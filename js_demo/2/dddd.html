@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./原生JS实现简洁的时间日期控件代码/jquery-1.7.1.min.js"></script>
+    <style>
+    </style>
+</head>
+<style>
+    .c_button { width:92px; height:30px;  border:0; float:left;}
+    /*.c_up{background:url(./imgs/default-m.png) no-repeat 0 top;}*/
+    /*.c_down{background:url(./imgs/default-l.png) no-repeat 0 bottom;}*/
+</style>
+<body>
+<input type="radio" checked>
+<input type="radio" name="1">
+<input type="radio" name="2">
+<input type="radio" name="2">
+<input type="radio" name="3">
+<input type="radio" name="3">
+<button id="btn">全选</button>
+<button id="btn1">取消全选</button>
+
+
+<input name="" class="c_button" class="c_up" type="submit" value="111111111111" title="点击登录"/>
+
+<script>
+    $(document).ready(function () {
+        $("#btn").click(function () {
+            $(":radio").attr("checked",true);
+        })
+        $("#btn1").click(function () {
+            $(":radio").attr("checked",false);
+        })
+    })
+
+    document.getElementById("c_button").onmouseover=function()  {this.className = "c_down";}
+    document.getElementById("c_button").onmouseout=function(){this.className = "c_up";}
+
+</script>
+</body>
+</html>

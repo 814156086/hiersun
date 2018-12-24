@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    .box1{
+        width: 300px;
+        height: 100px;
+        background-color: red;
+        display: inline-block;
+    }
+    .box2{
+        width: 300px;
+        height: 100px;
+        background-color: yellow;
+        display: inline-block;
+
+    }
+    .box3{
+         width: 300px;
+         height: 100px;
+         background-color: blue;
+        display: inline-block;
+
+    }
+    .box{
+        width: 900px;
+        margin: 0 auto;
+    }
+    .liandong_box {
+        float: left;
+    }
+
+    .liandong_box .selectPCA {
+        width: 292px;
+        height: 36px;
+        text-indent: 8px;
+    }
+
+    .select_site {
+        background-color: #fff;
+        display: none;
+        border-radius: 6px;
+        position: absolute;
+        left: 146px;
+        top: 288px;
+        box-shadow: 4px 4px 4px #ddd, -4px -4px 4px #ddd, 4px -4px 4px #ddd, -4px 4px 4px #ddd;
+        z-index: 999;
+    }
+    .site_title {
+        width: 100%;
+        height: 40px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+    }
+    .select_close{
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        font: bold 30px/36px 'microsoft yahei';
+        color: #9e9e9e;
+    }
+    .block {
+        text-align: center;
+    }
+    .list_data {
+        font: normal 14px/40px 'microsoft yahei';
+    }
+    .province{
+        width: 120px;
+        height: 250px;
+        overflow-y:  auto;
+        background-color: #e9e9e9;
+    }
+    .city{
+        display: none;
+        min-width: 120px;
+        height: 250px;
+        overflow-y:  auto;
+    }
+    .area{
+        display: none;
+        min-width: 120px;
+        height: 250px;
+        overflow-y:  auto;
+    }
+</style>
+
+<body>
+<div class="box">
+    <div class="boxx">
+        <div class="box1"></div><!----><div class="box2"></div><!----><div class="box3"></div><!---->
+    </div>
+</div>
+<p class="height40">
+    <label>称谓：</label>
+        <select class="call_name" name="appellation">
+        <option value="">请选择</option>
+        <option value="先生">先生</option>
+        <option value="女士">女士</option>
+        <option value="小姐">小姐</option>
+    </select>
+
+
+</p>
+
+
+<p class="height40">
+    <label>所在地区：</label>
+<div class="liandong_box">
+    <input type="text" class="selectPCA" readonly placeholder="请选择省/市/区">
+    <input type="hidden" name="province">
+    <input type="hidden" name="city">
+    <input type="hidden" name="area">
+    <div class="select_site">
+        <div class="site_title">选择地区<span class="select_close fr">×</span></div>
+        <div class="block">
+            <div class="province fl">
+            </div>
+            <div class="city fl">
+            </div>
+            <div class="area fl">
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</p>
+
+</body>
+<script src="../jquery-1.7.1.min.js"></script>
+<script>
+    (function () {
+        //	省市区三级联动
+        $('.selectPCA').on('click', function() {
+            selectPCA()
+        })
+        function selectPCA() {
+            $('.city').hide()
+            $('.area').hide()
+            $.ajax({
+                type: 'get',
+                url: testHttp + '/IdoStudio/associationAccount/getAllProvince',
+                dataType: 'jsonp',
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    var html = ''
+                    for(var i = 0; i < data.list.length; i++) {
+                        html += '<div class="list_data" data-id="' + data.list[i].ID + '">' + data.list[i].PROVINCENAME + '</div>'
+                    }
+                    $('.select_site').show()
+                    $('.select_close').click(function() {
+                        $('.select_site').hide()
+                    })
+                    $('.province').html(html)
+                    $('.province').on('click', 'div', function() {
+                        var sitename = ''
+                        var province = $(this).data('id')
+                        var parvincename = $(this).text()
+                        $('input[name="province"]').val(parvincename)
+                        sitename = parvincename
+                        $('.selectPCA').val(sitename)
+                        $.ajax({
+                            type: 'get',
+                            url: testHttp + '/IdoStudio/associationAccount/getAllCity',
+                            dataType: 'jsonp',
+                            async: false,
+                            data: {
+                                provinceId: province
+                            },
+                            success: function(data) {
+                                console.log(data);
+                                var cityhtml = ''
+                                for(var i = 0; i < data.list.length; i++) {
+                                    cityhtml += '<div class="list_data" data-id="' + data.list[i].ID + '">' + data.list[i].NAME + '</div>'
+                                }
+                                $('.city').html(cityhtml).show()
+                                $('.city').on('click', 'div', function() {
+                                    sitename = parvincename
+                                    var cityid = $(this).data('id')
+                                    var cityname = $(this).text()
+                                    $('input[name="city"]').val(cityname)
+                                    sitename += '/' + cityname
+                                    $('.selectPCA').val(sitename)
+                                    $.ajax({
+                                        type: 'get',
+                                        url: testHttp + '/IdoStudio/associationAccount/getAllAreaCity',
+                                        dataType: 'jsonp',
+                                        async: false,
+                                        data: {
+                                            cityId: cityid
+                                        },
+                                        success: function(data) {
+
+                                            if(data.list.length != 0) {
+                                                var areahtml = ''
+                                                for(var i = 0; i < data.list.length; i++) {
+                                                    areahtml += '<div class="list_data" data-id="' + data.list[i].ID + '">' + data.list[i].NAME + '</div>'
+                                                }
+                                                $('.area').html(areahtml).show()
+
+                                                $('.area').on('click', 'div', function() {
+                                                    sitename = parvincename + '/' + cityname
+                                                    var areaname = $(this).text()
+                                                    $('input[name="area"]').val(areaname)
+                                                    sitename += '/' + areaname
+                                                    $('.selectPCA').val(sitename)
+                                                    $('.select_site').hide()
+                                                })
+                                            } else {
+                                                $('.select_site').hide()
+                                                //											$('input[name="area"]').val('')
+                                            }
+
+                                        }
+                                    })
+                                })
+                            }
+                        })
+
+                    })
+
+                }
+            })
+        }
+    })()
+</script>
+</html>

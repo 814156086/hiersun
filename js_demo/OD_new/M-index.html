@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>oohdear 改版新页面</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="./css/swiper.min.css">
+
+  <!-- Demo styles -->
+  <style>
+    html, body {
+        position: relative;
+        height: 100%;
+    }
+    body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#000;
+        margin: 0;
+        padding: 0;
+    }
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+        /* display: -webkit-box; */
+        /* display: -ms-flexbox; */
+        /* display: -webkit-flex; */
+        /* display: flex; */
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+    .swiper-button-next{
+        background-size: 13px 30px;
+        top: 35%;
+    }
+    .swiper-button-prev{
+        background-size: 13px 30px;
+        top: 35%;
+    }
+    /* .swiper-button-next{
+        position: fixed;
+        top: 50%;
+    }
+    .swiper-button-prev{
+        position: fixed;
+        top: 50%;
+    } */
+    .swiper-slide img{
+        width: 100%;
+        display: block;
+    }
+    .swiper_img{
+        width: 100%;
+        display: block;
+    }
+    .mSwiper_text1{
+        background: white;
+        
+        top: 35%;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+        display: block;
+        padding: 0 0 .48rem;
+    }
+    .mSwiper_text1_p1{
+        line-height: 1;
+        text-transform: uppercase;
+        margin: 18px 0 17px;
+        padding: 0;
+        color: black;
+        font-size: .4rem;
+    }
+    .mSwiper_text1_p2{
+        font-size: 0.14rem;
+        line-height: 1.4;
+        margin: 0;
+        color: black;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+    .mSwiper_text2{
+        background: white;
+        
+        display: block;
+        width: 100%;
+    }
+    .mSwiper_text2_content{
+        border-left: 1px solid rgba(255, 255, 255, 0.5);
+        border-right: 1px solid rgba(255, 255, 255, 0.5);
+        background-image: none;
+        padding: .25rem 0;
+    }
+    .mSwiper_text2_h2{
+        font-size: .2rem;
+        line-height: 1.2;
+        color: black;
+        margin-bottom: .01rem;
+        font-weight: normal;
+    }
+    .mSwiper_text2_p1{
+        font-size: 0.13rem;
+        color: black;
+        line-height: .2rem;
+        padding: 0 10%;
+        margin-bottom: .01rem;
+    }
+    .swiper_img3{
+        width: 100%;
+        background: white;
+    }
+    .swiper_img3 img{
+        width: 80%;
+        margin: auto;
+    }
+    .mSwiper_text3{
+        background: white;
+        
+        display: block;
+        width: 100%;
+    }
+    .mSwiper_text3_content{
+        border-left: 1px solid rgba(255, 255, 255, 0.5);
+        border-right: 1px solid rgba(255, 255, 255, 0.5);
+        background-image: none;
+        padding: .25rem 0;
+    }
+    .mSwiper_text3_h2{
+        font-size: .2rem;
+        line-height: 1.2;
+        color: black;
+        margin-bottom: .01rem;
+        font-weight: normal;
+    }
+    .mSwiper_text3_p1{
+        font-size: 0.13rem;
+        color: black;
+        line-height: .2rem;
+        padding: 0 10%;
+        margin-bottom: .01rem;
+    }
+    
+
+
+    .mSwiper_text4{
+        background: white;
+        
+        display: block;
+        width: 100%;
+    }
+    .mSwiper_text4_content{
+        border-left: 1px solid rgba(255, 255, 255, 0.5);
+        border-right: 1px solid rgba(255, 255, 255, 0.5);
+        background-image: none;
+        padding: .25rem 0;
+    }
+    .mSwiper_text4_h2{
+        font-size: .2rem;
+        line-height: 1.2;
+        color: black;
+        margin-bottom: .01rem;
+        font-weight: normal;
+    }
+    .mSwiper_text4_p1{
+        font-size: 0.13rem;
+        color: black;
+        line-height: .2rem;
+        padding: 0 10%;
+        margin-bottom: .01rem;
+    }
+  </style>
+</head>
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="swiper_img swiper_img1">
+                <img  src="./img/m_one1.jpg" alt="">
+                
+                </div>
+                <div class="mSwiper_text1">
+                    <div class="mSwiper_content">
+                        <p class="mSwiper_text1_p1">致女性：<br> 本真如我</p>
+                        <p class="mSwiper_text1_p2">DIOR迪奥真我，带你回到活力梦幻的心悦之源</p>
+                    </div>
+                </div>
+                <div class="swiper_img swiper_img2">
+                        <img  src="./img/m_one2.jpg" alt="">
+                </div>
+
+
+                <div class="mSwiper_text2">
+                    <div class="mSwiper_text2_content">
+                        <h2 class="mSwiper_text2_h2">本真女性魅力</h2>
+                        <p class="mSwiper_text2_p1">回归自然本源，重新定义真我女性之美。查理兹·赛隆（Charlize Theron）作为诠释这款香氛的女神，重新回到她出生的土地——南非，点亮本真之美。</p>
+                    </div>
+                </div>
+
+                <div class="swiper_img swiper_img3">
+                        <img  src="./img/m_one3.jpg" alt="">
+                </div>
+                <div class="mSwiper_text3">
+                        <div class="mSwiper_text3_content">
+                            <h2 class="mSwiper_text3_h2">本真女性魅力</h2>
+                            <p class="mSwiper_text3_p1">回归自然本源，重新定义真我女性之美。查理兹·赛隆（Charlize Theron）作为诠释这款香氛的女神，重新回到她出生的土地——南非，点亮本真之美。</p>
+                        </div>
+                </div>
+                <div class="swiper_img swiper_img4">
+                        <img  src="./img/m_one4.jpg" alt="">
+                </div>
+
+                <div class="mSwiper_text4">
+                        <div class="mSwiper_text4_content">
+                            <h2 class="mSwiper_text4_h2">本真女性魅力</h2>
+                            <p class="mSwiper_text4_p1">回归自然本源，重新定义真我女性之美。查理兹·赛隆（Charlize Theron）作为诠释这款香氛的女神，重新回到她出生的土地——南非，点亮本真之美。</p>
+                        </div>
+                </div>
+                <div class="swiper_img swiper_img5">
+                        <img  src="./img/m_two1.jpg" alt="">
+                </div>
+            </div>
+
+            
+
+
+            <div class="swiper-slide">
+                    <div class="swiper_img swiper_img1">
+                    <img  src="./img/m_two1.jpg" alt="">
+                    </div>
+                    <div class="mSwiper_text1">
+                        <div class="mSwiper_content">
+                            <p class="mSwiper_text1_p1">致女性：<br> 本真如我</p>
+                            <p class="mSwiper_text1_p2">DIOR迪奥真我，带你回到活力梦幻的心悦之源</p>
+                        </div>
+                    </div>
+                    <div class="swiper_img swiper_img2">
+                            <img  src="./img/m_one2.jpg" alt="">
+                    </div>
+    
+    
+                    <div class="mSwiper_text2">
+                        <div class="mSwiper_text2_content">
+                            <h2 class="mSwiper_text2_h2">本真女性魅力</h2>
+                            <p class="mSwiper_text2_p1">回归自然本源，重新定义真我女性之美。查理兹·赛隆（Charlize Theron）作为诠释这款香氛的女神，重新回到她出生的土地——南非，点亮本真之美。</p>
+                        </div>
+                    </div>
+    
+                    <div class="swiper_img swiper_img3">
+                            <img  src="./img/m_one3.jpg" alt="">
+                    </div>
+
+                    <div class="mSwiper_text3">
+                            <div class="mSwiper_text3_content">
+                                <h2 class="mSwiper_text3_h2">本真女性魅力</h2>
+                                <p class="mSwiper_text3_p1">回归自然本源，重新定义真我女性之美。查理兹·赛隆（Charlize Theron）作为诠释这款香氛的女神，重新回到她出生的土地——南非，点亮本真之美。</p>
+                            </div>
+                    </div>
+                    <div class="swiper_img swiper_img4">
+                            <img  src="./img/m_one4.jpg" alt="">
+                    </div>
+    
+                    <div class="mSwiper_text4">
+                            <div class="mSwiper_text4_content">
+                                <h2 class="mSwiper_text4_h2">本真女性魅力</h2>
+                                <p class="mSwiper_text4_p1">回归自然本源，重新定义真我女性之美。查理兹·赛隆（Charlize Theron）作为诠释这款香氛的女神，重新回到她出生的土地——南非，点亮本真之美。</p>
+                            </div>
+                    </div>
+                    <div class="swiper_img swiper_img5">
+                            <img  src="./img/m_two1.jpg" alt="">
+                    </div>
+
+                </div>
+    
+        
+        </div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next swiper-button-red"></div>
+        <div class="swiper-button-prev swiper-button-red"></div>
+      </div>
+</body>
+<script src="./js/jquery-1.10.2.js"></script>
+
+<script src="./js/swiper.min.js"></script>
+<script src="./js/M-index.js"></script>
+<!-- Initialize Swiper -->
+<script>
+
+      var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        slidesPerView: 1,
+        paginationClickable: true,
+        loop: true
+    });
+   
+   var num=window.screen.width/3.75;
+document.querySelector('html').style.fontSize=num+'px';
+
+
+
+
+</script>
+</html>

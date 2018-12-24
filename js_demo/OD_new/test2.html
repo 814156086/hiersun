@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>book-css3</title>
+    <style>
+        tr {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<!--  -->
+
+<body>
+<!-- rw4svq1sy6c -->
+<table border="20" bgcolor="red">
+    <tr>
+        <td>Month</td>
+        <td>Savings</td>
+    </tr>
+    <tr>
+        <td>January</td>
+        <td>$100</td>
+    </tr>
+    <tr>
+        <th>January</th>
+        <th>$100</th>
+        <th>January</th>
+        <th>$100</th>
+        <th>January</th>
+        <th>$100</th>
+    </tr>
+</table>
+</body>
+<script src="./js/jquery-1.10.2.js"></script>
+<script>
+
+    // console.log($('th:nth-child(4)').html());
+    // var dataA = new Date();
+    var myDate = new Date();
+    myDate.getFullYear();//获取完整的年份(4位,1970-????)
+    myDate.getMonth();//获取当前月份(0-11,0代表1月)
+    myDate.getDate();//获取当前日(1-31)
+
+    // var mytime=myDate.toLocaleTimeString();//获取当前时间
+    // myDate.toLocaleString( );//获取日期与时间
+    var nowDate = myDate.getFullYear() + '-' + parseInt(myDate.getMonth() + 1) + '-' + myDate.getDate();
+    console.log(nowDate);
+
+
+    $.ajax({
+        type: 'get',
+        url: 'http://www.oohdear.com/pc/home/queryHomeGoodsByPage',
+        data: {
+            nowDate: nowDate
+        },
+        success: function (data) {
+
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+
+    // var thh = $('th')
+    // thh.each(function(item,index){
+    // console.log(index);
+
+    // })
+
+
+</script>
+
+</html>

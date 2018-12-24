@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Ooh Dear 改版新页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="./css/swiper.min.css">
+
+    <!-- Demo styles -->
+    <style>
+    /*
+* @Author: lijiao
+* @Date:   2017-10-31 13:25:25
+* @Last Modified by:   lijiao
+* @Last Modified time: 2017-11-02 09:15:20
+*/
+html,
+body {
+    position: relative;
+    height: 100%;
+}
+li{
+    list-style: none;
+}
+body {
+    background: #eee;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+}
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+    /* 在这里写小屏幕设备的样式 */
+    .swiper-slide-active img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        /* transition: left 2s linear; */
+        /* transform: matrix(1, 0, 0, 1, -914, 0); */
+    }
+}
+
+@media only screen and (min-width: 321px) and (max-width: 1024px) {
+    /* 这里写宽度大于321px小于1024px的样式(一般是平板电脑) */
+}
+
+/* <!-- /////////////////////////////////////////////////////////中间纵滑部
+
+分//////////////////////////////////////////////////////////// --> */
+
+@media only screen and (min-width: 700px) {
+    .swiper-container .swiper-button-prev{
+        background-image:url(https://od-imgs.oss-cn-beijing.aliyuncs.com/tab-l.png) !important
+    }
+    .swiper-container .swiper-button-next{
+        background-image:url(https://od-imgs.oss-cn-beijing.aliyuncs.com/next1-icon.png) !important
+    }
+    
+    .footer{
+        position: absolute;
+    }
+    .head_navigatin{
+        position: absolute;
+        height: 88px;;
+    }
+    .odBig_logo{
+        width: 16%;
+        height: 18%;
+        position: absolute;
+        top: 10px;
+        left: 24px;
+        z-index: 2;
+        max-width: 328px;
+        max-height: 185px;
+    }
+    .bigLogo_img{
+        width: 100%;
+        height: 100%;
+       
+    }
+    .content_all{
+        width: 100%;
+        height: 100%;
+        background: white;
+        opacity: 0;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        transition: opacity .3s linear;
+    }
+    /* 这里写pc客户端的样式 */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    .vertical_container {
+        width: 70%;
+        height: 80%;
+        margin: auto;
+        position: absolute;
+        top: 10%;
+        z-index: 3;
+        max-width: 1200px;
+        overflow-y: scroll;
+        left: 15%;
+        /* padding-left: 10%;
+        padding-right: 10%; */
+        /* animation: move 1s ; */
+        /* overflow: hidden */
+        transition: opacity 0.3s ease;
+    }
+    @keyframes move {
+        0% {
+            transform: translate(800px, 0) scale(1, 1);
+        }
+       
+    }
+    @keyframes moveText {
+        0% {
+            transform: translate(200px, 0) scale(1, 1);
+        }
+    }
+    .ani2 {
+        animation: box 1s ease-in-out both;
+    }
+    .vertical_second {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.5);
+        height: 490px;
+        /* opacity: 0.4; */
+        padding-top: 1px;
+    }
+    .vertical_pack {
+        width: 100%;
+        transition: 2s;
+        max-width: 1024px;
+        margin: auto;
+
+    }
+    .vertical_container::-webkit-scrollbar {
+        display: none;
+    }
+    .vertical_first_img {
+        width: 100%;
+        overflow: hidden;
+    }
+    .vertical_top {
+        width: 100%;
+        background: black;
+        height: 50px;
+        opacity: 0;
+        transition: height .5s linear;
+    }
+    .vertical_first {
+        width: 100%;
+        background: black;
+        height: 490px;
+        opacity: 1;
+    }
+    .vertical_third {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.5);
+        height: 400px;
+    }
+    .vertical_fourth {
+        width: 100%;
+        background: rgba(121, 223, 121, 0.5);
+        height: 400px;
+    }
+    .vertical_fifth {
+        width: 100%;
+        background: rgba(111, 111, 111, 0.5);
+        height: 400px;
+    }
+    .vertical_sixth{
+        width: 100%;
+        background: rgba(222, 222, 222, 0.5);
+        height: 300px;
+        padding-top: 35px;
+    }
+    .head_navigatin_logo{
+        display: none;
+    }
+    .navigation {
+        height: 60px;
+        background-position: -27px -24px;
+        line-height: 30px;
+        width: 60px;
+        color: #8c7f70;
+        font-size: 16px;
+        margin-left: 30px;
+        position: absolute;
+        left: 0;
+        top: 220px;
+        background: url(http://img.ido-love.com/pc.png) no-repeat 0 0;
+        cursor: pointer;
+        z-index: 2;
+        display: inline-block;
+        transition: left 0.3s linear;
+    }
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        /* opacity: 0; */
+        /* transition: opacity 1s linear !important; */
+        /* transform: matrix(1, 0, 0, 1, -514, 0); */
+    }
+  
+    .navList {
+        width: 30%;
+        max-width: 400px;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.6);
+        display: inline-block;
+        position: absolute;
+        left: -440px;
+        top: 0%;
+        /* display: none; */
+        z-index: 2;
+        transition: left 0.3s linear;
+    }
+    .naList_firli_firImg{
+        width: 100%;
+        height: 100%;;
+    }
+    .navList_ul{
+        width: 100%;
+        height: 100%;
+        padding-top: 30%;
+    }
+    .naList_li{
+        width: 100%;
+        height: 70px;
+        position: relative;
+    }
+    .naList_firstLi{
+        height: 96px;
+    }
+    .naList_li_href{
+        width: 100%;
+        height: 100%;
+        display: block;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+    }
+    .naList_li_bottom{
+        width: 60%;
+        height: 1px;
+        background: rgb(222,219,213);
+        position: absolute;
+        bottom: 0px;
+        left: 90px;
+
+    }
+    .naList_li_content_firimg{
+        margin-top: 25px;
+    }
+    .naList_li_content .naList_li_content_firp{
+        margin-top: 25px;
+        font-size: 32px;
+        color: rgb(218,91,156)
+    }
+    .naList_li_content_img{
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        vertical-align: middle;
+        margin-left: 37px;
+        margin-right: 70px;
+    }
+    .naList_li_content_p{
+        display: inline-block;
+        color: rgb(90,90,90);
+        font-size: 20px;
+        letter-spacing: 10px;
+    }
+    .naList_li_content{
+        /* background: url('https://od-imgs.oss-cn-beijing.aliyuncs.com/for-who.png')no-repeat 37px 12px; */
+        height: 100%;
+        /* text-align: center; */
+        line-height: 70px;
+    }
+    .navMask {
+        width: 100%;
+        height: 100%;
+        background: black;
+        opacity: .4;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
+        display: none;
+    }
+    #swiper-slide1 img {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    /* .swiper-wrapper{
+transition: left 2s linear;  
+} */
+    .swiper-slide-active img {
+        left: -900px;
+        position: absolute;
+        /* transition: left 2s linear; */
+        /* transform: matrix(1, 0, 0, 1, -914, 0); */
+    }
+  
+    .vertical_lable_li {
+        cursor: pointer;
+        list-style: none;
+        width: 120px;
+        height: 42px;
+        background: rgb(151, 112, 156);
+        margin-bottom: 1px;
+        text-align: center;
+        line-height: 35px;
+        color: white;
+    }
+    .vertical_lable_liactive {
+        cursor: pointer;
+        list-style: none;
+        height: 42px;
+        margin-bottom: 1px;
+        text-align: center;
+        line-height: 35px;
+        width: 199px;
+        left: -79px;
+        position: relative;
+        background: -webkit-linear-gradient(left, rgb(224,48,130), rgb(146,49,138));
+        /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(right, rgb(224,48,130), rgb(146,49,138));
+        /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(right, rgb(224,48,130), rgb(146,49,138));
+        /* Firefox 3.6 - 15 */
+        background: linear-gradient(to right, rgb(224,48,130), rgb(146,49,138));
+        /* 标准的语法 */
+    }
+    .vertical_lable {
+        top: 65%;
+        right: 10px;
+        width: 170px;
+        height: auto;
+        position: fixed;
+    }
+    .vertical_lable_ul {
+        padding-left: 50px;
+    }
+    .remaining_img {
+        display: none;
+        width: 100%;
+    }
+    .introduction {
+        position: absolute;
+        top: 150px;
+        right: 10%;
+        z-index: 2;
+        width: 28%;
+        height: 19%;
+        transition: left 1s linear;
+        max-width: 537px;
+        max-height: 189px;
+        text-align: center;
+    }
+    .introduction_pOne {
+        font-size: 20px;
+        color: white;
+        width: 44%;
+        margin: auto;
+        margin-top: 5%;
+        letter-spacing: 3px;
+        line-height: 25px;
+    }
+    .introduction_pTwo {
+        font-size: 16px;
+        color: white;
+        font-family: Georgia, serif;
+        width: 86%;
+        margin: auto;
+        margin-top: 5px;
+        letter-spacing: 1px;
+        line-height: 25px;
+        max-width: 465px;
+
+    }
+    .introduction_spOne {
+        position: absolute;
+        width: 50px;
+        height: 1px;
+        background: white;
+        top: 0px;
+        left: 0;
+    }
+    .introduction_spTwo {
+        position: absolute;
+        width: 1px;
+        height: 30px;
+        background: white;
+        top: 0px;
+        left: 0;
+    }
+    .introduction_spThree {
+        position: absolute;
+        width: 50px;
+        height: 1px;
+        background: white;
+        right: 0px;
+        bottom: 0;
+    }
+    .introduction_spFour {
+        position: absolute;
+        width: 1px;
+        height: 30px;
+        background: white;
+        right: 0px;
+        bottom: 0;
+    }
+}
+#odVideo{
+    height: 490px;
+    display: block;
+    margin: auto;
+}
+.vertical_second_top{
+    width: 370px;
+    height: 45px;
+    margin: auto;
+    text-align: center;
+    color: rgb(88,48,115);
+    margin-bottom: 6%;
+}
+.vertical_second_top_p1{
+    margin-top: 65px;
+    color: rgb(88,48,115);
+    font-size: 22px;
+}
+.vertical_second_top_p2{
+    color: rgb(88,48,115);
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: 800;
+}
+.vertical_second_left{
+    width: 65%;
+    height: 62%;
+    margin-left: 6%;
+    display: inline-block;
+}
+.vertical_second_leftImg{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.vertical_second_right{
+    display: inline-block;
+    height: 170px;
+    width: 20%;
+    margin-left: 5%;
+    color: rgb(88,48,115);
+}
+.vertical_second_right_p1{
+    color: rgb(88,48,115);
+    font-size: 22px;
+    letter-spacing: 3px;
+}
+.vertical_second_right_p2{
+    color: rgb(88,48,115);
+    margin-top: 25px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+.href_button{
+    width: 108px;
+    height: 30px;
+    border: 1px solid rgb(88,48,115);
+    text-align: center;
+    line-height: 30px;
+    position: relative;
+    left: 80%;
+    top: -13%;
+    color: rgb(88,48,115);
+    display: block;    
+}
+.vertical_third_right{
+    width: 65%;
+    height: 85%;
+    margin-left: 8%;
+    display: inline-block;
+    margin-top: 30px;
+}
+.vertical_third_rightImg{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.vertical_third_left{
+    display: inline-block;
+    height: 170px;
+    width: 18%;
+    margin-left: 5%;
+    color: rgb(88,48,115);
+}
+.vertical_third_left_p1{
+    color: rgb(88,48,115);
+    font-size: 22px;
+}
+.vertical_third_left_p2{
+    color: rgb(88,48,115);
+    margin-top: 25px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+.vertical_third_button{
+    width: 108px;
+    height: 30px;
+    border: 1px solid rgb(88,48,115);
+    text-align: center;
+    line-height: 30px;
+    position: relative;
+    left: 17%;
+    top: -13%;
+    color: rgb(88,48,115);
+    display: block;    
+}
+.vertical_fourth_left{
+    width: 65%;
+    height: 85%;
+    margin-left: 6%;
+    display: inline-block;
+    margin-top: 25px;
+}
+.vertical_fourth_leftImg{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.vertical_fourth_right{
+    display: inline-block;
+    height: 144px;
+    width: 20%;
+    margin-left: 5%;
+    color: rgb(88,48,115);
+}
+.vertical_fourth_right_p1{
+    color: rgb(88,48,115);
+    font-size: 22px;
+    letter-spacing: 3px;
+}
+.vertical_fourth_right_p2{
+    color: rgb(88,48,115);
+    margin-top: 25px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+.vertical_fourth_button{
+    width: 108px;
+    height: 30px;
+    border: 1px solid rgb(88,48,115);
+    text-align: center;
+    line-height: 30px;
+    position: relative;
+    left: 80%;
+    top: -13%;
+    color: rgb(88,48,115);
+    display: block;    
+}
+
+
+
+
+
+.vertical_fifth_right{
+    width: 65%;
+    height: 85%;
+    margin-left: 8%;
+    display: inline-block;
+    margin-top: 10px;
+}
+.vertical_fifth_rightImg{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.vertical_fifth_left{
+    display: inline-block;
+    height: 170px;
+    width: 18%;
+    margin-left: 5%;
+    color: rgb(88,48,115);
+}
+.vertical_fifth_left_p1{
+    color: rgb(88,48,115);
+    font-size: 22px;
+}
+.vertical_fifth_left_p2{
+    color: rgb(88,48,115);
+    margin-top: 25px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+.vertical_fifth_button{
+    width: 108px;
+    height: 30px;
+    border: 1px solid rgb(88,48,115);
+    text-align: center;
+    line-height: 30px;
+    position: relative;
+    left: 17%;
+    top: -13%;
+    color: rgb(88,48,115);
+    display: block;    
+}
+.vertical_sixth_div{
+    width: 27%;
+    height: 185px;
+    
+}
+.vertical_sixth_one{
+    display: inline-block;
+    margin-left: 84px;
+}
+.vertical_sixth_oneImg{
+    width: 100%;
+    height: 100%;
+}
+.vertical_sixth_oneP1{
+    font-size: 20px;
+    margin-top: 10px;
+    color: rgb;
+    color: rgb(88,48,115);
+}
+.vertical_sixth_two{
+    display: inline-block;
+    margin-left: 18px;;
+    
+}
+.vertical_sixth_twoImg{
+    width: 100%;
+    height: 100%;
+}
+.vertical_sixth_twoP1{
+    font-size: 20px;
+    margin-top: 10px;
+    color: rgb;
+    color: rgb(88,48,115);
+}
+.vertical_sixth_thire{
+    display: inline-block;
+    margin-left: 18px;;
+    
+}
+.vertical_sixth_thireImg{
+    width: 100%;
+    height: 100%;
+}
+.vertical_sixth_thireP1{
+    font-size: 20px;
+    margin-top: 10px;
+    color: rgb;
+    color: rgb(88,48,115);
+}
+/* 中间部分第二版 start*/
+.second_vertical_first{
+    width: 100%;
+    height: 348px;
+    border-top: 1px solid black;
+}
+.second_vertical_first_left{
+    width: 42%;
+    height: 350px;
+    float: left;
+}
+.second_vertical_first_left a{
+    width: 100%;
+    height: 90%;
+    display: block;
+    z-index: 2;
+}
+.second_vertical_first_leftImg{
+    width: 100%;
+    height: 100%;
+}
+.second_vertical_first_center{
+    width: 29%;
+    height: 350px;
+    float: left;
+    padding: 0 1px;
+    border-left: 1px solid rgb(171,174,177);
+    border-right: 1px solid rgb(171,174,177);
+    background: rgb(222,222,222);
+}
+.second_vertical_first_center a{
+    width: 100%;
+    height: 90%;
+    display: block;
+    z-index: 2;
+    
+}
+.second_vertical_first_centerImg{
+    width: 100%;
+    height: 100%;
+}
+.second_vertical_first_rightImg{
+    width: 100%;
+    height: 100%;
+}
+.second_vertical_first_right{
+    width: 29%;
+    height: 350px;
+    float: left;
+    background: rgb(222,222,222);
+    
+}
+.second_vertical_first_right a{
+    width: 100%;
+    height: 90%;
+    display: block;
+    z-index: 2;
+    
+}
+/* 中间部分第二版 end*/
+
+    </style>
+</head>
+
+<body>
+    <!-- 导航部分 -->
+    <div class="head_navigatin">
+        <a href="#logo" class="head_navigatin_logo"></a>
+
+        <a href="#小可爱" class="head_navigatin_myLove">我的小可爱</a>
+        <a href="#findDoor" class="head_navigatin_door">查找门店</a>
+        <div class="head_navigatin_line"></div>
+    </div>
+    
+    <!-- 首页超级大的logo图 -->
+    <a class="odBig_logo" target="_blank" href="index.html">
+        <img class="bigLogo_img" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/02.png" alt="">
+
+    </a>
+   
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530178493536&di=7ba36cb6ceff48d7da4ffb37278858e8&imgtype=jpg&src=http%3A%2F%2Fimg0.imgtn.bdimg.com%2Fit%2Fu%3D3088528925%2C4292268959%26fm%3D214%26gp%3D0.jpg" alt="">
+                <!-- 滑动变化的图片 -->
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606346333&di=d75ed428af5e1cfc8e9de29408f00794&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F0823dd54564e92584fbb491f9082d158cdbf4eb0.jpg" alt="">
+                
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530244228924&di=84c59191abd9bc9ed49a3a8a9d4c9c50&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fbd315c6034a85edf50107fa445540923dc54759d.jpg" alt="">
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530244169507&di=9716e7288f7729410c9c0573de32d5e1&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fe61190ef76c6a7ef06fb25aaf1faaf51f2de6659.jpg" alt="">
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606408299&di=ee0c8bada64b9613739febc87a2e1e0b&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb7003af33a87e95053e42ae21c385343faf2b449.jpg" alt="">
+
+            </div>
+            <div class="swiper-slide">
+                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530178671726&di=43c023795d947339f788445b72a99bee&imgtype=0&src=http%3A%2F%2Fimg4.focus.cn%2Fupload%2Fcq%2F38982%2Fb_389816854.jpg" alt="">
+                <!-- 滑动变化的图片 -->
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530244228924&di=84c59191abd9bc9ed49a3a8a9d4c9c50&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fbd315c6034a85edf50107fa445540923dc54759d.jpg" alt="">
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530244169507&di=9716e7288f7729410c9c0573de32d5e1&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fe61190ef76c6a7ef06fb25aaf1faaf51f2de6659.jpg" alt="">
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606346333&di=d75ed428af5e1cfc8e9de29408f00794&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F0823dd54564e92584fbb491f9082d158cdbf4eb0.jpg" alt="">
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606408299&di=ee0c8bada64b9613739febc87a2e1e0b&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb7003af33a87e95053e42ae21c385343faf2b449.jpg" alt="">
+
+            </div>
+            <div class="swiper-slide">
+                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530773433&di=1d3f2471b625f58dd6f82805a110de62&imgtype=jpg&er=1&src=http%3A%2F%2Fwww.07073.com%2Fuploads%2F130927%2F9869050_162816_1.jpg" alt="">
+                <!-- 滑动变化的图片 -->
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530244228924&di=84c59191abd9bc9ed49a3a8a9d4c9c50&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fbd315c6034a85edf50107fa445540923dc54759d.jpg" alt="">
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530244169507&di=9716e7288f7729410c9c0573de32d5e1&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fe61190ef76c6a7ef06fb25aaf1faaf51f2de6659.jpg" alt="">
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606346333&di=d75ed428af5e1cfc8e9de29408f00794&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F0823dd54564e92584fbb491f9082d158cdbf4eb0.jpg" alt="">
+                <img class="remaining_img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530606408299&di=ee0c8bada64b9613739febc87a2e1e0b&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb7003af33a87e95053e42ae21c385343faf2b449.jpg" alt="">
+
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination swiper-pagination-white"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+    </div>
+    <!-- 中间下滑部分 -->
+    <div class="vertical_container">
+        <div class="vertical_top"></div>
+
+        <div class="vertical_lable">
+            <ul class="vertical_lable_ul">
+                <li class="vertical_lable_li">梦的开始</li>
+                <li class="vertical_lable_li">爱的纪念(2-5岁)</li>
+                <li class="vertical_lable_li">梦想成真</li>
+                <li class="vertical_lable_li">匠心独具</li>
+            </ul>
+        </div>
+
+        <div class="vertical_pack">
+                <div class="second_vertical_first">
+                       <div class="second_vertical_first_left">
+                           <img class="second_vertical_first_leftImg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/story-middle.png" alt="">
+                           <a href=""></a>
+                       </div>
+                       <div class="second_vertical_first_center">
+                            <img class="second_vertical_first_centerImg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/pic1.png" alt="">
+                            <a href=""></a>
+                       </div>
+                       <div class="second_vertical_first_right">
+                            <img class="second_vertical_first_rightImg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/personal-item-pic.png" alt="">
+                            <a href=""></a>
+                       </div>
+                </div>
+                <p></p>
+                <div class="vertical_second">
+                    <div class="vertical_second_top">
+                        <p class="vertical_second_top_p1">Ooh Dear "绘梦童画" 定制系列</p>
+                        <p class="vertical_second_top_p2">宝宝画作定制为一件从满意义的首饰，留下永恒纪念的收藏</p>
+                    </div>
+                    <div class="vertical_second_left">
+                        <img class="vertical_second_leftImg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/story-middle.png" alt="">
+                    </div>
+                    <div class="vertical_second_right">
+                        <p class="vertical_second_right_p1">小兔子去非洲</p>
+                        <p class="vertical_second_right_p2">小兔崽子从爷爷那里看到一本关于非洲草原的绘本，非洲真是个神奇的地方，有永远吃不完的胡萝卜，穿着草裙舞蹈的兔姐姐，还有数不清的宝藏埋葬在丛林里。“爷爷 爷爷”</p>
+                    </div>
+                    <a href="" class="href_button">MORE+</a>
+                </div>
+                <div class="vertical_third">
+                    
+                    <div class="vertical_third_left">
+                        <p class="vertical_third_left_p1">小兔子去非洲</p>
+                        <p class="vertical_third_left_p2">小兔崽子从爷爷那里看到一本关于非洲草原的绘本，非洲真是个神奇的地方，有永远吃不完的胡萝卜，穿着草裙舞蹈的兔姐姐，还有数不清的宝藏埋葬在丛林里。“爷爷 爷爷”</p>
+                    </div>
+                    <div class="vertical_third_right">
+                        <img class="vertical_third_rightImg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/story-middle.png" alt="">
+                    </div>
+                    <a href="" class="vertical_third_button">MORE+</a>
+                </div>
+                <div class="vertical_fourth">
+                    <div class="vertical_fourth_left">
+                        <img class="vertical_fourth_leftImg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/story-middle.png" alt="">
+                    </div>
+                    <div class="vertical_fourth_right">
+                        <p class="vertical_fourth_right_p1">小兔子去非洲</p>
+                        <p class="vertical_fourth_right_p2">小兔崽子从爷爷那里看到一本关于非洲草原的绘本，非洲真是个神奇的地方，有永远吃不完的胡萝卜，穿着草裙舞蹈的兔姐姐，还有数不清的宝藏埋葬在丛林里。“爷爷 爷爷”</p>
+                    </div>
+                    <a href="" class="vertical_fourth_button">MORE+</a>
+                </div>
+                <div class="vertical_fifth">
+                    <div class="vertical_fifth_left">
+                        <p class="vertical_fifth_left_p1">小兔子去非洲</p>
+                        <p class="vertical_fifth_left_p2">小兔崽子从爷爷那里看到一本关于非洲草原的绘本，非洲真是个神奇的地方，有永远吃不完的胡萝卜，穿着草裙舞蹈的兔姐姐，还有数不清的宝藏埋葬在丛林里。“爷爷 爷爷”</p>
+                    </div>
+                    <div class="vertical_fifth_right">
+                        <img class="vertical_fifth_rightImg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/story-middle.png" alt="">
+                    </div>
+                    <a href="" class="vertical_fifth_button">MORE+</a>
+                </div>
+
+
+
+
+                
+                <div class="vertical_sixth">
+                    <div class="vertical_sixth_one vertical_sixth_div">
+                        <img class="vertical_sixth_oneImg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/3.jpg" alt="">
+                        <p class="vertical_sixth_oneP1">如何培养孩子的想象力</p>
+                    </div>
+                    <div class="vertical_sixth_two vertical_sixth_div">
+                        <img class="vertical_sixth_twoImg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/3.jpg" alt="">
+                        <p class="vertical_sixth_twoP1">如何培养孩子的想象力</p>
+                    </div>
+                    <div class="vertical_sixth_thire vertical_sixth_div">
+                        <img class="vertical_sixth_thireImg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/3.jpg" alt="">
+                        <p class="vertical_sixth_thireP1">如何培养孩子的想象力</p>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!-- 中间的简介 -->
+    <div class="introduction">
+        <p class="introduction_pOne">亲子礼品珠宝品牌</p>
+        <p class="introduction_pTwo">全面涵盖0-10岁孩子成长期间不同纪念、祝福、亲子佩戴等个性化礼品需求</p>
+        <span class="introduction_spOne"></span>
+        <span class="introduction_spTwo"></span>
+        <span class="introduction_spThree"></span>
+        <span class="introduction_spFour"></span>
+    </div>
+    <div class="content_all">
+
+    </div>
+    <div class="navcontet">
+        <div class="navMask"></div>
+        <div class="navList">
+            <ul class="navList_ul">
+                <!-- <li class="naList_firli">
+                    <img class="naList_firli_firImg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/000.jpg" alt="">
+                </li> -->
+                <li class="naList_li naList_firstLi">
+                    <div class="naList_li_content">
+                        <img class="naList_li_content_img naList_li_content_firimg" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/for-who.png" alt="">
+                        <p class="naList_li_content_p naList_li_content_firp">首页</p>
+                    </div>
+                    <a class="naList_li_href" href="index.html"></a>
+                    <p class="naList_li_bottom"></p>
+                </li>
+                <li class="naList_li">
+                    <div class="naList_li_content">
+                            <img class="naList_li_content_img" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/gife.png" alt="">
+                            <p class="naList_li_content_p">出生礼</p>
+                        
+                    </div>
+                    <a class="naList_li_href" href="product-list.html"></a>
+                    <p class="naList_li_bottom"></p>
+                    
+                </li>
+                <li class="naList_li">
+                    <div class="naList_li_content">
+                            <img class="naList_li_content_img" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/edit-btn.png" alt="">
+                            <p class="naList_li_content_p">周岁礼</p>
+                        
+                    </div>
+                    <a class="naList_li_href" href="product-list.html"></a>
+                    <p class="naList_li_bottom"></p>
+                    
+                </li>
+                <li class="naList_li">
+                    <div class="naList_li_content">
+                            <img class="naList_li_content_img" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/lock.png" alt="">
+                            <p class="naList_li_content_p">绘梦童画</p>
+                        
+                    </div>
+                    <a class="naList_li_href" href="personal-process.html"></a>
+                    <p class="naList_li_bottom"></p>
+                    
+                </li>
+                <li class="naList_li">
+                    <div class="naList_li_content">
+                            <img class="naList_li_content_img" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/pen.png" alt="">
+                            <p class="naList_li_content_p">查找店铺</p>
+                        
+                    </div>
+                    <a class="naList_li_href" href="odMap.html"></a>
+                    <p class="naList_li_bottom"></p>
+                    
+                </li>
+                <li class="naList_li">
+                    <div class="naList_li_content">
+                            <img class="naList_li_content_img" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/people.png" alt="">
+                            <p class="naList_li_content_p">品牌故事</p>
+                        
+                    </div>
+                    <a class="naList_li_href" href="brand-story.html"></a>
+                    <p class="naList_li_bottom"></p>
+                    
+                </li>
+                <li class="naList_li">
+                    <div class="naList_li_content">
+                            <img class="naList_li_content_img" src="https://od-imgs.oss-cn-beijing.aliyuncs.com/contact.png" alt="">
+                            <p class="naList_li_content_p">个人中心</p>
+                        
+                    </div>
+                    <a class="naList_li_href" href="personal-order.html"></a>
+                    <p class="naList_li_bottom"></p>
+                    
+                </li>
+            </ul>
+        </div>
+        <div class="navigation"></div>
+    </div>
+    <!-- Swiper JS -->
+    <script src="./js/swiper.min.js"></script>
+    <script src="./js/jquery-1.10.2.js"></script>
+    <!-- 菜单弹出层 -->
+    <!-- 面包屑按钮 -->
+    
+    <!-- Initialize Swiper -->
+    <script>
+       (function() {
+    // alert(document.body.scrollWidth)
+    // $('.vertical_container').ready(function(){
+    //   console.log(111111)
+    // })
+    var inNum = 0;
+//         var swiper = new Swiper('.swiper-container', {
+//     pagination: '.swiper-pagination',
+//     nextButton: '.swiper-button-next',
+//     prevButton: '.swiper-button-prev',
+//     slidesPerView: 1,
+//     paginationClickable: true,
+//     spaceBetween: 30,
+//     loop: true
+// });
+$('.vertical_lable_ul li:nth-child(1)').addClass('vertical_lable_liactive');
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        effect: 'fade',
+        loop: true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+
+    //点击坐标轴跳到对应的下拉坐标
+    var liList = $('.vertical_lable_li');
+    liList.each(function(item, index) {
+        $(index).on('click', function() {
+            $('.vertical_lable_li').removeClass('vertical_lable_liactive');
+            event.stopPropagation();
+            console.log($(this));
+            $(this).addClass('vertical_lable_liactive');
+            // $('.vertical_container').scrollTop(item * 758);
+            if(item == 0){
+                $('.vertical_container').scrollTop(50);
+            }else if(item ==1){
+                $('.vertical_container').scrollTop(758);
+            }else if(item ==2){
+                $('.vertical_container').scrollTop(1163);
+            }else if(item ==3){
+                $('.vertical_container').scrollTop(1514);
+            }
+            // setTimeout(function(){
+            //     $('.vertical_container').scrollTop(item * 758);
+
+            // },1000)
+            // console.log($('.vertical_container').scrollTop())
+        })
+    })
+    $(".swiper-slide-active img").css('animation', 'move 2s');
+    // $('.introduction').css('left', '55%');
+
+    //点击右边的按钮
+    $('.swiper-button-next').on('click', function() {
+        $('.content_all').css('opacity','1');
+        $('.content_all').css('z-index','9');
+
+        setTimeout(function(){
+        $('.content_all').css('z-index','');
+        $('.content_all').css('opacity','0');
+        $(".swiper-slide-active img").css('animation', 'move 2s');
+        
+        },0)
+
+        
+        // $('.introduction').css('left', '65%');
+
+
+        $('.swiper-slide-active img')[0].style.display = 'block';
+        $('.swiper-slide-active .remaining_img').css('display', 'none');
+        $('.vertical_lable_li').removeClass('vertical_lable_liactive');
+        // $('.swiper-slide-active').css("animation","");//上来清空样式
+        $(".vertical_container").css("animation", ""); //上来清空样式
+        $(".swiper-slide img").css('animation', '');
+
+        $('.vertical_top').css('height', 700 + 'px');
+        $('.vertical_pack').css('display', 'none');
+
+
+        setTimeout(function() {
+            setTimeout(function() {
+                // $('.introduction').css('left', '55%');
+                // $(".swiper-wrapper").css('left','-300px');
+                // $('.swiper-slide-active').css("animation","move 1s");
+                $('.vertical_container').scrollTop(50);
+                $('.vertical_top').css('height','100%');
+                $('.vertical_pack').css('display', 'block');
+            }, 700)
+        }, 200)
+        // <!-- 0010  0043  0117  0150  0223  0256  0329  0402  0436  0509  0542  0615  0649  0722  0755  0828  0902  0935  1008  1041 -->
+        // <!-- 1115  1148  1221  1254  1328  1401  1434  1507  1541  1614  1647  1720  1754  1827  1900  1933  2007  2040  -->
+        // <!-- 2113  2146  2219  2253  2326  2359  2433  2505  2538  2611  2645  2718  2750  2824  2857  2930  3004 -->
+        // <!-- 33  34  33   -->
+        // <!-- 33 -->
+        // <!-- 33 -->
+    })
+    //点击左边的按钮
+    $('.swiper-button-prev').on('click', function() {
+        $('.content_all').css('opacity','1');
+        $('.content_all').css('z-index','9');
+
+        setTimeout(function(){
+        $('.content_all').css('z-index','');
+        $('.content_all').css('opacity','0');
+        $(".swiper-slide-active img").css('animation', 'move 2s');
+        
+        },0)
+
+        $('.swiper-slide-active img')[0].style.display = 'block';
+        $('.swiper-slide-active .remaining_img').css('display', 'none');
+        $(".swiper-slide img").css('animation', '');
+        $('.vertical_lable_li').removeClass('vertical_lable_liactive');
+
+
+
+        $(".vertical_container").css("animation", ""); //上来清空样式
+        $('.vertical_top').css('height', 700 + 'px');
+        $('.vertical_pack').css('display', 'none');
+
+        setTimeout(function() {
+            setTimeout(function() {
+                $('.vertical_container').scrollTop(50);
+                // $(".vertical_container").css("animation","move 1s");//最后点击事件加上过度效果
+                $('.vertical_top').css('height', '100%');
+                $('.vertical_pack').css('display', 'block');
+            }, 700)
+            //   $.ajax({
+            //     type : "get",  
+            //     url :'http://192.168.30.68:9080/IdoStudio/queryRecommendArts',
+            // contentType: 'application/json',
+            //     dataType: 'jsonp',
+            //     jsonp: 'callback',
+            //     async : false,
+            //     success : function(data) {
+            //       console.log('左边')
+            //       var dataLen = data.articles;
+            //       // dataLen.forEach(function(item,index){
+            //         // console.log(dataLen.length);
+            //         // console.log(dataLen[inNum])
+            //       console.log(dataLen.length-1)
+            //       // })
+            //     // console.log(dataLen);
+            //     if(inNum <= 0){
+            //       inNum = dataLen.length-1;
+            //     }else{
+            //       inNum--;
+            //     }
+            //     $('.vertical_first_img').attr('src',dataLen[inNum].photoPath);
+            //     console.log(inNum)
+            //     },
+            //     error: function(xhr, status, error) {
+            //         //alert(xhr.responseText);
+            //     }
+            // })
+        }, 200)
+    })
+    // $.ajax({
+    //         type : "get",
+    //         url :'http://192.168.30.68:9080/IdoStudio/queryRecommendArts',
+    //      contentType: 'application/json',
+    //         dataType: 'jsonp',
+    //         jsonp: 'callback',
+    //         async : false,
+    //         success : function(data) {
+    //           var dataLen = data.articles;
+    //           console.log(data)
+    //             console.log(dataLen[0].photoPath)
+    //             $('.vertical_first_img').attr('src',dataLen[inNum].photoPath)
+    //         // inNum++;
+    //         },
+    //         error: function(xhr, status, error) {
+    //             //alert(xhr.responseText);
+    //         }
+    //     })
+    $(document).ready(function() {
+        if ($('.navList').css('left').split('px')[0] < 0) {
+            // 导航按钮部分swiper-button-prev
+            $('.navigation').on('click', function() {
+                $('.odBig_logo').css('display','none');
+                $('.introduction').css('opacity', '0');
+                $('.swiper-button-next').css('opacity', 0);
+                $('.swiper-button-prev').css('opacity', 0);
+
+                $('.vertical_container').css('opacity', 0);
+                $('.vertical_container').css('z-index', '0');
+                if ($('.navList').css('left').split('px')[0] < 0) {//第一次点击
+                    $('.navList').css("left", "0px");
+                    $('.introduction').css('opacity', '0');
+                    $('.introduction').css('z-index', '0');
+                    $('.navigation').css('left', '400px');
+                    $('.navMask').fadeIn();
+                } else { //第二次点击
+                    $('.navList').css("left", "-400px");
+                    setTimeout(function(){
+                        $('.odBig_logo').css('display','block');
+
+                    },200)                    
+                    $('.navMask').fadeOut();
+                    $('.introduction').css('opacity', '1');
+                    $('.navigation').css('left', '0px');
+                    $('.introduction').css('z-index', '1');
+
+                    $('.vertical_container').css('opacity', 1); //中间部分的显示
+                    $('.vertical_container').css('z-index', '3');
+                    
+                    $('.swiper-button-next').css('opacity', 1); //右边的按钮
+                    $('.swiper-button-prev').css('opacity', 1); //右边的按钮
+                }
+            })
+        }
+        $('.navMask').on('click', function() {
+            setTimeout(function(){
+                $('.odBig_logo').css('display','block');
+
+            },200)      
+            
+            $('.introduction').css('opacity', '1');
+
+            $('.vertical_container').css('opacity', 1);
+            $('.vertical_container').css('z-index', '3');
+            
+            $('.swiper-button-next').css('opacity', 1); //右边的按钮
+            $('.swiper-button-prev').css('opacity', 1); //右边的按钮
+
+            $('.navList').css("left", "-400px");
+            $('.navigation').css('left', '0px');
+            $('.introduction').css('z-index', '1');
+            
+            $('.navMask').fadeOut();
+        })
+    });
+    $('.vertical_container').scroll(function(event) {
+        $('.vertical_lable_li').each(function(itee, indd) {
+
+            console.log($('.vertical_container').scrollTop());
+            if ($('.vertical_container').scrollTop() <= 378) {
+                $(".swiper-slide-active img").css('left', '-900px');
+                $(".remaining_img").css('animation', '');
+                $(".swiper-slide-active .remaining_img").css('display', 'none');
+                $(".swiper-slide-active img")[0].style.display = 'block';
+                $('.vertical_lable_li').removeClass('vertical_lable_liactive');
+                $('.vertical_lable_ul').children('li').eq(0).addClass('vertical_lable_liactive');
+                $(".remaining_img").css('left', '0px');
+                console.log(1)
+
+            } else if ($('.vertical_container').scrollTop() >= 378 && $('.vertical_container').scrollTop() <= 757) {
+                $(".remaining_img").css('animation', '');
+                $(".swiper-slide-active .remaining_img").css('display', 'none');
+                // console.log($(".remaining_img")[1]);
+
+
+                $(".swiper-slide-active .remaining_img")[1].style.display = 'none';
+                $(".swiper-slide-active .remaining_img")[2].style.display = 'none';
+                $(".swiper-slide-active .remaining_img")[3].style.display = 'none';
+                
+
+
+                $(".swiper-slide-active .remaining_img")[0].style.display = 'block';
+                $(".swiper-slide-active .remaining_img").css('left', '0px');
+
+
+                $('.vertical_lable_li').removeClass('vertical_lable_liactive');
+                $('.vertical_lable_ul').children('li').eq(0).addClass('vertical_lable_liactive');
+                console.log(2)
+
+            } else if ($('.vertical_container').scrollTop() >= 757 && $('.vertical_container').scrollTop() <= 1135) {
+                $(".remaining_img").css('animation', '');
+            
+
+                $(".swiper-slide-active .remaining_img")[0].style.display = 'none';
+                $(".swiper-slide-active .remaining_img")[2].style.display = 'none';
+                $(".swiper-slide-active .remaining_img")[3].style.display = 'none';
+
+                $(".swiper-slide-active .remaining_img")[1].style.display = 'block';
+                $(".remaining_img").css('left', '0px');
+
+
+                $('.vertical_lable_li').removeClass('vertical_lable_liactive');
+                $('.vertical_lable_ul').children('li').eq(1).addClass('vertical_lable_liactive');
+                console.log(3)
+                
+
+            }else if ($('.vertical_container').scrollTop() >= 1135 && $('.vertical_container').scrollTop() <= 1513) {
+                $(".remaining_img").css('animation', '');
+                
+
+                $(".swiper-slide-active .remaining_img")[1].style.display = 'none';
+                $(".swiper-slide-active .remaining_img")[0].style.display = 'none';
+                $(".swiper-slide-active .remaining_img")[3].style.display = 'none';
+
+
+                $(".swiper-slide-active .remaining_img")[2].style.display = 'block';
+                $(".remaining_img").css('left', '0px');
+
+                $('.vertical_lable_li').removeClass('vertical_lable_liactive');
+                $('.vertical_lable_ul').children('li').eq(2).addClass('vertical_lable_liactive');
+                console.log(4)
+
+            }else if ($('.vertical_container').scrollTop() >= 1513 && $('.vertical_container').scrollTop() <= 1894) {
+                $(".remaining_img").css('animation', '');
+               
+                $(".swiper-slide-active .remaining_img")[1].style.display = 'none';
+                $(".swiper-slide-active .remaining_img")[2].style.display = 'none';
+                $(".swiper-slide-active .remaining_img")[0].style.display = 'none';
+
+
+
+                $(".swiper-slide-active .remaining_img")[3].style.display = 'block';
+                $(".remaining_img").css('left', '0px');
+
+
+                $('.vertical_lable_li').removeClass('vertical_lable_liactive');
+                $('.vertical_lable_ul').children('li').eq(3).addClass('vertical_lable_liactive');
+                console.log(5)
+
+            }
+        })
+
+    });
+
+    
+    $(".oohVideo_mask").trigger("pause");//for auto play
+    $(".oohVideo_mask").addClass('pause');//for check pause or play add a class
+    $('.oohVideo_mask').click(function() {
+        if ($(this).hasClass('pause')) {
+            $("#odVideo").trigger("play");
+            $(this).removeClass('pause');
+            $(this).addClass('play');
+            $("#oohVideo_mask_img").css('display','none');
+            
+        } else {
+            $("#odVideo").trigger("pause");
+            $(this).removeClass('play');
+            $(this).addClass('pause');
+        }
+    });
+
+
+ // 点击弹层播放视频
+ $('.oohVideo_mask').on('click',function(){
+    // 判断测试是播放状态还是暂停状态
+    if($('.oohVideo_mask').hasClass('play')){//播放状态，点击暂停
+        $('.oohVideo_mask').attr('href','#a1');
+        $('.oohVideo_mask').attr('target','');
+        $('.oohVideo_mask').css('opacity','0');
+    }else{
+        $('.oohVideo_mask').css('opacity','0.8');
+    }
+});
+// alert($('.oohVideo_mask').css('height'))
+$('.oohVideo_mask').css('height',$("#odVideo").css('height'));
+// $('##to_pro').on('click',function(){
+//     location.href='promotion.html'
+// })
+
+
+
+
+})()
+    </script>
+</body>
+
+</html>

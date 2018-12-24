@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Ooh Dear 亲子礼品珠宝</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML5抽奖大转盘</title>
+
+<link href="style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="js/awardRotate.js"></script>
+
+<script type="text/javascript">
+var turnplate={
+		restaraunts:[],				//大转盘奖品名称
+		colors:[],					//大转盘奖品区块对应背景颜色
+		outsideRadius:192,			//大转盘外圆的半径
+		textRadius:155,				//大转盘奖品位置距离圆心的距离
+		insideRadius:68,			//大转盘内圆的半径
+		startAngle:0,				//开始角度
+		
+		bRotate:false				//false:停止;ture:旋转
+};
+$(document).ready(function(){
+	//动态添加大转盘的奖品与奖品区域背景颜色
+	turnplate.restaraunts = ["50元代金券","20闪币 ", "30M免费流量包", "100M免费流量包", "2闪币"];
+	turnplate.colors = ["red", "black", "white", "yellow","blue", "#FFFFFF", "#FFF4D6", "#FFFFFF","#FFF4D6", "#FFFFFF"];
+
+	var aa =1;
+	var rotateTimeOut = function (){
+		$('#wheelcanvas').rotate({
+			angle:0,
+			animateTo:2160,
+			duration:8000,
+			callback:function (){
+				alert('网络超时，请检查您的网络设置！');
+			}
+		});
+	};
+//	if(aa != 0){
+//        rotateTimeOut()
+//	}
+
+	//旋转转盘 item:奖品位置; txt：提示语;
+	var rotateFn = function (item, txt){
+	    //item是随机数计算出来中奖的区间
+		//angles是
+	    alert((360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length*2)));
+		var angles = item * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length*2));
+
+		if(angles<270){
+			angles = 270 - angles;
+			alert(555555555)
+		}else{
+			angles = 360 - angles + 270;
+            alert(666666666)
+        }
+		$('#wheelcanvas').stopRotate();
+		$('#wheelcanvas').rotate({
+			angle:0,
+			animateTo:angles+1800,
+			duration:8000,
+			callback:function (){
+				alert(txt);
+				turnplate.bRotate = !turnplate.bRotate;
+			}
+		});
+	};
+
+	$('.pointer').click(function (){
+		if(turnplate.bRotate)return;
+		turnplate.bRotate = !turnplate.bRotate;
+		//获取随机数(奖品个数范围内)
+		var item = rnd(1,turnplate.restaraunts.length);
+		//奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
+		rotateFn(item, turnplate.restaraunts[item-1]);
+		/* switch (item) {
+			case 1:
+				rotateFn(252, turnplate.restaraunts[0]);
+				break;
+			case 2:
+				rotateFn(216, turnplate.restaraunts[1]);
+				break;
+			case 3:
+				rotateFn(180, turnplate.restaraunts[2]);
+				break;
+			case 4:
+				rotateFn(144, turnplate.restaraunts[3]);
+				break;
+			case 5:
+				rotateFn(108, turnplate.restaraunts[4]);
+				break;
+			case 6:
+				rotateFn(72, turnplate.restaraunts[5]);
+				break;
+			case 7:
+				rotateFn(36, turnplate.restaraunts[6]);
+				break;
+			case 8:
+				rotateFn(360, turnplate.restaraunts[7]);
+				break;
+			case 9:
+				rotateFn(324, turnplate.restaraunts[8]);
+				break;
+			case 10:
+				rotateFn(288, turnplate.restaraunts[9]);
+				break;
+		} */
+		console.log(item);
+	});
+});
+
+function rnd(n, m){
+	var random = Math.floor(Math.random()*(m-n+1)+n);
+	return random;
+}
+
+
+//页面所有元素加载完毕后执行drawRouletteWheel()方法对转盘进行渲染
+window.onload=function(){
+	drawRouletteWheel();
+};
+
+function drawRouletteWheel() {    
+  var canvas = document.getElementById("wheelcanvas");    
+  if (canvas.getContext) {
+	  //根据奖品个数计算圆周角度
+	  var arc = Math.PI / (turnplate.restaraunts.length/2);
+	  var ctx = canvas.getContext("2d");
+	  //在给定矩形内清空一个矩形
+	  ctx.clearRect(0,0,422,422);
+	  //strokeStyle 属性设置或返回用于笔触的颜色、渐变或模式  
+	  ctx.strokeStyle = "#FFBE04";
+	  //font 属性设置或返回画布上文本内容的当前字体属性
+	  ctx.font = '16px Microsoft YaHei';      
+	  for(var i = 0; i < turnplate.restaraunts.length; i++) {       
+		  var angle = turnplate.startAngle + i * arc;
+		  ctx.fillStyle = turnplate.colors[i];
+		  ctx.beginPath();
+		  //arc(x,y,r,起始角,结束角,绘制方向) 方法创建弧/曲线（用于创建圆或部分圆）    
+		  ctx.arc(211, 211, turnplate.outsideRadius, angle, angle + arc, false);    
+		  ctx.arc(211, 211, turnplate.insideRadius, angle + arc, angle, true);
+		  ctx.stroke();  
+		  ctx.fill();
+		  //锁画布(为了保存之前的画布状态)
+		  ctx.save();   
+		  
+		  //----绘制奖品开始----
+		  ctx.fillStyle = "#E5302F";
+		  var text = turnplate.restaraunts[i];
+		  var line_height = 17;
+		  //translate方法重新映射画布上的 (0,0) 位置
+		  ctx.translate(211 + Math.cos(angle + arc / 2) * turnplate.textRadius, 211 + Math.sin(angle + arc / 2) * turnplate.textRadius);
+		  
+		  //rotate方法旋转当前的绘图
+		  ctx.rotate(angle + arc / 2 + Math.PI / 2);
+		  
+		  /** 下面代码根据奖品类型、奖品名称长度渲染不同效果，如字体、颜色、图片效果。(具体根据实际情况改变) **/
+		  if(text.indexOf("M")>0){//流量包
+			  var texts = text.split("M");
+			  for(var j = 0; j<texts.length; j++){
+				  ctx.font = j == 0?'bold 20px Microsoft YaHei':'16px Microsoft YaHei';
+				  if(j == 0){
+					  ctx.fillText(texts[j]+"M", -ctx.measureText(texts[j]+"M").width / 2, j * line_height);
+				  }else{
+					  ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+				  }
+			  }
+		  }else if(text.indexOf("M") == -1 && text.length>6){//奖品名称长度超过一定范围 
+			  text = text.substring(0,6)+"||"+text.substring(6);
+			  var texts = text.split("||");
+			  for(var j = 0; j<texts.length; j++){
+				  ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+			  }
+		  }else{
+			  //在画布上绘制填色的文本。文本的默认颜色是黑色
+			  //measureText()方法返回包含一个对象，该对象包含以像素计的指定字体宽度
+			  ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+		  }
+		  //添加对应图标
+		  if(text.indexOf("闪币")>0){
+			  var img= document.getElementById("shan-img");
+			  img.onload=function(){  
+				  ctx.drawImage(img,-15,10);      
+			  }; 
+			  ctx.drawImage(img,-15,10);  
+		  }else if(text.indexOf("谢谢参与")>=0){
+			  var img= document.getElementById("sorry-img");
+			  img.onload=function(){  
+				  ctx.drawImage(img,-15,10);      
+			  };  
+			  ctx.drawImage(img,-15,10);  
+		  }
+		  //把当前画布返回（调整）到上一个save()状态之前 
+		  ctx.restore();
+		  //----绘制奖品结束----
+	  }     
+  } 
+}
+
+</script>
+</head>
+<body style="background:#e62d2d;overflow-x:hidden;">
+<!--1.a英雄跑右下角接任务记得前4个任务都接了 开始跑去送信
+b助手飞去杂货店买狼而后丢到巨魔那 再传送给英雄，英雄送信中途召出来跑到这去等怪来《当然还具有个仓库能用》
+2.基本等怪打到英雄召唤的狼时你信也送到了 助手过去买了除狼以外的召唤吧，合出毁灭而后丢到去卡怪《..别忘了仓库和英雄都能重新召唤出毁灭用这2个去打小巨魔做任务吧》PS：记得输：-m自动捡起地上的钱
+-b自动捡起地上的书《这个指令适用单人》.....
+3.送2-3次信 基本你那个接的小巨魔任务也完成了这个时候交了任务 估计你也有20来w了 停怪 动作快的话应该还具有50多秒，慢的也有30级秒
+4.停怪期间 就注意下毁灭就行了，记得让3个毁灭一直刷小巨魔，你就送信 如此 《当然中途买双鞋子升级给英雄吧》速度飞快很多 基本停怪还具有1分钟时你10趟信也送完了 拿了次神器《人送信，宝宝停怪期间能抓50条鱼，刚好够你换一个散件的》将鱼给英雄，等顺路去打亡灵首领时..
+5.拿了次神器就进刷钱房吧，开始刷等级喽 这里记住 从第3波开始，卡怪要将毁灭放在水沟上的实地了 不然会被远程的秒 基本2波你就去清一次吧.《.记得买几个农民，这里可能会漏几个怪，有了农民就放心吧》
+6.等到第5波时估计你的英雄也快50级了吧《记住，第5波后期和6波时是不能卡的》 这个时候50级到了就去刷完5次镜像《记得买个复活，放然你rp坚挺前期就出了冥当我没说》而后清怪
+7.清完之后顺手过去将这个亡灵首领清了吧，而后去交任务《.当然，这里交任务是在路过的那个袄尔京处》而后去打融合宝石《复活》..《这个时候记住 第6波出来时会来次偷袭，坚挺住吧.一个技能就能搞定》
+8.打完了融合 合到衣服就去 欺负下王冠《..也记得买个复活 不然就是你被欺负了》出了王冠就继续刷钱吧《rp不好的只能再刷累点吧..阿门》
+9.等第7波出来了，丢一个毁灭卡怪，记得会漏几个怪，我们牺牲下时间吧，去看家下吧。当然你也能直接清了 这个时候boss也出来捣乱了，你要是有信心就去单挑吧。记得停怪这波《没信心的就让毁灭一直卡在那吧 当然停怪期间你自己多注意了》
+10.接下来 刷会等级就跑去 打下升级宝石吧 就在基地下方的挑战第一排最后个《..这里作者简单了难度 第一次打的领主 都是难度极低的，基本你都能一下秒》基本跑一圈将小的都清了够你衣服升级满了.《记得在这波停怪时会出一次偷袭，及其无耻的》费点心思吧
+11.衣服满了就回去刷怪吧 第8.9波时最好宝宝给自己带个反魔圈..当然有冥的就不需要了 实在没有，去雕像换吧 这个时候候你也应该有120多功勋了能换二次 对了，顺手将boss虐了吧《这里你要是想出武器也行，刷人头时轻松点 武器升级到4级就够了》
+12.就这么清到11波的数人时注意了..那波树人带毒，不论你多少血，基本都是2秒空血3秒死，自己注意下跑位 用技能打吧 《这波树人能卡一下用毁灭，不过会漏几个，自己注意下吧》
+13.基本 清到13波，boss又出来捣乱的..注意下吧，这波boss必杀几率超高，一出就秒，人跑去先拖着boss跑吧，将小怪都清了，而后拉到水沟那用毁灭卡住吧 《记得停怪》《要是有多余的木头买下等级吧，还可以刷下50被镜像》
+14..到这里就分叉了，看你喜欢先刷到10级皇冠还是先出衣服了 要是想出衣服，先去挑战七彩boss吧 记得带上冥合反弹 开始用死亡堆砌七彩吧，阿门..
+15.等衣服出了 就去将卡位的boss清了吧 当然也是用死亡堆砌出来的 而后继续努力奋斗10级皇冠，如此
+16.估计等你到了17 18波时也该差不多10级皇冠了吧 人也估计能150级了 去将镜像挑战了吧 而后继续去死亡堆砌7彩..《对了，这里你应该有100功勋200多的木头吧，记得用宝宝买个单晕的技能》 《有空将2转3转打了，当然也是靠死亡反弹堆》
+17.等到20波蜘蛛时，用毁灭卡下吧..而后等boss出来了，宝宝用技能去晕下恶魔，你就休息吧 清清怪，打打5行《..打5行这里有个小技巧》 要是没木头了 .闪烁到恶魔那用个技能送他上路吧《.记得停怪》
+18.等打够了混沌之力 和混元 就先去将恶魔分身磨死..合个泣血. 而后将带上，开始去磨悲剧的麒麟吧...
+19.边看家边磨 麒麟，对了，人物的分身记得让他去刷木头..估计着到了25波麒麟 也差不多能磨死了 这里要注意了，25波的加强龙是个变态的... 你靠宝宝吃药前面的都能需要..等加强龙出来了记得先开个无敌而后用3转技能先给他们丢一个 能打死几个是几个 等龙快飞到老家时 给老家来个无敌，这样加强龙就直接又会回到出发点再回来，基本你再吃个无敌追着那几个龙打 3转技能不要命的丢吧，阿门，这波就能搞定了..
+20..搞定了龙就没啥难度了 26波石头人，记得卡怪就是了. 等boss骑士出来了，宝宝飞上去用下技能也不论用了，你继续清 你的麒麟吧，等打死了，继续努力将青龙也解决了吧 等解决了青龙 赶紧的，合个青龙铠而后再将弄件白衣服升到顶级穿上 估计你当前的装备是青龙铠 白衣服顶级 混沌 混天 梦魔外加皇冠 10来W属性吧《功勋也有4.500了吧？要是你提前换了当我没说..》能换个停怪就停，不能就换属性吧
+21基本有了这套装备你顶到29波没问题了 至于最后波龙，没办法，靠闪吧 拖着打吧，阿门....记得引了怪就闪到属性房 要是实在撑不住了，老家用个无敌，也能顶段时间 等待最终boss来，努力去秒他吧阿门....秒了他你就成神了，安息吧！！！！-->
+    <img src="images/1.png" id="shan-img" style="display:none;"/>
+    <img src="images/2.png" id="sorry-img" style="display:none;"/>
+	<div class="banner">
+		<div class="turnplate" style="background-image:url(images/turnplate-bg.png);background-size:100% 100%;">
+			<canvas class="item" id="wheelcanvas" width="422px" height="422px"></canvas>
+			<img class="pointer" src="images/turnplate-pointer.png"/>
+		</div>
+	</div>
+
+	<div style="display:none">
+	<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F6f798e51a1cd93937ee8293eece39b1a' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_5718743'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/stat.php%3Fid%3D5718743%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));</script>
+	</div>
+</body>
+</html>

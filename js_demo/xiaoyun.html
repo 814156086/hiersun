@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>title</title>
+   
+</head>
+<body>
+
+</body>
+<script src=""></script>
+<script>
+    function Foo() {
+        getName = function () {
+            alert(1);
+        }
+        return this;
+    }
+    Foo.getName = function () {
+        alert(2)
+    }
+    Foo.prototype.getName = function () {
+        alert(3)
+    }
+    var getName = function () {
+        alert(4)
+    }
+    function getName() {
+        alert(5)
+    }
+
+    http://localhost/lotteryIn.html?luicode=10000011&lfid=1076033208261557&ep=G8ouYm8Vh%252C3208261557%252CG8ouYm8Vh%252C3208261557
+    https://weibo.cn/sinaurl/blockedc1796d13?luicode=10000011&lfid=1076033208261557&u=%5C%27http%2F%2F%3Awww.baidu.com%5C%27&ep=G8owKj1fa%252C3208261557%252CG8owKj1fa%252C3208261557
+//
+//    Foo.getName();//2
+//    getName();//4
+//    Foo().getName();//1
+//    getName();//1
+//    new Foo.getName();//2
+//    new Foo().getName();//3
+//    new new Foo().getName();//3
+
+
+
+//    function check() {
+//        console.log(11111111111)
+//    }
+//
+//    console.log(parseInt("X8X8")+parseFloat('8'));
+//    setTimeout(check,10)
+
+        coverString();
+
+        function  coverString(subStr,str){
+        alert()
+            var reg = eval("/"+subStr+"/ig");
+            return reg.test(str);
+            console.log(str)
+        }
+</script>
+</html>

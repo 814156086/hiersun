@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0px;
+
+        }
+        #box1ul{
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<select id="selecttest">
+    <option value ="Volvo">Volvo</option>
+    <option value ="saab">Saab</option>
+    <option value="opel">Opel</option>
+    <option value="audi">Aud</option>
+</select>
+<div class="box1">
+    <ul id="box1ul">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+
+</body>
+<script src="../jquery-1.7.1.min.js"></script>
+<script>
+    var aaa = $('#selecttest').val();
+    $('#selecttest').on('click',function () {
+        alert(aaa)
+    })
+</script>
+</html>

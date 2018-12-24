@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3a180225-194c-41fc-8359-314b50517c5e" name="Default" comment="" />
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/原生JS实现简洁的时间日期控件代码/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="178">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="9" selection-end-column="9" />
+              <folding>
+                <marker date="1502789511866" expanded="true" signature="714:745" ph="..." />
+                <marker date="1502789511866" expanded="true" signature="1521:1542" ph="..." />
+                <marker date="1502789511866" expanded="true" signature="1865:1869" ph="&lt;" />
+                <marker date="1502789511866" expanded="true" signature="1869:1873" ph="&lt;" />
+                <marker date="1502789511866" expanded="true" signature="1948:1952" ph="&lt;" />
+                <marker date="1502789511866" expanded="true" signature="2139:2143" ph="&gt;" />
+                <marker date="1502789511866" expanded="true" signature="2217:2221" ph="&gt;" />
+                <marker date="1502789511866" expanded="true" signature="2221:2225" ph="&gt;" />
+                <marker date="1502789511866" expanded="true" signature="2779:2783" ph="&lt;" />
+                <marker date="1502789511866" expanded="true" signature="2783:2787" ph="&lt;" />
+                <marker date="1502789511866" expanded="true" signature="2849:2853" ph="&lt;" />
+                <marker date="1502789511866" expanded="true" signature="3060:3064" ph="&gt;" />
+                <marker date="1502789511866" expanded="true" signature="3112:3116" ph="&gt;" />
+                <marker date="1502789511866" expanded="true" signature="3116:3120" ph="&gt;" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="datetime.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/原生JS实现简洁的时间日期控件代码/datetime.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="495">
+              <caret line="357" column="4" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="357" selection-end-column="4" />
+              <folding>
+                <marker date="1423726670643" expanded="true" signature="245:276" ph="..." />
+                <marker date="1423726670643" expanded="true" signature="1017:1038" ph="..." />
+                <marker date="1423726670643" expanded="true" signature="1338:1342" ph="&lt;" />
+                <marker date="1423726670643" expanded="true" signature="1342:1346" ph="&lt;" />
+                <marker date="1423726670643" expanded="true" signature="1413:1417" ph="&lt;" />
+                <marker date="1423726670643" expanded="true" signature="1588:1592" ph="&gt;" />
+                <marker date="1423726670643" expanded="true" signature="1658:1662" ph="&gt;" />
+                <marker date="1423726670643" expanded="true" signature="1662:1666" ph="&gt;" />
+                <marker date="1423726670643" expanded="true" signature="2180:2184" ph="&lt;" />
+                <marker date="1423726670643" expanded="true" signature="2184:2188" ph="&lt;" />
+                <marker date="1423726670643" expanded="true" signature="2242:2246" ph="&lt;" />
+                <marker date="1423726670643" expanded="true" signature="2437:2441" ph="&gt;" />
+                <marker date="1423726670643" expanded="true" signature="2489:2493" ph="&gt;" />
+                <marker date="1423726670643" expanded="true" signature="2493:2497" ph="&gt;" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/原生JS实现简洁的时间日期控件代码/index.html" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>false</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>false</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="2" type="462c0819:PsiDirectoryNode" />
+              <item name="原生JS实现简洁的时间日期控件代码" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../3/原生JS实现简洁的时间日期控件代码" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3a180225-194c-41fc-8359-314b50517c5e" name="Default" comment="" />
+      <created>1502787992457</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1502787992457</updated>
+      <workItem from="1502787993752" duration="689000" />
+      <workItem from="1502788767907" duration="1324000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="2013000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21292776" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/原生JS实现简洁的时间日期控件代码/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1502789511866" expanded="true" signature="714:745" ph="..." />
+            <marker date="1502789511866" expanded="true" signature="1521:1542" ph="..." />
+            <marker date="1502789511866" expanded="true" signature="1865:1869" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="1869:1873" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="1948:1952" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="2139:2143" ph="&gt;" />
+            <marker date="1502789511866" expanded="true" signature="2217:2221" ph="&gt;" />
+            <marker date="1502789511866" expanded="true" signature="2221:2225" ph="&gt;" />
+            <marker date="1502789511866" expanded="true" signature="2779:2783" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="2783:2787" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="2849:2853" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="3060:3064" ph="&gt;" />
+            <marker date="1502789511866" expanded="true" signature="3112:3116" ph="&gt;" />
+            <marker date="1502789511866" expanded="true" signature="3116:3120" ph="&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/原生JS实现简洁的时间日期控件代码/下载更多免费素材.url">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/原生JS实现简洁的时间日期控件代码/datetime.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1423726670643" expanded="true" signature="245:276" ph="..." />
+            <marker date="1423726670643" expanded="true" signature="1017:1038" ph="..." />
+            <marker date="1423726670643" expanded="true" signature="1338:1342" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="1342:1346" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="1413:1417" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="1588:1592" ph="&gt;" />
+            <marker date="1423726670643" expanded="true" signature="1658:1662" ph="&gt;" />
+            <marker date="1423726670643" expanded="true" signature="1662:1666" ph="&gt;" />
+            <marker date="1423726670643" expanded="true" signature="2180:2184" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="2184:2188" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="2242:2246" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="2437:2441" ph="&gt;" />
+            <marker date="1423726670643" expanded="true" signature="2489:2493" ph="&gt;" />
+            <marker date="1423726670643" expanded="true" signature="2493:2497" ph="&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/原生JS实现简洁的时间日期控件代码/下载更多免费素材.url">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/原生JS实现简洁的时间日期控件代码/datetime.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="357" column="4" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="357" selection-end-column="4" />
+          <folding>
+            <marker date="1423726670643" expanded="true" signature="245:276" ph="..." />
+            <marker date="1423726670643" expanded="true" signature="1017:1038" ph="..." />
+            <marker date="1423726670643" expanded="true" signature="1338:1342" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="1342:1346" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="1413:1417" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="1588:1592" ph="&gt;" />
+            <marker date="1423726670643" expanded="true" signature="1658:1662" ph="&gt;" />
+            <marker date="1423726670643" expanded="true" signature="1662:1666" ph="&gt;" />
+            <marker date="1423726670643" expanded="true" signature="2180:2184" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="2184:2188" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="2242:2246" ph="&lt;" />
+            <marker date="1423726670643" expanded="true" signature="2437:2441" ph="&gt;" />
+            <marker date="1423726670643" expanded="true" signature="2489:2493" ph="&gt;" />
+            <marker date="1423726670643" expanded="true" signature="2493:2497" ph="&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/原生JS实现简洁的时间日期控件代码/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="9" selection-end-column="9" />
+          <folding>
+            <marker date="1502789511866" expanded="true" signature="714:745" ph="..." />
+            <marker date="1502789511866" expanded="true" signature="1521:1542" ph="..." />
+            <marker date="1502789511866" expanded="true" signature="1865:1869" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="1869:1873" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="1948:1952" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="2139:2143" ph="&gt;" />
+            <marker date="1502789511866" expanded="true" signature="2217:2221" ph="&gt;" />
+            <marker date="1502789511866" expanded="true" signature="2221:2225" ph="&gt;" />
+            <marker date="1502789511866" expanded="true" signature="2779:2783" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="2783:2787" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="2849:2853" ph="&lt;" />
+            <marker date="1502789511866" expanded="true" signature="3060:3064" ph="&gt;" />
+            <marker date="1502789511866" expanded="true" signature="3112:3116" ph="&gt;" />
+            <marker date="1502789511866" expanded="true" signature="3116:3120" ph="&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

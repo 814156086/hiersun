@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    * {margin: 0;padding: 0}
+    #wrap {width: 600px;height: 600px;background: #ccc; margin: 0 auto;position: relative;perspective:800px;}
+    #box {box-shadow: 10px 10px 5px #888888;margin-top: 100px; position: absolute;left: 100px;width: 400px;height: 400px;transform-style:preserve-3d; transform-origin: right center;}
+    #box p {display: block;width: 100%;height: 100%;position: absolute;left: 0;top: 0;font-size: 28px; backface-visibility: hidden;color: #fff}
+    .box_p1 {background: blue;transition:.8s transform}
+    .box_p2 {background: red;transform:rotateY(-180deg);transition:.8s transform}
+	.box_p3 {background: black;transform:rotateY(180deg);transition:.8s transform}
+    /* #box:hover a:nth-of-type(1) {transform:rotateY(180deg);}
+    #box:hover a:nth-of-type(2) {transform:rotateY(0deg);} */
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="box">
+            <p class="box_p1" href="#" id="one">1世界那么大</p>
+            <p class="box_p2" href="#" id="two">2我想去看看</p>
+			<p class="box_p3" href="#" id="two">3可惜没人陪着我</p>
+        </div>
+    </div>
+</body>
+<script src="./js/jquery-1.10.2.js"></script>
+<script>
+  
+    $('.box_p1').on('click',function(){
+        $('.box_p1').css('transform','rotateY(180deg)');
+        $('.box_p2').css('transform','rotateY(0deg)');
+        
+    })
+    $('.box_p2').on('click',function(){
+    
+        $('.box_p2').css('transform','rotateY(-180deg)');
+		$('.box_p3').css('transform','rotateY(0deg)');
+    })
+	$('.box_p3').on('click',function(){
+      
+        $('.box_p1').css('transform','rotateY(0deg)');
+		$('.box_p3').css('transform','rotateY(-180deg)');
+    })
+</script>
+</html>

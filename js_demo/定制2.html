@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ooh Dear 亲子礼品珠宝</title>
+    <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+
+    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/alertPopShow.js"></script>
+    <script type="text/javascript" src="js/setFont.js"></script>
+    <link rel="stylesheet" href="css/alert.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/personal.css">
+</head>
+<body>
+<div class="wrap">
+    <div class="header">
+        <!-- <a href="#"></a> -->
+        <!-- <em></em> -->
+        <img src="./imgs/goods1.png"/>
+        <p>用户名</p>
+        <p>手机号</p>
+    </div>
+    <ul class="nav">
+        <li>
+            <span>0</span>
+            <span>积分</span>
+            <a href="#"></a>
+        </li>
+        <li>
+            <span>0</span>
+            <span>卡券</span>
+            <a href="#"></a>
+        </li>
+        <li>
+            <span>0</span>
+            <span>订单</span>
+            <a href="http://www.oohdear.com/"></a>
+        </li>
+        <li>
+            <span></span>
+            <span>签到</span>
+            <a href="integration.html"></a>
+        </li>
+    </ul>
+    <div class="content">
+        <ul>
+            <li>
+                <p>官方商城</p>
+                <em></em>
+                <a href="index.html"></a>
+            </li>
+            <!-- <li>
+                <p>积分兑换</p>
+                <em></em>
+                <a href="my-custom.html"></a>
+            </li> -->
+            <li>
+                <p>个人信息</p>
+                <em></em>
+                <a href="info.html"></a>
+            </li>
+            <li>
+                <p>会员权益</p>
+                <em></em>
+                <a href="personal/menberRights.jsp"></a>
+            </li>
+            <li>
+                <p>邀请有礼</p>
+                <em></em>
+                <a class="shareyq"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<script>
+    //import apiUrl from '../build/js/config';
+    //$('.content li:nth-child(4)').on('click',function () {
+    //    alert(1111)
+    //    $.ajax({
+    //        type: 'post',
+    //        headers: signName(md5, vipNo, token),
+    //        url: apiUrl + '/wxlogin',
+    //        success: function (data) {
+    //            alert(221212)
+    //            console.log(data)
+    //        },
+    //        error: function (err) {
+    //            alert(3333)
+    //            console.log(err);
+    //        },
+    //    });
+    //    alert(4444)
+    //})
+</script>
+</html>
+
+if (!vipNo) {//未登录
+// 如果满足条件就直接登陆进去
+(function () {
+$.ajax({
+type: 'post',
+url: apiUrl + '/login',
+data: {
+// mobile: mobile,
+// type: type
+},
+success: function (data) {
+if (data.head.code) {
+var vipNo = data.body.memberNo;
+setSto("token", data.body.token);
+setSto("vipNo", vipNo);
+setSto("nickname", data.body.nickName);
+var tab = GetQueryString('tab');
+if (tab == 'perinfo') {
+location.href = 'info.html';
+} else if (tab == 'order') {
+location.href = 'my-order-all-order.html';
+}
+}
+
+
+},
+error: function (err) {
+console.log(err);
+}
+});
+
+})();
+
+}
+<a href="my-card.html?from=user-center"></a>

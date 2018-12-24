@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>各行添加样式</title>
+    <style type="text/css">
+        p{font:400 20px/30px "微软雅黑";background-color: red;display: inline;}
+    </style>
+    <script type="text/javascript">
+        function addBrTag(){
+            if(!document.getElementsByTagName) return false;   //这句有毛意义呢？
+            var p_tag=document.getElementsByTagName("p");
+
+
+
+            for(var i=0;i<p_tag.length;i++){
+                var create_br=document.createElement("br");        //根据你的业务逻辑 你是每个p加一个br
+                p_tag[i].parentNode.insertBefore(create_br,p_tag[i]);
+
+                alert(i);
+
+            }
+
+        }
+    </script>
+
+
+</head>
+<body>
+<div id="demo"></div>
+<p>1.我是个好人。</p>
+<p>2.卧槽这你也信。</p>
+<p>3.你这么还不是好人。</p>
+<p >4.我做了什么事好人。</p>
+<p>5.比我还穷，居然信我把钱都给我，还不是好人。</p>
+<p>6.这只能说你骗术很高我被骗了。</p>
+<p>7.不是，不是这个原因，是你快饿死了。</p>
+<p>8.表示不懂？请解释。</p>
+<p>9.老实和好人都不会活得很长，死的快。</p>
+<p>10.你错了，老实人和好人是因为最笨迂腐而饿死的。</p>
+<p>11.那你属于哪一种。</p>
+<p>12.我哪一种都不是，我是脑子反应慢。</p>
+<p>13.那你岂不是快要饿死了。</p>
+<p>14.是的，快要饿死了。</p>
+
+</body>
+<script>
+    addBrTag();
+</script>
+</html>

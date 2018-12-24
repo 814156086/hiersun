@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>导航测试</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style type="text/css">
+    body,ul,li,img{
+        margin: 0;
+        padding: 0;
+    }
+
+    ul{list-style: none;}
+
+    .tab_header{
+        width: 100%;
+        height: 44px;
+        background-color: crimson;
+    }
+
+    .tab_header span{
+        height: 44px;
+        line-height: 44px;
+        margin-left: 2%;
+        color: white;
+        font-size: 12px;
+    }
+
+    .tab_header span.right{
+        float: right;
+        margin-right: 2%;
+    }
+    .tab_nav {
+        margin-top: 8px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #F8F8F8;
+    }
+
+    .tab_nav ul li{
+
+        display: inline-block;
+        width: 16%;
+        text-align: center;
+    }
+
+
+    .tab_menu{
+
+        width: 20%;
+        float: left;
+    }
+
+    .tab_menu ul li{
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        border-bottom: 1px solid #F8F8F8;
+        font-size: 12px;
+
+    }
+    .tab_menu ul li:last-child
+    {
+        border-bottom:none;
+    }
+
+    .tab_content{
+
+        width: 76%;
+        display: inline-block;
+        float: left;
+        height: 100%;
+        padding-left: 2%;
+        border-left: 1px solid #CCCCCC;
+    }
+
+
+    .selected{
+        color: red;
+    }
+
+    .content_left{
+        display: inline-block;
+        width:22%;
+        padding-top: 2%;
+    }
+
+    .content_right{
+        display: inline-block;
+        width:70%;
+        margin-left: 3%;
+        border-bottom: 1px solid #CCCCCC;
+    }
+
+    .content_right p{
+
+        font-size:6px;
+        padding:0;
+        margin:5px 0px;
+        color:#333333;
+    }
+
+    .content_right p span{
+        width: 50%;
+        display: inline-block;
+        color:#333333;
+
+    }
+
+    .content_right  .total{
+        width: 30%;
+        color: cornflowerblue;
+    }
+    .content_right  .jindu{
+        width: 60%;
+        color: cornflowerblue;
+    }
+
+    .content_right .progress{
+        background-color: yellow;
+        width: 90%;
+        height: 2px;
+        position: relative;
+    }
+    .content_right  .progressBar{
+
+        background-color: red;
+        width: 80%;
+        height: 2px;
+        padding: 0px;
+        margin: 0px;
+        position: absolute;
+    }
+
+
+
+</style>
+<body>
+
+<div class="tab_header">
+    <span>一元玩法</span>
+    <span class="right">购物车</span>
+</div>
+<div class="tab_nav">
+    <ul>
+        <li>最热</li>
+        <li>最快</li>
+        <li>最新</li>
+        <li>价格↑</li>
+        <li>价格↓</li>
+    </ul>
+</div>
+<!--导航菜单内容-->
+<div class="tab_menu">
+    <ul>
+        <li class="selected">全部分类</li>
+        <li>汽车摩托</li>
+        <li>手机数码</li>
+        <li>电脑办公</li>
+        <li>钟表首饰</li>
+        <li>家电家用</li>
+        <li>化妆个护</li>
+        <li>美食饮料</li>
+        <li>虚拟商品</li>
+        <li>其他</li>
+    </ul>
+</div>
+
+<!--展示内容渲染列项-->
+<div class="tab_content">
+    <div class="tab_item">
+        <div class="content_left">
+            <img src="http://img13.360buyimg.com/n5/s54x54_jfs/t292/14/1005385568/209475/53b8cd7f/542d0773Nb794f465.jpg"  width="70" height="70"/>
+        </div>
+        <div class="content_right">
+            <p class="title">第1期苹果iphone 6 4.7寸 64G </p>
+            <p><span class="total">5488元</span> <span class="jindu">揭晓进度72%</span></p>
+            <p class="progress"><span class="progressBar"></span></p>
+            <p><span>3926</span><span>1552</span></p>
+            <p><span>已参与</span><span>剩余</span></p>
+        </div>
+    </div>
+
+    <div class="tab_item">
+        <div class="content_left">
+            <img src="http://img11.360buyimg.com/n5/jfs/t2605/80/1325468232/457943/6a3e71d5/573aec3eN482fd34f.jpg"  width="70" height="70"/>
+        </div>
+        <div class="content_right">
+            <p>第15期港荣蒸奶香蛋糕整箱1kg </p>
+            <p><span class="total">49元</span> <span class="jindu">揭晓进度53%</span></p>
+            <p class="progress"><span class="progressBar"></span></p>
+            <p><span>26</span><span>23</span></p>
+            <p><span>已参与</span><span>剩余</span></p>
+        </div>
+    </div>
+
+    <div class="tab_item">
+        <div class="content_left">
+            <img src="http://img12.360buyimg.com/n5/jfs/t2194/251/2597042450/396964/c70e92f8/570bb76cN443fd448.jpg"  width="70" height="70"/>
+        </div>
+        <div class="content_right">
+            <p>第10期三只松鼠葡萄1包 </p>
+            <p><span class="total">20元</span> <span class="jindu">揭晓进度43%</span></p>
+            <p class="progress"><span class="progressBar"></span></p>
+            <p><span>10</span><span>12</span></p>
+            <p><span>已参与</span><span>剩余</span></p>
+        </div>
+    </div>
+    <div class="tab_item">
+        <div class="content_left">
+            <img src="http://img12.360buyimg.com/n5/jfs/t2047/170/850036326/120755/921ea52c/562e0717N55e0b8e0.jpg"  width="70" height="70"/>
+        </div>
+        <div class="content_right">
+            <p>第5期苹果ipad air2 </p>
+            <p><span class="total">3200元</span> <span class="jindu">揭晓进度83%</span></p>
+            <p class="progress"><span class="progressBar"></span></p>
+            <p><span>300</span><span>80</span></p>
+            <p><span>已参与</span><span>剩余</span></p>
+        </div>
+    </div>
+    <div class="tab_item">
+        <div class="content_left">
+            <img src="http://img14.360buyimg.com/n5/jfs/t2284/25/1287004071/48631/54571266/564c67c7N1b5f4a25.jpg"  width="70" height="70"/>
+        </div>
+        <div class="content_right">
+            <p>第2期飞利全新浦台灯1台 </p>
+            <p><span class="total">99元</span> <span class="jindu">揭晓进度23%</span></p>
+            <p class="progress"><span class="progressBar"></span></p>
+            <p><span>10</span><span>10</span></p>
+            <p><span>已参与</span><span>剩余</span></p>
+        </div>
+    </div>
+    <div class="tab_item">
+        <div class="content_left">
+            <img src="http://img12.360buyimg.com/n5/jfs/t1174/338/865120803/45181/e564982f/5563cb4cNa42cf32c.jpg"  width="70" height="70"/>
+        </div>
+        <div class="content_right">
+            <p>第20期小米充电宝1个 </p>
+            <p><span class="total">80元</span> <span class="jindu">揭晓进度2%</span></p>
+            <p class="progress"><span class="progressBar"></span></p>
+            <p><span>12</span><span>12</span></p>
+            <p><span>已参与</span><span>剩余</span></p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

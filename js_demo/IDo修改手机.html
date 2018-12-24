@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .wrap {
+            width: 100%;
+            height: 100%;
+        }
+
+        .header {
+
+            line-height: 30px;
+            text-align: center;
+            margin: 0 auto;
+            width: 480px;
+            display: flex;
+        }
+
+        .nav {
+            height: 30px;
+            background-color: #f1f1f1;
+            width: 100%;
+            height: 30px;
+        }
+
+        .box1 {
+            color: #8c7f6f;
+            font-size: 14px;
+            width: 160px;
+            height: 30px;
+            display: inline-block;
+        }
+
+        .box1 span {
+            color: white;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #8c7f6f;
+            text-align: center;
+            line-height: 16px;
+            display: inline-block;
+            margin-right: 35px;
+        }
+
+        .box2 {
+            color: #c0c0c0;
+            font-size: 14px;
+        }
+
+        .box2 span {
+            background-color: #c0c0c0;
+        }
+
+        .box3 {
+            color: #c0c0c0;
+        }
+
+        .box3 span {
+            font-size: 14px;
+            background-color: #c0c0c0;
+        }
+
+        .content h2 {
+            margin-top: 70px;
+            margin-bottom: 30px;
+            letter-spacing: 12px;
+            color: #978973;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .content .mobileYZ {
+            margin-top: 70px;
+            margin-bottom: 30px;
+            letter-spacing: 12px;
+            color: #978973;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .content .mobileYZ input {
+            height: 41px;
+            text-align: center;
+            border: 1px solid #f4f4f4;
+            outline: none;
+        }
+
+        .content .mobileYZ input::placeholder {
+            color: red;
+            line-height: 42px;
+            letter-spacing: 8px;
+            background-color: whitesmoke;
+        }
+
+        .hk {
+            height: 41px;
+            width: 412px;
+            text-align: center;
+            border: 1px solid #f4f4f4;
+            outline: none;
+            margin: 20px auto;
+            background-color: #f4f4f4;
+            position: relative;
+        }
+
+        .hks{
+            display: inline-block;
+            width: 40px;
+            height: 38px;
+            border: 1px solid #c0c0c0;
+            float: left;
+            background-color: white;
+            position: absolute;
+        }
+
+        .yzm {
+            margin: 20px auto;
+        }
+
+        .yamText{
+            width: 288px;
+            background-color: #f4f4f4;
+        }
+
+        .secondIn{
+            display: inline-block;
+            background-color: #999999;
+            text-align: center;
+            width: 124px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrap">
+    <div class="nav">
+        <div class="header">
+            <div class="box1">
+                <span>1</span>
+                填写账号
+            </div>
+            <div class="box1 box2">
+                <span>2</span>
+                身份验证
+            </div>
+            <div class="box1 box3">
+                <span>3</span>
+                设置密码
+            </div>
+        </div>
+        <!--<div class="btn">-->
+        <!--<button class="btn1">点点点</button>-->
+        <!--</div>-->
+    </div>
+    <div class="content">
+        <h2>致美婚戒典范</h2>
+        <div class="mobileYZ">
+            <input type="text" style="width: 414px" placeholder="请输入手机号">
+            <div id="hk" class="hk">
+                <span id="hks" class="hks"></span>
+            </div>
+            <div class="yzm">
+                <input type="text" class="yamText"><!----><input class="secondIn" type="text" value="获取验证码">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<script src="jquery-1.7.1.min.js"></script>
+<script>
+    var num = 0;
+    $('.btn1').on('click', function () {
+        num++
+        if (num > 1) {
+            $('.box2').css('color', '#8c7f6f');
+            $('.box2 span').css('background', '#8c7f6f');
+
+        }
+        if (num > 4) {
+            $('.box3').css('color', '#8c7f6f');
+            $('.box3 span').css('background', '#8c7f6f');
+        }
+    })
+    window.onload = function() {
+
+        var lineDiv = document.getElementById('hk'); //长线条
+        var minDiv = document.getElementById('hks'); //小方块
+
+//        var lineDiv = $('#hk'); //长线条
+//        var minDiv = $('#hks'); //小方块
+        var msg = document.getElementById("msg");
+        var vals = document.getElementById("vals");
+        var ifBool = false; //判断鼠标是否按下
+        //事件
+        var start = function(e) {
+            e.stopPropagation();
+            ifBool = true;
+            console.log("鼠标按下")
+        }
+        var move = function(e) {
+            console.log("鼠标拖动")
+            if(ifBool) {
+                if(!e.touches) {    //兼容移动端
+                    var x = e.clientX;
+                } else {     //兼容PC端
+                    var x = e.touches[0].pageX;
+                }
+                //var x = e.touches[0].pageX || e.clientX; //鼠标横坐标var x
+                var lineDiv_left = getPosition(lineDiv).left; //长线条的横坐标
+                var minDiv_left = x - lineDiv_left; //小方块相对于父元素（长线条）的left值
+                if(minDiv_left >= lineDiv.offsetWidth - 15) {
+                    minDiv_left = lineDiv.offsetWidth - 15;
+                }
+                if(minDiv_left < 0) {
+                    minDiv_left = 0;
+                }
+                //设置拖动后小方块的left值
+                minDiv.style.left = minDiv_left + "px";
+//                msg.innerText = parseInt((minDiv_left / (lineDiv.offsetWidth - 15)) * 100);
+//                vals.innerText = parseInt((minDiv_left / (lineDiv.offsetWidth - 15)) * 100);
+            }
+        }
+        var end = function(e) {
+            console.log("鼠标弹起");
+            ifBool = false;
+        }
+        //鼠标按下方块
+        minDiv.addEventListener("touchstart", start);
+        minDiv.addEventListener("mousedown", start);
+        //拖动
+        window.addEventListener("touchmove", move);
+        window.addEventListener("mousemove", move);
+        //鼠标松开
+        window.addEventListener("touchend", end);
+        window.addEventListener("mouseup", end);
+        //获取元素的绝对位置
+        function getPosition(node) {
+            var left = node.offsetLeft; //获取元素相对于其父元素的left值var left
+            var top = node.offsetTop;
+            current = node.offsetParent; // 取得元素的offsetParent
+            // 一直循环直到根元素
+
+            while(current != null) {
+                left += current.offsetLeft;
+                top += current.offsetTop;
+                current = current.offsetParent;
+            }
+            return {
+                "left": left,
+                "top": top
+            };
+        }
+    }
+
+</script>
+</html>

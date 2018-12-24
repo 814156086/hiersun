@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .book {
+            width: 100%;
+            height: 800px;
+            position: relative;
+            -webkit-transform-style: preserve-3d;
+            -moz-transform-style: preserve-3d;
+            -ms-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            transform: rotatex(30deg);
+        }
+
+        .page:nth-child(1) {
+            transform: rotatey(-180deg);
+            backface-visibility: hidden;
+        }
+        .page {
+            width: 45%;
+            height: 80%;
+            position: absolute;
+            right: 0;
+            position: absolute;
+            right: 50px;
+            bottom: 0px;
+            transform-origin: left;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            font-size: 60px;
+            text-align: center;
+            background: wheat;
+        }
+        #before {
+            display: inline-block;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            z-index: 12;
+            top:800px;        
+            }
+
+        #after {
+            display: inline-block;
+            position: absolute;
+            top: 800px;
+            left: 50px;;
+        }
+
+        .XLLimg {
+            width: 100%;
+            height: 60%;
+            vertical-align: top;
+        }
+
+        .page span {
+            display: block;
+            width: 100%;
+            position: absolute;
+            background-color: wheat;
+            height: 100%;
+            margin-left: 30px;
+        }
+
+        .page span:nth-child(2) {
+            transform: rotatey(-180deg);
+            backface-visibility: hidden;
+        }
+
+        .pageUl {
+            width: 100%;
+            height: 100%;
+        }
+
+        .pageUl li {
+            color: black;
+            list-style: none;
+            width: 20%;
+            height: 200px;
+            margin-right: 1%;
+            float: left;
+            margin-bottom: 3%;
+        }
+
+        .pageP {
+            display: inline-block;
+            font-size: 10px;
+            vertical-align: top;
+            width: 100%;
+        }
+
+        /*以下两个动画可以只使用第一个，animation中有reverse，可以反向执行动画
+    使用时需要在JS中点击上一页时添加改属性值*/
+
+        /*翻书下一页的动画*/
+
+        @keyframes page {
+            0% {
+                transform: rotatey(0deg);
+            }
+            100% {
+                transform: rotatey(-180deg);
+                z-index: 10;
+            }
+        }
+
+        /*翻书上一页的动画*/
+
+        @keyframes page1 {
+            0% {
+                transform: rotatey(-180deg);
+                z-index: 10;
+            }
+            100% {
+                transform: rotatey(0deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 所展示的书的内容 -->
+    <div class="book">
+
+    </div>
+    <!-- 用来控制上一页和下一页操作 -->
+    <p id="before">上一页</p>
+    <p id="after">下一页</p>
+    <div class="oooo"></div>
+</body>
+<script src="./js/jquery-1.10.2.js"></script>
+<script>
+    $(function() {
+        var before = document.querySelector("#before");
+        var after = document.querySelector("#after");
+        var book = document.querySelector(".book");
+        var page = document.getElementsByClassName("page");
+
+        var middle = 0;
+        var fenyeNum = 1;
+
+        dataRender(1);
+
+        function dataRender(pageNum) {
+            var str = '';
+            var pageSize = 8;
+            $.ajax({
+                type: 'get',
+                url: 'http://www.oohdear.com/pc/home/queryHomeGoodsByPage',
+                data: {
+                    type: 1,
+                    pageNum: pageNum,
+                    pageSize: pageSize
+                },
+                success: function(data) {
+                    $('.pageUl').html('');
+                    // $('.book').html('');
+                
+                    var dataList = data.body.goodsVoList;
+                    var data = data.body;
+                        var str = ``;
+
+                        str = `<div class="page"><span><ul class="pageUl"></ul></span><span></span></div>`;
+                        // str1+=`<div class="page"><span><img class="XLimg" src="./img/sss.jpg" alt=""><p class="pageP">666666</p></span><span>1</span></div>`;
+                        $('.book').append(str);
+                    // 新品推荐
+                 
+                    dataList.forEach(function(iteee, inddd) {
+                     
+                     console.log(22222);
+                     setTimeout(function() {
+                         
+                         var str1 = ``;
+                         str1 += `<li class="pageLi"><img class="XLLimg" src="${iteee.goodsPicture}" alt=""><p class="pageP">${iteee.name}</p></li>`;
+                         // str1+=`<div class="page"><span><img class="XLimg" src="./img/sss.jpg" alt=""><p class="pageP">666666</p></span><span>1</span></div>`;
+
+                         $('.pageUl').append(str1);
+                     }, 0)
+                 })
+                
+
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+
+
+
+        for (var z = 0; z < book.children.length; z++) {
+            page[z].style.zIndex = book.children.length - z;
+        }
+        after.onclick = function() {
+            fenyeNum++;
+            setTimeout(function(){
+                dataRender(fenyeNum);
+
+            },1000)
+            if (middle != book.children.length) {
+                page[middle].style.animation = "page 1s linear 1 forwards";
+                middle++;
+            } else {
+                middle = book.children.length;
+            }
+        };
+        before.onclick = function() {
+            fenyeNum--;
+            setTimeout(function(){
+                dataRender(fenyeNum);
+
+            },800)
+            
+            if (middle != 0) {
+                page[middle - 1].style.animation = "page1 1s linear 1 forwards";
+                middle--;
+            } else {
+                middle = 0;
+            }
+        };
+
+    })
+</script>
+
+</html>

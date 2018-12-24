@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    /*.container input{*/
+        /*width: 18px;*/
+        /*height: 18px;*/
+        /*margin-left: 20px;*/
+        /*margin-top: 50px;*/
+    /*}*/
+</style>
+<body>
+    <input type="radio" name="select4">很好
+    <input type="radio" name="select4">比较好
+    <input type="radio" name="select4">一般
+    <input checked="true" type="radio" name="select4">不怎么样
+    <input type="radio" name="select4">差
+
+
+</body>
+<script>
+    $.ajax({
+        type:'post',
+        headers:signName(md5,vipNo,token),
+        url:apiUrl+'/questionnaire',
+
+        data:{
+            mobile:18510299806,
+            id : id
+        },
+        success:function(data){
+
+            testchecked()
+
+        },
+        error:function(err){
+            console.log(err);
+        }
+    });
+    function testchecked(){
+        var spCodesTemp = ""
+        $('input[name="cheeckk"]:checked').each(function(i){
+            if(0==i){
+                spCodesTemp = $(this).val();
+            }else{
+                spCodesTemp += (","+$(this).val());//选中了前两个，输出的就是0,1(这里的数字根据数据库数据形式可能由不同的输出)
+                // alert(spCodesTemp)
+            }
+        })
+        $("#instructionType").val(spCodesTemp)//这里将选中的id放到一个input text中，并设置隐藏，来方便上传数据
+        // console.log($("#instructionType").val(spCodesTemp))
+        testcheckedbox()
+        function testcheckedbox(){
+            var str = $("#instructionType").val(spCodesTemp);
+            // console.log(str);
+            var strArray = str.split(",",0); //分解成数组，方便后面进行选中
+            var obj = eval('(' + data + ')');
+            console.log(strArray)
+            for(var i=0;i<strArray.length;i++)
+            {
+                var ii = strArray[i];
+                alert($('input:checkbox').eq(ii).attr('checked', 'true'));//选中指定的复选框
+            }
+        }
+    }
+</script>
+</html>

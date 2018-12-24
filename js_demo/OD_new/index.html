@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>oohdear 改版新页面</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="./css/swiper.min.css">
+
+  <!-- Demo styles -->
+  <style>
+    html, body {
+      position: relative;
+      height: 100%;
+    }
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color:#000;
+      margin: 0;
+      padding: 0;
+    }
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+
+/* <!-- /////////////////////////////////////////////////////////中间纵滑部分//////////////////////////////////////////////////////////// --> */
+    .swiper img{
+      width: 100%;
+      height: 100%;
+    }
+    .vertical_container{
+      width: 80%;
+      height: 80%;
+      margin: auto;
+      position: absolute;
+      top: 10%;
+      z-index: 999;
+      overflow-y: scroll;
+      padding-left: 10%;
+      padding-right: 10%
+    }
+
+    .vertical_pack{
+      width: 100%;
+    }
+    .vertical_first{
+      width: 100%;
+      background: black;
+      height: 600px;
+      opacity: 0;
+    }
+    .vertical_second{
+      width: 100%;
+      background: sandybrown;
+      height: 300px;
+      opacity: 0.4;
+    }
+    .vertical_third{
+      width: 100%;
+      background: wheat;
+      height: 300px;
+      
+    }
+    .vertical_fourth{
+      width: 100%;
+      background: skyblue;
+      height: 300px;
+      
+    }
+    .vertical_fifth{
+      width: 100%;
+      background: pink;
+      height: 300px;
+    }
+    .swiper-slide{
+        background: url('./img/cc.jpg') no-repeat;
+        background-size: 100% 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Swiper -->
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">1
+        <!-- <img class="swiper-slide-img" src="./img/aa.jpg" alt=""> -->
+      </div>
+      <div class="swiper-slide">2
+        <!-- <img class="swiper-slide-img"  src="./img/bb.jpg" alt=""> -->
+      </div>
+      <div class="swiper-slide">3
+        <!-- <img class="swiper-slide-img"  src="./img/cc.jpg" alt=""> -->
+      </div>
+      <!-- <div class="swiper-slide" style="background:skyblue">Slide 4</div>
+      <div class="swiper-slide" style="background:pink">Slide 5</div>
+      <div class="swiper-slide" style="background:black">Slide 6</div>
+      <div class="swiper-slide" style="background:firebrick">Slide 7</div>
+      <div class="swiper-slide" style="background:fuchsia">Slide 8</div>
+      <div class="swiper-slide" style="background:cadetblue">Slide 9</div>
+      <div class="swiper-slide" style="background:khaki">Slide 10</div> -->
+    </div>
+    <!-- Add Arrows -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+
+
+  <!-- 中间下滑部分 -->
+  <div class="vertical_container">
+      <div class="vertical_pack">
+        <div class="vertical_first"></div>
+        <div class="vertical_second"></div>
+        <div class="vertical_third"></div>
+        <div class="vertical_fourth"></div>
+        <div class="vertical_fifth"></div>
+      </div>
+  </div>
+  <!-- Swiper JS -->    
+  <script src="./js/swiper.min.js"></script>
+  <script src="./js/jquery-1.10.2.js"></script>
+  <!-- Initialize Swiper -->
+  <script>
+       var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+
+    // var imgList = $('.swiper-slide-img');
+    console.log(imgList);
+    var str ='';
+    $.ajax({
+            type : "get",
+            url :'http://192.168.30.68:9080/IdoStudio/tSweetShowList-3-31-1',
+         contentType: 'application/json',
+            dataType: 'jsonp',
+            jsonp: 'callback',
+            async : false,
+          
+            success : function(data) {
+              var dataImg = data
+              dataImg.forEach(function (item,index) {
+                    str+=` <div class="swiper-slide"></div>`;
+                    console.log(prizes[index].level == 1);
+                })
+            console.log(data);
+                $('.swiper-wrapper').html(str)
+            },
+            error: function(xhr, status, error) {
+                //alert(xhr.responseText);
+            }
+        })
+  </script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>book-css3</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            /* background: url('./img/bg.gif') no-repeat; */
+            background-size: cover;
+            /* min-width: 950px; */
+            -webkit-perspective: 2500px;
+            -moz-perspective: 2500px;
+            -ms-perspective: 2500px;
+            perspective: 2500px;
+        }
+
+        #myBook {
+            width: 90%;
+            height: 558px;
+            position: relative;
+            top: 100px;
+            margin: 0 auto;
+            transition: left 0.5s linear;
+            -webkit-transform-style: preserve-3d;
+            -moz-transform-style: preserve-3d;
+            -ms-transform-style: preserve-3d;
+            -o-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+
+        .bookPage {
+            width: 50%;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            text-align: center;
+            -webkit-transform-style: preserve-3d;
+            -moz-transform-style: preserve-3d;
+            -ms-transform-style: preserve-3d;
+            -o-transform-style: preserve-3d;
+            -webkit-transform-origin: left;
+            -moz-transform-origin: left;
+            -ms-transform-origin: left;
+            -o-transform-origin: left;
+            transform-origin: left;
+            -webkit-transition: 1s ease-in-out;
+            -moz-transition: 1s ease-in-out;
+            -ms-transition: 1s ease-in-out;
+            -o-transition: 1s ease-in-out;
+            transition: 1s ease-in-out;
+        }
+
+        .left,
+        .right {
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            /* top: 6px; */
+            overflow: hidden;
+            background: white;
+            /* background: url('./img/page.png') no-repeat; */
+            color: #fff;
+            border-radius: 4px;
+            box-shadow: 2px 2px 10px 5px rgb(228, 226, 225);
+        }
+
+        .left {
+            border-left: 2px solid rgb(255, 255, 255);
+            -webkit-transform: translate3d(0px, 0px, 0.02px);
+            -moz-transform: translate3d(0px, 0px, 0.02px);
+            -ms-transform: translate3d(0px, 0px, 0.02px);
+            -o-transform: translate3d(0px, 0px, 0.02px);
+            transform: translate3d(0px, 0px, 0.02px);
+        }
+
+        .right {
+            border-right: 2px solid white;
+            -webkit-transform: rotateY(180deg);
+            -moz-transform: rotateY(180deg);
+            -ms-transform: rotateY(180deg);
+            -o-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+        }
+
+        .firstPage,
+        .lastPage {
+            width: 100%;
+            height: 558px;
+            position: absolute;
+            /* top: -9px; */
+        }
+
+        .firstPage {
+            background: url('./img/lleft.png') no-repeat;
+            right: 0;
+            box-shadow: 2px 2px 10px 5px rgb(228, 226, 225);
+        }
+
+        .lastPage {
+            background: url('./img/lleft.png') no-repeat;
+            right: 0;
+            box-shadow: 2px 2px 10px 5px rgb(228, 226, 225);
+        }
+
+        .page {
+            width: 40px;
+            padding: 4px;
+            background-color: white;
+            float: left;
+            bottom: 6px;
+            left: 49%;
+            border-radius: 4px;
+            color: #000;
+        }
+
+        .hello {
+            color: red;
+        }
+
+        .left_img {
+            width: 80%;
+            height: 40%;
+            margin: auto;
+            display: block;
+        }
+        .right_img {
+            width: 80%;
+            height: 40%;
+            margin: auto;
+            display: block;
+        }
+        .right .page{
+            width: 100%;
+            height: 100%;
+        }
+        .left .page {
+            width: 23%;
+            height: 20%;
+        }
+        .left .page img {
+            width: 100%;
+            height: 100%;
+        }
+        .hello_img{
+            width: 100%;
+            height: 100%;
+        }
+        .pageRight{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="myBook" class="book">
+        <div class="bookPage">
+            <div class="left firstPage"><img class="cover_img" src="./img/lleft.png" alt=""></div>
+            <div class="hello right">
+                <p><img class="hello_img" src="./img/rright.png" alt=""></p>
+            </div>
+        </div>
+        <div class="bookPage_container">
+            <!-- <div class="bookPage"><div class="left"><p class="page">1</p></div><div class="right"><p class="page">2</p></div>
+            </div> -->
+            <!-- <div class="bookPage"><div class="left"></div><div class="right"></div></div>
+            <div class="bookPage">
+                <div class="left">
+                    
+                </div>
+                <div class="right">
+                  
+                </div>
+            </div> -->
+        </div>
+
+
+
+        <img src="" alt="">
+
+
+
+
+        <!-- <div class="bookPage">
+            <div class="right lastPage"></div>
+        </div> -->
+    </div>
+
+</body>
+<script src="./js/jquery-1.10.2.js"></script>
+<script>
+    (function() {
+        var books = $('.bookPage');
+        var firstNum = 0;
+        var pageNum = 1;
+
+
+        dataRender1(pageNum);
+
+        function dataRender1(pageNum) {
+            var str = '';
+            var pageSize = 12;
+            $.ajax({
+                type: 'get',
+                url: 'http://www.oohdear.com/pc/home/queryHomeGoodsByPage',
+                data: {
+                    type: 2,
+                    pageNum: pageNum,
+                    pageSize: pageSize
+                },
+                async: false,
+                success: function(data) {
+                    var dataList = data.body.goodsVoList;
+                    var data = data.body;
+
+                    var str2 = ``;
+
+                    dataList.forEach(function(item, index) {
+                        str2 = `<div class="bookPage"><div class="left"></div><div class="right"></div></div>`;
+                        $('.bookPage_container').append(str2);
+                    })
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        //
+        dataRender(pageNum);
+
+        function dataRender(pageNum) {
+            var str = '';
+            var pageSize = 8;
+            $.ajax({
+                type: 'get',
+                url: 'http://www.oohdear.com/pc/home/queryHomeGoodsByPage',
+                data: {
+                    type: 2,
+                    pageNum: pageNum,
+                    pageSize: pageSize
+                },
+                async: false,
+                success: function(data) {
+                    var dataList = data.body.goodsVoList;
+                    var data = data.body;
+                    var str = ``;
+                    var str1 = ``;
+                    console.log(data.goodsVoList.length)
+
+                    $('.bookPage_container .bookPage .left').html("");
+
+                    dataList.forEach(function(item, index) {
+                            str = `<p class="page"><img class="pageLeft" src="${item.goodsPicture}" alt=""></p>`;
+                            str1 = `<p class="page"><img class="pageRight" src="./img/rright.png" alt=""></p>`;
+                            $('.bookPage_container .bookPage .left').append(str);
+                            $('.bookPage_container .bookPage .right').html(str1);
+                            $('.bookPage_container .bookPage:last .right img').attr('src','./img/lleft.png');
+                            $('.bookPage_container .bookPage:last .left img').html('src','./img/lleft.png');
+                            
+                            $('.cover_img').attr('src','./img/lleft.png');
+                            
+                    })
+                    console.log(dataList);
+                    $(".right_img:last").attr('src', './img/lleft.png');
+                    $(".right_img:last").css('width', '100%');
+                    $(".right_img:last").css('height', '100%');
+
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+
+
+
+
+        // 设置书页
+        for (var i = 0; i < books.length; i++) {
+            setTransform(books[i], 'translate3d(0px, 0px, ' + (-i) + 'px)')
+        }
+
+        // transform属性兼容
+        function setTransform(e, v) {
+            var s = e.style;
+            s.webkitTransform =
+                s.MozTransform =
+                s.msTransform =
+                s.Otransform =
+                s.transform = v;
+        }
+
+        window.onload = function() {
+            var books = $('.bookPage');
+            var bookWrap = document.querySelector('.book');
+            var currentPage = 0;
+            var rotY = 0;
+            var flag = true;
+            var timer;
+
+            //鼠标摁下 
+            // $("p").mouseover(function(){
+            bookWrap.onmousedown = function(ev) {
+                var cx = ev.clientX;
+                var cy = ev.clientY;
+                // 点击标志位
+                flag = true;
+                timer = setTimeout(function() {
+                    flag = false;
+                }, 200);
+
+                // // 鼠标移动
+                // document.onmousemove = function(ev){
+                // 		var x = ev.clientX;
+                // 		var y = ev.clientY;
+                // 		var disX = x-cx;
+                // 		rotY -= disX/2;
+                // 		setTransform(bookWrap,'rotateY('+rotY+'deg)');
+                // }
+                //鼠标抬起 
+                document.onmouseup = function(ev) {
+                    document.onmousemove = document.onmouseup = null;
+                    clearTimeout(timer);
+                    console.log(flag);
+                    // 点击执行操作
+                    if (flag) {
+                        var x = ev.pageX - bookWrap.offsetLeft;
+                        if (x < Math.floor(bookWrap.offsetWidth / 2)) {
+                            previousPage();
+                        } else {
+                            nextPage();
+                        }
+                    }
+                }
+                ev.preventDefault();
+            }
+            // $('#myBook').css('left', '0')
+            if (firstNum == 0) {
+                setTimeout(function() {
+                    setTransform(books[currentPage], 'translate3d(0px,0px,' + currentPage + 'px) rotateY(-170deg)');
+                    currentPage++;
+                });
+                firstNum++;
+            }
+
+            // 前一页
+            function previousPage() {
+                if (currentPage > 0) {
+                    pageNum--;
+                    setTimeout(function() {
+                        dataRender(pageNum);
+                    }, 400);
+                    currentPage--;
+                    setTransform(books[currentPage], 'translate3d(0px,0px,' + (-currentPage) + 'px) rotateY(0deg)')
+                }
+            }
+
+            // 后一页
+            function nextPage() {
+                console.log(books)
+                if (currentPage < books.length) {
+                    pageNum++;
+                    setTimeout(function() {
+                        dataRender(pageNum);
+                    }, 400)
+                    setTransform(books[currentPage], 'translate3d(0px,0px,' + currentPage + 'px) rotateY(-170deg)');
+                    currentPage++;
+                }
+            }
+        }
+    })()
+</script>
+
+</html>

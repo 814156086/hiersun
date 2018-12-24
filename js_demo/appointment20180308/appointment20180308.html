@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= htmlWebpackPlugin.options.title%>
+    </title>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="女人,妇女,节,3.8,三八,送,好礼,礼物,预约,试戴,浓情,璀璨,春天,18K金,PT950,钻石,对戒,钻戒,项链,坠,耳饰,手链,珠宝,到店礼,预约,信息,促销,浓情宠爱季,与I Do一同璀璨春天,I Do,ido,官网"/>
+    <meta name="description"
+          content="女人节送什么礼物好?女人节到了,ido推出女人节珠宝试戴活动.浓情宠爱季,与I Do一同璀璨春天:2月26日至3月8日女人节活动时间,来I Do享惊喜好礼,预约并到店体验试戴求婚钻戒,结婚钻戒,情侣戒指,订婚戒指,钻石女戒,钻石项链,女士套链,即可获赠I Do定制丝巾一条.活动时间:2月26日——3月8日."/>
+</head>
+<style>
+    .whiteDay_wrap{
+        width: 100%;
+        margin: 0 auto;
+    }
+    .whiteDay_first_a1{
+        font-family: "Times New Roman", 宋体;
+        position: absolute;
+        top: 48%;
+        left: 51%;
+        color: rgb(181,117,119);
+        font-size: .18rem;
+        line-height: 22px;
+        text-decoration: none;
+        text-align:left;
+        cursor: pointer;
+        font-weight:600;
+    }
+    .whiteDay_first_a2{
+        text-align: center;
+        position: absolute;
+        width: 11.5%;
+        height: 4%;
+        top: 62%;
+        left: 51%;
+        text-decoration: none;
+        color: white;
+        font-family: "Times New Roman", 宋体;
+        font-size: .2rem;
+        letter-spacing: 6px;
+        padding-top: 0.9%;
+        font-weight:600;
+        cursor: pointer;
+    }
+    .whiteDay img{
+        display: block;
+        width: 100%;
+    }
+    .whiteDay{
+        position: relative;
+    }
+    .whiteDay_second_a{
+        position: absolute;
+        width: 15%;
+        height: 25%;
+    }
+    .whiteDay_second_at{
+        font-family: "Times New Roman", 宋体;
+        line-height: 22px;
+        position: absolute;
+        width: 22%;
+        height: 6%;
+        color: rgb(181,117,119);
+        text-decoration: none;
+        font-size: .20rem;
+        font-weight:600;
+    }
+    .whiteDay_second_a21{
+        top:16%;
+        left: 27%;
+    }
+    .whiteDay_second_a22{
+        top:26%;
+        left: 58%   ;
+    }
+    .whiteDay_second_a23{
+        top:47%;
+        left: 27%;
+    }
+    .whiteDay_second_a24{
+        top:62%;
+        left: 55%;
+    }
+    .whiteDay_second_a25{
+        top:23%;
+        left: 42%;
+        text-align:left;
+    }
+    .whiteDay_second_a26{
+        top:43%;
+        left: 39%;
+        text-align: right;
+    }
+    .whiteDay_second_a27{
+        top:67%;
+        left: 25%;
+        text-align: center;
+    }.whiteDay_second_a28{
+         top:80%;
+         left: 37%;
+         text-align: right;
+     }
+
+    .whiteDay_third_a{
+        position: absolute;
+        width: 20%;
+        height: 25%;
+    }
+    .whiteDay_third_at{
+        font-family: "Times New Roman", 宋体;
+        line-height: 22px;
+        position: absolute;
+        width: 22%;
+        height: 6%;
+        color: rgb(181,117,119);
+        text-decoration: none;
+        font-size: .20rem;
+        font-weight:600;
+    }
+    .whiteDay_third_a31{
+        top:13%;
+        left: 24%;
+    }
+    .whiteDay_third_a32{
+        top:27%;
+        left: 56%;
+    }
+    .whiteDay_third_a33{
+        top:53%;
+        left: 30%;
+    }
+    .whiteDay_third_a34{
+        top:69%;
+        left: 57%;
+    }
+    .whiteDay_third_a35{
+        top:19%;
+        left: 45%;
+        text-align:left;
+    }
+    .whiteDay_third_a36{
+        top:44%;
+        left: 33%;
+        text-align: right;
+    }
+    .whiteDay_third_a37{
+        top:58%;
+        left: 12%;
+        text-align: right;
+    }
+    .whiteDay_third_a38{
+        top:83%;
+        left: 33%;
+        text-align: right;
+    }
+
+    .whiteDay_fourth_a{
+        position: absolute;
+        width: 20%;
+        height: 30%;
+    }
+    .whiteDay_fourth_at{
+        font-family: "Times New Roman", 宋体;
+        line-height: 22px;
+        position: absolute;
+        width: 22%;
+        height: 7%;
+        color: rgb(181,117,119);
+        text-decoration: none;
+        font-size: .20rem;
+        font-weight:600;
+    }
+    .whiteDay_fourth_a41{
+        top:21%;
+        left: 25%;
+    }
+    .whiteDay_fourth_a42{
+        top:15%;
+        left: 56%;
+    }
+    .whiteDay_fourth_a43{
+        top:60%;
+        left: 18%;
+    }
+    .whiteDay_fourth_a44{
+        top:53%;
+        left: 56%;
+    }
+    .whiteDay_fourth_a45{
+        top:25%;
+        left: 44%;
+        text-align:left;
+    }
+    .whiteDay_fourth_a46{
+        top:41%;
+        left: 54%;
+        text-align: center;
+    }
+    .whiteDay_fourth_a47{
+        top:77%;
+        left: 40%;
+        text-align: left;
+    }
+    .whiteDay_fourth_a48{
+        top:84%;
+        left: 50%;
+        text-align: center;
+    }
+
+    .whiteDay_fifth_a51{
+        text-align: center;
+        position: absolute;
+        width: 12%;
+        height: 21%;
+        top: 67%;
+        left: 44%;
+        text-decoration: none;
+        color: white;
+        font-family: "Times New Roman", 宋体;
+        font-size: .18rem;
+        letter-spacing: 6px;
+        padding-top: 0.7%;
+        font-weight:600;
+        cursor: pointer;
+    }
+    .whiteDay_fifth{
+    }
+    .whiteDay_fifth_div{
+        position: absolute;
+        width: 60%;
+        height: 47%;
+        top:18%;
+        left: 20%;
+        text-align: center;
+    }
+    .whiteDay_fifth_div span{
+        display: block;
+        line-height: 25px;
+        font-size: .14rem;
+        letter-spacing: 1px;
+        font-weight:600;
+    }
+    .whiteDay_fifth_p1{
+        color: rgb(189,101,101);
+        font-family: "Times New Roman", 宋体;
+    }
+    .whiteDay_fifth_p2{
+        color: rgb(189,101,101);
+        font-family: "Times New Roman", 宋体;
+
+    }
+    .whiteDay_fifth_p3{
+        color: rgb(131,97,97);
+        font-family: "Times New Roman", 宋体;
+
+
+    }
+</style>
+<body>
+<div class="whiteDay_wrap">
+    <div class="whiteDay whiteDay_first">
+        <img src="http://img.hiersun-ido.com/active/20180307/whiteday_01.jpg" alt="">
+        <a class="whiteDay_first_a1">预约并到店试戴，即可获赠I Do限量丝巾<br>&nbsp;&nbsp;&nbsp;(礼品有限，赠完为止)<br>3月9日-3月18日</a>
+        <a class="whiteDay_first_a2">立即预约</a>
+    </div>
+
+
+
+    <div class="whiteDay whiteDay_second">
+        <a href="http://www.hiersun-ido.com/lastCommodity-F00021.html" class="whiteDay_second_a whiteDay_second_a21"></a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-F00009.html" class="whiteDay_second_a whiteDay_second_a22"></a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-T00014R.html" class="whiteDay_second_a whiteDay_second_a23"></a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-L00050A.html" class="whiteDay_second_a whiteDay_second_a24"></a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-F00021.html" class="whiteDay_second_at whiteDay_second_a25">THE MOMENT系列<br>18K金钻石女戒</a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-F00009.html" class="whiteDay_second_at whiteDay_second_a26">THE MOMENT系列<br>18K金钻石女戒</a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-T00014R.html" class="whiteDay_second_at whiteDay_second_a27">I Do系列<br>18K金钻石女戒</a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-L00050A.html" class="whiteDay_second_at whiteDay_second_a28">真爱加冕系列<br>18K金/PT950钻石红宝石女戒</a>
+        <img src="http://img.hiersun-ido.com/active/20180307/whiteday_02.jpg" alt="">
+
+    </div>
+
+
+
+    <div class="whiteDay whiteDay_third">
+        <img src="http://img.hiersun-ido.com/active/20180307/whiteday_03.jpg" alt="">
+        <a href="http://www.hiersun-ido.com/lastCommodityDouble-D00008A%20D00008B.html" class="whiteDay_third_a whiteDay_third_a31"></a>
+        <a href="http://www.hiersun-ido.com/lastCommodityDouble-L00005B%20L00005C.html" class="whiteDay_third_a whiteDay_third_a32"></a>
+        <a href="http://www.hiersun-ido.com/lastCommodityDouble-D00007A%20D00007B.html" class="whiteDay_third_a whiteDay_third_a33"></a>
+        <a href="http://www.hiersun-ido.com/lastCommodityDouble-L00053B%20L00053C.html" class="whiteDay_third_a whiteDay_third_a34"></a>
+
+
+
+        <a href="http://www.hiersun-ido.com/lastCommodityDouble-D00008A%20D00008B.html" class="whiteDay_third_at whiteDay_third_a35">I Do 系列<br>18K金/PT950钻石对戒</a>
+        <a href="http://www.hiersun-ido.com/lastCommodityDouble-L00005B%20L00005C.html" class="whiteDay_third_at whiteDay_third_a36">真爱加冕系列<br>18K金/PT950钻石红宝石对戒</a>
+        <a href="http://www.hiersun-ido.com/lastCommodityDouble-D00007A%20D00007B.html" class="whiteDay_third_at whiteDay_third_a37">I Do 系列<br>18K金/PT950钻石对戒</a>
+        <a href="http://www.hiersun-ido.com/lastCommodityDouble-L00053B%20L00053C.html" class="whiteDay_third_at whiteDay_third_a38">真爱加冕系列<br>18K金/PT950钻石红宝石对戒</a>
+    </div>
+    <div class="whiteDay whiteDay_fourth">
+        <img src="http://img.hiersun-ido.com/active/20180307/whiteday_04.jpg" alt="">
+        <a href="http://www.hiersun-ido.com/lastCommodity-B00005.html" class="whiteDay_fourth_a whiteDay_fourth_a41"></a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-T00014E.html" class="whiteDay_fourth_a whiteDay_fourth_a42"></a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-F00025.html" class="whiteDay_fourth_a whiteDay_fourth_a43"></a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-N00052.html" class="whiteDay_fourth_a whiteDay_fourth_a44"></a>
+
+
+        <a href="http://www.hiersun-ido.com/lastCommodity-B00005.html" class="whiteDay_fourth_at whiteDay_fourth_a45">花冠系列<br>18K金钻石手链</a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-T00014E.html" class="whiteDay_fourth_at whiteDay_fourth_a46">I Do 系列<br>18K金钻石耳饰</a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-F00025.html" class="whiteDay_fourth_at whiteDay_fourth_a47">FOREVER系列<br>18K金钻石女戒</a>
+        <a href="http://www.hiersun-ido.com/lastCommodity-N00052.html" class="whiteDay_fourth_at whiteDay_fourth_a48">LOVE 系列<br>18K金钻石项链坠</a>
+    </div>
+    <div class="whiteDay whiteDay_fifth">
+        <img src="http://img.hiersun-ido.com/active/20180307/whiteday_05.jpg" alt="">
+        <div class="whiteDay_fifth_div">
+            <span class="whiteDay_fifth_p1">预约并体验试戴，即可获赠I Do限量丝巾</span>
+            <span class="whiteDay_fifth_p2">礼品有限，赠完为止</span>
+            <span class="whiteDay_fifth_p3">2018.3.9～2018.3.18</span>
+        </div>
+        <a class="whiteDay_fifth_a51">立即预约</a>
+    </div>
+</div>
+
+<!--# include virtual="/internal/footer_pc.html" -->
+<!--# include virtual="/IdoStudio/ntkf/params.html" -->
+</body>
+<script type="text/javascript" src="http://js.hiersun-ido.com/common/jquery-1.7.2.min.js"></script>
+<script>
+    function getRem(pwidth, prem) {
+        var html = document.getElementsByTagName("html")[0];
+        var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
+        html.style.fontSize = oWidth / pwidth * prem + "px";
+    }
+    $(function() {
+        getRem(1440, 100);
+        $(window).resize(function() {
+            getRem(1440, 100);
+        });
+        $('.yuyue').click(function() {
+            NTKF.im_openInPageChat();
+        });
+    })
+    $('.whiteDay_first_a2,.whiteDay_first_a1').on('click',function () {
+        location.href = 'http://www.hiersun-ido.com/lastCommodity-B00005.html'
+    })
+</script>
+</html>

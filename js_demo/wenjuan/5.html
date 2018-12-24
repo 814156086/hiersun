@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .wrap {
+            width: 500px;
+            background-color: #EEE;
+            border: 2px solid #DEF;
+        }
+
+        input[type='checkbox'] {
+            display: none;
+        }
+
+        label {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            position: relative;
+            margin: 20px 120px 0 20px;
+            background: url(//www.chitanda.me/images/blank.png);
+            background-position: 0 0px;
+            -webkit-transition: background 0.5s linear;
+        }
+
+        input[type='checkbox']:checked+label {
+            background-position: 0 -60px;
+        }
+
+        label::after {
+            content: attr(data-name);
+            /*  利用attr可以减少css代码量*/
+            display: inline-block;
+            position: relative;
+            width: 120px;
+            height: 60px;
+            left: 100%;
+            vertical-align: middle;
+            margin: 10px;
+            /* line-height: 60px; */
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <input type="checkbox" id="checkbox01" />
+    <label for="checkbox01" data-name="点点点点"></label>
+    <input type="checkbox" id="checkbox02" />
+    <label for="checkbox02" data-name="点点点点"></label>
+    <input type="checkbox" id="checkbox03" />
+    <label for="checkbox03" data-name="点点点点"></label>
+    <input type="checkbox" id="checkbox04" />
+    <label for="checkbox04" data-name="点点点点"></label>
+    <input type="checkbox" id="checkbox05" />
+    <label for="checkbox05" data-name="点点点点"></label>
+    <input type="checkbox" id="checkbox06" />
+    <label for="checkbox06" data-name="点点点点"></label>
+    <input type="checkbox" id="checkbox07" />
+    <label for="checkbox07" data-name="点点点点"></label>
+    <input type="checkbox" id="checkbox08" />
+    <label for="checkbox08" data-name="点点点点"></label>
+    <input type="checkbox" id="checkbox09" />
+    <label for="checkbox09" data-name="点点点点"></label>
+    <input type="checkbox" id="checkbox10" />
+    <label for="checkbox10" data-name="点点点点"></label>
+</div>
+</body>
+</html>

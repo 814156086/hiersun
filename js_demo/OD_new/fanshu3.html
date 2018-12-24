@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>book-css3</title>
+    <style>
+        body{
+            background: url('./img/backgro.png') center center;
+        }
+        .flip_book {
+            width: 90%;
+            height: 750px;
+            margin: 100px auto;
+        }
+
+        .flip_book_wrap {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .flip_book_left {
+            width: 45%;
+            height: 80%;
+            background: white;
+            box-shadow: 2px 2px 10px 5px rgb(228,226,225);
+            display: inline-block;
+            position: relative;
+            /* background: url('./img/lleft.png') no-repeat; */
+            margin-right: 2%;
+        }
+
+        .flip_book_right {
+            width: 45%;
+            height: 80%;
+            background: white;
+            box-shadow: 2px 2px 10px 5px rgb(228, 226, 225);
+            display: inline-block;
+            position: relative;
+        }
+
+        .flip_book_leftOne {
+            width: 100%;
+            position: absolute;
+            height: 94%;
+            background: white;
+            box-shadow: 2px 2px 10px 5px rgb(228, 226, 225);
+            z-index: -1;
+            top: 3%;
+            left: -15px;
+        }
+
+        .flip_book_leftTwo {
+            width: 100%;
+            position: absolute;
+            height: 88%;
+            background: white;
+            box-shadow: 2px 2px 10px 5px rgb(228, 226, 225);
+            z-index: -2;
+            top: 6%;
+            left: -35px;
+        }
+
+        .flip_book_rightOne {
+            width: 100%;
+            position: absolute;
+            height: 94%;
+            background: white;
+            z-index: -1;
+            top: 3%;
+            left: 15px;
+            box-shadow: 2px 2px 10px 5px rgb(228, 226, 225);
+        }
+
+        .flip_book_rightTwo {
+            width: 100%;
+            position: absolute;
+            height: 88%;
+            background: white;
+            z-index: -2;
+            top: 6%;
+            left: 35px;
+            box-shadow: 2px 2px 10px 5px rgb(228, 226, 225);
+        }
+
+        .flip_book_left_img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            vertical-align: top;
+        }
+        .flip_book_left_img2{
+            width: 100%;
+            height: 100%;
+            display: block;
+            vertical-align: top;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            z-index: -1;
+        }
+        .flip_book_right_img2{
+            width: 100%;
+            height: 100%;
+            display: block;
+            vertical-align: top;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: -1;
+            transform-origin: left;
+            transform-style: preserve-3d;
+            /* transform: rotatey(-50deg); */
+            backface-visibility: hidden;
+        }
+        .flip_book_right_img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            vertical-align: top;
+        }
+        .flip_book_leftOn{
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            z-index: 9;
+            cursor: pointer;
+        }
+        .flip_book_righttOn{
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            z-index: 9;
+            cursor: pointer;
+        }
+        @keyframes moveleft {
+                0% {
+                    transform: translate(0px,0px) scale(1.5, 1.5);
+                }
+            }
+         @keyframes moveright {
+                0% {
+                    /* transform: translate(00px, 0px) scale(1, 1); */
+                    transform: rotatey(0deg);
+                }
+            }        
+    </style>
+</head>
+<!--  -->
+
+<body>
+    <div class="flip_book">
+        <div class="flip_book_wrap">
+            <div class="flip_book_left">
+                <img class="flip_book_left_img" src="./img/lleft.png" alt="">
+                
+                
+                <div class="flip_book_leftOne"></div>
+                <div class="flip_book_leftTwo"></div>
+                <span class="flip_book_leftOn"></span>
+            </div>
+            <div class="flip_book_right">
+                <img class="flip_book_right_img" src="./img/rright.png" alt="">
+                <img class="flip_book_right_img2" src="./img/lleft.png" alt="">
+                <div class="flip_book_rightOne"></div>
+                <div class="flip_book_rightTwo"></div>
+                <span class="flip_book_righttOn"></span>
+                
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<script src="./js/jquery-1.10.2.js"></script>
+<script>
+    
+    var pageNum = 1;
+    $('.flip_book_leftOn').on('click',function(){
+        dataRender(pageNum);
+        pageNum++;
+    })
+    $('.flip_book_righttOn').on('click',function(){
+        $("<img class='flip_book_right_img2' src='./img/rright.png'>").appendTo($('.flip_book_right'));
+        $(".flip_book_right_img2").css('animation', 'moveleft 1s');
+        $(".flip_book_right_img2").css('z-index', '2');
+        setTimeout(function(){
+            $(".flip_book_right_img2:not(':last')").remove();
+        },1000)
+    })
+
+    function dataRender(pageNum) {
+            var str = '';
+            var pageSize = 1;
+            $.ajax({
+                type: 'get',
+                url: 'http://www.oohdear.com/pc/home/queryHomeGoodsByPage',
+                data: {
+                    type: 1,
+                    pageNum: pageNum,
+                    pageSize: pageSize
+                },
+                success: function(data) {
+                    $('.pageUl').html('');
+                    var dataList = data.body.goodsVoList;
+                    var data = data.body;
+                        var str = ``;
+                        $("<img class='flip_book_left_img2' src=''>").appendTo($('.flip_book_left'));
+                        $('.flip_book_left_img2').attr('src',dataList[0].goodsPicture);
+                        $(".flip_book_left_img2").css('animation', 'moveleft 1s');
+                        $(".flip_book_left_img2").css('z-index', '2');
+                        $(".flip_book_left_img2:not(':last')").remove();
+                    //     str = `<img class='flip_book_left_img2' src='dataList[0].goodsPicture'>`;
+                    //     // str1+=`<div class="page"><span><img class="XLimg" src="./img/sss.jpg" alt=""><p class="pageP">666666</p></span><span>1</span></div>`;
+                    //     $('.book').append(str);
+                    // // 新品推荐
+                    // dataList.forEach(function(item,index){
+                    //     console.log(item.goodsPicture);
+                    // })
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+</script>
+</html>
