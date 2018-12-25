@@ -1,0 +1,17 @@
+a {
+  text-decoration: none;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+td {
+  white-space: nowrap;
+}
+
+.order-container {
+  width: 50%;
+}
+

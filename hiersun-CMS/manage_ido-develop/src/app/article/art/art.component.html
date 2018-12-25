@@ -1,0 +1,196 @@
+<div class="header">
+    <h1>文章管理 <small> Article The  Management</small></h1>
+</div>
+
+ 
+
+<div class="content">
+<button class="btn blue-hoki" routerLink="/article/addf">添加文章大类</button>
+<div class="portlet box blue-hoki">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-globe"></i>文章分类列表 </div>
+        <div class="tools">
+            <a class="collapse" data-original-title="" href="javascript:;" title=""></a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable">
+            <nz-table #nestedTable [nzData]="list1" [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th nzShowExpand>
+
+                        </th>
+                        <th style="width:15%;text-align:center;" tabindex="0">
+                            分类序号
+                        </th>
+                        <th style="width:20%;text-align:center;" tabindex="0">
+                            分类名称
+                        </th>
+                        <th style="width:20%;text-align:center;" tabindex="0">
+                            分类编码
+                        </th>
+                        <th style="width:35%;text-align:center;" tabindex="0">
+                            操作
+                        </th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                        <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+                            <tr>
+                                <!-- <tr *ngFor="let item of list1 let i = index"> -->
+                                <td nzShowExpand [(nzExpand)]="data.expand"></td>
+                                <td id="serialNumber">{{data.serialNumber}}</td>
+                                <td id="name">{{data.name}}</td>
+                                <td id="code">{{data.code}}</td>
+                                <td style="width:350px;" colspan="8" class="operation">
+                                    <a routerLink="/article/art/{{data.id}}" class="btn blue btn-xs" style="width:54px;">
+                                        <i class="fa fa-edit"></i>
+                                        编辑
+                                    </a>
+                                    <a style="width:54px;" (click)="operation(data.id,'del')" *ngIf="data.artCount==0 && data.subClassifyList.length==0" data-toggle="modal" data-target="#myModalo" class="btn red btn-xs">
+                                        <i class="fa fa-trash-o"></i>
+                                        删除
+                                    </a>
+                                    <a style="width:78px;" (click)="cadd(data.id,data.code)" class="btn blue btn-xs">
+                                        <i class="fa fa-save"></i>
+                                        添加子类</a>
+                                    <a style="width:54px;" routerLink="/article/artclassify" [queryParams]="{code:data.code}" class="btn blue btn-xs">
+                                        <i class="fa fa-search"></i>
+                                        文章</a>
+                                </td>
+                            </tr>
+                            <tr [nzExpand]="data.expand">
+                                <td></td>
+                                <td colspan="8">
+                                    <nz-table #innerTable [nzData]="data.subClassifyList" nzSize="middle" [nzShowPagination]="false">
+                                        <tbody style="font-size:12px;">
+                                            <tr *ngFor="let data2 of innerTable.data">
+                                                <td style="width:17.5%;">{{data2.serialNumber}}</td>
+                                                <td style="width:20.5%;">{{data2.name}}</td>
+                                                <td style="width:24.3%;">{{data2.subCode}}</td>
+                                                <td style="text-align:left;">
+                                                    <a  class="btn blue btn-xs" routerLink='/article/artc/{{data2.id}}'> <i class="fa fa-edit"></i>
+                                                      编辑</a>
+                                                    <a  data-toggle="modal" *ngIf="data2.artCount==0" data-target="#myModalo" class="btn red btn-xs" (click)="operation(data2.id,'delc')">
+                                                      <i class="fa fa-trash-o"></i>删除</a>
+                                                    <a  class="btn blue btn-xs" routerLink='/article/artclassify' [queryParams]="{code:data2.code,subCode:data2.subCode}">
+                                                      <i class="fa fa-search"></i>文章</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </nz-table>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加子类modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 class="modal-title" id="myModalLabel">添加子类</h3>
+        </div>
+        <div class="modal-body">
+            <form action="ArticleAction!saveArticleClassify.action" method="post" name="save_artSubClassify" class="form-horizontal" [formGroup]="formModel">
+                <input type="hidden" value="402887f2659e916e0165f0f2b93d0c9d" id="fatherId" name="fatherId">
+                    <div class="c_com">
+                        <div class="col-md-12">
+                            <label class="col-md-4 control-label">
+                                    <span style="color:red;">*</span>子分类序号：</label>
+                            <div class="col-md-8">
+                                <input  class="form-control inputtext" [class.hasError]="formModel.get('cserialNumber').invalid && formModel.get('cserialNumber').touched"
+formControlName="cserialNumber" [(ngModel)]="cserialNumber" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="请输入子分类序号" type="text" name="artSubClassify.cserialNumber" value="" id="cserialNumber">
+                                 <div [hidden]="formModel.get('cserialNumber').untouched">
+                                    <div class="formtips" [hidden]="!formModel.hasError('required',['cserialNumber'])">
+                                    子分类序号必填
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="col-md-4 control-label">
+                                    <span style="color:red;">*</span>子分类名称：</label>
+                            <div class="col-md-8">
+                                <input [class.hasError]="formModel.get('cname').invalid && formModel.get('cname').touched"
+                                type="text" formControlName="cname" name="cname" [(ngModel)]="cname" placeholder="请输入子分类名称" type="text" name="artSubClassify.cname" value="" id="cname" class="inputtext">
+                                <div [hidden]="formModel.get('cname').untouched">
+                                        <div class="formtips" [hidden]="!formModel.hasError('required',['cname'])">
+                                            子分类名称必填
+                                        </div>
+                                        </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="col-md-4 control-label">
+                                    <span style="color:red;">*</span>子分类编码：</label>
+                            <div class="col-md-8">
+                                <input [class.hasError]="formModel.get('csubCode').invalid && formModel.get('csubCode').touched"
+                                type="text" formControlName="csubCode" name="csubCode" [(ngModel)]="csubCode" placeholder="请输入子分类编码"  type="text" name="artSubClassify.subCode" value="" id="csubCode" class="inputtext">
+                                <div [hidden]="formModel.get('csubCode').untouched">
+                                        <div class="formtips" [hidden]="!formModel.hasError('required',['csubCode'])">
+                                            子分类编码必填
+                                        </div>
+                                        </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="col-md-4 control-label">分类title：</label>
+                            <div class="col-md-8">
+                                <input type="text" name="artSubClassify.title" value="" id="ctit" class="inputtext">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="col-md-4 control-label">分类keywords：</label>
+                            <div class="col-md-8">
+                                <textarea name="artSubClassify.keywords" class="textarea_fl" value="" id="ckey"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="col-md-4 control-label">分类description：</label>
+                            <div class="col-md-8">
+                                <textarea name="artSubClassify.description" class="textarea_fl" value="" id="cdp"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                <span class="but">
+                    <button class="btn inp2 btnBigOnBlur" type="button" (click)="back()">返回</button>
+                    <button class="btn btn-success inp1 btnBigOnBlur" type="button"  (click)="sub_form()">保存</button>
+                   
+                </span>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<div class="modal fade" id="myModalo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content" style="width: 400px">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel2">文章列表</h4>
+        </div>
+        <div class="modal-body">{{message}}</div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="subStatus()" >确定</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+

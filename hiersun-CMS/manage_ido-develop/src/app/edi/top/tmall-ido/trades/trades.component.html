@@ -1,0 +1,403 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>天猫交易管理
+        <small>Trades</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <div class="choosesx">
+            <form class="form-inline" role="form">
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <label for="item-relation-condition-item-buyerNick" class="control-label col-md-4">买家昵称 :</label>
+                <div class='col-md-8'>
+                  <input id="item-relation-condition-item-buyerNick" class='topItemId form-control' style='width: 100%' type="text" placeholder="请输入买家昵称">
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <label for="item-relation-condition-item-tid" class="control-label col-md-4">交易编号 :</label>
+                <div class='col-md-8'>
+                  <input id="item-relation-condition-item-tid" class='topItemNameQuery form-control' style='width: 100%' type="text" placeholder="请输入交易编号">
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <label for="item-relation-condition-item-alipayNo" class="control-label col-md-4">支付宝交易号 :</label>
+                <div class='col-md-8'>
+                  <input id="item-relation-condition-item-alipayNo" class='itemCode form-control' style='width: 100%' type="text" placeholder="请输入支付宝交易号">
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <label for="item-relation-condition-item-ediCheckPassed" class="control-label col-md-4">EDI检查订单通过 :</label>
+                <div class='col-md-8'>
+                  <select name="ediCheckPassed" class="form-control" id="item-relation-condition-item-ediCheckPassed" style='width: 100%'>
+                      <option value="">请选择</option>
+                      <option value="true">是</option>
+                      <option value="false">否</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <label for="item-relation-condition-item-status" class="control-label col-md-4">订单状态 :</label>
+                <div class='col-md-8'>
+                  <select name="status" class="form-control" id="item-relation-condition-item-status" style='width: 100%'>
+                      <option value="">请选择</option>
+                      <option value="TRADE_NO_CREATE_PAY">未创建支付宝交易</option>
+                      <option value="WAIT_BUYER_PAY">等待买家付款</option>
+                      <option value="SELLER_CONSIGNED_PART">卖家部分发货</option>
+                      <option value="WAIT_SELLER_SEND_GOODS">等待卖家发货</option>
+                      <option value="WAIT_BUYER_CONFIRM_GOODS">等待买家确认收货</option>
+                      <option value="TRADE_BUYER_SIGNED">买家已签收</option>
+                      <option value="TRADE_FINISHED">交易成功</option>
+                      <option value="TRADE_CLOSED">付款以后用户退款成功，交易自动关闭</option>
+                      <option value="TRADE_CLOSED_BY_TAOBAO">付款以前，卖家或买家主动关闭交易</option>
+                      <option value="PAY_PENDING">国际信用卡支付付款确认中</option>
+                      <option value="WAIT_PRE_AUTH_CONFIRM">0元购合约中</option>
+                      <option value="PAID_FORBID_CONSIGN">拼团中订单或者发货强管控的订单，已付款但禁止发货</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <label for="item-relation-condition-item-topPreSale" class="control-label col-md-4">是否天猫预售模式 :</label>
+                <div class='col-md-8'>
+                  <select name="topPreSale" class="form-control" id="item-relation-condition-item-topPreSale" style='width: 100%'>
+                      <option value="">请选择</option>
+                      <option value="true">是</option>
+                      <option value="false">否</option>
+                  </select>
+                </div>
+              </div>
+              <div class="btn_container col-md-6" style="text-align: left;margin-bottom: 15px">
+                <button id="btnSearch" style='margin-left:15px' type="button" class="btnstyle btn default"
+                        (click)="reloadGrid()">查询
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnReset" type="button" class="btnstyle btn default" (click)="clearCondition()">清空
+                  <i class="fa fa-times"></i>
+                </button>
+                <button id="btnScan" type="button" class="btnstyle btn default" (click)='orderScan()'>漏单扫描
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnGrabOrder" type="button" class="btnstyle btn default" (click)='grabOrder()'>手工抓单
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div style="clear:both;height:10px;"></div>
+          <div class="portlet box blue-hoki" style="margin-top: 15px;">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>天猫交易
+              </div>
+              <div class="tools">
+                <a href="javascript:" class="collapse" data-original-title="" title=""></a>
+                <a data-original-title="" title="" (click)="reloadGrid()">
+                  <i class="fa fa-refresh" style="color:#fff;position: relative;top:-2px;"></i>
+                </a>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="table-scrollable" style="overflow-x: auto">
+                <table style="border-bottom:none"
+                       class="table text-center table-striped table-bordered table-hover dataTable no-footer" id="trades"
+                       role="grid" aria-describedby="trades_info">
+                  <thead>
+                  <tr role="row">
+                    <th aria-controls="trades">天猫交易号</th>
+                    <th aria-controls="trades">是否异常订单</th>
+                    <th aria-controls="trades">是否预售交易</th>
+                    <th aria-controls="trades">支付宝交易号</th>
+                    <th aria-controls="trades">天猫交易状态</th>
+                    <th aria-controls="trades">交易总金额</th>
+                    <!--<th aria-controls="trades">使用积分</th>-->
+                    <!--<th aria-controls="trades">邮费</th>-->
+                    <th aria-controls="trades">交易优惠(不<br/>包含商品行优惠)</th>
+                    <th aria-controls="trades">实际应付金额</th>
+                    <th style='min-width:120px' aria-controls="trades">付款时间</th>
+                    <!--<th aria-controls="trades">收到支付金额</th>-->
+                    <!--<th aria-controls="trades">交易佣金</th>-->
+                    <!--<th aria-controls="trades">剩余确认收货金额</th>-->
+                    <th style='min-width:200px' aria-controls="trades">买家留言</th>
+                    <!--<th style='min-width:300px' aria-controls="trades">卖家备注</th>-->
+                    <!--<th style='min-width:300px' aria-controls="trades">交易备注</th>-->
+                    <!--<th style='min-width:200px' aria-controls="trades">发票抬头</th>-->
+                    <!--<th aria-controls="trades">发票类型</th>-->
+                    <!--<th aria-controls="trades">买家支付宝账号</th>-->
+                    <!--<th aria-controls="trades">邮件地址</th>-->
+                    <th aria-controls="trades">买家昵称</th>
+                    <th style='min-width:120px' aria-controls="trades">创建时间</th>
+                    <!--<th style='min-width:200px' aria-controls="trades">描述</th>-->
+                    <!--<th style='min-width:120px' aria-controls="trades">修改时间</th>-->
+                    <!--<th style='min-width:120px' aria-controls="trades">发货时间</th>-->
+                    <!--<th aria-controls="trades">收货人所在省份</th>-->
+                    <!--<th aria-controls="trades">收货人所在城市</th>-->
+                    <!--<th aria-controls="trades">收货人所在地区</th>-->
+                    <!--<th style='min-width:200px' aria-controls="trades">收货人地址</th>-->
+                    <!--<th aria-controls="trades">收货人手机号/电话</th>-->
+                    <!--<th aria-controls="trades">收货人姓名</th>-->
+                    <!--<th aria-controls="trades">收货人邮编</th>-->
+                    <!--<th aria-controls="trades">买家获得积分</th>-->
+                    <!--<th style='min-width:400px' aria-controls="trades">订单异常信息</th>-->
+                    <!--<th aria-controls="trades">操作</th>-->
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr role="row" class="odd" *ngFor="let item of tradePageContent()">
+                    <td (click)='getDetailShow(item.tid)'><a href="javascript:" >{{item.tid}}</a></td>
+                    <td *ngIf='item.checkPassed'>否</td>
+                    <td *ngIf='!item.checkPassed' style="color: red;">是</td>
+                    <td *ngIf='item.topPreSale'>是</td>
+                    <td *ngIf='!item.topPreSale'>否</td>
+                    <td>{{item.alipayNo}}</td>
+                    <td *ngIf='"TRADE_NO_CREATE_PAY" == item.status'>等待付款</td>
+                    <td *ngIf='"WAIT_BUYER_PAY" == item.status'>等待付款</td>
+                    <td *ngIf='"SELLER_CONSIGNED_PART" == item.status'>部分发货</td>
+                    <td *ngIf='"WAIT_SELLER_SEND_GOODS" == item.status'>等待发货</td>
+                    <td *ngIf='"WAIT_BUYER_CONFIRM_GOODS" == item.status'>已发货</td>
+                    <td *ngIf='"TRADE_BUYER_SIGNED" == item.status'>已签收</td>
+                    <td *ngIf='"TRADE_FINISHED" == item.status'>交易完成</td>
+                    <td *ngIf='"TRADE_CLOSED" == item.status'>发货前退款</td>
+                    <td *ngIf='"TRADE_CLOSED_BY_TAOBAO" == item.status'>未支付取消</td>
+                    <td>{{item.totalFee}}</td>
+                    <!--<td>{{item.pointFee}}</td>-->
+                    <!--<td>{{item.postFee}}</td>-->
+                    <td>{{item.discountFee}}</td>
+                    <td>{{item.payment}}</td>
+                    <td>{{item.payTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <!--<td>{{item.receivedPayment}}</td>-->
+                    <!--<td>{{item.commissionFee}}</td>-->
+                    <!--<td>{{item.availableConfirmFee}}</td>-->
+                    <td>{{item.buyerMessage}}</td>
+                    <!--<td>{{item.sellerMemo}}</td>-->
+                    <!--<td>{{item.tradeMemo}}</td>-->
+                    <!--<td>{{item.invoiceName}}</td>-->
+                    <!--<td>{{item.invoiceType}}</td>-->
+                    <!--<td>{{item.buyerAlipayNo}}</td>-->
+                    <!--<td>{{item.buyerEmail}}</td>-->
+                    <td>{{item.buyerNick}}</td>
+                    <td>{{item.created | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <!--<td>{{item.markDesc}}</td>-->
+                    <!--<td>{{item.modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
+                    <!--<td>{{item.consignTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
+                    <!--<td>{{item.receiverState}}</td>-->
+                    <!--<td>{{item.receiverCity}}</td>-->
+                    <!--<td>{{item.receiverDistrict}}</td>-->
+                    <!--<td>{{item.receiverAddress}}</td>-->
+                    <!--<td *ngIf="item.receiverMobile">{{item.receiverMobile}}</td>-->
+                    <!--<td *ngIf="!item.receiverMobile">{{item.receiverPhone}}</td>-->
+                    <!--<td>{{item.receiverName}}</td>-->
+                    <!--<td>{{item.receiverZip}}</td>-->
+                    <!--<td>{{item.buyerObtainPointFee}}</td>-->
+                    <!--<td *ngIf='!item.checkMsg'>-</td>
+                    <td *ngIf='item.checkMsg'>{{item.checkMsg}}</td>-->
+                    <!--<td>
+                      <a class="btn green btn-xs btn-info" data-toggle="modal" (click)='childOrder(item.tid)'>
+                        <i class="fa fa-search"></i> 子订单
+                      </a>
+                    </td>-->
+                  </tr>
+                  <tr *ngIf='noData'>
+                    <td colspan="11" style="text-align:center;padding:10px;">暂时还没有数据~</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="clearfix">
+                <div id="item-relation-pagination" class="page"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spinner" *ngIf="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>
+
+<!--根据交易编码查询子订单-->
+<!--<div id="item-child-order" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bindshop" aria-hidden="true">
+  <div class="modal-dialog" style="width: 900px;left: 50%;margin-left: -450px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;">×</span>
+          </span>
+        </button>
+        <h4 class="modal-title">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;">子订单列表</span>
+          </span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="table-scrollable" style="overflow-x: auto">
+          <table style="border-bottom:none" class="table text-center table-striped table-bordered table-hover dataTable no-footer" id="trade-orders" role="grid" aria-describedby="trade-orders_info">
+            <thead>
+            <tr role="row">
+              <th style='min-width:120px' aria-controls="trade-orders">子订单编号</th>
+              <th style='min-width: 200px' aria-controls="trade-orders">商品标题</th>
+              <th aria-controls="trade-orders">商品类型</th>
+              <th style='min-width:120px' aria-controls="trade-orders">商品数字ID</th>
+              <th aria-controls="trade-orders">商家商品编码</th>
+              <th style='min-width: 300px' aria-controls="trade-orders">SKU属性值</th>
+              <th style="min-width: 130px" aria-controls="trade-orders">商家Sku编号</th>
+              <th aria-controls="trade-orders">商品价格</th>
+              <th aria-controls="trade-orders">购买数量</th>
+              <th aria-controls="trade-orders">应付金额</th>
+              <th aria-controls="trade-orders">子订单优惠金额</th>
+              <th aria-controls="trade-orders">主订单优惠分摊</th>
+              <th aria-controls="trade-orders">分摊后实付金额</th>
+              <th aria-controls="trade-orders">子订单实付金额</th>
+              <th style="min-width: 130px" aria-controls="trade-orders">订单状态</th>
+              <th style="min-width: 130px" aria-controls="trade-orders">发货状态</th>
+              <th style='min-width:120px' aria-controls="trade-orders">卖家发货时间</th>
+              <th aria-controls="trade-orders">快递公司名称</th>
+              <th style='min-width:120px' aria-controls="trade-orders">运单号</th>
+              <th aria-controls="trade-orders">退款状态</th>
+              <th aria-controls="trade-orders">最近退款ID</th>
+              <th style='min-width:120px' aria-controls="trade-orders">交易结束时间</th>
+              <th style='min-width:120px' aria-controls="trade-orders">修改时间</th>
+              <th style="min-width: 400px" aria-controls="trade-orders">异常信息</th>
+              <th aria-controls="trade-orders">所属EDI拆单号</th>
+              <th aria-controls="trade-orders">销售单号</th>
+              <th style='min-width:120px' aria-controls="trade-orders">OMS订单商品行号</th>
+              <th aria-controls="trade-orders">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr role="row" class="odd" *ngFor="let item of topChildOrders">
+              <td>{{item.oid}}</td>
+              <td>{{item.title}}</td>
+              <td *ngIf="item.itemType == 'V_CODE'">V条码商品</td>
+              <td *ngIf="item.itemType == 'MODEL_IN_STOCK'">版库现货</td>
+              <td *ngIf="item.itemType == 'MODEL_CUSTOMIZATION'">版库定制</td>
+              <td *ngIf="item.itemType == 'PATCH'">起版费</td>
+              <td *ngIf="!item.itemType">未知</td>
+              <td>{{item.numIid}}</td>
+              <td>{{item.outerIid}}</td>
+              <td style="width: 200px">{{item.skuPropertiesName}}</td>
+              <td>{{item.outerSkuId}}</td>
+              <td>{{item.price}}</td>
+              <td>{{item.num}}</td>
+              <td>{{item.totalFee}}</td>
+              <td>{{item.discountFee}}</td>
+              <td>{{item.partMjzDiscount}}</td>
+              <td>{{item.divideOrderFee}}</td>
+              <td>{{item.payment}}</td>
+              <td>{{item.status}}</td>
+              <td>{{item.sendStatus}}</td>
+              <td>{{item.consignTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td>{{item.logisticsCompany}}</td>
+              <td>{{item.logisticsNo}}</td>
+              <td *ngIf='item.refundStatus=="NO_REFUND"'>无退款</td>
+              <td *ngIf='item.refundStatus=="WAIT_SELLER_AGREE"'>退款申请审核中</td>
+              <td *ngIf='item.refundStatus=="WAIT_BUYER_RETURN_GOODS"'>审核通过待退货</td>
+              <td *ngIf='item.refundStatus=="WAIT_SELLER_CONFIRM_GOODS"'>等待卖家确认收货</td>
+              <td *ngIf='item.refundStatus=="SELLER_REFUSE_BUYER"'>卖家拒绝退款</td>
+              <td *ngIf='item.refundStatus=="CLOSED"'>退款关闭</td>
+              <td *ngIf='item.refundStatus=="SUCCESS"'>退款成功</td>
+              <td>{{item.refundId}}</td>
+              <td>{{item.endTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td>{{item.modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td *ngIf="item.error">{{item.error}}</td>
+              <td *ngIf="!item.error">正常订单</td>
+              <td *ngIf="item.splitTid">{{item.splitTid}}</td>
+              <td *ngIf="!item.splitTid">EDI未能成功拆单</td>
+              <td>{{item.subOrderSid}}</td>
+              <td>{{item.orderItemSid}}</td>
+              <td>
+                <a *ngIf="item.error" class="btn green btn-xs btn-info" data-toggle="modal" (click)="updateOrder(item)">
+                  <i class="fa fa-edit"></i> 修改子订单
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->
+
+<!--漏单扫描-->
+<div id="item-order-scan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;">×</span>
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>是否开始扫描交易漏单</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button data-dismiss="modal" class="btn blue delsure" (click)="orderScaning()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--手工抓单-->
+<div id="item-grab-order" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;">×</span>
+          </span>
+        </button>
+        <h4 class="modal-title">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;">手工抓单</span>
+          </span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="row margin-search height-30">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for='item-grab-order-tid' class="control-label col-md-4">天猫交易号：</label>
+                <div class="col-md-7">
+                  <input class='form-control' id="item-grab-order-tid" onkeyup="value=value.replace(/[^\d]/g,'')" style='width: 100%' type="text" placeholder="请输入天猫交易号">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a class="desc"></a>
+        <button class="btn blue delsure" (click)="grabOrdering()">确认</button>
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-tradesdetail #tradesdetail></app-tradesdetail>

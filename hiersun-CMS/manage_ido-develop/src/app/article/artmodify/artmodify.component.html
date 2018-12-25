@@ -1,0 +1,115 @@
+<div class="header">
+    <h3>修改文章
+      <small>Article&nbsp; edit</small>
+    </h3>
+</div>
+
+<div class="content">
+  <form class="form-horizontal" [formGroup]="formModel">
+  <div class="" *ngFor = "let item of newList">
+      <div class="col-md-12">
+        <label class="col-md-2 control-label">文章大类：</label>
+        <div class="col-md-8">
+          <input class="form-control" type="text" readonly id="code" value="{{item.codeName}}">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label class="col-md-2 control-label">文章子类：</label>
+        <div class="col-md-8">
+          <input class="form-control" type="text" readonly id="subCode" value="{{item.subCodeName}}">
+        </div>
+      </div>
+       <div class="col-md-12">
+        <label class="col-md-2 control-label">序号：</label>
+        <div class="col-md-8">
+            <input class="form-control" type="text" id="artNum" value="{{item.artNum}}" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+        </div>
+      </div>
+       <div class="col-md-12">
+        <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>标题：</label>
+        <div class="col-md-8">
+            <input class="form-control" [class.hasError]="formModel.get('heading').invalid && formModel.get('heading').touched"
+            type="text" formControlName="heading" name="heading" [(ngModel)]="heading" placeholder="请输入标题" id="heading">
+            <div [hidden]="formModel.get('heading').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['heading'])">
+                标题必填
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label class="col-md-2 control-label">副标题：</label>
+        <div class="col-md-8">
+            <input class="form-control" type="text" id="subHeading" value="{{item.subHeading}}">
+        </div>
+      </div>
+      <div class="col-md-12" *ngIf="item.code==3">
+        <label class="col-md-2 control-label">文章标签：</label>
+        <div class="col-md-8">
+            <select id="selectTag">
+              <option value="">请选择标签</option>
+              <option   *ngFor='let data of taglist' value="{{data.tagCode}}" [attr.selected]="item.tagCode==data.tagCode?'':null">{{data.tagName}}</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label class="col-md-2 control-label">发布时间：</label>
+        <div class="col-md-8">
+           
+          <nz-date-picker
+          id="publishDate"
+            nzShowTime
+            nzFormat="yyyy-MM-dd HH:mm:ss"
+            nzPlaceHolder="{{publishDate | date:'yyy-MM-dd HH:mm:ss'}}"
+            (ngModelChange)="onChangetime($event)"
+            (nzOnOk)="onOk($event)"
+          ></nz-date-picker>
+            <!-- <input class="beginDate form-control" type="text" id="publishDate" name="publishDate" value="{{publishDate | date:'yyyy-MM-dd HH:mm:ss'}}"/>
+            <input class="beginDate form-control" type="text"  name="startDate" id="startDate" value="{{startDate | date:'yyyy-MM-dd HH:mm:ss'}}"> -->
+          </div>
+      </div>
+      <div class="col-md-12">
+        <label class="col-md-2 control-label">简介图片：</label>
+        <div class="col-md-8">
+            <span class="btn green fileinput-button">
+                <i class="fa fa-plus"></i>
+                <span>选择文件</span>
+                <input type="file" id="photoPath"  name="photoFile" accept="image/png, image/jpeg ,image/jpg" (change)="imgadd($event)">
+        </span>
+        <div class="imgbox">
+                <img class="setimg" src="{{item.photoPath}}" alt="">
+              </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+          <label class="col-md-2 control-label">简介描述：</label>
+          <div class="col-md-8">
+              <textarea class="table" id="synopsis" name="synopsis" rows="8" cols="150">{{item.synopsis}}</textarea>
+          </div>
+        </div>
+       <div class="col-md-12">
+          <label class="col-md-2 control-label">内容：</label>
+          <div class="col-md-8">
+              <ckeditor id="mycontent" [(ngModel)]="mycontent" [ngModelOptions]="{standalone: true}"  #myckeditor [config]="ckeConfig" debounce="500" (change)="onChange($event)"></ckeditor>
+          </div>
+        </div>
+        <input type="hidden" id="memberId" value="{{item.memberId}}">
+    </div>
+  </form>
+    <div class="anniu">
+        <input style="margin:10px;" type="button" class="btn btn-info" value="返回" (click)="back()">
+        <input type="submit" class="btn btn-success" [disabled]="formModel.invalid" value="修改" (click)="edit()">
+        
+    </div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+  

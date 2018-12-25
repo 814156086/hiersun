@@ -1,0 +1,12 @@
+.allwrap {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: #fff;
+  width: 100%;
+  padding: 10px 10px 0;
+}
+
+.noprint {
+  display: none;
+}

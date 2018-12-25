@@ -1,0 +1,106 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>支付介质
+        <small>Pay Manage</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <a class="btn blue-hoki" (click)="add()" style="margin-bottom:20px;">
+            <i class="fa fa-plus"></i> 添加</a>
+          <a class="btn blue-hoki" (click)="goback()" style="margin-bottom:20px;">
+            <i class="fa fa-plus"></i>返回</a>
+          <!--筛选-->
+          <div class="choosesx">
+            <form class="form-inline">
+              <div class="form-group col-md-3">
+                <label for="f1">介质编码：</label>
+                <input type="text" class="form-control code" placeholder="请输入介质编码" />
+              </div>
+              <button class="btn btn-default" type="button" (click)="reset()">重置</button>
+              <button class="btn green btn-default" type="button" (click)="seconedpaymediumlist()">查询</button>
+            </form>
+          </div>
+          <!--筛选-->
+          <div class="portlet box blue-hoki">
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>介质列表
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <!--列表end-->
+            <!--body-->
+            <div class="portlet-body">
+
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th style="width:15%">介质编号</th>
+                      <th style="width:15%">介质名称</th>
+                      <th style="width:15%">类型编号 </th>
+                      <th style="width:15%">客户端类型</th>
+                      <th style="width:20%">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of qudaolist">
+                      <td>{{item.code}}</td>
+                      <td>{{item.name}}</td>
+                      <td>
+                          <span *ngFor="let items of paytype">{{items.id==item.typeCode?items.value:''}}</span>
+                      </td>
+                      <td>
+                        <span *ngIf="item.clientType==1">PC</span>
+                        <span *ngIf="item.clientType==2">移动</span>
+                        <span *ngIf="item.clientType==0">不限</span>
+                        <span *ngIf="item.clientType==null">--</span>
+                      </td>
+                      <td>
+                        <a class="btn btn-xs btn-info" routerLink='/pay/paymediumdetail' [queryParams]="{id:item.code,type:1,pid:item.pCode}">
+                          <i class="fa fa-file-pdf-o"></i> 详情</a>
+                        <a class="btn btn-xs btn-info green" routerLink='/pay/paymediumdetail' [queryParams]="{id:item.code,type:2,pid:item.pCode}">
+                          <i class="fa fa-edit"></i> 编辑</a>
+                      </td>
+                    </tr>
+                    <tr *ngIf="nodata==true">
+                      <td colspan="6" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--分页页码-->
+              <div class="clearfix box">
+                <div id="pagination1" class="page fr"></div>
+              </div>
+              <!--分页页码end-->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

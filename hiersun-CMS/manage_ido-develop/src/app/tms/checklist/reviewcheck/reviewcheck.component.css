@@ -1,0 +1,14 @@
+th,
+td {
+  text-align: center;
+}
+
+td {
+  white-space: nowrap;
+}
+
+/* 去除表格底部横线 */
+
+table.dataTable.no-footer {
+  border-bottom: 1px solid #f9f9f9;
+}

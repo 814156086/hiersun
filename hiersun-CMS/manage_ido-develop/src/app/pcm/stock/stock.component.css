@@ -1,0 +1,37 @@
+.col-md-4 {
+  padding-right: 0;
+}
+
+.col-md-8 {
+  padding-left: 0;
+}
+
+.margin-search {
+  margin: 10px 30px 0 0 !important;
+}
+
+.height-30 {
+  height: 30px !important;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+/* 维护 选择框 居中 */
+
+.md-checkbox {
+  position: relative;
+  width: 18px;
+  margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* 库存变动详情 弹窗 */
+.stock-container {
+  width: 900px;
+}

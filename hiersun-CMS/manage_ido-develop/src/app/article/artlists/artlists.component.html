@@ -1,0 +1,194 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>文章列表
+      <small>Article Manage</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="portlet-body">
+  <div class="contenttab">
+    <div class="templatecon form-horizontal ng-untouched ng-pristine">
+      <div class="form-group" style="position: relative;">
+        <div class="col-md-11">
+          <button class="btn blue-hoki" routerLink="/article/addcmt" [queryParams]="{code:code,subCode:subCode}">添加文章</button>
+          <span class="btn blue-hoki fileinput-button" (click)="go_back()">返回</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <div class="form-horizontal" id="ffSearch">
+        <div class="row">
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label class="control-label col-md-4">文章标题：</label>
+              <div class="col-md-8">
+                <input id="heading" name="heading" type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label class="control-label col-md-4">是否审核：</label>
+              <div class="col-md-8">
+                <select id="verify" class="form-control">
+                  <option value="">全部</option>
+                  <option value="1">是</option>
+                  <option value="0">否</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label class="control-label col-md-4">是否推荐：</label>
+              <div class="col-md-8">
+                <select id="recommend" class="form-control">
+                  <option value="">全部</option>
+                  <option value="1">是</option>
+                  <option value="0">否</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label class="control-label col-md-4">是否发布：</label>
+              <div class="col-md-8">
+                <select id="publish" class="form-control">
+                  <option value="">全部</option>
+                  <option value="1">是</option>
+                  <option value="0">否</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label class="control-label col-md-4">发布时间：</label>
+              <div class="col-md-8">
+                <!-- <input type="Date" id="publishDate" class="beginDate form-control"> -->
+                <input class="input-append form-control" style="background-color:#fff;" readonly type="text"
+                  data-date-format="dd-mm-yyyy" name="publishDate" id="publishDate" placeholder="请选择发布时间" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12" style="text-align:center;">
+            <button id="btnSearch" type="button" class="btn default right" (click)="search()">查询
+              <i class="fa fa-search"></i>
+            </button>
+            <button id="btnReset" type="button" class="btn default right" (click)="request()">
+              <i class="fa fa-times"></i>重置
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-globe"></i>文章列表
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+        </div>
+      </div>
+
+      <div class="portlet-body">
+        <div class="table-scrollable">
+          <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_1" role="grid"
+            aria-describedby="sample_1_info">
+            <thead>
+              <tr>
+              <tr class="th">
+                <td *ngIf="code==3">发布人</td>
+                <td class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:15%;">文章标题</td>
+                <td class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:15%;">内容简介</td>
+                <td class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1">是否审核</td>
+                <td class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1">是否推荐</td>
+                <td class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:15%;">发布时间</td>
+                <td class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1">操作</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="tr" *ngFor="let item of tplList;">
+                <td *ngIf="code==3">{{item.nickName}}</td>
+                <td>{{item.heading}}</td>
+                <td>{{item.synopsis}}</td>
+                <td *ngIf="item.verify" class="verify">已审核</td>
+                <td *ngIf="!item.verify" class="verify">未审核</td>
+
+                <td *ngIf="item.recommend" class="recommend">已推荐</td>
+                <td *ngIf="!item.recommend" class="recommend">未推荐</td>
+                <td>{{item.publishDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>
+                  <!--  routerLink="/article/artd/{{item.code}}" -->
+                  <a class="btn btn-xs btn-warning" (click)="edit(item.id)">
+                    <i class="fa fa-edit"></i>
+                    编辑
+                  </a>
+                  <a class="btn btn-xs btn-info" (click)="operation(item.id,'verify')" *ngIf="item.verify==false">
+                    <i class="fa fa-edit"></i>
+                    审核
+                  </a>
+                  <a class="btn btn-xs btn-danger" *ngIf="item.publishDate==null" (click)="operation(item.id,'del')">
+                    <i class="fa fa-trash-o"></i>
+                    删除
+                  </a>
+                  <a class="btn btn-xs  btn-danger" *ngIf="item.publishDate!=null" (click)="operation(item.id,'unPublish')">
+                    <i class="fa fa-unlink"></i>
+                    下架</a>
+                  <a class="btn btn-xs btn-success" (click)="operation(item.id,'publish')" *ngIf="item.publishDate == null ">
+                    <i class="fa fa-location-arrow"></i>
+                    发布
+                  </a>
+                  <a class="btn btn-xs btn-primary" (click)="operation(item.id,'recommend')" ng-model="item.recommend"
+                    *ngIf="!item.recommend">
+                    <i class="fa fa-star"></i>
+                    推荐
+                  </a>
+                  <a class="btn btn-xs btn-primary" (click)="operation(item.id,'unRecommend')" ng-model="item.recommend"
+                    *ngIf="item.recommend">
+                    <i class="	fa fa-star-o"></i>
+                    取消推荐
+                  </a>
+                  <a class="btn btn-xs btn-default" target="_blank" href="{{item.idoUrl}}article-{{item.code}}-{{item.subCode}}/{{item.id}}/">
+                    <i class="fa fa-eye"></i>
+                    预览
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!--pagema-->
+        <div class="clearfix box">
+          <div id="pagination1" class="page fr"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 400px">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">文章列表</h4>
+      </div>
+      <div class="modal-body">{{message}}</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="subStatus()">确定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>添加小组信息
+        <small>Group add</small>
+      </h1>
+    </div>
+  </div>
+   <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body col-md-12">
+        <div class="contenttab">
+          <form class="form-horizontal" [formGroup]="formModel">
+            <div class="form-body">
+             <div class="form-group">
+                <label class="col-md-1 control-label" style="text-align: right;">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">
+                      <span style="color:red;">*</span>名称 :</font>
+                  </font>
+                </label>
+                <div class="col-md-11">
+                  <input id="name" class="form-control" [class.hasError]="formModel.get('name').invalid && formModel.get('name').touched" type="text"
+                    formControlName="name" name="newChildCn" [(ngModel)]="name" placeholder="请输入名称">
+                  <div [hidden]="formModel.get('name').untouched">
+                    <div class="formtips" [hidden]="!formModel.hasError('required',['name'])">
+                      请输入小组名称
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+              <div class="form-group">
+                  <label class="col-md-1 control-label" style="text-align: right;">
+                    <font style="vertical-align: inherit;">
+                      <font style="vertical-align: inherit;">描述：</font>
+                    </font>
+                  </label>
+                  <div class="col-md-11">
+                   <textarea id="comm" style="width:100%;height:80px;"></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-1 control-label" style="text-align: right;">
+                      <font style="vertical-align: inherit;">
+                          <font style="vertical-align: inherit;">状态：</font>
+                        </font>
+                    </label>
+                    <div class="col-md-11">
+                        <input type="radio" checked name="enabled" value="true">启用
+                          <input style="margin-left:20px;" type="radio" name="enabled" value="false">禁用
+                          
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="col-md-1">
+
+                    </div>
+                    <div class="form-actions right1 col-md-11">
+                      <button type="button" class="btn default" (click)="goback()">返回</button>
+                      <button  class="btn blue" [disabled]="formModel.invalid"  (click)="save()">保存</button><!-- [disabled]="formModel.invalid"-->
+                    </div>
+                </div>
+
+              <!-- -->
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>

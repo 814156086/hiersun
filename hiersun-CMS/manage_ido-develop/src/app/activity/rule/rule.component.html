@@ -1,0 +1,148 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>活动规则
+        <small>Activity Rule</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+
+          <div class="choosesx">
+            <form class="form-inline">
+              <div class="form-group col-md-3">
+                <label>活动编号：</label>
+                <select class="form-control activitySid">
+                  <option value="">请选择</option>
+                  <option *ngFor="let item of activityList" value="{{item.activitySid}}">{{item.activitySid}}-{{item.name}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label>规则类型：</label>
+                <select class="form-control type">
+                  <option value="">请选择</option>
+                  <option value="1">买赠</option>
+                  <option value="2">满减</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label>满减方式：</label>
+                <select class="form-control discountType">
+                  <option value="">请选择</option>
+                  <option value="1">固定折扣</option>
+                  <option value="2">固定金额</option>
+                </select>
+              </div>
+              <button class="btn btn-default" type="button" (click)="reset()">重置</button>
+              <button class="btn green btn-default" type="button" (click)="getRuleList()">查询</button>
+            </form>
+          </div>
+
+          <div style="clear:both;height:10px;"></div>
+          <div class="portlet box blue-hoki" style="margin-top: 15px;">
+
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>活动规则
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <!--列表end-->
+
+            <div class="portlet-body">
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover ">
+                  <thead>
+                  <tr>
+                    <th>活动名称</th>
+                    <!--<th>
+                      活动编号
+                    </th>-->
+                    <th>
+                      规则类型
+                    </th>
+                    <th>
+                      优惠规则
+                    </th>
+                    <th>
+                      优惠门槛
+                    </th>
+                    <th>
+                      满减方式
+                    </th>
+                    <th>
+                      折扣数量
+                    </th>
+                    <th>
+                      创建时间
+                    </th>
+                    <th>
+                      操作
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of ruleList">
+                    <td>{{item.name}}</td>
+                    <!--<td>{{item.activitySid}}</td>-->
+                    <td>
+                      <span class="label label-sm label-primary" *ngIf="item.type=='1'">买赠</span>
+                      <span class="label label-sm label-primary" *ngIf="item.type=='2'">满减</span>
+                    </td>
+                    <td>{{item.step}}</td>
+                    <td>{{item.threshold}}</td>
+                    <td>
+                      <span *ngIf="item.discountType=='1'">固定折扣</span>
+                      <span *ngIf="item.discountType=='2'">固定金额</span>
+                    </td>
+                    <td>{{item.discountNum}}</td>
+                    <td>
+                      <span *ngIf="item.createTime==null">--</span>
+                      <span *ngIf="item.createTime!=null">{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    </td>
+                    <td>
+                      <a class="btn btn-xs btn-info" routerLink='/activity/ruledetail' [queryParams]="{sid:item.sid,page:pageNo}">
+                        <i class="fa fa-file-pdf-o"></i>查看详情</a>
+                    </td>
+                  </tr>
+                  <tr *ngIf="nodata">
+                    <td colspan="7" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--分页页码-->
+              <div class="clearfix box">
+                <div id="pagination1" class="page fr"></div>
+              </div>
+              <!--分页页码end-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spinner" *ngIf="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>
+

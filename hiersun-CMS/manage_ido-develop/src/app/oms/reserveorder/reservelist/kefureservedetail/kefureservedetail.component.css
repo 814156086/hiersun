@@ -1,0 +1,11 @@
+.customers li{display:block;padding:10px;text-align:center;float:left;margin-right:3%;margin-top:10px;margin-bottom:10px;border:1px solid #ccc;cursor: pointer;}
+td {
+    white-space: nowrap;
+  }
+.table-scrollable {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid #dddddd;
+    margin: 10px 0 !important;
+  }

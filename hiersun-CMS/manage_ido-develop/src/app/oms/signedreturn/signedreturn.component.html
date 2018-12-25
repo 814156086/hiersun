@@ -1,0 +1,664 @@
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption" *ngIf="flag==2">
+          已签收退货信息管理
+        </div>
+        <div class="caption" *ngIf="flag==3">
+          京东已签收退货信息管理
+        </div>
+      </div>
+      <div class="portlet-body">
+        <form class="form-horizontal" id="ffSearch">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">销售单号：</label>
+                <div class="col-md-7">
+                  <input id="saleNum" name="txtSaleNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">订单号：</label>
+                <div class="col-md-7">
+                  <input id="orderNum" name="txtOrderNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">是否缺货：</label>
+                <div class="col-md-7">
+                  <select id="isStock" class="form-control">
+                    <option value="">所有</option>
+                    <option value="02">是</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">销售时间：</label>
+                <div class="col-md-7">
+                  <input type="text" id="saleDt" class="saleDate form-control" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">外部订单号：</label>
+                <div class="col-md-7">
+                  <input id="outOrderNum" name="txtOutOrderNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">手机号：</label>
+                <div class="col-md-7">
+                  <input id="receptPhone" name="txtReceptPhone" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">供货商名称：</label>
+                <div class="col-md-7">
+                  <input id="supplierName" name="txtSupplierName" type="text" class="form-control">
+                </div>
+              </div>
+            </div> -->
+            <!-- <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">供货商编码：</label>
+                <div class="col-md-7">
+                  <input id="supplierNum" name="txtSupplierNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div> -->
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12 disChannel">
+              <div class="form-group">
+                <label class="control-label col-md-4">销售渠道：</label>
+                <div class="col-md-7">
+                  <select id="saleChannel" class="form-control select2me" data-placeholder=" ">
+                    <option value="">所有</option>
+                    <option value="0">全渠道</option>
+                    <option value="C2">天猫渠道</option>
+                    <option value="C1">官网渠道</option>
+                    <option value="M1">微信平台渠道</option>
+                    <!-- <option *ngFor="let sourceitem of sourceList;let sourcekey=index;" value="{{sourceitem.channelCode}}">{{sourceitem.channelName}}</option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row margin-search">
+            <div class="">
+              <div class="form-group col-md-12" style="text-align:center;">
+                <button id="btnSearch" type="button" class="btn default" (click)="initRejectedInfo()">查询
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnReset" type="button" class="btn default" (click)="queryReset()">
+                  <i class="fa fa-times"></i>重置</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div id="sample_6_wrapper" class="dataTables_wrapper no-footer">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover allList">
+              <thead>
+                <tr class="text-center">
+                  <th> 操作</th>
+                  <th> 销售单号</th>
+                  <th> 销售渠道</th>
+                  <th> 订单号</th>
+                  <th> 外部订单号</th>
+                  <th> 手机号</th>
+                  <th> 会员卡号</th>
+                  <!-- <th> 供应商名称</th>
+                  <th> 供应商编码</th> -->
+                  <th> 下单时间</th>
+                  <th> 销售单金额</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="recordTotal==0">
+                  <td class="text-center" colspan="20">没有相关记录~</td>
+                </tr>
+                <tr role="row" class="odd" *ngFor="let rtItem of returnsList;let rtkey=index;">
+                  <td style="text-align:center;">
+                    <span style="cursor: pointer;" class="glyphicon glyphicon-plus" (click)="detailPlus($event.target,rtItem.saleNo,rtItem.saleSource,rtItem.orderNo)"></span>
+                  </td>
+                  <td>
+                    <a (click)="getSalesMes(rtItem.saleNo,1)">{{rtItem.saleNo}}</a>
+                  </td>
+                  <!-- <td>{{rtItem.saleSource}}</td> -->
+                  <td><span *ngFor="let sourceitem of sourceList;let stokey=index;">{{sourceitem.channelCode==rtItem.saleSource?sourceitem.channelName:''}}</span></td>
+                  <td>
+                    <a (click)="getOrderItemInfo(rtItem.orderNo,1)">{{rtItem.orderNo}}</a>
+                  </td>
+                  <td>{{rtItem.outOrderNo?rtItem.outOrderNo:"——"}}</td>
+                  <td>{{rtItem.receptPhone?rtItem.receptPhone:"——"}}</td>
+                  <td>{{rtItem.memberCardNo?rtItem.memberCardNo:"——"}}</td>
+                  <!-- <td>{{rtItem.suppllyName?rtItem.suppllyName:"——"}}</td>
+                  <td>{{rtItem.supplyNo?rtItem.supplyNo:"——"}}</td> -->
+                  <td>{{rtItem.saleTimeStr?rtItem.saleTimeStr:"——"}}</td>
+                  <td>{{rtItem.paymentAmount}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--分页-->
+          <div class="clearfix">
+            <div id="pagination1" class="page"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 操作加号的modal -->
+<!-- BEGIN MODAL-->
+<div class="modal fade" id="modal_plus" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog sale-container">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">销售单详情</h4>
+        </div> -->
+      <div class="modal-body form-horizontal">
+        <!-- 1 -->
+        <div class="form-body">
+          <div class="table-scrollable table-ofy">
+            <table class="table table-striped table-bordered table-hover selItemTable">
+              <thead>
+                <tr class="text-center">
+                  <th> 操作</th>
+                  <th> 商品名称</th>
+                  <th> 商品渠道名称</th>
+                  <th *ngFor="let pnitem of propNameList;let pnkey=index;">
+                    {{pnitem}}
+                  </th>
+                  <th> sku编码</th>
+                  <th> 缺货数量</th>
+                  <th> 商品编号</th>
+                  <th> 可退货数量</th>
+                  <th> 标准价</th>
+                  <th> 销售价</th>
+                  <th> 销售数量</th>
+                  <th> 是否为赠品</th>
+                  <th> 订单号</th>
+                  <th> 行号</th>
+                  <th> 门店名称</th>
+                  <th> 商品单位</th>
+                  <th> 品牌名称</th>
+                  <th> spu编码</th>
+                  <th>提货数量</th>
+                  <th>商品折后总额</th>
+                  <th>商品图片</th>
+                  <th>运费分摊金额</th>
+                  <th>实际运费分摊</th>
+                  <th>是否已评论</th>
+                  <th>收银损益</th>
+                  <th>创建时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr role="row" class="odd" *ngFor="let slitem of saleItemList;let skey=index;">
+                  <!-- <td><button type="button" class="btn green-meadow" (click)="submitReturn(slitem)">退货</button></td> -->
+                  <!-- 商品名称 -->
+                  <td id="{{slitem.salesItemNo}}">
+                    <div class="md-checkbox">
+                      <input type="checkbox" name="checkbox_NotJD" value="{{slitem.salesItemNo}}" title="{{slitem.sid}}"
+                        id="checkbox_all{{slitem.sid}}" class="md-check" *ngIf="!hasGift" checked disabled>
+                      <input type="checkbox" name="checkbox_NotJD" value="{{slitem.salesItemNo}}" title="{{slitem.sid}}"
+                        id="checkbox_all{{slitem.sid}}" class="md-check" *ngIf="hasGift">
+                      <label for="checkbox_all{{slitem.sid}}">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td> {{slitem.shoppeProName?slitem.shoppeProName:"——"}}</td>
+                  <!-- 商品渠道名称 -->
+                  <td> {{slitem.productChannleName?slitem.productChannleName:"——"}} </td>
+                  <td *ngFor="let spItem of slitem.salePropList;let spkey=index;">
+                    {{spItem?spItem:"——"}}
+                  </td>
+                  <!-- sku编码 -->
+                  <td> {{slitem.skuNo?slitem.skuNo:"——"}}</td>
+                  <!-- 缺货数量 -->
+                  <td> {{slitem.stockoutAmount}} </td>
+                  <!-- 商品编号 -->
+                  <td class="NotJDbarCode"> {{slitem.barcode?slitem.barcode:"——"}} </td>
+                  <!-- 可退货数量 -->
+                  <!-- <td> {{slitem.refundNum}}</td> -->
+                  <td class="NotJDrefundNum">
+                    <div class="input-group input-small">
+                      <input type="number" style="height: 34px;" class="spinner-input form-control NotJDproNum_{{slitem.sid}}"
+                        readonly="" value={{slitem.refundNum}} />
+                      <div class="spinner-buttons input-group-btn btn-group-vertical">
+                        <button type="button" class="btn spinner-up btn-xs blue" (click)="plusNumJDNot(slitem.refundNum,slitem.sid)">
+                          <i class="fa fa-angle-up"></i>
+                        </button>
+                        <button type="button" class="btn spinner-down btn-xs blue" (click)="lowerNumJDNot(slitem.refundNum,slitem.sid)">
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                  <!-- 标准价 -->
+                  <td> {{slitem.standPrice}} </td>
+                  <!-- 销售价 -->
+                  <td class="NotJDprice"> {{slitem.salePrice}} </td>
+                  <!-- 销售数量 -->
+                  <td> {{slitem.saleSum}} </td>
+                  <!-- 是否为赠品 -->
+                  <td *ngIf="slitem.isGift!=1">
+                    <span class="label label-sm label-danger">否</span>
+                  </td>
+                  <td *ngIf="slitem.isGift==1">
+                    <span class="label label-sm label-success">是</span>
+                  </td>
+                  <!-- 订单号 -->
+                  <td class="NotJDorderNo"> {{slitem.orderNo?slitem.orderNo:"——"}}</td>
+                  <!-- 行号 -->
+                  <td> {{slitem.rowNo?slitem.rowNo:"——"}}</td>
+                  <!-- 门店名称 -->
+                  <td> 门店名称 </td>
+                  <!-- 商品单位 -->
+                  <td> {{slitem.unit?slitem.unit:"——"}}</td>
+                  <!-- 品牌名称 -->
+                  <td> {{slitem.brandName?slitem.brandName:"——"}} </td>
+                  <!-- spu编码 -->
+                  <td> {{slitem.spuNo?slitem.spuNo:"——"}} </td>
+                  <!-- 提货数量 -->
+                  <td> {{slitem.pickSum}}</td>
+                  <!-- 商品折后总额 -->
+                  <td> {{slitem.paymentAmount}}</td>
+                  <!-- 商品图片 -->
+                  <td> 商品图片</td>
+                  <!-- 运费分摊金额 -->
+                  <td> {{slitem.shippingFeeSplit}}</td>
+                  <!-- 实际运费分摊 -->
+                  <td> {{slitem.shippingFeeSplit}}</td>
+                  <!-- 是否已评论 -->
+                  <td> 是否已评论</td>
+                  <!-- 收银损益 -->
+                  <td> {{slitem.incomeAmount}}</td>
+                  <!-- 创建时间 -->
+                  <td> {{slitem.createdTimeStr?slitem.createdTimeStr:"——"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 1 -->
+        <div style="margin: 0 auto;width: 30%;">
+          <button type="button" class="btn btn-block green-meadow" (click)="submitReturn()">退货</button>
+        </div>
+      </div>
+      <div class="modal-footer" style="text-align: right">
+        <button type="button" class="btn default" data-dismiss="modal" (click)="closeMoadl()">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END MODAL-->
+<!-- 操作加号的modal -->
+<!-- BEGIN MODAL-->
+<div class="modal fade" id="modal_plusjd" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog sale-container">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">销售单详情</h4>
+        </div> -->
+      <div class="modal-body form-horizontal">
+        <!-- 1 -->
+        <div class="form-body">
+          <div class="table-scrollable table-ofy">
+            <table class="table table-striped table-bordered table-hover selItemTable">
+              <thead>
+                <tr class="text-center">
+                  <th> 操作</th>
+                  <th> 商品名称</th>
+                  <th> 商品渠道名称</th>
+                  <th *ngFor="let pnitem of propNameList;let pnkey=index;">
+                    {{pnitem}}
+                  </th>
+                  <th> sku编码</th>
+                  <th> 缺货数量</th>
+                  <th> 商品编号</th>
+                  <th> 可退数量</th>
+                  <th> 标准价</th>
+                  <th> 销售价</th>
+                  <th> 销售数量</th>
+                  <th> 是否为赠品</th>
+                  <th> 订单号</th>
+                  <th> 行号</th>
+                  <th> 门店名称</th>
+                  <th> 商品单位</th>
+                  <th> 品牌名称</th>
+                  <th> spu编码</th>
+                  <th> 可退货数量</th>
+                  <th>提货数量</th>
+                  <th>商品折后总额</th>
+                  <th>商品图片</th>
+                  <th>运费分摊金额</th>
+                  <th>实际运费分摊</th>
+                  <th>是否已评论</th>
+                  <th>收银损益</th>
+                  <th>创建时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr role="row" class="odd" *ngFor="let slitem of saleItemList;let skey=index;">
+                  <td id="{{slitem.salesItemNo}}">
+                    <div class="md-checkbox">
+                      <input type="checkbox" name="checkbox_JD" value="{{slitem.salesItemNo}}" title="{{slitem.sid}}"
+                        id="checkbox{{slitem.sid}}" class="md-check">
+                      <label for="checkbox{{slitem.sid}}">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                      </label>
+                    </div>
+                  </td>
+                  <!-- 商品名称 -->
+                  <td> {{slitem.shoppeProName?slitem.shoppeProName:"——"}}</td>
+                  <!-- 商品渠道名称 -->
+                  <td> {{slitem.productChannleName?slitem.productChannleName:"——"}} </td>
+                  <td *ngFor="let spItem of slitem.salePropList;let spkey=index;">
+                    {{spItem?spItem:"——"}}
+                  </td>
+                  <!-- sku编码 -->
+                  <td> {{slitem.skuNo?slitem.skuNo:"——"}}</td>
+                  <!-- 缺货数量 -->
+                  <td> {{slitem.stockoutAmount}} </td>
+                  <!-- 商品编号 -->
+                  <td class="JDbarCode"> {{slitem.barcode?slitem.barcode:"——"}} </td>
+                  <!-- 可退数量 -->
+                  <td class="JDrefundNum">
+                    <div class="input-group input-small">
+                      <input type="number" style="height: 34px;" class="spinner-input form-control JDproNum_{{slitem.sid}}"
+                        readonly="" value="{{slitem.refundNum}}" />
+                      <div class="spinner-buttons input-group-btn btn-group-vertical">
+                        <button type="button" class="btn spinner-up btn-xs blue" (click)="plusNumJD(slitem.refundNum,slitem.sid)">
+                          <i class="fa fa-angle-up"></i>
+                        </button>
+                        <button type="button" class="btn spinner-down btn-xs blue" (click)="lowerNumJD(slitem.refundNum,slitem.sid)">
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                  <!-- 标准价 -->
+                  <td> {{slitem.standPrice}} </td>
+                  <!-- 销售价 -->
+                  <td class="JDprice"> {{slitem.salePrice}} </td>
+                  <!-- 销售数量 -->
+                  <td> {{slitem.saleSum}} </td>
+                  <!-- 是否为赠品 -->
+                  <td *ngIf="slitem.isGift!=1">
+                    <span class="label label-sm label-danger">否</span>
+                  </td>
+                  <td *ngIf="slitem.isGift==1">
+                    <span class="label label-sm label-success">是</span>
+                  </td>
+                  <!-- 订单号 -->
+                  <td class="JDorderNo"> {{slitem.orderNo?slitem.orderNo:"——"}}</td>
+                  <!-- 行号 -->
+                  <td> {{slitem.rowNo?slitem.rowNo:"——"}}</td>
+                  <!-- 门店名称 -->
+                  <td> 门店名称 </td>
+                  <!-- 商品单位 -->
+                  <td> {{slitem.unit?slitem.unit:"——"}}</td>
+                  <!-- 品牌名称 -->
+                  <td> {{slitem.brandName?slitem.brandName:"——"}} </td>
+                  <!-- spu编码 -->
+                  <td> {{slitem.spuNo?slitem.spuNo:"——"}} </td>
+                  <!-- 可退货数量 -->
+                  <td> {{slitem.refundNum}}</td>
+                  <!-- 提货数量 -->
+                  <td> {{slitem.pickSum}}</td>
+                  <!-- 商品折后总额 -->
+                  <td> {{slitem.paymentAmount}}</td>
+                  <!-- 商品图片 -->
+                  <td> 商品图片</td>
+                  <!-- 运费分摊金额 -->
+                  <td> {{slitem.shippingFeeSplit}}</td>
+                  <!-- 实际运费分摊 -->
+                  <td> {{slitem.shippingFeeSplit}}</td>
+                  <!-- 是否已评论 -->
+                  <td> 是否已评论</td>
+                  <!-- 收银损益 -->
+                  <td> {{slitem.incomeAmount}}</td>
+                  <!-- 创建时间 -->
+                  <td> {{slitem.createdTimeStr?slitem.createdTimeStr:"——"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 1 -->
+        <div style="margin: 0 auto;width: 30%;">
+          <button type="button" class="btn btn-block green-meadow" (click)="submitReturnJD()">退货</button>
+        </div>
+      </div>
+      <div class="modal-footer" style="text-align: right;">
+        <button type="button" class="btn default" data-dismiss="modal" (click)="closeMoadl()">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END MODAL-->
+<!-- JD提交退货弹窗 -->
+<!-- BEGIN MODAL-->
+<div class="modal fade" id="submit_jdreturn" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">创建退货申请单</h4>
+      </div>
+      <!-- <p>退款金额</p> -->
+      <div class="modal-body form-horizontal">
+        <div class="row">
+          <!-- 1 -->
+          <form style="padding: 0 5%">
+            <h4>退款金额</h4>
+            <table class="table table-striped table-bordered table-hover allList">
+              <thead>
+                <tr class="text-center">
+                  <th> 类型</th>
+                  <th> 名称</th>
+                  <th> 金额</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr role="row" class="odd">
+                  <td>支付</td>
+                  <td>其他支付</td>
+                  <td>
+                    <input id="otherPay" class="form-control" name="txtOtherPay" type="text" placeholder="请输入数字">
+                    <!-- <span class="regPoint">请输入数字</span> -->
+                    <!-- <input id="otherPay" class="form-control" name="txtOtherPay" [class.hasError]="formModel.get('otherPay').invalid && formModel.get('otherPay').touched" 
+                    type="text" formControlName="otherPay" [(ngModel)]="otherPay" placeholder="请输入数字"> -->
+
+                    <!-- <div [hidden]="formModel.get('otherPay').untouched">
+                        <div class="formtips" [hidden]="!formModel.hasError('required',['otherPay'])">
+                            模板名称必填
+                        </div>
+                    </div> -->
+                  </td>
+                </tr>
+                <tr role="row" class="odd">
+                  <td>支付</td>
+                  <td>扣税项支付</td>
+                  <td> <input id="taxDeduction" name="txtTaxDeduction" type="text" class="form-control" placeholder="请输入数字"></td>
+                </tr>
+                <tr role="row" class="odd">
+                  <td>支付</td>
+                  <td>京豆</td>
+                  <td> <input id="Jingdou" name="txtJingdou" type="text" class="form-control" placeholder="请输入数字"></td>
+                </tr>
+                <tr role="row" class="odd">
+                  <td>支付</td>
+                  <td>退款金额</td>
+                  <td> <input id="refundAmount" name="txtRefAmount" type="text" class="form-control" placeholder="请输入数字"></td>
+                </tr>
+                <tr role="row" class="odd">
+                  <td>扣款</td>
+                  <td>运费</td>
+                  <td> <input id="Freight" name="txtFreight" type="text" class="form-control" placeholder="请输入数字"></td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+          <!-- 1 -->
+          <!-- <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <label class="control-label col-md-3">可退商品数量：</label>
+              <div style="display: inline-block;">
+
+                <div class="input-group input-small">
+                  <input type="number" style="height: 34px;" class="proNum spinner-input form-control" maxlength="3"
+                    readonly="" value="{{proNumJD}}" />
+                  <div class="spinner-buttons input-group-btn btn-group-vertical">
+                    <button type="button" class="btn spinner-up btn-xs blue" (click)="plusNumJD()">
+                      <i class="fa fa-angle-up"></i>
+                    </button>
+                    <button type="button" class="btn spinner-down btn-xs blue" (click)="lowerNumJD()">
+                      <i class="fa fa-angle-down"></i>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div> -->
+          <!-- 1 -->
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <label class="control-label col-md-3">包装情况：</label>
+              <div style="display: inline-block;">
+                <select id="packStatusJD" class="form-control">
+                  <option value="包装良好">包装良好</option>
+                  <option value="包装破损">包装破损</option>
+                  <option value="包装无">包装无</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- 1 -->
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <label class="control-label col-md-3">商品情况：</label>
+              <div style="display: inline-block;">
+                <select id="productsStatusJD" class="form-control">
+                  <option value="良好">良好</option>
+                  <option value="有划痕">有划痕</option>
+                  <option value="外观破损">外观破损</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- 1 -->
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <label class="control-label col-md-3">退货原因：</label>
+              <div style="display: inline-block;">
+                <select id="rejectedReasonJD" class="form-control">
+                  <option value="">请选择</option>
+                  <option *ngFor="let refitem of refundReasonList;let refkey=index;" value="{{refitem.codeValue}}">{{refitem.codeName}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- 2 -->
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <label class="control-label col-md-3">备注：</label>
+              <div style="display: inline-block;">
+                <textarea rows="3" placeholder="非必填" id="callCenterCommentsJD"></textarea>
+              </div>
+            </div>
+          </div>
+          <!-- 2 -->
+        </div>
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <button type="button" class="btn blue" (click)="subJDReason()">提交</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 提交退货弹窗 -->
+<!-- BEGIN MODAL-->
+<div class="modal fade" id="submit_returnNotJD" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">创建退货申请单</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+        <!-- 1 -->
+        <div class="form-body">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退货原因：</label>
+                <div class="col-md-7">
+                  <select id="rejreason" class="form-control">
+                    <option value="">请选择退货申请的原因</option>
+                    <option *ngFor="let refitema of refundReasonList;let refkey=index;" value="{{refitema.codeValue}}">{{refitema.codeName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 1 -->
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <button type="button" class="btn blue" (click)="subReason()">确定</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BEGIN MODAL-->
+<!-- 销售单详情弹窗 -->
+<app-saledetail #saledetail></app-saledetail>
+<!-- 订单详情弹窗 -->
+<app-orderdetail #orderdetail></app-orderdetail>
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

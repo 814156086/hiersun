@@ -1,0 +1,15 @@
+th,
+td {
+  text-align: center;
+}
+
+td {
+  white-space: nowrap;
+}
+.table-scrollable {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid #dddddd;
+    /* margin: 10px 0 !important; */
+  }

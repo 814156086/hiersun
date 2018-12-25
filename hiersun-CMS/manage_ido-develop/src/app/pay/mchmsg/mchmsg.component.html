@@ -1,0 +1,500 @@
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:70%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">商户管理</font>
+            <input type="hidden" class="isadd">
+          </font>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form action="#" class="form-horizontal" id="submit_form">
+          <div class="form-wizard">
+            <div class="form-body">
+              <ul class="nav nav-pills nav-justified steps">
+                <li class="active" (click)="changetab(0)">
+                  <a href="#tab1" data-toggle="tab" class="step" aria-expanded="true">
+                    <span class="number">1 </span>
+                    <span class="desc">
+                      <i class="fa fa-check"></i> 商户信息</span>
+                  </a>
+                </li>
+                <li (click)="changetab(1)">
+                  <a href="#tab2" data-toggle="tab" class="step">
+                    <span class="number">2 </span>
+                    <span class="desc">
+                      <i class="fa fa-check"></i> 支付通道</span>
+                  </a>
+                </li>
+                <li (click)="changetab(2)">
+                  <a href="#tab3" data-toggle="tab" class="step">
+                    <span class="number">3 </span>
+                    <span class="desc">
+                      <i class="fa fa-check"></i>信息确认</span>
+                  </a>
+                </li>
+              </ul>
+              <div id="bar" class="progress progress-striped" role="progressbar">
+                <div class="progress-bar progress-bar-success" style="width: 33%;">
+                </div>
+              </div>
+              <div class="tab-content">
+                <div class="alert alert-danger display-none">
+                  <button class="close" data-dismiss="alert"></button> You have some form errors. Please check below.
+                </div>
+                <div class="alert alert-success display-none">
+                  <button class="close" data-dismiss="alert"></button> Your form validation is successful!
+                </div>
+                <div class="tab-pane active" id="tab1">
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                      <span style="color:red;">*</span>商户名称：</label>
+                    <div class="col-md-8">
+                      <!--选择框-->
+                      <div class="md-radio-inline">
+                        <div class="md-radio">
+                          <input type="radio" id="regular" name="opeType" title="0" class="md-radiobtn" checked="" (change)="options()">
+                          <label for="regular">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span>
+                            店铺商户</label>
+                        </div>
+                        <div class="md-radio has-error">
+                          <input type="radio" id="franchise" name="opeType" title="1" class="md-radiobtn" (change)="options()">
+                          <label for="franchise">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span>
+                            普通商户</label>
+                        </div>
+                      </div>
+                      <!--选择框end-->
+                      <div [hidden]="optional==1">
+                        <select id="shops" class="form-control select2me shops" data-placeholder="请选择">
+                          <option value="">请选择</option>
+                          <option *ngFor="let item of shops;let list=index;" value="{{item.organizationCode}}">{{item.organizationCode}}-{{item.organizationName}}</option>
+                        </select>
+                        <div class="formtips" style="display:none">
+                          商户名称必选
+                        </div>
+                      </div>
+                      <div class="addbusines" *ngIf="optional==1">
+                        <input type="text writename" class="form-control" (change)="validinput($event.target)">
+                        <div class="formtips" style="display:none">
+                          商户名称必填
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">是否启用：</label>
+                    <div class="col-md-8">
+                      <div class="switch" data-on="success" data-off="warning">
+                        <input type="checkbox" checked name="businessenabled" id="businessenabled" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                      <span style="color:red;">*</span>请求密钥：</label>
+                    <div class="col-md-8">
+                      <textarea class="form-control" name="businesssy" [(ngModel)]="businesssy" placeholder="请输入请求私钥" readonly></textarea>
+                      <!-- <a class="btn btn-xs btn-info" (click)="random()">生成密钥</a> -->
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                      <span style="color:red;">*</span>响应密钥：</label>
+                    <div class="col-md-8">
+                      <textarea class="form-control" name="businessxysy" [(ngModel)]="businessxysy" placeholder="请输入响应私钥" readonly></textarea>
+                      <!-- <a class="btn btn-xs btn-info" (click)="randomxy()">生成密钥</a> -->
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">备注：</label>
+                    <div class="col-md-8">
+                      <textarea class="form-control comm" placeholder="请填写备注"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab2">
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">
+                      <span style="color:red;">*</span>支付平台：
+                    </label>
+                    <div class="col-md-3">
+                      <select class="form-control channelname" (change)="applyname($event.target)">
+                        <option value="ALIPAY">支付宝</option>
+                        <option value="WXPAY">微信</option>
+                      </select>
+                      <div class="formtips"></div>
+                    </div>
+                    <label class="col-md-2 control-label">
+                      <span style="color:red;">*</span>平台名称：
+                    </label>
+                    <div class="col-md-3">
+                      <input class="form-control ptname" type="text" name="ptname" [(ngModel)]="ptname" placeholder="请输入平台名称">
+                      <div class="formtips" style="display:none">请输入平台名称</div>
+                    </div>
+                  </div>
+                  <div class="form-group" *ngIf="optional==2">
+                    <label class="col-md-3 control-label">
+                      <span style="color:red;">*</span>销售渠道：
+                    </label>
+                    <div class="col-md-8">
+                      <select id="channle" class="form-control channle" (change)="thisvalue()">
+                        <option value="">请选择</option>
+                        <option *ngFor="let item of channellists;let list=index;" value="{{item.channelCode}}">{{item.channelName}}</option>
+                      </select>
+                      <div class="formtips" style="display:none">请选择销售渠道</div>
+                    </div>
+                  </div>
+                  <div class="form-group" *ngIf="appluyname==1">
+                    <label class="col-md-3 control-label">
+                      <span style="color:red;">*</span>平台编号：
+                    </label>
+                    <div class="col-md-8">
+                      <input class="form-control pindaonum" type="text" name="chanelbussid" [(ngModel)]="chanelbussid" placeholder="请输入平台编号" (input)="validbh($event.target)">
+                      <div class="formtips" style="display:none">请输入数字或者字母</div>
+                    </div>
+                  </div>
+                  <div class="form-group applydetail">
+                    <label class="col-md-3 control-label">应用名称:</label>
+                    <div class="col-md-3">
+                      <input class="form-control yyname" type="text" name="yyname" placeholder="请填写" (change)="yyname()" />
+                    </div>
+                    <label class="col-md-2 control-label">费率:</label>
+                    <div class="col-md-3">
+                      <input class="form-control feeRate" type="text" name="feeRate" placeholder="请输入费率" value="0.00" (input)="validnum($event.target)">
+                      <div class="formtips" style="display:none">只能输入大于0，小于100的数字</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">
+                      <span style="color:red;">*</span>appId：</label>
+                    <div class="col-md-8">
+                      <input class="form-control appid" type="text" name="appid" [(ngModel)]="appid" placeholder="请输入appId">
+                      <div class="formtips" style="display:none">
+                        appId必填
+                      </div>
+                    </div>
+                  </div>
+                  <!--wx-->
+                  <div *ngIf="appluyname!=1">
+                    <div class="form-group wxdetail">
+                      <label class="col-md-3 control-label">
+                        <span style="color:red;">*</span>商户ID:</label>
+                      <div class="col-md-8">
+                        <textarea class="form-control wxrequire" type="text" name="wxMchId" [(ngModel)]="wxMchId" placeholder="请输入wxMchId"></textarea>
+                        <div class="formtips" style="display:none">
+                          wxMchId必填
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group wxdetail">
+                      <label class="col-md-3 control-label">
+                        <span style="color:red;">*</span>微信密钥(key):</label>
+                      <div class="col-md-8">
+                        <textarea class="form-control wxrequire" type="text" name="key" [(ngModel)]="key" placeholder="请输入key"></textarea>
+                        <div class="formtips" style="display:none">
+                          key必填
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group wxdetail">
+                      <label class="col-md-3 control-label">
+                        <span style="color:red;">*</span>支付证书存放路径:</label>
+                      <div class="col-md-8">
+                        <input class="form-control wxrequire" type="text" name="certLocalPath" [(ngModel)]="certLocalPath" placeholder="请输入支付证书存放路径，相对路径，不能以/开头">
+                        <div class="formtips" style="display:none">
+                          certLocalPath必填
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--wx end-->
+                  <!--ALIPAY-->
+                  <div *ngIf="appluyname==1">
+                    <div class="form-group applydetail">
+                      <label class="col-md-3 control-label">
+                        <span style="color:red;">*</span>支付宝公钥(alipayPublicKey):</label>
+                      <div class="col-md-8">
+                        <textarea class="form-control alipayrequire" name="alipayPublicKey" [(ngModel)]="alipayPublicKey" placeholder="请输入alipayPublicKey"></textarea>
+                        <div class="formtips" style="display:none">
+                          alipayPublicKey必填
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group applydetail">
+                      <label class="col-md-3 control-label">
+                        <span style="color:red;">*</span>商户私钥(privateKey):</label>
+                      <div class="col-md-8">
+                        <textarea class="form-control alipayrequire" name="privateKey" [(ngModel)]="privateKey" placeholder="请输入privateKey"></textarea>
+                        <div class="formtips" style="display:none">
+                          privateKey必填
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group applydetail">
+                      <label class="col-md-3 control-label">
+                        <span style="color:red;">*</span>商户公钥(publicKey):</label>
+                      <div class="col-md-8">
+                        <textarea class="form-control alipayrequire" type="text" name="publicKey" [(ngModel)]="publicKey" placeholder="请输入publicKey"></textarea>
+                        <div class="formtips" style="display:none">
+                          publicKey必填
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">是否沙箱：</label>
+                      <div class="col-md-3">
+                        <!-- <div class="switch" data-on="success" data-off="warning">
+                          <input type="checkbox" checked name="balance" id="shaxiang" />
+                        </div> -->
+                        <div class="md-radio-inline">
+                          <div class="md-radio">
+                            <input type="radio" id="shaxiang1" name="shaxiang" title="0" class="md-radiobtn" checked="checked" (change)="shaxiangchange()">
+                            <label for="shaxiang1">
+                              <span></span>
+                              <span class="check"></span>
+                              <span class="box"></span>
+                              启用</label>
+                          </div>
+                          <div class="md-radio has-error">
+                            <input type="radio" id="shaxiang2" name="shaxiang" title="1" class="md-radiobtn" (change)="shaxiangchange()">
+                            <label for="shaxiang2">
+                              <span></span>
+                              <span class="check"></span>
+                              <span class="box"></span>
+                              不启用</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--ALIPAY end-->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">
+                      <span style="color:red;">*</span>是否开启对账功能：</label>
+                    <div class="col-md-8">
+                      <div class="switch" data-on="success" data-off="warning">
+                        <input type="checkbox" checked name="balance" id="balance" />
+                      </div>
+                    </div>
+                  </div>
+                  <!---->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">渠道是否可用：</label>
+                    <div class="col-md-8">
+                      <div class="switch" data-on="success" data-off="warning">
+                        <input type="checkbox" checked name="chanenlname" id="chanenlname" />
+                      </div>
+                    </div>
+                  </div>
+                  <!---->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">应用是否可用：</label>
+                    <div class="col-md-8">
+                      <div class="switch" data-on="success" data-off="warning">
+                        <input type="checkbox" checked name="yongname" id="yongname" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-1"></div>
+                    <fieldset class="col-md-10 clearfix">
+                      <legend>功能列表</legend>
+                      <div class="md-checkbox-inline col-md-12">
+                        <div class="md-checkbox col-md-4" *ngFor="let item of funclists;let key=index">
+                          <input type="checkbox" id="checkbox{{key}}" class="md-check" name="funcl" title="{{item.id}}" value="{{item.value}}" (click)="checkfunclist()">
+                          <label for="checkbox{{key}}">
+                            <span class="inc"></span>
+                            <span class="check"></span>
+                            <span class="box"></span>
+                            {{item.value}}</label>&nbsp;
+                          <a title="详情" data-container="body" data-toggle="popover" data-placement="top" data-content="" id="{{key}}" (click)="detailshow(key,$event.target,item.comm)"
+                            style="z-index:10051">
+                            <i class="fa fa-question-circle"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                  <!---->
+                </div>
+                <div class="tab-pane" id="tab3">
+                  <form class="form-horizontal">
+                    <div class="col-md-12 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <label class="control-label col-md-2">商户名称：</label>
+                        <div class="col-md-4 control-label" style="text-align:left">{{name}}</div>
+                        <label class="control-label col-md-2">是否启用：</label>
+                        <div class="col-md-4 control-label" style="text-align:left">
+                          <span *ngIf="enabled==1">启用</span>
+                          <span *ngIf="enabled!=1">停用</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <label class="control-label col-md-2">支付平台：</label>
+                        <div class="col-md-4 control-label" style="text-align:left">
+                          <span *ngIf="appluyname==2">微信</span>
+                          <span *ngIf="appluyname==1">支付宝</span>
+                        </div>
+                        <label class="control-label col-md-2">平台名称：</label>
+                        <div class="col-md-4 control-label" style="text-align:left">{{ptname}}</div>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <label class="control-label col-md-2">请求密钥：</label>
+                        <div class="col-md-4 control-label" style="text-align:left">{{businesssy}}</div>
+                        <label class="control-label col-md-2">响应密钥：</label>
+                        <div class="col-md-4 control-label" style="text-align:left">{{businessxysy}}</div>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <label class="control-label col-md-2">应用名称：</label>
+                        <div class="col-md-4 control-label" style="text-align:left">{{yynames}}</div>
+                        <label class="control-label col-md-2">费率：</label>
+                        <div class="col-md-4 control-label" style="text-align:left">{{feilv}}</div>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                          <label class="control-label col-md-2">渠道是否可用：</label>
+                          <div class="col-md-4 control-label" style="text-align:left">
+                            <span *ngIf="mchPayChannelEnabled==1">可用</span>
+                            <span *ngIf="mchPayChannelEnabled!=1">不可用</span>
+                          </div>
+                          <label class="control-label col-md-2">应用是否可用：</label>
+                          <div class="col-md-4 control-label" style="text-align:left">
+                              <span *ngIf="mchPayAppEnabled==1">可用</span>
+                              <span *ngIf="mchPayAppEnabled!=1">不可用</span>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-md-12 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <label class="control-label col-md-2">是否开启对账功能：</label>
+                        <div class="col-md-4 control-label" style="text-align:left">
+                          <span *ngIf="checked==true">是</span>
+                          <span *ngIf="checked!=true">否</span>
+                        </div>
+                        <label class="control-label col-md-2">销售渠道：</label>
+                        <div class="col-md-4 control-label" style="text-align:left">
+                          {{chanel}}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <label class="control-label col-md-2">appid：</label>
+                        <div class="col-md-10 control-label" style="text-align:left">{{appid}}</div>
+                      </div>
+                    </div>
+                    <!--如果是支付宝-->
+                    <div *ngIf="appluyname==1">
+                      <div class="col-md-12 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                          <label class="control-label col-md-2">平台编号：</label>
+                          <div class="col-md-10 control-label" style="text-align:left">{{chanelbussid}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                          <label class="control-label col-md-2">支付宝公钥：</label>
+                          <div class="col-md-10 control-label" style="text-align:left;word-wrap: break-word;">{{alipayPublicKey}}</div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                          <label class="control-label col-md-2">商户私钥：</label>
+                          <div class="col-md-10 control-label" style="text-align:left;word-wrap: break-word;">{{privateKey}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                          <label class="control-label col-md-2">商户公钥：</label>
+                          <div class="col-md-10 control-label" style="text-align:left;word-wrap: break-word;">{{publicKey}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                          <label class="control-label col-md-2">是否启用沙箱：</label>
+                          <div class="col-md-10 control-label" style="text-align:left">
+                            <span *ngIf="shaxiang==0">启用</span>
+                            <span *ngIf="shaxiang!=0">不启用</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--如果是微信-->
+                    <div *ngIf="appluyname==2">
+                      <div class="col-md-12 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                          <label class="control-label col-md-2">微信密钥：</label>
+                          <div class="col-md-10 control-label" style="text-align:left;word-wrap: break-word;">{{key}}</div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                          <label class="control-label col-md-2">支付证书存放路径：</label>
+                          <div class="col-md-10 control-label" style="text-align:left;word-wrap: break-word;">{{certLocalPath}}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <label class="control-label col-md-2">功能列表：</label>
+                        <div class="col-md-10 control-label" style="text-align:left">{{numbername}}</div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions">
+              <div class="row">
+                <div class="col-md-offset-3 col-md-9 watestep">
+                  <a href="javascript:;" class="btn default button-previous" (click)="prestep()" style="display: none;">
+                    <i class="m-icon-swapleft"></i>上一步</a>
+                  <a href="javascript:;" class="btn blue button-next" (click)="stepone($event.target)">
+                    下一步
+                    <i class="m-icon-swapright m-icon-white"></i>
+                  </a>
+                  <a href="javascript:;" class="btn blue button-next" style="display: none;" (click)="stepone1($event.target)">
+                    下一步
+                    <i class="m-icon-swapright m-icon-white"></i>
+                  </a>
+                  <a href="javascript:;" class="btn green button-submit" (click)="onsubmit()" style="display: none;">
+                    提交
+                    <i class="m-icon-swapright m-icon-white"></i>
+                  </a>
+                  <span class="tips" style="color:red;margin-left:10px;"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!--       <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button data-dismiss="modal" class="btn blue delsure" (click)="datadel()">确认</button>
+      </div> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,160 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+          <div class="caption" *ngIf="flag==1">
+            <i class="glyphicon glyphicon-chevron-left back_hand" (click)="goBack()"></i>添加库位
+          </div>
+          <div class="caption" *ngIf="flag==2">
+            <i class="glyphicon glyphicon-chevron-left back_hand" (click)="goBack()"></i>编辑库位
+          </div>
+        </div>
+        <div class="portlet-body form">
+          <!-- BEGIN FORM-->
+          <div class="form-horizontal">
+            <div class="form-body">
+              <div class="form-group">
+                <label class="col-md-3 control-label">库位编号
+                  <span class="required" aria-required="true">
+                    * </span>
+                </label>
+                <div class="col-md-4">
+                  <div class="input-icon">
+                    <i class="fa fa-bell-o"></i>
+                    <input type="text" class="form-control localNum" value="{{tmsLocal.localNum}}" placeholder="可不填，自动生成" readonly >
+                    <input type="hidden" class="form-control localSid" value="{{tmsLocal.sid}}">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">库位名称
+                  <span class="required" aria-required="true">
+                    * </span>
+                </label>
+                <div class="col-md-4">
+                  <div class="input-icon">
+                    <i class="fa fa-bell-o"></i>
+                    <input type="text" class="form-control localName" value="{{tmsLocal.localName}}" placeholder="必填" required>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">库位类型
+                  <span class="required" aria-required="true">
+                    * </span>
+                </label>
+                <div class="col-md-4">
+                  <select id="localType" class="form-control">
+                    <option value="">请选择</option>
+                    <option *ngFor="let localtypeitem of localType" value="{{localtypeitem.code}}" [attr.selected]="localtypeitem.code==tmsLocal.localType?true:null">{{localtypeitem.name}}</option>
+                    <!--<option *ngFor="let localtypeitem of localType" value="{{localtypeitem.code}}">{{localtypeitem.name}}</option>-->
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">仓库
+                  <span class="required" aria-required="true">
+                    * </span>
+                </label>
+                <div class="col-md-4">
+                  <select id="storageNum" class="form-control" data-placeholder=" ">
+                    <option value="">请选择</option>
+                    <option *ngFor="let item of storehouses" value="{{item.storageNum}}" [attr.selected]="item.storageNum==tmsLocal.storageNum?true:null">{{item.storageName}}</option>
+                    <!--<option *ngFor="let item of storehouses" value="{{item.storageNum}}">{{item.storageName}}</option>-->
+                  </select>
+                </div>
+              </div>
+              <!--<div class="form-group">
+                <label class="col-md-3 control-label">是否禁用
+                  <span class="required" aria-required="true">
+                    * </span>
+                </label>
+                <div class="col-md-4">
+                  <div class="md-radio-inline">
+                    <div class="md-radio">
+                      <input type="radio" id="isforb" name="isForbidis" title="0" class="md-radiobtn">
+                      <label for="isforb">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        是 </label>
+                    </div>
+                    <div class="md-radio has-error">
+                      <input type="radio" id="notforb" name="isForbidis" title="1" class="md-radiobtn">
+                      <label for="notforb">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        否</label>
+                    </div>
+                  </div>
+                </div>
+              </div>-->
+              <div class="form-group">
+                <label class="col-md-3 control-label">是否默认
+                  <span class="required" aria-required="true">
+                    * </span>
+                </label>
+                <div class="col-md-4">
+                  <div class="md-radio-inline">
+                    <div class="md-radio">
+                      <input type="radio" id="isdef" name="isDefault" value="1" class="md-radiobtn">
+                      <label for="isdef">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        是 </label>
+                    </div>
+                    <div class="md-radio has-error">
+                      <input type="radio" id="notdef" name="isDefault" value="0" class="md-radiobtn">
+                      <label for="notdef">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        否</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-md-3 control-label">备注
+                  </label>
+                  <div class="col-md-4">
+                    <div class="input-icon">
+                      <i class="fa fa-bell-o"></i>
+                      <input type="text" class="form-control remark" placeholder="必填" required value="{{tmsLocal.remark}}">
+                    </div>
+                  </div>
+                </div>
+              <!--  -->
+            </div>
+            <div class="form-actions">
+              <div class="row">
+                <div class="col-md-offset-3 col-md-9">
+                  <button type="submit" class="btn blue" (click)="subLocation()">保存</button>
+                  <button type="reset" class="btn default" (click)="goBack()">取消</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END FORM-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--确认消息提示框-->
+  <div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+    <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+    <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+    <div class="dialog_divOperation ">
+      <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+        (click)="closeWin()">确定</span>
+    </div>
+  </div>
+  <div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+  <!-- 加载动图 -->
+  <div class="spinner" *ngIf="!isload">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>

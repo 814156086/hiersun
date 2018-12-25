@@ -1,0 +1,137 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>商户信息
+      <small>Business Manage</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal">
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>商户名称：</label>
+          <div class="col-md-8">
+            <!--选择框-->
+            <div class="md-radio-inline">
+              <div class="md-radio">
+                <input type="radio" id="regular" name="opeType" title="0" class="md-radiobtn" checked="" (change)="options()">
+                <label for="regular">
+                  <span></span>
+                  <span class="check"></span>
+                  <span class="box"></span>
+                  门店商户</label>
+              </div>
+              <div class="md-radio has-error">
+                <input type="radio" id="franchise" name="opeType" title="1" class="md-radiobtn" (change)="options()">
+                <label for="franchise">
+                  <span></span>
+                  <span class="check"></span>
+                  <span class="box"></span>
+                  普通商户</label>
+              </div>
+            </div>
+            <!--选择框end-->
+            <div [hidden]="(btntype==1 || optional==1) || (btntype==2 || optional==1)">
+              <select id="shops" class="form-control select2me shops" data-placeholder="请选择">
+                <option value="">请选择</option>
+                <option *ngFor="let item of shops;let list=index;" value="{{item.organizationCode}}">{{item.organizationCode}}-{{item.organizationName}}</option>
+              </select>
+              <div class="formtips" style="display:none">
+                商户名称必选
+              </div>
+            </div>
+            <div class="addbusines" *ngIf="optional==1 && btntype==3">
+                  <input type="text" class="form-control txname" name="businessname" [(ngModel)]="businessname">
+                  <div class="formtips" style="display:none">
+                      商户名称必填
+                    </div>
+            </div>
+            <div *ngIf="optional==1 && (btntype==1 || btntype==2)">
+                <input type="text" class="form-control" name="businessname" [(ngModel)]="businessname" readonly>
+            </div>
+            <div *ngIf="btntype==2 && optional!=1">
+              <select class="form-control bussshow" disabled>
+                <option value="{{businessid}}">{{businessname}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>是否启用：</label>
+          <div class="col-md-8">
+            <div class="switch" data-on="success" data-off="warning">
+              <input type="checkbox" checked name="businessenabled" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>请求密钥：</label>
+          <div class="col-md-8">
+            <textarea class="form-control" name="businesssy" [(ngModel)]="businesssy" placeholder="请输入请求私钥" readonly></textarea>
+            <!-- <a class="btn btn-xs btn-info" (click)="random()">生成密钥</a> -->
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>响应密钥：</label>
+          <div class="col-md-8">
+            <textarea class="form-control" name="businessxysy" [(ngModel)]="businessxysy" placeholder="请输入响应私钥" readonly></textarea>
+            <!-- <a class="btn btn-xs btn-info" (click)="randomxy()">生成密钥</a> -->
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">备注：</label>
+          <div class="col-md-8">
+            <textarea class="form-control comm" placeholder="请填写备注"></textarea>
+          </div>
+        </div>
+        <!--商户详情-->
+        <div class="form-group" *ngIf="timeshowhide">
+          <label class="col-md-2 control-label">
+            <span style="color:red;"></span>创建时间：</label>
+          <div class="col-md-8">
+            <input class="form-control" name="creattime" value="{{creattime | date:'yyyy-MM-dd HH:mm:ss'}}" type="text">
+          </div>
+        </div>
+        <div class="form-group" *ngIf="timeshowhide">
+          <label class="col-md-2 control-label">
+            <span style="color:red;"></span>更新时间：</label>
+          <div class="col-md-8">
+            <input class="form-control" name="updatetime" value="{{updatetime | date:'yyyy-MM-dd HH:mm:ss'}}" type="text">
+          </div>
+        </div>
+        <div class="form-group" *ngIf="btnshowhide">
+          <label class="col-md-3 control-label">
+            <button type="button" class="btn purple" id="save" (click)="onSubmit()">保存</button>
+            <button type="reset" class="btn blue-hoki">重置</button>
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </label>
+        </div>
+        <div class="form-group" *ngIf="!btnshowhide">
+          <label class="col-md-2 control-label"></label>
+          <div class="col-md-8">
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

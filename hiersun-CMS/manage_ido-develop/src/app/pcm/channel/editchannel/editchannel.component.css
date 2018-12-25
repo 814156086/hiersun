@@ -1,0 +1,66 @@
+.back_hand {
+  cursor: pointer
+}
+
+#hint {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .6);
+  z-index: 100;
+}
+
+.hintMsg {
+  width: 300px;
+  height: 100px;
+  margin: 100px auto;
+  text-align: center;
+  background-color: #fff;
+  line-height: 100px;
+  border-radius: 6px !important;
+  font-size: 16px;
+}
+
+#sureBack {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .6);
+  z-index: 100;
+}
+
+.back_box {
+  width: 300px;
+  height: 190px;
+  background-color: #fff;
+  border-radius: 6px !important;
+  margin: 100px auto;
+}
+
+.backHint {
+  text-align: center;
+  width: 300px;
+  height: 90px;
+  padding-top: 30px;
+  font-size: 18px;
+}
+
+.back_title {
+  width: 100%;
+  text-align: left;
+  border-bottom: 1px solid #e0e1dd;
+  line-height: 48px;
+  padding-left: 10px;
+}
+
+.sure_back {
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid #e0e1dd;
+  line-height: 48px;
+  cursor: pointer;
+}

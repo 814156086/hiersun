@@ -1,0 +1,89 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>客服组管理
+        <small>Custom Manage</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <a class="btn blue-hoki" routerLink="/custom/addcustomer" style="margin-bottom:20px;">
+          <!--<a class="btn blue-hoki" routerLink='/custom/editorcustom' [queryParams]="{page:1}" style="margin-bottom:20px;">-->
+              <i class="fa fa-plus"></i> 添加客服组</a>
+          <div class="portlet box blue-hoki">
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>客服组列表
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <!--列表end-->
+            <!--body-->
+            <div class="portlet-body">
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>序号</th>
+                      <th>组类别</th>
+                      <th>组名称</th>
+                      <th>组编号</th>
+                      <th>操作 </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of customerList;let i=index">
+                      <td>{{i+1}}</td>
+                      <td>
+                          <span *ngIf="item.type==1">外呼组</span>
+                          <span *ngIf="item.type==2">在线组</span>
+                      </td>
+                      <td>{{item.name}}</td>
+                      <td>{{item.key}}</td>
+                      <td>
+                        <a class="btn btn-xs btn-info"  routerLink="/custom/updatecustomer" [queryParams]="{type:item.type,key:item.key,name:item.name,enabled:item.enabled,id:item.id}">
+                            <i class="fa fa-file-pdf-o"></i> 编辑</a>
+                        <a class="btn btn-xs green" *ngIf='!item.enabled' data-toggle="modal" (click)='state(item)'>
+                            启用
+                            <i class="fa fa-exchange"></i>
+                        </a>
+                        <a class="btn btn-xs red" *ngIf='item.enabled' data-toggle="modal" (click)='state(item)'>
+                            禁用
+                            <i class="fa fa-exchange"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr *ngIf="nodata == true">
+                      <td colspan="5" style="text-align:center;padding:10px;">暂时还没有数据~</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--分页页码-->
+              <div class="clearfix box">
+                <div id="pagination1" style="margin: 0 auto;" class="page"></div>
+              </div>
+              <!--分页页码end-->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+      <i *ngIf="warning" class="warningMsg"></i>
+      <i *ngIf="!warning" class="ok"></i>
+      <span>{{hintMsg}}</span>
+  </div>
+</div>

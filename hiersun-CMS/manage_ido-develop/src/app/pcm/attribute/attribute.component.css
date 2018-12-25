@@ -1,0 +1,42 @@
+input {
+  border: 1px solid rgb(169, 169, 169);
+}
+
+a {
+  text-decoration: none;
+}
+
+/* 去除表格底部横线 */
+
+table.dataTable.no-footer {
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.md-checkbox label>.box {
+  border: 1px solid rgb(169, 169, 169);
+}
+
+th,
+td {
+  text-align: center;
+}
+
+.tab_zero {
+  width: 15px;
+}
+
+.tab_first {
+  width: 250px;
+}
+
+.tab_fifth {
+  width: 150px;
+}
+
+ /* 维护 选择框 居中 */
+
+ .md-checkbox {
+  position: relative;
+  width: 18px;
+  margin: 0 auto;
+}

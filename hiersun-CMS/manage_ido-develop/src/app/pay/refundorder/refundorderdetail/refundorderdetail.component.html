@@ -1,0 +1,181 @@
+<div class="page-head">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-title">
+      <h1>退款详情
+        <small>Refund Detail</small>
+      </h1>
+    </div>
+    <!-- END PAGE TITLE -->
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="contenttab">
+        <form class="templatecon form-horizontal">
+          <div class="form-group">
+            <label class="col-md-2 control-label">订单号：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{payOrderId}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">订单金额：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{payAmount}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">退款单号：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{refundOrderId}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">退款金额：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{refundAmount}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">退款状态：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{status}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">退款结果：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{result}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">商家退款单号：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{mchRefundNo}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">商家ID：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{mchId}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">退款成功时间：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text"  *ngIf="refundSuccTime!=null" value="{{refundSuccTime | date:'yyyy-MM-dd HH:mm:ss'}}" />
+              <input class="form-control" type="text"  *ngIf="refundSuccTime==null" value="--" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">用户名：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{username}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">订单失效时间：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" *ngIf="expireTime!=null" value="{{expireTime | date:'yyyy-MM-dd HH:mm:ss'}}" />
+              <input class="form-control" type="text" *ngIf="expireTime==null" value="--" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">客户的IP：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{clientIp}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">渠道ID：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{channelId}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">渠道商户ID：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{channelMchId}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">渠道订单号：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{channelOrderNo}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">渠道用户标识：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{channelUser}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">渠道错误码：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{channelErrCode}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">渠道错误描述：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{channelErrMsg}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">设备：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{device}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">特定渠道发起的额外参数：</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="{{extra}}" />
+            </div>
+          </div>
+          <div class="form-group">
+              <label class="col-md-2 control-label">通知地址：</label>
+              <div class="col-md-8">
+                <input class="form-control" type="text" value="{{notifyUrl}}" />
+              </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">扩展参数1：</label>
+                <div class="col-md-8">
+                  <input class="form-control" type="text" value="{{param1}}" />
+                </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-md-2 control-label">扩展参数2：</label>
+                  <div class="col-md-8">
+                    <input class="form-control" type="text" value="{{param2}}" />
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">备注：</label>
+                    <div class="col-md-8">
+                      <input class="form-control" type="text" value="{{remarkInfo}}" />
+                    </div>
+                  </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label"></label>
+            <div class="col-md-8">
+              <button type="button" class="btn default" (click)="goback()">返回</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="spinner" *ngIf="isload">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+  <div id="hint" *ngIf="isHint">
+    <div class="hintMsg">
+      <i *ngIf="warning" class="warningMsg"></i>
+      <i *ngIf="!warning" class="ok"></i>
+      <span>{{hintMsg}}</span>
+    </div>
+  </div>

@@ -1,0 +1,10 @@
+.contenttab{padding:20px 10px;}
+.right1{margin-left: 40px}
+fieldset{padding:.35em .625em .75em;margin:0 2px;border:1px solid silver}
+legend{padding:.5em;border:0;width:auto}
+fieldset .FTPbox input{width:14%;float: left;margin-right:1%}
+fieldset span{line-height:36px}
+fieldset .ossbox input{width:50%;}
+fieldset .imgossbox input{width:50%;}
+fieldset .vdoossbox input{width:50%;}
+fieldset .domainUrlbox input{width:50%;}

@@ -1,0 +1,46 @@
+input {
+  border: 1px solid rgb(169, 169, 169);
+}
+
+a {
+  text-decoration: none;
+}
+
+/* 维护 选择框 居中 */
+
+.md-checkbox2 {
+  position: relative;
+  width: 18px;
+  margin: 0 auto;
+}
+
+/* 查询 */
+
+.sec_line {
+  margin-top: 15px;
+  /* margin-bottom: 15px */
+}
+/* 
+.sec_line .form-group,
+.sec_line .btn {
+  margin-right: 10px;
+} */
+
+/* .sec_line .form-control {
+  height: 34px;
+} */
+
+/* 去除表格底部横线 */
+
+table.dataTable.no-footer {
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.md-checkbox label>.box {
+  border: 1px solid rgb(169, 169, 169);
+}
+
+th,
+td {
+  text-align: center;
+}

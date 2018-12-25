@@ -1,0 +1,158 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>EDI对应门店管理
+        <small>edi-channel</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <!--筛选-->
+          <div class="choosesx">
+            <!--格式一-->
+            <div class="form-inline">
+              <div class="form-group col-md-4">
+                <label> 平台类型：</label>
+                <select  style="max-width: 200px" class="form-control input-large input-inline platform" id="channel-platform">
+                  <option value="">—请选择—</option>
+                  <option value="TMALL">天猫</option>
+                  <option value="TAOBAO">淘宝</option>
+                  <option value="JOS">京东</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label> 品牌代码：</label>
+                <input id="channel-brand" style="max-width: 200px;width:200px" type="text" class="form-control brand" placeholder="请输入品牌代码" >
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label> 是否启用：</label>
+                <select style="max-width: 200px" id="channel-enabled" class="form-control input-large input-inline enabled" >
+                  <option value="">—请选择—</option>
+                  <option value="1">启用</option>
+                  <option value="0">禁用</option>
+                </select>
+              </div>
+              <div style="text-align:center">
+                <button style="margin-bottom: 10px" class="btn green btn-default" (click)="search()">查询</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button style="margin-bottom: 10px" class="btn green btn-default" routerLink="" >重置</button>
+              </div>
+            </div>
+          </div>
+          <!--筛选-->
+          <div class="portlet box blue-hoki">
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>EDI对应门店管理
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <!--列表end-->
+            <!--body-->
+            <div class="portlet-body">
+
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_1" role="grid" aria-describedby="sample_1_info">
+                  <thead>
+                  <tr>
+                    <th style="width:20%">
+                      渠道号
+                    </th>
+                    <th style="width:20%">
+                      商家名称
+                    </th>
+                    <th style="width:20%">
+                      平台类型
+                    </th>
+                    <th style="width:20%">
+                      品牌代码
+                    </th>
+                    <th style="width:20%">
+                      非现货订单绑定门店号
+                    </th>
+                    <th style="width:20%">
+                      操作
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr role="row" class="odd" *ngFor="let item of channelList">
+                    <td>{{item.channel}}</td>
+                    <td>{{item.sellerName}}</td>
+                    <td>{{item.platform}}</td>
+                    <td>{{item.brand}}</td>
+                    <td>{{item.omsCode}}</td>
+                    <td>
+                      <!-- <a class="btn btn-xs btn-info" data-toggle="modal" href="#shop" (click)="editCompany(item.tmsCompanyCode)">-->
+                      <a class="btn btn-xs btn-info">
+                        <i class="fa fa-edit"></i> 启用 </a>
+                      <a class="btn btn-xs btn-info">
+                        <i class="fa fa-edit"></i> 禁用 </a>
+                    </td>
+                  </tr>
+                  <!--<tr *ngIf="nodata==false">-->
+                    <!--<td colspan="5" style="text-align:center;padding:10px;">暂时还没有数据</td>-->
+                  <!--</tr>-->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--编辑商品类型-->
+<!--<div class="modal fade" id="shop" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">修改淘宝物流公司信息</font>
+          </font>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>中台物流公司：{{this.tmsCompanyName}}</label><br>
+          <label>请选择淘宝物流公司：</label>
+          <select class="form-control goodstype" id="top">
+            <option value="">请选择</option>
+            <option *ngFor="let item of topLogisticsCompanyList;" value="{{item.code}}" [attr.selected]="item.code==topCompanyCode?true:null">{{item.name}}</option>
+          </select>
+        </div>
+        <p style="color:red" *ngIf="isShow">请选择编码类型 !!!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn blue" (click)="addCompany()">确认</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>-->
+<!--编辑商品类型end-->
+<!--默认加载图标-->
+<!--<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>-->
+<!--默认加载图标end-->
+<!--<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>-->

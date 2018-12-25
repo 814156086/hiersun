@@ -1,0 +1,136 @@
+.my_mnu{
+    width: 100%;
+    text-indent: 10px;
+    height: 30px;
+    line-height: 30px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+.my_choose{
+    background-color: #e0e0e1;
+}
+.imgset_box{
+    display: inline-block;
+    margin: 0 auto;
+}
+.imgset_box>div{
+    float:left;
+    margin: 10px;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    /*display:table;*/
+    text-align:center;
+    border: 1px solid #eee;
+    position: relative;
+}
+.imgset_box>div .everyset{
+    width: 198px;
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,.2);
+}
+.imgset_box>div .everyset span{
+    display: inline-block;
+    width: 96px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+.imgset_box>div img{
+    width: 100%;
+    position: relative;
+    left: 0;
+}
+.selectType{
+    display: none;
+    width: 196px;max-height: 120px;overflow: auto;position: absolute;top: 42px;left: 69px;border: 1px solid #eee;line-height: 24px;padding-left: 4px;background: #fff;
+}
+.show{
+    display: block;
+}
+.msgSetbox{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+}
+.msgsetsmall{
+    width: 80%;
+    min-width: 800px;
+    margin: 100px auto 0;
+    background: #fff;
+    padding: 10px 20px;
+}
+
+.imgMsg{
+    margin:10px 0;
+}
+.imgMsg span{
+    padding:0 10px;
+    height:30px;
+    line-height:30px;
+    text-align:center;
+    position: relative;
+}
+.imgMsg span select{
+    width: 100px;
+    height: 100%;
+    border-color:#eee;
+}
+.setImgInput{
+    display: none;
+    width: 196px;
+    max-height: 120px;
+    overflow: auto;
+    position: absolute;
+    top: 33px;
+    left: 10px;
+    border: 1px solid #eee;
+    line-height: 24px;
+    padding-left: 4px;
+    background: #fff;
+    text-align: left;
+}
+.yulan_box{
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.yulan_box>div{
+    width: 60%;
+    margin:100px auto 0;
+    background-color: #fff;
+}
+.height >div{
+    width: 30%;
+    margin:40px auto 0;
+}
+.yulan_box>div>img{
+    display: block;
+    width: 100%;
+    margin:0 auto;
+}
+.newgroup{
+    display: inline-block;
+    float:left;
+}
+.newgroup span{
+    padding:4px 10px;
+    margin: 3px 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px!important;
+    cursor: pointer;
+}
+.newgroup .chooseZU{
+    background-color: #e5e5e5;
+}

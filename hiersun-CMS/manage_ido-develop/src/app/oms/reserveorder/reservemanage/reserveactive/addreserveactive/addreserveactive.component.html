@@ -1,0 +1,176 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>活动
+      <small>Reserve Active</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal" [formGroup]="formModel" (submit)="onSubmit()">
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>活动状态：</label>
+          <div class="col-md-8">
+            <div class="switch activestatus" data-on="success" data-off="warning">
+              <input type="checkbox" class="form-control" checked name="activestatus"/>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>活动名称：</label>
+          <div class="col-md-8">
+            <input class="form-control" [class.hasError]="formModel.get('name').invalid && formModel.get('name').touched" type="text"
+              formControlName="name" name="name" [(ngModel)]="name" placeholder="请输入活动名称">
+            <div [hidden]="formModel.get('name').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['name'])">
+                活动名称必填
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>活动渠道：</label>
+          <div class="col-md-8">
+            <select class="form-control" [class.hasError]="formModel.get('activitychannel').invalid && formModel.get('activitychannel').touched" 
+            formControlName="activitychannel" name="activitychannel" [(ngModel)]="activitychannel">
+            <option value="">请选择</option>  
+            <option value="恰客">恰客</option>
+              <option value="普通">普通</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>下单开始日期：</label>
+          <div class="col-md-8">
+            <input class="form-control saleDate" id="ordertimestart" [class.hasError]="formModel.get('ordertimestart').invalid && formModel.get('ordertimestart').touched" type="text"
+              formControlName="ordertimestart" name="ordertimestart" [(ngModel)]="ordertimestart" placeholder="请输入下单起始日期">
+            <div [hidden]="formModel.get('ordertimestart').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['ordertimestart'])">
+                  下单起始日期必选
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>下单结束日期：</label>
+          <div class="col-md-8">
+            <input class="form-control saleDate" id="ordertimeend" [class.hasError]="formModel.get('ordertimeend').invalid && formModel.get('ordertimeend').touched" type="text"
+              formControlName="ordertimeend" name="ordertimeend" [(ngModel)]="ordertimeend" placeholder="请输入下单起始日期">
+            <div [hidden]="formModel.get('ordertimeend').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['ordertimeend'])">
+                  下单起始日期必选
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>验证开始日期：</label>
+          <div class="col-md-8">
+              <input class="form-control" id="validetimestart" [class.hasError]="formModel.get('validetimestart').invalid && formModel.get('validetimestart').touched" type="text"
+              formControlName="validetimestart" name="validetimestart" [(ngModel)]="validetimestart" placeholder="请输入下单起始日期" >
+            <div [hidden]="formModel.get('validetimestart').untouched" >
+              <div class="formtips" [hidden]="!formModel.hasError('required',['validetimestart'])">
+                  验证起始日期必选
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>验证结束日期：</label>
+          <div class="col-md-8">
+              <input class="form-control" id="validetimeend" [class.hasError]="formModel.get('validetimeend').invalid && formModel.get('validetimeend').touched" type="text"
+              formControlName="validetimeend" name="validetimeend" [(ngModel)]="validetimeend" placeholder="请输入下单起始日期" >
+            <div [hidden]="formModel.get('validetimeend').untouched" >
+              <div class="formtips" [hidden]="!formModel.hasError('required',['validetimeend'])">
+                  验证起始日期必选
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>赠品类别：</label>
+          <div class="col-md-8">
+              <select class="form-control" [class.hasError]="formModel.get('gifttype').invalid && formModel.get('gifttype').touched" 
+              formControlName="gifttype" name="gifttype" [(ngModel)]="gifttype">
+                  <option value="">请选择</option>
+                  <option value="非实物类">非实物类</option>
+                  <option value="实物+非实物">实物+非实物</option>
+                  <option value="实物类">实物类</option>
+               </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>赠品人数设定：</label>
+          <div class="col-md-8">
+              <input class="form-control" [class.hasError]="formModel.get('setcount').invalid && formModel.get('setcount').touched" type="text"
+              formControlName="setcount" name="setcount" [(ngModel)]="setcount" placeholder="请输入赠品人数设定" >
+            <div [hidden]="formModel.get('setcount').untouched" >
+              <div class="formtips" [hidden]="!formModel.hasError('required',['setcount'])">
+                  赠品人数设定必填
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>送完提示短信：</label>
+          <div class="col-md-8">
+            <div class="switch message" data-on="success" data-off="warning">
+              <input type="checkbox" class="form-control" checked name="message"/>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>活动备注：</label>
+          <div class="col-md-8">
+              <input class="form-control" [class.hasError]="formModel.get('remark').invalid && formModel.get('remark').touched" type="text"
+              formControlName="remark" name="remark" [(ngModel)]="remark" placeholder="请输入活动备注" >
+            <div [hidden]="formModel.get('remark').untouched" >
+              <div class="formtips" [hidden]="!formModel.hasError('required',['remark'])">
+                  活动备注必填
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="btnshowhide">
+          <label class="col-md-3 control-label">
+            <button type="submit" class="btn purple" id="save" [disabled]="formModel.invalid">保存</button>
+            <button type="reset" class="btn blue-hoki">重置</button>
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </label>
+        </div>
+        <div class="form-group" *ngIf="!btnshowhide">
+          <label class="col-md-2 control-label"></label>
+          <div class="col-md-8">
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

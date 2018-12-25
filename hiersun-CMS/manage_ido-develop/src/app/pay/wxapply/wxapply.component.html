@@ -1,0 +1,150 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>微信应用
+      <small>Wx Manage</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab clearfix">
+      <form class="templatecon form-horizontal" [formGroup]="formModel" (submit)="onSubmit()">
+        <div class="form-group">
+            <label class="col-md-2 control-label">商户ID：</label>
+            <div class="col-md-8">
+              <input class="form-control" [class.hasError]="formModel.get('wxMchId').invalid && formModel.get('wxMchId').touched" type="text"
+              formControlName="wxMchId" name="wxMchId" [(ngModel)]="wxMchId" placeholder="请输入wxMchId">
+            <div [hidden]="formModel.get('wxMchId').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['wxMchId'])">
+                wxMchId必填
+              </div>
+            </div>
+            </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>appId：</label>
+          <div class="col-md-8">
+            <input class="form-control" [class.hasError]="formModel.get('appid').invalid && formModel.get('appid').touched" type="text"
+              formControlName="appid" name="appid" [(ngModel)]="appid" placeholder="请输入appId">
+            <div [hidden]="formModel.get('appid').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['appid'])">
+                appId必填
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group wxdetail">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>微信密钥(key):</label>
+          <div class="col-md-8">
+            <textarea class="form-control" [class.hasError]="formModel.get('key').invalid && formModel.get('key').touched" type="text"
+              formControlName="key" name="key" [(ngModel)]="key" placeholder="请输入key"></textarea>
+            <div [hidden]="formModel.get('key').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['key'])">
+                key必填
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group wxdetail">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>支付证书存放路径:</label>
+          <div class="col-md-8">
+            <input class="form-control" [class.hasError]="formModel.get('certLocalPath').invalid && formModel.get('certLocalPath').touched"
+              type="text" formControlName="certLocalPath" name="certLocalPath" [(ngModel)]="certLocalPath" placeholder="请输入支付证书存放路径，相对路径，不能以/开头">
+            <div [hidden]="formModel.get('certLocalPath').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['certLocalPath'])">
+                certLocalPath必填
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group applydetail">
+          <label class="col-md-2 control-label">费率:</label>
+          <div class="col-md-8">
+            <input class="form-control feeRate" type="text" name="feeRate" placeholder="请输入费率" value="0.00" (change)="validnum($event.target)">
+            <div class="formtips" style="display:none">只能输入大于0，小于100的数字</div>
+          </div>
+        </div>
+        <!-- <div class="form-group applydetail">
+          <label class="col-md-2 control-label">功能列表:</label>
+          <div class="col-md-8">
+            <textarea class="form-control func" type="text" name="func" placeholder="功能列表,以逗号分隔"></textarea>
+          </div>
+        </div> -->
+        <div class="form-group applydetail">
+          <label class="col-md-2 control-label">应用名称:</label>
+          <div class="col-md-8">
+            <input class="form-control yyname" type="text" name="yyname" placeholder="请填写"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">是否启用：</label>
+          <div class="col-md-6">
+            <div class="switch" data-on="success" data-off="warning">
+              <input type="checkbox" checked name="businessenabled" id="businessenabled" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">是否开启对账功能：</label>
+          <div class="col-md-6">
+            <div class="switch" data-on="success" data-off="warning">
+              <input type="checkbox" checked name="balance" id="balance" />
+            </div>
+          </div>
+        </div>
+        <!-- <div class="form-group">
+            <label class="col-md-2 control-label">是否沙箱：</label>
+            <div class="col-md-6">
+              <div class="switch" data-on="success" data-off="warning">
+                <input type="checkbox" checked name="balance" id="shaxiang" />
+              </div>
+            </div>
+          </div> -->
+        <div class="form-group">
+          <label class="col-md-2 control-label"></label>
+          <div class="col-md-6">
+            <button type="submit" class="btn default green" [disabled]="formModel.invalid">保存</button>
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-1"></div>
+          <fieldset class="col-md-10 clearfix">
+            <legend>功能列表</legend>
+            <div class="md-checkbox-inline col-md-12">
+              <div class="md-checkbox col-md-3" *ngFor="let item of funclists;let key=index">
+                <input type="checkbox" id="checkbox{{key}}" class="md-check" name="funcl" title="{{item.id}}" value="{{item.value}}">
+                <label for="checkbox{{key}}">
+                  <span class="inc"></span>
+                  <span class="check"></span>
+                  <span class="box"></span>
+                  {{item.value}}</label>&nbsp;
+                <a title="详情" data-container="body" data-toggle="popover" data-placement="top" data-content="" id="{{key}}" (click)="detailshow(key,$event.target,item.comm)">
+                  <i class="fa fa-question-circle"></i>
+                </a>
+              </div>
+            </div>
+          </fieldset>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

@@ -1,0 +1,455 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box">
+      <!-- <div class="portlet-title">
+        <div class="caption">
+          产品分类管理
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title="">
+          </a>
+        </div>
+      </div> -->
+      <div class="allContainer">
+        <!-- <input type="hidden" id="choosesite" /> -->
+        <!-- <div class="sitetips">请选择对应的站点</div> -->
+        <div class="row">
+          <div class="col-md-4">
+            <div class="portlet blue-hoki box">
+              <div class="portlet-title">
+                <div class="caption">
+                  产品分类管理
+                </div>
+              </div>
+              <div class="portlet-body">
+                <div class="clearfix">
+                  <a class="btn blue" data-toggle="modal" (click)="addItem()">增加</a>
+                  <a id="" class="btn yellow" (click)="editItem()">编辑</a>
+                  <a class="btn purple" (click)="stopItem()">停用</a>
+                  <a class="btn red" (click)="delItem()">删除</a>
+                </div>
+                <div class="content_wrap">
+                  <input type="hidden" name="mymsg">
+                  <button class="myclick" (click)="myclick()" style="opacity: 0;"></button>
+                  <div class="zTreeDemoBackground">
+                    <ul id="treeDemo" class="ztree"></ul>
+                  </div>
+                </div>
+              </div>
+              <!--  -->
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="portlet blue-hoki box">
+              <div class="portlet-title">
+                <div class="caption">
+                  分类属性维护
+                </div>
+              </div>
+              <div class="portlet-body">
+                <div class="tabbable-line">
+                  <ul class="nav nav-tabs ">
+                    <li class="active">
+                      <a href="#tab_general" data-toggle="tab" (click)="tabGeneral(0)">
+                        一般属性 </a>
+                    </li>
+                    <li>
+                      <a id="show_tab_price" (click)="tabPrice(1)">
+                        价格库存控制项 </a>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="tab_general">
+                      <!-- 一般属性 -->
+                      <div class="clearfix" style="text-align: right;" (click)="Maintain()">
+                        <a href="javascript:;" class="btn btn-sm purple" (click)="showWeiHuModel()">
+                          <i class="fa fa-edit"></i>维护 </a>
+                      </div>
+                      <div class="table-scrollable tabGenList">
+                        <table class="table table-striped table-bordered table-hover dataTable" id="sample_6" role="grid"
+                          aria-describedby="sample_6_info">
+                          <thead>
+                            <tr>
+                              <th> 选择 </th>
+                              <th> 属性编号 </th>
+                              <th> 属性名称 </th>
+                              <th> 属性类型 </th>
+                              <th> 分类名称 </th>
+                              <!-- <th> 分类编号 </th>-->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- <tr role="row" class="odd" *ngFor="let companyitem of companyList;let key=index"> -->
+                            <tr role="row" class="odd det{{genkey+1}}" *ngFor="let genItem of generalList; let genkey=index;">
+                              <td style="text-align:center;">
+                                <button *ngIf="genItem.isEnumProp!=1" style="padding: 0px 3px;width: 17.6px;" (click)="detailGeneral(genItem.categorySid,genkey+1,genItem.propsSid,$event)">+</button>
+                                <!-- <div class="md-checkbox">
+                                  <input type="checkbox" title="{{genItem.propsSid}}" id="checkbox{{genItem.propsSid}}" class="md-check">
+                                  <label for="checkbox{{genItem.propsSid}}">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span>
+                                  </label>
+                                </div> -->
+                              </td>
+                              <td>{{genItem.propsSid}}</td>
+                              <td>{{genItem.propsName}}</td>
+                              <td *ngIf="genItem.isEnumProp==0">枚举类型</td>
+                              <td *ngIf="genItem.isEnumProp==1">文本类型</td>
+                              <td>{{genItem.categoryName}}</td>
+                              <!--<td>{{genItem.categorySid}}</td>-->
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!--  -->
+                    </div>
+                    <div class="tab-pane" id="tab_price">
+                      <div class="form-horizontal">
+                        <div class="form-body allList">
+                          <!-- <div class="form-group" *ngIf="isPcon==0">
+                            <label class="col-md-3 control-label">
+                            </label>
+                            <div class="col-md-5">
+                              <select id="parent" class="form-control input-large input-inline pri11">
+                                <option value="">--请选择--</option>
+                                <option *ngFor="let paritem of priceInit;let parkey=index" value="{{paritem.sid}}">{{paritem.propsName}}</option>
+                              </select>
+                            </div>
+                            <label style="margin-top: 5px;">
+                              <a href="javascript:;" class="btn btn-xs blue-hoki" (click)="addPrc()">
+                                <i class="fa fa-plus"></i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-xs purple" (click)="delPrc()">
+                                <i class="fa fa-times"></i>
+                              </a>
+                            </label>
+                          </div> -->
+                          <div class="form-group" *ngFor="let pconitem of pconList;let pconkey=index;">
+                            <label class="col-md-2 control-label">
+                            </label>
+                            <div class="col-md-8">
+                              <select id="parent1" class="form-control input-large input-inline pri1{{pconkey+1}}">
+                                <option value="">--请选择--</option>
+                                <option *ngFor="let paritem of priceInit;let parkey=index" value="{{paritem.sid}}"
+                                  title="{{paritem.propsCode}}" [attr.selected]="paritem.sid==pconitem.propsSid?true:null">{{paritem.propsName}}</option>
+                              </select>
+                              <label style="margin-top: 5px;">
+                                <a href="javascript:;" class="btn btn-xs blue-hoki" *ngIf="pconkey==(pconList.length-1)"
+                                  (click)="addPrc()">
+                                  <i class="fa fa-plus"></i>
+                                </a>
+                                <a href="javascript:;" class="btn btn-xs purple" *ngIf="pconList.length>1" (click)="delPrc(pconkey)">
+                                  <i class="fa fa-times"></i>
+                                </a>
+                              </label>
+                            </div>
+
+                          </div>
+                          <!-- <div class="form-group">
+                            <label class="col-md-3 control-label">三级
+                              <span class="required" aria-required="true">
+                                * </span>
+                            </label>
+                            <div class="col-md-5">
+                              <select id="parent" class="form-control input-large input-inline pri13">
+                                <option value="">--请选择--</option>
+                                <option *ngFor="let paritem2 of priceInit;let parkey2=index" value="{{paritem2.sid}}">{{paritem2.propsName}}</option>
+                              </select>
+                            </div>
+                          </div> -->
+                        </div>
+                        <div class="form-actions">
+                          <div class="row">
+                            <div class="col-md-11" style="text-align: center; margin-top: 10px;">
+                              <button type="submit" class="btn blue" (click)="subPrice()">保存</button>
+                              <!-- <button type="reset" class="btn default" (click)="goBack()">取消</button> -->
+                            </div>
+                          </div>
+                        </div>
+                        <!--  -->
+                      </div>
+                      <!--form end -->
+                    </div>
+                  </div>
+                </div>
+                <!-- tab end -->
+              </div>
+              <!--  -->
+            </div>
+            <!--  -->
+          </div>
+        </div>
+        <!--  -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 添加的modal -->
+<div class="modal fade" id="add" data-backdrop="static" tabindex="-1" role="basic" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">分类信息</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+        <div class="form-group">
+          <label class="col-md-3 control-label">分类名称
+            <span class="required" aria-required="true">
+              * </span>
+          </label>
+          <div class="col-md-6">
+            <div class="input-icon">
+              <i class="fa fa-bell-o"></i>
+              <input type="text" class="form-control cateName" placeholder="必填" required>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">状态
+            <span class="required" aria-required="true">
+              * </span>
+          </label>
+          <div class="col-md-5">
+            <div class="md-radio-inline">
+              <div class="md-radio">
+                <input type="radio" id="valid" name="cateStatus" title="1" class="md-radiobtn" checked="">
+                <label for="valid">
+                  <span></span>
+                  <span class="check"></span>
+                  <span class="box"></span>
+                  有效 </label>
+              </div>
+              <div class="md-radio has-error">
+                <input type="radio" id="invalid" name="cateStatus" title="0" class="md-radiobtn">
+                <label for="invalid">
+                  <span></span>
+                  <span class="check"></span>
+                  <span class="box"></span>
+                  无效</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="form-group">
+          <label class="col-md-3 control-label">关联分类</label>
+          <div class="col-md-6">
+            <select id="" class="form-control select2attr attrCode" data-placeholder="" multiple="multiple">
+              <option value=""></option>
+              <option *ngFor="let attritem of attrList;let brdkey=index" value="{{attritem.code}}">{{attritem.name}}</option>
+            </select>
+          </div>
+        </div> -->
+        <!-- 3 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn blue" (click)="subAdd()">保存</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- 编辑的modal -->
+<div class="modal fade" id="edit" tabindex="-1" role="basic" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">分类信息</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+        <div class="form-group">
+          <label class="col-md-3 control-label">分类名称
+            <span class="required" aria-required="true">
+              * </span>
+          </label>
+          <div class="col-md-5">
+            <div class="input-icon">
+              <i class="fa fa-bell-o"></i>
+              <input type="text" class="form-control ecateName" placeholder="必填" value="{{itemName}}">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">状态
+            <span class="required" aria-required="true">
+              * </span>
+          </label>
+          <div class="col-md-5">
+            <div class="md-radio-inline">
+              <div class="md-radio">
+                <input type="radio" id="evalid" name="ecateStatus" title="1" class="md-radiobtn">
+                <label for="evalid">
+                  <span></span>
+                  <span class="check"></span>
+                  <span class="box"></span>
+                  有效 </label>
+              </div>
+              <div class="md-radio has-error">
+                <input type="radio" id="einvalid" name="ecateStatus" title="0" class="md-radiobtn">
+                <label for="einvalid">
+                  <span></span>
+                  <span class="check"></span>
+                  <span class="box"></span>
+                  无效</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="form-group">
+          <label class="col-md-3 control-label">关联分类</label>
+          <div class="col-md-6">
+            <select id="" class="form-control select2me attrCode" data-placeholder="" multiple="multiple">
+              <option value=""></option>
+              <option *ngFor="let attritem of attrList;let brdkey=index" value="{{attritem.code}}">{{attritem.name}}</option>
+            </select>
+          </div>
+        </div> -->
+        <!-- end -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn blue" (click)="subEdit()">保存</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+<!-- 维护的modal -->
+<div class="modal fade" id="maintain" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-full" style="width: 800px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">属性信息</h4>
+      </div>
+      <div class="modal-body form-horizontal col-md-12">
+        <div class="form-group col-md-5">
+          <label class="control-label">分类名称：
+          </label>
+          <div class="">
+            <div class="input-icon">
+              <i class="fa fa-file-text-o"></i>
+              <input type="text" class="form-control mtcateName" value="{{mtcateName}}" readonly="readonly" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="form-group col-md-5">
+          <label class="control-label">分类编码
+          </label>
+          <div class="">
+            <div class="input-icon">
+              <i class="fa fa-list-ol"></i>
+              <input type="text" class="form-control mtcateCode" value="{{mtcateCode}}" readonly="readonly" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="control-label">属性名称
+          </label>
+          <div class="">
+            <div class="input-icon right">
+              <i class="fa fa-search"></i>
+              <input id="wh_propName" type="text" class="form-control mtcateCode" (input)="searchPropsByName()">
+            </div>
+          </div>
+        </div>
+        <!-- third start -->
+        <div class="form-group col-md-7">
+          <!-- table start -->
+          <div class="tabGenList" style="height: 300px;overflow-y:auto">
+            <table class="table table-striped table-bordered table-hover dataTable" role="grid" aria-describedby="sample_6_info">
+              <thead>
+                <tr>
+                  <th> 选择 </th>
+                  <th> 属性 </th>
+                  <th> 属性描述</th>
+                  <th> 是否必填 </th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr role="row" class="odd" *ngFor="let companyitem of companyList;let key=index"> -->
+                <tr role="row" class="odd isdis{{leItem.sid}}" *ngFor="let leItem of leftList; let leftkey=index;">
+                  <td style="text-align: center">
+                    <a href="javascript:;" (click)="newArr(leItem.sid)">
+                      <i class="fa fa-plus"></i>
+                    </a>
+                    <!-- <div class="md-checkbox" (change)="newArr(leItem.propsSid)">
+                      <input type="checkbox" title="{{leItem.propsSid}}" id="checkbox{{leItem.propsSid}}" class="md-check">
+                      <label for="checkbox{{leItem.propsSid}}">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                      </label>
+                    </div> -->
+                  </td>
+                  <td class="name{{leItem.sid}}">{{leItem.propsName}}</td>
+                  <td class="desc{{leItem.sid}}">{{leItem.propsDesc}}</td>
+                  <td class="sel{{leItem.sid}}">
+                    <div class="md-checkbox">
+                      <input type="checkbox" title="1" id="check{{leItem.sid}}" class="md-check">
+                      <label for="check{{leItem.sid}}">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                      </label>
+                      <input type="hidden" id="level{{leItem.sid}}" value="{{leItem.isKeyProp}}">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- table end -->
+        </div>
+        <div class="col-md-2" style="text-align: center; margin-top: 110px;">
+          <!-- <div class="clearfix">
+            <a href="javascript:;" class="btn btn-icon-only blue-hoki" (click)="toRight()">
+              <i class="fa fa-share"></i>
+            </a>
+          </div>
+          <div class="clearfix" style="margin-top: 6px;">
+            <a href="javascript:;" class="btn btn-icon-only purple" (click)="backLeft()">
+              <i class="fa fa-reply"></i>
+            </a>
+          </div> -->
+        </div>
+        <div class="form-group col-md-3">
+          <div style="height: 300px; margin-top: 10px;border:1px solid #efefef;overflow-y:auto">
+            <ul class="rgList">
+              <li *ngFor="let ritem of rightList;let rkey=index" (click)="back(ritem.propSid)" class="libg{{ritem.propSid}}">{{ritem.propName}}</li>
+            </ul>
+          </div>
+        </div>
+        <!-- third end -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn blue" (click)="subMaintain()">保存</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

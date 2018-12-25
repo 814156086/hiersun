@@ -1,0 +1,16 @@
+a {
+  text-decoration: none;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+td {
+  white-space: nowrap;
+}
+.ant-timeline-item {
+  position: relative !important;
+  padding: 0 0 8px !important;
+}

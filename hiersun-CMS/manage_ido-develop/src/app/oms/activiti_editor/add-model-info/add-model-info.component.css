@@ -1,0 +1,36 @@
+.back_hand {
+  cursor: pointer
+}
+
+.div_dialog .dialog_divOperation .btn_span {
+  display: flex;
+  align-items: center;
+  border-radius: 4px !important;
+  height: 20px;
+  box-sizing: content-box;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 18px;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  margin: 0 auto !important;
+}
+
+.modal-body {
+  position: relative;
+  padding: 0 15px 0;
+  min-height: 200px;
+}
+
+#bizTreeModal{
+  margin: 0 auto;
+}
+.modal-header{
+  width: 350px;
+}
+
+.modal .modal-header {
+  border-bottom: 1px solid #ccc;
+}

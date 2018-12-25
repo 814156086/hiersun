@@ -1,0 +1,44 @@
+/* .col-md-4 {
+  padding-right: 0;
+}
+
+.col-md-8 {
+  padding-left: 0;
+}
+
+.margin-search {
+  margin: 10px 30px 0 0 !important;
+}
+
+.height-30 {
+  height: 30px !important;
+} */
+.margin-search{
+  margin-top: 10px;
+}
+a {
+  text-decoration: none;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+/* 维护 选择框 居中 */
+.md-checkbox {
+  position: relative;
+  width: 18px;
+  margin: 0 auto;
+}
+
+/* .searchInput {
+  margin: 0 25px;
+} */
+.serach_pos {
+  float: left;
+}
+.serach_posn{
+  float: left;
+  width: 10%;
+}

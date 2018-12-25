@@ -1,0 +1,329 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>添加预约单
+      <small>Add Reserveorder</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<!-- <form class="templatecon form-horizontal" [formGroup]="formModel" (submit)="onSubmit()"> -->
+<div class="row" style="background:#fff;">
+  <div class="col-md-12">
+    <div class="contenttab"></div>
+    <!--预约单信息-->
+    <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+      <div class="portlet-title">
+        <div class="caption">预约单信息</div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title="">
+          </a>
+        </div>
+      </div>
+      <!--需要预约单操作的判断，-->
+      <div class="portlet-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <td style="width:16%">预约单号：</td>
+              <td style="width:34%">
+                <input type="text" class="form-control" [(ngModel)]="orderno" readonly />
+              </td>
+              <td style="width:16%">
+                <span class="text-danger">*</span> 预约日期 / 时间：</td>
+                <input type="hidden" class="currentdata"/>
+              <td>
+                <input class="form-control" id="ordertimestart" type="text" [(ngModel)]="ordertimestart" placeholder="请选择预约日期" style="width:49%;float:left">
+                <select class="form-control reservetime" style="width:49%;float:left;margin-left:2%;display:none;" (change)="isactive()" >
+                    <option value="">请选择</option>
+                    <option value="10:00-11:00">10:00-11:00</option>
+                    <option value="11:00-12:00">11:00-12:00</option>
+                    <option value="12:00-13:00">12:00-13:00</option>
+                    <option value="13:00-14:00">13:00-14:00</option>
+                    <option value="14:00-15:00">14:00-15:00</option>
+                    <option value="15:00-16:00">15:00-16:00</option>
+                    <option value="16:00-17:00">16:00-17:00</option>
+                    <option value="17:00-18:00">17:00-18:00</option>
+                    <option value="18:00-19:00">18:00-19:00</option>
+                    <option value="19:00-20:00">19:00-20:00</option>
+                  </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-danger">*</span> 预约门店：</td>
+              <td>
+                <div style="position:relative" *ngIf="chooseshop==''" >
+                  <input type="text" class="form-control chooseshop" [(ngModel)]="chooseshop" />
+                  <a class="fa fa-search" style="position:absolute;right:2%;top:10px" data-toggle="modal" data-target="#myModal" (click)="searchshoplist()"></a>
+                </div>
+                <div style="position:relative" *ngIf="chooseshop!=''" >
+                    <input type="text" class="form-control chooseshop" [(ngModel)]="chooseshop" />
+                    <a class="fa fa-times-circle-o" style="position:absolute;right:2%;top:10px" (click)="clearshopname()"></a>
+                  </div>
+              </td>
+              <td>
+                <span class="text-danger">*</span> 预约内容：</td>
+              <td>
+                <select class="form-control reservecontent">
+                  <option value="体验">体验</option>
+                  <option value="购物">购物</option>
+                  <option value="其他">其他</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-danger">*</span> 姓名：</td>
+              <td>
+                <input type="text" class="form-control reservename" [(ngModel)]="reservename"/>
+              </td>
+              <td>
+                <span class="text-danger">*</span> 联系方式：</td>
+              <td>
+                <input type="text" class="form-control reservetel" [(ngModel)]="reservetel" (blur)="blacktel()"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-danger">*</span> 用户标志：</td>
+              <td>
+                <input type="text" class="form-control reservebz" [(ngModel)]="reservebz" />
+              </td>
+              <td>
+                <span class="text-danger">*</span> 订单来源：</td>
+              <td>
+                <select class="form-control origin">
+                  <option value="">请选择</option>
+                  <option value="本网">本网</option>
+                  <option value="天猫">天猫</option>
+                  <option value="京东">京东</option>
+                  <option value="婚礼纪">婚礼纪</option>
+                  <option value="飞凡">飞凡</option>
+                  <option value="大众点评">大众点评</option>
+                  <option value="洽客">洽客</option>
+                  <option value="婚博">婚博</option>
+                  <option value="尚品">尚品</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>活动名称：</td>
+              <td>
+                <select id="activityid" class="form-control select2me activityid" style="width:100%">
+                  <option value="">请选择</option>
+                  <option *ngFor="let item of activelist;let list=index;" value="{{item.id}}">{{item.name}}</option>
+                </select>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+            <!-- <tr *ngIf="orderno">
+                <td>客户来源：</td>
+                <td>
+                    <input type="text" class="form-control customeorigin" [(ngModel)]="cusromorigin" />
+                </td>
+                <td>渠道url：</td>
+                <td><input type="text" class="form-control customeorigin" [(ngModel)]="url" /></td>
+            </tr> -->
+          </table>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div *ngIf="id!=null">
+      <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+        <div class="portlet-title">
+          <div class="caption">预约单状态</div>
+          <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title="">
+            </a>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tr>
+                <td style="width:50%">预约单状态：{{statename}}</td>
+                <td>
+                  <div *ngIf="orderstatesequence==2">
+                    <span>未验证，已提醒，{{verifyremind}}次</span>
+                  </div>
+                  <div *ngIf="orderstatesequence==4 || orderstatesequence==5 || orderstatesequence==6">
+                    <p>门店名称：{{signincode}}-{{signinaddress}}</p>
+                    <p>操作人：{{signinshopname}} 编号：{{signinshopcode}}</p>
+                  </div>
+                  <div *ngIf="orderstatesequence==99">
+                    <span>取消预约单的原因：{{cancelreason}}</span>
+                  </div>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+      <div class="portlet-title">
+        <div class="caption">购买意向</div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title="">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <td>品类：</td>
+              <td>
+                <input class="form-control" [(ngModel)]="classifytype" *ngIf="orderstatesequence==1">
+                <input class="form-control" [(ngModel)]="classifytype" *ngIf="orderstatesequence!=1" readonly>
+              </td>
+              <td>预算：</td>
+              <td><input class="form-control" [(ngModel)]="tabprice" *ngIf="orderstatesequence==1">
+                <input class="form-control" [(ngModel)]="tabprice" *ngIf="orderstatesequence!=1" readonly>
+              </td>
+              <td>材质：</td>
+              <td><input class="form-control" [(ngModel)]="materianame" *ngIf="orderstatesequence==1">
+                <input class="form-control" [(ngModel)]="materianame" *ngIf="orderstatesequence!=1" readonly>
+              </td>
+              <td>钻重：</td>
+              <td><input class="form-control" [(ngModel)]="mainstoneinfo" *ngIf="orderstatesequence==1">
+                <input class="form-control" [(ngModel)]="mainstoneinfo" *ngIf="orderstatesequence!=1" readonly>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+      <div class="portlet-title">
+        <div class="caption">预约单备注</div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title="">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <td>问题1：意向款/系列</td>
+              <td><span class="pull-left">答:&nbsp;&nbsp;</span>
+                <span class="quesContent pull-left">
+                  <input class="form-control" [(ngModel)]="affixcontent1" *ngIf="orderstatesequence==1">
+                  <input class="form-control" [(ngModel)]="affixcontent1" *ngIf="orderstatesequence!=1" readonly>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>问题2：用途</td>
+              <td><span class="pull-left">答:&nbsp;&nbsp;</span>
+                <span class="quesContent pull-left">
+                  <input class="form-control" [(ngModel)]="affixcontent2" *ngIf="orderstatesequence==1">
+                  <input class="form-control" [(ngModel)]="affixcontent2" *ngIf="orderstatesequence!=1" readonly>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>问题3：使用时间</td>
+              <td><span class="pull-left">答:&nbsp;&nbsp;</span>
+                <span class="quesContent pull-left">
+                  <input class="form-control" [(ngModel)]="affixcontent3" *ngIf="orderstatesequence==1">
+                  <input class="form-control" [(ngModel)]="affixcontent3" *ngIf="orderstatesequence!=1" readonly>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>问题4：是否了解过I DO </td>
+              <td><span class="pull-left">答:&nbsp;&nbsp;</span>
+                <span class="quesContent pull-left">
+                  <input class="form-control" [(ngModel)]="affixcontent4" *ngIf="orderstatesequence==1">
+                  <input class="form-control" [(ngModel)]="affixcontent4" *ngIf="orderstatesequence!=1" readonly>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>问题5：是否了解过珠宝类的知识 </td>
+              <td><span class="pull-left">答:&nbsp;&nbsp;</span>
+                <span class="quesContent pull-left">
+                  <input class="form-control" [(ngModel)]="affixcontent5" *ngIf="orderstatesequence==1">
+                  <input class="form-control" [(ngModel)]="affixcontent5" *ngIf="orderstatesequence!=1" readonly>
+                </span>
+              </td>
+            </tr>
+          </table>
+          <textarea placeholder="其他备注请注意" style="width:100%;" [(ngModel)]="remark" *ngIf="orderstatesequence==1"></textarea>
+          <textarea placeholder="其他备注请注意" style="width:100%;" [(ngModel)]="remark" *ngIf="orderstatesequence!=1" readonly></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="text-center" style="padding-bottom:20px;margin-top:20px;">
+        <button type="button" class="btn default" (click)="addreserve()">确认</button>
+      <button type="button" class="btn default" (click)="goback()">返回</button>
+    </div>
+  </div>
+</div>
+<!-- </form> -->
+<!--查找门店-->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">选择预约门店</font>
+          </font>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="shopping">
+          <div style="margin-bottom:20px">
+            <select id="area" class="form-control select2me area" data-placeholder="请选择门店所在大区" style="width:30%">
+              <option value="">请选择</option>
+              <option *ngFor="let item of area;let list=index;" value="{{item}}">{{item}}</option>
+            </select>
+            <select id="city" class="form-control select2me city" data-placeholder="请选择门店所在城市" style="width:30%;margin-left:6%">
+              <option value="">请选择</option>
+              <option *ngFor="let item of citys;let list=index;" value="{{item}}">{{item}}</option>
+            </select>
+          </div>
+          <div>
+            <select id="shops" class="form-control select2me shops" data-placeholder="请选择门店" style="width:66%">
+              <option value="">请选择</option>
+              <option *ngFor="let item of shops;let list=index;" value="{{item.organizationCode}}">{{item.organizationName}}</option>
+            </select>
+            <input type="hidden" id="shopname"/>
+            <input type="hidden" id="shopcode"/>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span class="hftips text-danger"></span>
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button class="btn default" (click)="sureshop()">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--查找门店end-->
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

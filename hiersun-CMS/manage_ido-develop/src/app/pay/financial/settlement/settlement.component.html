@@ -1,0 +1,291 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>日结算明细
+        <!--<small>edi-channel</small>-->
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <!--筛选-->
+          <div class="choosesx row">
+            <!--格式一-->
+            <div class="form-inline" id="search">
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 操作时间：</label>
+                <div class="col-md-7">
+                  <input style="width: 100%"  id="operationtime" type="text" class="col-md-7 form-control beginDate brand" placeholder="请选择操作时间">
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 订单类别 ：</label>
+                <div class="col-md-7">
+                  <select style='width: 100%!important'  id="oType" class="form-control input-large input-inline platform">
+                    <option value="">请选择</option>
+                    <option  *ngFor="let item of typeList;let i=index;" value="{{item.value}}">{{item.text}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 渠道代码：</label>
+                <div class="col-md-7">
+                  <!--<input style="width: 100%"  id="channelCode" type="text" class="col-md-7 form-control brand" placeholder="请输入渠道代码">-->
+                  <select style="width: 100%" id="channelCode" class="form-control select2me" data-placeholder=" ">
+                      <option value="">请选择</option>
+                      <option *ngFor="let sourceitem of sourceList;let sourcekey=index;" value="{{sourceitem.channelCode}}">{{sourceitem.channelName}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 品牌编码：</label>
+                <div class="col-md-7">
+                  <!--<input style="width: 100%"  id="brandNo" type="text" class="col-md-7 form-control brand" placeholder="请输入品牌编码">-->
+                  <select style="width: 100%" id="brandNo" class="form-control select2me" data-placeholder=" ">
+                      <option value="">请选择</option>
+                      <option *ngFor='let brandlist of brandlist' value="{{brandlist.brandSid}}">{{brandlist.brandName}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 平台单据号：</label>
+                <div class="col-md-7">
+                  <input style="width: 100%"  id="outTradeNo" type="text" class="col-md-7 form-control brand" placeholder="请输入平台单据号">
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 定制单号：</label>
+                <div class="col-md-7">
+                  <input style="width: 100%"  id="customNo" type="text" class="col-md-7 form-control brand" placeholder="请输入定制单号">
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 门店号：</label>
+                <div class="col-md-7">
+                  <select style="width: 100%" id="storeCode" class="form-control select2me" data-placeholder=" ">
+                      <option value="">请选择</option>
+                      <option *ngFor="let stoitem of storeList;let stokey=index;" value="{{stoitem.organizationCode}}">{{stoitem.organizationCode}}:{{stoitem.organizationName}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 销售单号：</label>
+                <div class="col-md-7">
+                  <input style="width: 100%"  id="saleNo" type="text" class="col-md-7 form-control brand" placeholder="请输入销售单号(POS单)">
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 业务类型：</label>
+                <div class="col-md-7">
+                  <!--<input style="width: 100%"  id="type" type="text" class="col-md-7 form-control brand" placeholder="请输入业务类型">-->
+                  <select style="width: 100%" id="type" class="form-control">
+                    <option value="">请选择</option>
+                    <option value="R">退款</option>
+                    <option value="S">交易</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 支付类型：</label>
+                <div class="col-md-7">
+                  <select style="width: 100%"  id="payType" class="col-md-7 form-control platform">
+                    <option value="">请选择</option>
+                    <option value="13103">支付宝</option>
+                    <option value="13101">微信</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 付款时间 ：</label>
+                <div class="col-md-7">
+                  <input style="width: 100%"  id="startPayTime" type="text" class="col-md-7 beginDate form-control brand" placeholder="请输入付款时间">
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 销账时间 ：</label>
+                <div class="col-md-7">
+                  <input style="width: 100%"  id="startCrossTime" type="text" class="col-md-7 beginDate form-control brand" placeholder="请输入销账时间">
+                </div>
+              </div>
+              <div id="Settlementbox" class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 是否结算：</label>
+                <div class="col-md-7">
+                  <select style='width: 100%!important' id="isSettlement" class="form-control platform">
+                    <option value="">请选择</option>
+                    <option value="0">未结算</option>
+                    <option value="1">已结算</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 创建时间 ：</label>
+                <div class="col-md-7">
+                  <input style="width: 100%"  id="startTradeTime" type="text" class="col-md-7 beginDate form-control brand" placeholder="请输入交易创建时间 ">
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="col-md-4"> 交易时间 ：</label>
+                <div class="col-md-7">
+                  <input style="width: 100%" id="startSuccessTime" type="text" class="col-md-7 beginDate form-control brand" placeholder="请输入交易成功时间 ">
+                </div>
+              </div>
+              <div id="Verifybox" class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 是否核销 ：</label>
+                <div class="col-md-7">
+                  <select  style='width: 100%!important' id="isVerify" class="form-control platform">
+                    <option value="">请选择</option>
+                    <option value="0">未核销</option>
+                    <option value="1">已核销</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12 text-center" style="margin-top: 10px;">
+                <button style="margin: 10px" (click)='search()' class="btn green btn-default">查询</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button style="margin: 10px" class="btn green btn-default" (click)='loadAgain()'>重置</button>
+              </div>
+            </div>
+          </div>
+          <!--财务报表明细-->
+          <div class="portlet box blue-hoki" style="margin-top: 15px;">
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>日结算明细
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <!--列表end-->
+            <!--body-->
+            <div class="portlet-body">
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_1" role="grid" aria-describedby="sample_1_info">
+                  <thead>
+                    <tr>
+                      <th>渠道代码</th>
+                      <th>定制单号</th>
+                      <th>平台单据号</th>
+                      <th>销售单明细号</th>
+                      <th>品类</th>
+                      <th>产品名称</th>
+                      <th>数量</th>
+                      <th>回款金额</th>
+                      <th>版库编号</th>
+                      <th>付款时间</th>
+                      <th>销账时间</th>
+                      <th>条码</th>
+                      <th>是否已结算</th>
+                      <th>订单类别</th>
+                      <th>品牌编码</th>
+                      <th>门店号</th>
+                      <th>销售单号</th>
+                      <th>支付金额</th>
+                      <th>业务类型</th>
+                      <th>支付类型</th>
+                      <th>交易创建时间</th>
+                      <th>交易成功时间</th>
+                      <th>订单状态</th>
+                      <th>尾款单号</th>
+                      <th>是否核销</th>
+                      <th>操作时间</th>
+                      <!--<th>操作</th>-->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor = 'let item of settlementList'>
+                      <td *ngIf='item.channelName'>{{item.channelName}}</td>
+                      <td *ngIf='!item.channelName'>-</td>
+                      <td *ngIf='item.customNo'>{{item.customNo}}</td>
+                      <td *ngIf='!item.customNo'>-</td>
+                      <td *ngIf='item.outTradeNo'>{{item.outTradeNo}}</td>
+                      <td *ngIf='!item.outTradeNo'>-</td>
+                      <td *ngIf='item.saleItemNo'>{{item.saleItemNo}}</td>
+                      <td *ngIf='!item.saleItemNo'>-</td>
+                      <td *ngIf='item.category'>{{item.category}}</td>
+                      <td *ngIf='!item.category'>-</td>
+                      <td *ngIf='item.goodsName'>{{item.goodsName}}</td>
+                      <td *ngIf='!item.goodsName'>-</td>
+                      <td *ngIf='item.goodsNum'>{{item.goodsNum}}</td>
+                      <td *ngIf='!item.goodsNum'>-</td>
+                      <td *ngIf='item.receivedAmount'>{{item.receivedAmount |  number:'.2-2'}}</td>
+                      <td *ngIf='!item.receivedAmount'>-</td>
+                      <td *ngIf='item.spuNo'>{{item.spuNo}}</td>
+                      <td *ngIf='!item.spuNo'>-</td>
+                      <td *ngIf='item.payTime' style='min-width:130px'>{{item.payTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                      <td *ngIf='!item.payTime'>-</td>
+                      <td *ngIf='item.crossTime' style='min-width:130px'>{{item.crossTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                      <td *ngIf='!item.crossTime'>-</td>
+                      <td *ngIf='item.barcode'>{{item.barcode}}</td>
+                      <td *ngIf='!item.barcode'>-</td>
+                      <td *ngIf='item.isSettlement == 0'>未结算</td>
+                      <td *ngIf='item.isSettlement == 1'>已结算</td>
+                      <td *ngIf='item.oType==1'>预收款</td>
+                      <td *ngIf='item.oType==2'>刷单费</td>
+                      <td *ngIf='item.oType==3'>维修费</td>
+                      <td *ngIf='item.oType==4'>测试费</td>
+                      <td *ngIf='item.oType==5'>平台订单</td>
+                      <td *ngIf='item.oType==6'>核销pos</td>
+                      <td *ngIf='!item.oType'>-</td>
+                      <td *ngIf='item.brandName'>{{item.brandName}}</td>
+                      <td *ngIf='!item.brandName'>-</td>                      
+                      <td *ngIf='item.storeCode'>{{item.storeCode}}</td>
+                      <td *ngIf='!item.storeCode'>-</td>                      
+                      <td *ngIf='item.saleNo'>{{item.saleNo}}</td>
+                      <td *ngIf='!item.saleNo'>-</td>                      
+                      <td *ngIf='item.payAmount'>{{item.payAmount}}</td>
+                      <td *ngIf='!item.payAmount'>-</td>                      
+                      <td *ngIf='item.type=="S"'>交易</td>
+                      <td *ngIf='item.type=="R"'>退款</td>
+                      <td *ngIf='!item.type'>-</td>                                            
+                      <td *ngIf='item.payType==13103'>支付宝</td>
+                      <td *ngIf='item.payType==13101'>微信</td>
+                      <td *ngIf='item.payType==14112'>微信</td><!-- !!!!!!!!!未确定 -->
+                      <td *ngIf='!item.payType'>-</td>
+                      <td *ngIf='item.tradeTime' style='min-width:130px'>{{item.tradeTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                      <td *ngIf='!item.tradeTime'>-</td>                                            
+                      <td *ngIf='item.successTime' style='min-width:130px'>{{item.successTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                      <td *ngIf='!item.successTime'>-</td>                                            
+                      <td *ngIf='item.orderState'>{{item.orderState}}</td>
+                      <td *ngIf='!item.orderState'>-</td>                                            
+                      <td *ngIf='item.tailNo'>{{item.tailNo}}</td>
+                      <td *ngIf='!item.tailNo'>-</td>                                            
+                      <td *ngIf='item.isVerify == 0'>未核销</td>
+                      <td *ngIf='item.isVerify == 1'>已核销</td>
+                      <td *ngIf='item.operationTime' style='min-width:130px'>{{item.operationTime}}</td>
+                      <td *ngIf='!item.operationTime'>-</td>                                            
+                      <!--<td>
+                        <a class="btn btn-xs btn-info">
+                          <i class="fa fa-edit"></i> 启用 </a>
+                        <a class="btn btn-xs btn-info">
+                          <i class="fa fa-edit"></i> 禁用 </a>
+                      </td>-->
+                    </tr>
+                    <tr *ngIf="nodata==false">
+                        <td colspan="13" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="clearfix">
+                  <div id="pagination1" class="page"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

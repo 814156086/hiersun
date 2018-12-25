@@ -1,0 +1,21 @@
+.verify-container {
+    width: 70%;
+  }
+  
+  .verity_body {
+    height: 500px;
+    overflow-y: auto;
+  }
+  
+  .dic_score {
+    display: inline-block;
+    border-bottom: 1px solid;
+    width: 60px;
+    text-align: center;
+  }
+  
+  .dropdown-menu {
+    margin-top: 0px;
+    /* min-width: 89%; */
+  }
+  

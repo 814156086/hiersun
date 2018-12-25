@@ -1,0 +1,324 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>编辑站点
+      <small>Site edit</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet-body">
+      <div class="contenttab">
+        <form class="form-horizontal" [formGroup]="formModel" (submit)="submit()">
+          <div class="form-body">
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>站点名称：</label>
+              <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('name').invalid && formModel.get('name').touched" type="text"
+                  formControlName="name" name="name" [(ngModel)]="names" placeholder="请输入站点名称">
+                <div [hidden]="formModel.get('name').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['name'])">
+                    站点名称必填
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>站点地址：</label>
+              <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('baseUrl').invalid && formModel.get('baseUrl').touched" type="text"
+                  formControlName="baseUrl" name="baseUrl" [(ngModel)]="baseUrls" placeholder="请输入站点地址">
+                <div [hidden]="formModel.get('baseUrl').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['baseUrl'])">
+                    站点地址必填
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>页面后缀名：</label>
+              <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('fileSuffix').invalid && formModel.get('fileSuffix').touched"
+                  type="text" formControlName="fileSuffix" name="fileSuffix" [(ngModel)]="fileSuffixs" placeholder="请输入页面后缀名">
+                <div [hidden]="formModel.get('fileSuffix').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['fileSuffix'])">
+                    页面后缀名必填
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>系列地址：</label>
+              <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('seriesUrl').invalid && formModel.get('seriesUrl').touched" type="text"
+                  formControlName="seriesUrl" name="seriesUrl" [(ngModel)]="seriesUrls" placeholder="请输入系列地址">
+                <div [hidden]="formModel.get('seriesUrl').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['seriesUrl'])">
+                    系列地址必填
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>商品地址：</label>
+              <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('productUrl').invalid && formModel.get('productUrl').touched"
+                  type="text" formControlName="productUrl" name="productUrl" [(ngModel)]="productUrls" placeholder="请输入商品地址">
+                <div [hidden]="formModel.get('productUrl').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['productUrl'])">
+                    商品地址必填
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>站点类型：</label>
+              <div class="col-md-8">
+                <select class="form-control" [class.hasError]="formModel.get('sitetype').invalid && formModel.get('sitetype').touched" type="text"
+                  formControlName="sitetype" name="sitelx" [(ngModel)]="sitetypes">
+                  <option value=" ">请选择</option>
+                  <option value="1">PC</option>
+                  <option value="2">移动</option>
+                </select>
+                <div [hidden]="formModel.get('sitetype').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['sitetype'])">
+                    站点类型必填
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-1 control-label"></label>
+              <fieldset class="col-md-10 clearfix">
+                <legend> 静态文件</legend>
+                <!--ftp-->
+                <div class="form-group">
+                  <label class="col-md-1 control-label">
+                    <button type="button" class="btn btn-info addftp" (click)="addwebsiteList()">添加FTP</button>
+                  </label>
+                </div>
+                <div class="form-group FTPbox" *ngFor="let item of ftpArray;let key=index;">
+                  <div class="col-md-12 row">
+                    <span class="pull-left" style="padding-left:20px;">ip：</span>
+                    <input type="text" name="ip" value="{{item.ip}}" class="form-control ip" placeholder="ip" />
+                    <span class="pull-left">port：</span>
+                    <input type="text" name="port" value="{{item.port}}" class="form-control port" placeholder="port" style="width:8%" />
+                    <span class="pull-left">用户名：</span>
+                    <input type="text" name="username" value="{{item.username}}" class="form-control usernameftp" placeholder="username" style="width:10%"
+                    />
+                    <span class="pull-left">密码：</span>
+                    <input type="password" name="password" value="{{item.password}}" class="form-control password" placeholder="pwd" style="width:10%"
+                    />
+                    <span class="pull-left">目录：</span>
+                    <input type="text" name="basePath" value="{{item.basePath}}" class="form-control basePath" placeholder="basePath" />
+                    <a class="btn blue" (click)="testfpt(key)">
+                      测试
+                    </a>
+                    <button class="btn red" (click)="delwebsiteList(key)">
+                      删除
+                    </button>
+                  </div>
+                </div>
+                <!--oss-->
+                <div class="form-group">
+                  <label class="col-md-1 control-label">
+                    <button type="button" class="btn btn-info addftp" (click)="addoss()">添加OSS</button>
+                  </label>
+                </div>
+                <div class="form-group ossbox" *ngFor="let item of ossArray;let key=index;">
+                  <div class="col-md-12 row" style="margin-bottom:20px">
+                    <div class="col-md-4">
+                      <span class="col-md-5" style="padding-left:20px;">accessKeyId：</span>
+                      <input type="text" name="accessKeyId" value="{{item.accessKeyId}}" class="col-md-6 form-control imgaccessKeyId" placeholder="accessKeyId"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <span class="col-md-5">accessKeySecret：</span>
+                      <input type="text" name="accessKeySecret" value="{{item.accessKeySecret}}" class="col-md-6 form-control imgaccessKeySecret"
+                        placeholder="accessKeySecret" />
+                    </div>
+                    <div class="col-md-4">
+                      <span class="col-md-5">bucketName：</span>
+                      <input type="text" name="bucketName" value="{{item.bucketName}}" class="col-md-6 form-control imgbucketName" placeholder="bucketName"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-12 row" style="margin-bottom:20px">
+                    <div class="col-md-4" style="padding-left:20px;">
+                      <span class="col-md-5">endpoint：</span>
+                      <input type="text" name="endpoint" value="{{item.endpoint}}" class="col-md-6 form-control imgendpoint" placeholder="endpoint"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <span class="col-md-5">目录：</span>
+                      <input type="text" name="fileName" value="{{item.fileName}}" class="col-md-6 form-control imgfileName" placeholder="fileName"
+                      />
+                    </div>
+                    <!-- <div class="col-md-4">
+                      <span class="col-md-5">url：</span>
+                      <input type="text" name="url" value="{{item.url}}" class="col-md-5 form-control url" placeholder="url" />
+                    </div> -->
+                    <div class="col-md-12 row" style="margin-top:20px">
+                      <a class="btn blue" (click)="testimgoss(key)"  style="margin-left:30px">
+                        测试
+                      </a>
+                      <button class="btn red" (click)="deladdoss(key)">
+                        删除
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <div class="form-group">
+                <label class="col-md-1 control-label"></label>
+                <fieldset class="col-md-10 clearfix">
+                  <legend> 图片资源</legend>
+                  <!--oss-->
+                  <div class="form-group">
+                    <label class="col-md-1 control-label">
+                      <button type="button" class="btn btn-info addftp" (click)="imgaddoss()">添加OSS</button>
+                    </label>
+                  </div>
+                  <div class="form-group imgossbox" *ngFor="let item of imgossArray;let key=index;">
+                    <div class="col-md-12 row" style="margin-bottom:20px">
+                      <div class="col-md-4">
+                        <span class="col-md-5" style="padding-left:20px;">accessKeyId：</span>
+                        <input type="text" name="imgaccessKeyId" value="{{item.accessKeyId}}" class="col-md-6 form-control accessKeyId" placeholder="accessKeyId"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <span class="col-md-5">accessKeySecret：</span>
+                        <input type="text" name="imgaccessKeySecret" value="{{item.accessKeySecret}}" class="col-md-6 form-control accessKeySecret"
+                          placeholder="accessKeySecret" />
+                      </div>
+                      <div class="col-md-4">
+                        <span class="col-md-5">bucketName：</span>
+                        <input type="text" name="imgbucketName" value="{{item.bucketName}}" class="col-md-6 form-control bucketName" placeholder="bucketName"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-12 row" style="margin-bottom:20px">
+                      <div class="col-md-4" style="padding-left:20px;">
+                        <span class="col-md-5">endpoint：</span>
+                        <input type="text" name="imgendpoint" value="{{item.endpoint}}" class="col-md-6 form-control endpoint" placeholder="endpoint"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <span class="col-md-5">目录：</span>
+                        <input type="text" name="imgfileName" value="{{item.fileName}}" class="col-md-6 form-control fileName" placeholder="fileName"
+                        />
+                      </div>
+                      <div class="col-md-12 row" style="margin-top:20px">
+                        <a class="btn blue" (click)="testoss(key)"  style="margin-left:30px">
+                          测试
+                        </a>
+                        <button class="btn red" (click)="deladdimgoss(key)">
+                          删除
+                        </button>
+                      </div>
+                    </div>
+                    </div>
+                    <label class=" control-label">
+                      <button type="button" class="btn btn-info addftp" (click)="adddomainUrl()">添加域名</button>
+                    </label>
+                    <div class="form-group domainUrlbox" *ngFor="let item of domainUrlArray;let key=index;">
+                      <div class="col-md-12">
+                        <div class="col-md-8" style="margin-top:20px;">
+                          <span class="col-md-2" style="padding-left:20px;">域名：</span>
+                          <input type="text" name="domainUrl" value="{{item}}" class="col-md-6 form-control accessKeyId"
+                            placeholder="domainUrl" />
+                            <button class="btn red" style="margin-left:20px;" (click)="deldomainUrl(key)">
+                              删除
+                            </button>
+                        </div>
+                        
+                      </div>
+                      
+                  </div>
+                </fieldset>
+              </div>
+              <div class="form-group">
+                  <label class="col-md-1 control-label"></label>
+                  <fieldset class="col-md-10 clearfix">
+                    <legend> 视频资源</legend>
+                    <!--oss-->
+                    <div class="form-group">
+                      <label class="col-md-1 control-label">
+                        <button type="button" class="btn btn-info addftp" (click)="addvdooss()">添加OSS</button>
+                      </label>
+                    </div>
+                    <div class="form-group vdoossbox" *ngFor="let item of vdoossArray;let key=index;">
+                      <div class="col-md-12 row" style="margin-bottom:20px">
+                        <div class="col-md-4">
+                          <span class="col-md-5" style="padding-left:20px;">accessKeyId：</span>
+                          <input type="text" name="vdoKeyId" value="{{item.accessKeyId}}" class="col-md-6 form-control vdoaccessKeyId" placeholder="accessKeyId"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <span class="col-md-5">accessKeySecret：</span>
+                          <input type="text" name="vdoKeySecret" value="{{item.accessKeySecret}}" class="col-md-6 form-control vdoaccessKeySecret"
+                            placeholder="accessKeySecret" />
+                        </div>
+                        <div class="col-md-4">
+                          <span class="col-md-5">regionId：</span>
+                          <input type="text" name="vdoregionId" value="{{item.regionId}}" class="col-md-6 form-control vdoregionId" placeholder="bucketName"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-12 row" style="margin-bottom:20px">
+                        <div class="col-md-4" style="padding-left:20px;">
+                          <span class="col-md-5">formats：</span>
+                          <input type="text" name="vdoformats" value="{{item.formats}}" class="col-md-6 form-control vdoformats" placeholder="formats"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <span class="col-md-5">authTimeOut：</span>
+                          <input type="text" name="vdoTimeOut" value="{{item.authTimeOut}}" class="col-md-6 form-control vdoauthTimeOut" placeholder="authTimeOut"
+                          />
+                        </div>
+                        <!-- <div class="col-md-4">
+                          <span class="col-md-5">url：</span>
+                          <input type="text" name="url" value="{{item.url}}" class="col-md-5 form-control url" placeholder="url" />
+                        </div> -->
+                        <div class="col-md-12 row" style="margin-top:20px">
+                          <a class="btn blue" (click)="testvdooss(key)"  style="margin-left:30px">
+                            测试
+                          </a>
+                          <button class="btn red" (click)="deladdvdooss(key)">
+                            删除
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              
+          </div>
+          <div style="clear:both;height:20px"></div>
+          <div class="form-actions right1">
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+            <button type="submit" class="btn green" [disabled]="formModel.invalid">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

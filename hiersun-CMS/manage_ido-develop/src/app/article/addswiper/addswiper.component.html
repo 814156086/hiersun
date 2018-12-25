@@ -1,0 +1,72 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>编辑标签
+      <small>Tag edit</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet-body">
+      <div class="contenttab">
+        <form class="form-horizontal" [formGroup]="formModel" (submit)="submit()">
+          <div class="form-body">
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>轮播图名称：</label>
+          <div class="col-md-8">
+            <input class="form-control" [class.hasError]="formModel.get('picTitle').invalid && formModel.get('picTitle').touched"
+                   type="text" formControlName="picTitle" name="picTitle" [(ngModel)]="picTitle" placeholder="请输入名称" >
+            <div [hidden]="formModel.get('picTitle').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['picTitle'])">
+                轮播图名称必填
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>置顶值：</label>
+          <div class="col-md-8">
+            <input class="form-control" [class.hasError]="formModel.get('stickNum').invalid && formModel.get('stickNum').touched"
+                   type="text" formControlName="stickNum" name="stickNum" [(ngModel)]="stickNum" placeholder="请输入置顶值" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+            <div [hidden]="formModel.get('stickNum').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['stickNum'])">
+                置顶值必填
+              </div>
+            </div>
+          </div>
+        </div>
+            <div class="form-group" style="position: relative;">
+              <label class="col-md-2 control-label">图片：</label>
+              <div class="col-md-8">
+            <span class="btn green fileinput-button">
+                <i class="fa fa-plus"></i>
+                <span>选择文件</span>
+                <input type="file"  name="photoFile" accept="image/png, image/jpeg ,image/jpg" (change)="imgadd($event)">
+              </span>
+                <div class="imgbox" style="display:none;">
+                  <img class="setimg" src="" alt="">
+                </div>
+              </div>
+            </div>
+            <div class="form-actions" style="text-align:center;">
+              <button type="button" class="btn default" (click)="goback()">返回</button>
+              <button type="submit" class="btn green" [disabled]="formModel.invalid">保存</button>
+            </div>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

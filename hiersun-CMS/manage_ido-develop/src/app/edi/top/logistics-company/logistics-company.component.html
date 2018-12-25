@@ -1,0 +1,133 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>物流公司映射关系管理
+        <small>Logistics Company Mapping</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <div class="choosesx">
+            <div class="form-inline">
+              <button class="btn green btn-default"
+                      *ngIf="availableTmsCompanies != null && availableTmsCompanies.length > 0"
+                      data-toggle="modal" href="#edi-top-logistics-company-mapping-editor"
+                      (click)="editMapping(null)">新增
+              </button>
+              <button *ngIf="availableTmsCompanies == null || availableTmsCompanies.length === 0"
+                      class="btn green btn-default disabled" disabled>新增
+              </button>
+            </div>
+          </div>
+          <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>物流公司映射
+              </div>
+              <div class="tools">
+                <a href="javascript:" class="collapse" data-original-title="" title=""></a>
+                <a data-original-title="" title="" (click)="reloadGrid()">
+                  <i class="fa fa-refresh" style="color:#fff;position: relative;top:-2px;"></i>
+                </a>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="mappings"
+                       role="grid" aria-describedby="mappings_info">
+                  <thead>
+                  <tr role="row">
+                    <th aria-controls="mappings">中台物流公司编码</th>
+                    <th aria-controls="mappings">中台物流公司名称</th>
+                    <th aria-controls="mappings">淘宝物流公司编码</th>
+                    <th aria-controls="mappings">淘宝物流公司名称</th>
+                    <th aria-controls="mappings">操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr role="row" class="odd" *ngFor="let mapping of mappings">
+                    <td>{{mapping.tmsCompanyCode}}</td>
+                    <td>{{mapping.tmsCompanyName}}</td>
+                    <td>{{mapping.topCompanyCode}}</td>
+                    <td>{{mapping.topCompanyName}}</td>
+                    <td>
+                      <a class="btn btn-xs btn-info" data-toggle="modal"
+                         href="#edi-top-logistics-company-mapping-editor" (click)="editMapping(mapping)">
+                        <i class="fa fa-edit"></i> 编辑 </a>
+                    </td>
+                  </tr>
+                  <tr *ngIf="noData">
+                    <td colspan="5" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="clearfix box">
+                <div id="edi-top-logistics-company-mappings-pagination" class="page fr"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="edi-top-logistics-company-mapping-editor" tabindex="-1" data-backdrop="static" role="dialog"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;">编辑淘宝物流公司映射</span>
+          </span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" *ngIf="mappingEditing != null">
+          <label>中台物流公司：</label>{{mappingEditing.tmsCompanyName}}
+        </div>
+        <div class="form-group" *ngIf="mappingEditing == null">
+          <label for="edi-top-logistics-company-mapping-tms-selected">选择中台物流公司：</label>
+          <select class="form-control" id="edi-top-logistics-company-mapping-tms-selected">
+            <option value="">请选择</option>
+            <option *ngFor="let tmsCompany of availableTmsCompanies;"
+                    value="{{tmsCompany.code}}">{{tmsCompany.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edi-top-logistics-company-mapping-top-selected">请选择淘宝物流公司：</label>
+          <select class="form-control" id="edi-top-logistics-company-mapping-top-selected">
+            <option value="">请选择</option>
+            <option *ngFor="let topCompany of topCompanies;" value="{{topCompany.code}}"
+                    [attr.selected]="topCompany.code==mappingEditing?.topCompanyCode?true:null">{{topCompany.name}}</option>
+          </select>
+        </div>
+        <p style="color:red" *ngIf="errorMsg !== ''">{{errorMsg ? errorMsg : ''}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn blue" (click)="saveMapping()">确认</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="loadingMappings || loadingTop || loadingTms">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<!--<div id="hint" *ngIf="isHint">-->
+<!--<div class="hintMsg">-->
+<!--<i *ngIf="warning" class="warningMsg"></i>-->
+<!--<i *ngIf="!warning" class="ok"></i>-->
+<!--<span>{{hintMsg}}</span>-->
+<!--</div>-->
+<!--</div>-->

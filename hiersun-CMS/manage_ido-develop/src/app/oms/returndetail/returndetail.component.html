@@ -1,0 +1,363 @@
+<!-- BEGIN MODAL-->
+<div class="modal fade" id="modal_return" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog sale-container">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">退货单详情</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+        <!-- 1 -->
+        <div class="form-body">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th> 退货单号</th>
+                  <th> 订单号</th>
+                  <th> 退货申请单号</th>
+                  <th> 原销售单号</th>
+                  <th> 外部订单号</th>
+                  <th> 手机号</th>
+                  <th> 退货单状态</th>
+                  <th> 退款状态</th>
+                  <th> 会员卡号</th>
+                  <th> 退货类型</th>
+                  <th> 退货类别</th>
+                  <th> 退款路径</th>
+                  <th> 第三方退货单号</th>
+                  <th> 应退金额</th>
+                  <th> 实退金额</th>
+                  <th> 退货总数</th>
+                  <th> 门店名称</th>
+                  <th> 受理人</th>
+                  <th> 受理门店</th>
+                  <th> 退货时间</th>
+                  <th> 最后修改人</th>
+                  <th> 最后修改时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr *ngIf="recordTotal==0">
+                  <td class="text-center" colspan="22">没有相关记录~</td>
+                </tr> -->
+                <tr role="row" class="odd" *ngFor="let roitem of returnOrderList;let rokey=index;">
+                  <!-- 退货单号 -->
+                  <td>
+                    {{roitem.refundApplyNo?roitem.refundNo:"——"}}
+                  </td>
+                  <!-- 订单号 -->
+                  <td> {{roitem.orderNo?roitem.orderNo:"——"}}</td>
+                  <!-- 退货申请单号 -->
+                  <td> {{roitem.refundApplyNo?roitem.refundApplyNo:"——"}}</td>
+                  <!-- 原销售单号 -->
+                  <td> {{roitem.originalSalesNo?roitem.originalSalesNo:"——"}}</td>
+                  <!-- 外部订单号 -->
+                  <td> {{roitem.outOrderNo?roitem.outOrderNo:"——"}}</td>
+                  <!-- 手机号 -->
+                  <td> {{roitem.receptPhone?roitem.receptPhone:"——"}}</td>
+                  <!-- 退货单状态 -->
+                  <td> {{roitem.refundStatusDesc?roitem.refundStatusDesc:"——"}}</td>
+                  <!-- <td *ngIf="roitem.refundStatus==1">
+                    <span class="label label-sm label-warning">待审核</span>
+                  </td>
+                  <td *ngIf="roitem.refundStatus==2">
+                    <span class="label label-sm label-danger">审核不通过</span>
+                  </td>
+                  <td *ngIf="roitem.refundStatus==4">
+                    <span class="label label-sm label-success">审核通过</span>
+                  </td>
+                  <td *ngIf="roitem.refundStatus==5">
+                    <span class="label label-sm label-primary">取消成功</span>
+                  </td>
+                  <td *ngIf="roitem.refundStatus!=1&&roitem.refundStatus!=2&&roitem.refundStatus!=4&&
+                    roitem.refundStatus!=5">
+                    ——
+                  </td> -->
+                  <!-- 退款状态 -->
+                  <td> {{roitem.rebateStatus?roitem.rebateStatus:"——"}}</td>
+                  <!-- 会员卡号 -->
+                  <td> {{roitem.memberCardNo?roitem.memberCardNo:"——"}}</td>
+                  <!-- 退货类型 -->
+                  <td *ngIf="roitem.refundType==1">
+                    <span class="label label-sm label-success">线上</span>
+                  </td>
+                  <td *ngIf="roitem.refundType==2">
+                    <span class="label label-sm label-primary">线下</span>
+                  </td>
+                  <td *ngIf="roitem.refundType!=1&&roitem.refundType!=2">
+                    ——
+                  </td>
+                  <!-- 退货类别 -->
+                  <td *ngIf="roitem.refundClass=='RequestReturn'">
+                    <span class="label label-sm label-success">正常退</span>
+                  </td>
+                  <td *ngIf="roitem.refundClass=='RejectReturn'">
+                    <span class="label label-sm label-danger">拒收退货</span>
+                  </td>
+                  <td *ngIf="roitem.refundClass=='RequestCancelReturn'">
+                    <span class="label label-sm label-primary">发货前退货</span>
+                  </td>
+                  <td *ngIf="roitem.refundClass=='OOSReturn'">
+                    <span class="label label-sm label-warning">缺货退货</span>
+                  </td>
+                  <td *ngIf="roitem.refundClass!='RequestReturn'&&roitem.refundClass!='RejectReturn'&&roitem.refundClass!='RequestCancelReturn'&&roitem.refundClass!='OOSReturn'">
+                    ——
+                  </td>
+                  <!-- 退款路径 -->
+                  <td> {{roitem.refundTarget?roitem.refundTarget:"——"}}</td>
+                  <!-- 第三方退货单号 -->
+                  <td> {{roitem.externalRefundNo?roitem.externalRefundNo:"——"}}</td>
+                  <!-- 应退金额 -->
+                  <td> {{roitem.refundAmount?roitem.refundAmount:"——"}}</td>
+                  <!-- 实退金额 -->
+                  <td> {{roitem.needRefundAmount?roitem.needRefundAmount:"——"}}</td>
+                  <!-- 退货总数 -->
+                  <td> {{roitem.refundNum?roitem.refundNum:"——"}}</td>
+                  <!-- 门店名称 -->
+                  <td> {{roitem.shopName?roitem.shopName:"——"}}</td>
+                  <!-- 受理人 -->
+                  <td> {{roitem.operator?roitem.operator:"——"}}</td>
+                  <!-- 受理门店 -->
+                  <td> {{roitem.operatorStore?roitem.operatorStore:"——"}}</td>
+                  <!-- 退货时间 -->
+                  <td> {{roitem.refundTimeStr?roitem.refundTimeStr:"——"}}</td>
+                  <!-- 最后修改人 -->
+                  <td> {{roitem.latestUpdateMan?roitem.latestUpdateMan:"——"}}</td>
+                  <!-- 最后修改时间 -->
+                  <td> {{roitem.latestUpdateTimeStr?roitem.latestUpdateTimeStr:"——"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 1 -->
+        <!-- 2 start tab-->
+        <div class="form-body">
+          <div class="tabbable-custom">
+            <ul class="nav nav-tabs tab-sales">
+              <li class="active">
+                <a href="#retab_5_1" class="rtab_1" data-toggle="tab" (click)="loadReturnItem(returnNo)">
+                  退货单商品明细 </a>
+              </li>
+              <li>
+                <a href="#retab_5_2" data-toggle="tab" (click)="loadRebateInfo(returnNo)">
+                  退款信息 </a>
+              </li>
+              <li>
+                <a href="#retab_5_3" data-toggle="tab" (click)="loadHisInfo(returnNo)">
+                  历史信息 </a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active table-scrollable table-ofy" id="retab_5_1">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th>操作</th>
+                      <th>退货单号</th>
+                      <th>退货单商品行号</th>
+                      <th>sku编码</th>
+                      <th>spu编码</th>
+                      <th>商品编码</th>
+                      <th>商品名称</th>
+                      <th>商品单位</th>
+                      <th>品牌名称</th>
+                      <th>退货数量</th>
+                      <th>销售价</th>
+                      <th>应退金额</th>
+                      <th>实退金额</th>
+                      <th>是否为赠品</th>
+                      <th>销售单明细</th>
+                      <th>销售单行号</th>
+                      <th>商品类别</th>
+                      <th>收银损益</th>
+                      <th>销项税</th>
+                      <th>条形码</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor="let refundItem of refundItemList; let refundkey=index;">
+                      <td style="text-align:center;">
+                        <span style="cursor: pointer;" class="glyphicon glyphicon-plus" (click)="detailReturnItem($event.target,'12345')"></span>
+                      </td>
+                      <!-- 退货单号 -->
+                      <td>{{refundItem.refundNo?refundItem.refundNo:"——"}}</td>
+                      <!-- 退货单商品行号 -->
+                      <td>{{refundItem.rowNo?refundItem.rowNo:"——"}}</td>
+                      <!-- sku编码 -->
+                      <td>{{refundItem.skuNo?refundItem.skuNo:"——"}}</td>
+                      <!-- spu编码 -->
+                      <td>{{refundItem.spuNo?refundItem.spuNo:"——"}}</td>
+                      <!-- 商品编码 -->
+                      <td>{{refundItem.barcode?refundItem.barcode:"——"}}</td>
+                      <!-- 商品名称 -->
+                      <td>{{refundItem.shoppeProName?refundItem.shoppeProName:"——"}}</td>
+                      <!-- 商品单位 -->
+                      <td>{{refundItem.unit?refundItem.unit:"——"}}</td>
+                      <!-- 品牌名称 -->
+                      <td>{{refundItem.brandName?refundItem.brandName:"——"}}</td>
+                      <!-- 退货数量 -->
+                      <td>{{refundItem.refundNum?refundItem.refundNum:"——"}}</td>
+                      <!-- 销售价 -->
+                      <td>{{refundItem.salePrice?refundItem.salePrice:"——"}}</td>
+                      <!-- 应退金额 -->
+                      <td>{{refundItem.refundAmount}}</td>
+                      <!-- 实退金额 -->
+                      <td>{{refundItem.actualRefundAmount}}</td>
+                      <!-- 是否为赠品 -->
+                      <td *ngIf="refundItem.isGift==0">
+                        <span class="label label-sm label-danger">否</span>
+                      </td>
+                      <td *ngIf="refundItem.isGift==1">
+                        <span class="label label-sm label-success">是</span>
+                      </td>
+                      <!-- 销售单明细 -->
+                      <td>{{refundItem.saleItemNo?refundItem.saleItemNo:"——"}}</td>
+                      <!-- 销售单行号 -->
+                      <td>{{refundItem.saleItemRowNo?refundItem.saleItemRowNo:"——"}}</td>
+                      <!-- 商品类别 -->
+                      <td>{{refundItem.productType?refundItem.productType:"——"}}</td>
+                      <!-- 收银损益 -->
+                      <td>{{refundItem.incomeAmount?refundItem.incomeAmount:"——"}}</td>
+                      <!-- 销项税 -->
+                      <td>{{refundItem.tax?refundItem.tax:"——"}}</td>
+                      <!-- 条形码 -->
+                      <td>{{refundItem.barcode?refundItem.barcode:"——"}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane table-scrollable table-ofy" id="retab_5_2">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th>退款单号</th>
+                      <th>原订单号</th>
+                      <th>退货单号</th>
+                      <th>销售渠道</th>
+                      <th>渠道订单号</th>
+                      <th>客户登录账号</th>
+                      <th>客户编号</th>
+                      <th>退款状态</th>
+                      <th>退款金额</th>
+                      <th>退款介质</th>
+                      <th>开户行</th>
+                      <th>开户人</th>
+                      <th>卡号</th>
+                      <th>创建时间</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor="let rbateItem of rebateList; let rbatekey=index;">
+                      <!-- 退款单号 -->
+                      <td>{{rbateItem.refundMonNo?rbateItem.refundMonNo:"——"}}</td>
+                      <!-- 原订单号 -->
+                      <td>{{rbateItem.orderNo?rbateItem.orderNo:"——"}}</td>
+                      <!-- 退货单号 -->
+                      <td>{{rbateItem.refundNo?rbateItem.refundNo:"——"}}</td>
+                      <!-- 销售渠道 -->
+                      <td><span *ngFor="let sourceitem of sourceList;let stokey=index;">{{sourceitem.channelCode==rbateItem.orderSource?sourceitem.channelName:''}}</span></td>
+                      <!-- 渠道订单号 -->
+                      <td>{{rbateItem.outOrderNo?rbateItem.outOrderNo:"——"}}</td>
+                      <!-- 客户登录账号 -->
+                      <td>{{rbateItem.applyNo?rbateItem.applyNo:"——"}}</td>
+                      <!-- 客户编号 -->
+                      <td>{{rbateItem.memberNo?rbateItem.memberNo:"——"}}</td>
+                      <!-- 退款状态 -->
+                      <!-- <td>{{rbateItem.reMonStatus?rbateItem.reMonStatus:"——"}}</td> -->
+                      <td *ngIf="rbateItem.reMonStatus==12">
+                        <span class="label label-sm label-danger">待退款</span>
+                      </td>
+                      <td *ngIf="rbateItem.reMonStatus==14">
+                        <span class="label label-sm label-success">退款成功</span>
+                      </td>
+                      <td *ngIf="rbateItem.reMonStatus!=12&&rbateItem.reMonStatus!=14">
+                        ——
+                      </td>
+                      <!-- 退款金额 -->
+                      <td>{{rbateItem.needRefundMon?rbateItem.needRefundMon:"——"}}</td>
+                      <!-- 退款介质 -->
+                      <td>{{rbateItem.paymentType?rbateItem.paymentType:"——"}}</td>
+                      <!-- 开户行 -->
+                      <td>{{rbateItem.bankName?rbateItem.bankName:"——"}}</td>
+                      <!-- 开户人 -->
+                      <td>{{rbateItem.bankUser?rbateItem.bankUser:"——"}}</td>
+                      <!-- 卡号 -->
+                      <td>{{rbateItem.applyNo?rbateItem.applyNo:"——"}}</td>
+                      <!-- 创建时间 -->
+                      <td>{{rbateItem.allRefTimeStr?rbateItem.allRefTimeStr:"——"}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane table-scrollable table-ofy" id="retab_5_3">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th> 退货单号</th>
+                      <th> 修改前状态</th>
+                      <th> 修改后状态 </th>
+                      <th> 修改人 </th>
+                      <th> 系统来源 </th>
+                      <th> 修改时间 </th>
+                      <th> 备注 </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor="let rhItem of refundHisList; let rhkey=index;">
+                      <td>{{rhItem.refundNo?rhItem.refundNo:"——"}}</td>
+                      <!-- <td>{{rhItem.priviousStatus?rhItem.priviousStatus:"——"}}</td> -->
+                      <td *ngIf="rhItem.priviousStatus==03">
+                        已入库 </td>
+                      <td *ngIf="rhItem.priviousStatus==12">
+                        待退款 </td>
+                      <td *ngIf="rhItem.priviousStatus==14">
+                        退款成功
+                      </td>
+                      <td *ngIf="rhItem.priviousStatus==19">
+                        待确认 </td>
+                      <td *ngIf="rhItem.priviousStatus!=03&&rhItem.priviousStatus!=12&&rhItem.priviousStatus!=14&&
+                        rhItem.priviousStatus!=19">
+                        ——
+                      </td>
+                      <td>{{rhItem.currentStatusDesc?rhItem.currentStatusDesc:"——"}}</td>
+                      <td>{{rhItem.updateMan?rhItem.updateMan:"——"}}</td>
+                      <td>{{rhItem.operatorSource?rhItem.operatorSource:"——"}}</td>
+                      <td>{{rhItem.updateTimeStr?rhItem.updateTimeStr:"——"}}</td>
+                      <td>{{rhItem.remark?rhItem.remark:"——"}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--  -->
+
+            </div>
+          </div>
+        </div>
+        <!-- 2 end tab-->
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <!-- <button type="button" class="btn blue" (click)="subeProMes()">保存</button> -->
+        <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END MODAL-->
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

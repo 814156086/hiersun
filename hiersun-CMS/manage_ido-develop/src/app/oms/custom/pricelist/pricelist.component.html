@@ -1,0 +1,307 @@
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          <!-- <i class="fa fa-globe"></i> -->
+          定做单管理
+        </div>
+      </div>
+      <div class="portlet-body">
+        <form class="form-horizontal" id="ffSearch">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">销售时间：</label>
+                <div class="col-md-7">
+                  <input type="text" id="priceDate" class="saleDate form-control" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">订单号：</label>
+                <div class="col-md-7">
+                  <input id="orderNum" name="txtOrderNo" type="text" class="form-control" (input)="normalInputChange($event)">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">外部订单号：</label>
+                <div class="col-md-7">
+                  <input id="outOrderNum" name="txtOutOrderNo" type="text" class="form-control" (input)="normalInputChange($event)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">销售单号：</label>
+                <div class="col-md-7">
+                  <input id="saleNum" name="txtSaleNo" type="text" class="form-control" (input)="normalInputChange($event)">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">手机号：</label>
+                <div class="col-md-7">
+                  <input id="receptPhone" name="txtReceptPhone" type="text" class="form-control" (input)="normalInputChange($event)">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">会员卡号：</label>
+                <div class="col-md-7">
+                  <input id="accountNum" name="txtAccountNo" type="text" class="form-control" (input)="normalInputChange($event)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">销售单状态：</label>
+                <div class="col-md-7">
+                  <select id="saleStatus" class="form-control select2me" data-placeholder=" ">
+                    <option value="">所有</option>
+                    <option *ngFor="let sasitem of saStatusList;let saskey=index;" value="{{sasitem.codeValue}}">{{sasitem.codeName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="form-group">
+                <label class="control-label col-md-4">销售单来源：</label>
+                <div class="col-md-7">
+                  <select id="saleSource" class="form-control select2me" data-placeholder=" ">
+                    <option value="">请选择</option>
+                    <option *ngFor="let sourceitem of sourceList;let sourcekey=index;" value="{{sourceitem.channelCode}}">{{sourceitem.channelName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">门店：</label>
+                <div class="col-md-7">
+                  <select id="storeCode" class="form-control select2me" data-placeholder=" ">
+                    <option value=""></option>
+                    <option *ngFor="let stoitem of storeList;let stokey=index;" value="{{stoitem.organizationCode}}">{{stoitem.organizationName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label class="control-label col-md-4">销售单类型：</label>
+                  <div class="col-md-7">
+                    <select id="orderType" class="form-control">
+                      <option value="">所有</option>
+                      <option *ngFor="let ositem of oTypeList;let oskey=index;" value="{{ositem.codeValue}}">{{ositem.codeName}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div> -->
+            <!-- <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">支付状态：</label>
+                <div class="col-md-7">
+                  <select id="payStatus" class="form-control">
+                    <option value="">所有</option>
+                    <option value="5001">未支付</option>
+                    <option value="5002">定金已支付</option>
+                    <option value="5003">超时未支付</option>
+                    <option value="5004">已支付</option>
+                    <option value="5005">尾款已支付</option>
+                  </select>
+                </div>
+              </div>
+            </div> -->
+          </div>
+          <div class="row margin-search height-30">
+            <div class="">
+              <div class="form-group col-md-12" style="text-align:center;">
+                <button id="btnSearch" type="button" class="btn default" (click)="initSaleOrderInfo()">查询
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnReset" type="button" class="btn default" (click)="queryReset()">
+                  <i class="fa fa-times"></i>重置</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div id="sample_6_wrapper" class="dataTables_wrapper no-footer">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th> 操作</th>
+                  <th> 销售单号</th>
+                  <th> 订单号</th>
+                  <th> 外部订单号</th>
+                  <th> 销售单来源</th>
+                  <th> 销售单类型</th>
+                  <th> 销售单状态</th>
+                  <th> 支付状态</th>
+                  <!-- <th> 会员卡号</th> -->
+                  <th> 定做单状态</th>
+                  <th> 门店名称</th>
+                  <th> 核价金额</th>
+                  <th> 总金额</th>
+                  <th> 应付金额</th>
+                  <th> 运费</th>
+                  <th> 实付金额</th>
+                  <!-- <th> 积分</th> -->
+                  <th> 促销优惠金额</th>
+                  <th> 使用优惠券金额</th>
+                  <th> 收件人电话</th>
+                  <th> 收件人姓名</th>
+                  <th> 收件地区省份</th>
+                  <th> 收件人城市</th>
+                  <th> 收货地址</th>
+                  <!-- <th> 收货城市邮编</th> -->
+                  <!-- <th> 销售类型</th> -->
+                  <th> 销售时间</th>
+                  <!-- <th> 最后修改人</th> -->
+                  <!-- <th> 最后修改时间</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="recordTotal==0">
+                  <td class="text-center" colspan="24">没有相关记录~</td>
+                </tr>
+                <tr role="row" class="odd" *ngFor="let saitem of salesList;let slkey=index;">
+                  <td>
+                    <a href="javascript:;" class="btn btn-xs blue" *ngIf="saitem.cusStatus!=null&&saitem.cusStatus!=1"
+                      (click)="detailForm(saitem.cusOrder,saitem.cusStatus,saitem.pid)">
+                      <i class="fa fa-search"></i> 查看
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs green" *ngIf="saitem.cusStatus==null" (click)="vetrifyModal(saitem)">
+                      <i class="fa fa-plus"></i> 定做
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs purple" *ngIf="saitem.cusStatus==1" (click)="detailForm(saitem.cusOrder,saitem.cusStatus,saitem.pid)">
+                      <i class="fa fa-search"></i> 审核
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs red" *ngIf="saitem.cusStatus==0||saitem.cusStatus==3"
+                      (click)="editForm(saitem)">
+                      <i class="fa fa-edit"></i> 编辑
+                    </a>
+                  </td>
+                  <td>
+                    <a (click)="getSalesMes(saitem.saleNo,1)">{{saitem.saleNo?saitem.saleNo:"——"}}</a>
+                  </td>
+                  <td>
+                    <a (click)="getOrderMes(saitem.orderNo,1)">{{saitem.orderNo?saitem.orderNo:"——"}}</a>
+                  </td>
+                  <!-- 外部订单号 -->
+                  <td>
+                    <a (click)="getDetailShow(saitem.outOrderNo)">{{saitem.outOrderNo}}</a>
+                  </td>
+                  <!-- 销售单来源 -->
+                  <td><span *ngFor="let sourceitem of sourceList;let stokey=index;">{{sourceitem.channelCode==saitem.saleSource?sourceitem.channelName:''}}</span></td>
+                  <!--订单类型-->
+                  <td><span *ngFor="let orderTypeItem of oTypeList;let stokey=index;">{{orderTypeItem.codeValue==saitem.arrtibute1?orderTypeItem.codeName:''}}</span></td>
+                  <!-- 销售单状态 -->
+                  <td>{{saitem.saleStatusDesc?saitem.saleStatusDesc:"——"}}</td>
+                  <!-- 支付状态 -->
+                  <td *ngIf="saitem.payStatus==5001">未支付</td>
+                  <td *ngIf="saitem.payStatus==5002">定金已支付</td>
+                  <td *ngIf="saitem.payStatus==5003">超时未支付</td>
+                  <td *ngIf="saitem.payStatus==5004">已支付</td>
+                  <td *ngIf="saitem.payStatus==5005">尾款已支付</td>
+                  <td *ngIf="saitem.payStatus!=5001&&saitem.payStatus!=5002&&saitem.payStatus!=5003&&saitem.payStatus!=5004&&saitem.payStatus!=5005">——</td>
+                  <!-- 会员卡号 -->
+                  <!-- <td> {{saitem.memberCardNo?saitem.memberCardNo:"——"}}</td> -->
+                  <!-- 定做单状态 -->
+                  <td> {{saitem.cusStatusDesc?saitem.cusStatusDesc:"——"}}</td>
+                  <!-- 门店名称 -->
+                  <td> {{saitem.storeName?saitem.storeName:"——"}}</td>
+                  <!-- 核价金额 -->
+                  <td> {{saitem.cusOrderAmount}}</td>
+                  <!-- 总金额(含运费) -->
+                  <td> {{saitem.saleAmount}}</td>
+                  <!-- 应付金额(含运费) -->
+                  <td> {{saitem.paymentAmount}}</td>
+                  <!-- 运费 -->
+                  <td> {{saitem.shippingFee}}</td>
+                  <!-- 现金类支付金额(含运费不含积分) -->
+                  <td> {{saitem.cashAmount}}</td>
+                  <!-- 积分 -->
+                  <!-- <td> {{saitem.integral}}</td> -->
+                  <!-- 促销优惠金额 -->
+                  <td> {{saitem.discountAmount}}</td>
+                  <!-- 使用优惠券金额 -->
+                  <td> {{saitem.couponAmount}}</td>
+                  <!-- 销售类别 -->
+                  <!-- <td> {{saitem.saleClass?saitem.saleClass:"——"}}</td> -->
+                  <!-- 收件人电话 -->
+                  <td> {{saitem.receptPhone?saitem.receptPhone:"——"}}</td>
+                  <!-- 收件人姓名 -->
+                  <td> {{saitem.receptName?saitem.receptName:"——"}}</td>
+                  <!-- 收件地区省份 -->
+                  <td> {{saitem.receptProvName?saitem.receptProvName:"——"}}</td>
+                  <!-- 收件人城市 -->
+                  <td> {{saitem.receptCityName?saitem.receptCityName:"——"}}</td>
+                  <!-- 收货地址 -->
+                  <td> {{saitem.receptAddress?saitem.receptAddress:"——"}}</td>
+                  <!-- 收货城市邮编 -->
+                  <!-- <td> {{saitem.receptCityCode?saitem.receptCityCode:"——"}}</td> -->
+                  <!-- 销售类型 -->
+                  <!-- <td *ngIf="saitem.saleType==1">
+                    销售单
+                  </td>
+                  <td *ngIf="saitem.saleType==2">
+                    换货换出单
+                  </td>
+                  <td *ngIf="saitem.saleType!=1&&saitem.saleType!=2">
+                    ——
+                  </td> -->
+                  <!-- 销售时间 -->
+                  <td> {{saitem.saleTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <!-- 最后修改人 -->
+                  <!-- <td> {{saitem.latestUpdateMan?saitem.latestUpdateMan:"——"}}</td> -->
+                  <!-- 最后修改时间 -->
+                  <!-- <td> {{saitem.latestUpdateTimeStr?saitem.latestUpdateTimeStr:"——"}}</td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--pagestart-->
+          <div class="clearfix">
+            <div id="pagination1" class="page"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 定做商品弹窗 -->
+<app-verifyprice #verifyprice></app-verifyprice>
+<!-- 编辑商品弹窗 -->
+<app-editform #editform></app-editform>
+<!-- 销售单详情弹窗 -->
+<app-saledetail #saledetail (outer)="getDetailShow($event)"></app-saledetail>
+<!-- 订单详情弹窗 -->
+<app-orderdetail #orderdetail (outer)="getDetailShow($event)"></app-orderdetail>
+<!-- 外部订单号 -->
+<app-tradedetail #tradedetail></app-tradedetail>
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

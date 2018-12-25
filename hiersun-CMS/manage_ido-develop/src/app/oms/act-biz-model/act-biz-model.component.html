@@ -1,0 +1,293 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box">
+      <!-- <div class="portlet-title">
+        <div class="caption">
+          产品分类管理
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title="">
+          </a>
+        </div>
+      </div> -->
+      <div class="allContainer">
+        <!-- <input type="hidden" id="choosesite" /> -->
+        <!-- <div class="sitetips">请选择对应的站点</div> -->
+        <div class="row">
+          <div class="col-md-4">
+            <div class="portlet blue-hoki box">
+              <div class="portlet-title">
+                <div class="caption">
+                  业务管理
+                </div>
+              </div>
+              <div class="portlet-body">
+                <div class="clearfix">
+                  <a class="btn blue" data-toggle="modal" (click)="addItem()">增加</a>
+                  <a class="btn red" (click)="delItem()">删除</a>
+                </div>
+                <div class="content_wrap">
+                  <input type="hidden" name="mymsg">
+                  <button class="myclick" (click)="myclick()" style="opacity: 0;"></button>
+                  <div class="zTreeDemoBackground">
+                    <ul id="treeDemo" class="ztree"></ul>
+                  </div>
+                </div>
+              </div>
+              <!--  -->
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="portlet blue-hoki box">
+              <div class="portlet-title">
+                <div class="caption">
+                  业务信息维护
+                </div>
+              </div>
+              <div class="portlet-body">
+                <div class="tabbable-line">
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="tab_general">
+                      <!-- 一般属性 -->
+                      <!--<div class="clearfix" style="text-align: right;" (click)="Maintain()">
+                        <a href="javascript:;" class="btn btn-sm purple" (click)="showWeiHuModel()">
+                          <i class="fa fa-edit"></i>维护 </a>
+                      </div>-->
+                      <form class="form-horizontal" id="ffSearch">
+                        <div class="row margin-search sec_line">
+                          <div class="row" style="text-align:center;">
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                              <div class="form-group">
+                                <label for="bizName" class="control-label col-md-4">业务名称:</label>
+                                <div class="col-md-8">
+                                  <input id="bizName" type="text" class="form-control">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                              <div class="form-group">
+                                <label for="bizProcessKey" class="control-label col-md-4">业务流程Key:</label>
+                                <div class="col-md-8">
+                                  <input id="bizProcessKey"  type="text" class="form-control">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row" style="text-align:center;">
+                            <!--<div class="col-md-5 col-sm-6 col-xs-12">
+                              <div class="form-group">
+                                <label for="bizType" class="control-label col-md-4">工单类型:</label>
+                                <div class="col-md-8">
+                                  <select id="bizType" class="form-control">
+                                    <option value="" selected>无</option>
+                                    <option *ngFor="let item of codeList;let refkey=index;" value="{{item.codeValue}}">{{item.codeName}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>-->
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                              <div class="form-group">
+                                <label for="url" class="control-label col-md-4">详情URL:</label>
+                                <div class="col-md-8">
+                                  <input id="url"  type="text" class="form-control">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                              <div class="form-group">
+                                <label for="editUrl" class="control-label col-md-4">编辑URL:</label>
+                                <div class="col-md-8">
+                                  <input id="editUrl"  type="text" class="form-control">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!--<div class="row" style="text-align:center;">
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                              <div class="form-group">
+                                <label for="bizProcessKey" class="control-label col-md-4">页面URL:</label>
+                                <div class="col-md-8">
+                                  <input id="url"  type="text" class="form-control">
+                                </div>
+                              </div>
+                            </div>
+                          </div>-->
+                          <!--<div class="row" style="text-align:center;">
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                              <div class="form-group">
+                                <label for="bizName" class="control-label col-md-4">是否展开:</label>
+                                <div class="col-md-8">
+                                  <input id="ss" type="text" class="form-control">
+                                </div>
+                              </div>
+                            </div>
+                          </div>-->
+                          <div class="row" style="text-align:center;">
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                              <div class="form-group">
+                                <label for="bizProcessKey" class="control-label col-md-4">是否展开:</label>
+                                <div class="col-md-8">
+                                  <select id="isOpen" class="form-control">
+                                    <option value="1">展开</option>
+                                    <option value="0">关闭</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row" style="text-align:center;">
+                            <div class="col-md-10 col-sm-6 col-xs-12">
+                              <div class="form-group">
+                                <label for="bizProcessKey" class="control-label col-md-2">业务描述:</label>
+                                <div class="col-md-10">
+                                  <textarea id="bizDesc" title="请输入业务描述信息" class="form-control col-md-5"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row" style="text-align:center;">
+                            <div class="form-group">
+                              <button id="btnSearch" type="button" class="btn default" (click)="updateBizInfo()">保存
+                               <!-- <i class="fa fa-search"></i>-->
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 添加的modal -->
+<div class="modal fade" id="add" data-backdrop="static" tabindex="-1" role="basic" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">添加业务信息</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+        <div class="form-group">
+          <label class="col-md-3 control-label">业务名称:
+            <span class="required" aria-required="true">
+              * </span>
+          </label>
+          <div class="col-md-7">
+            <div class="input-icon">
+              <i class="fa fa-bell-o"></i>
+              <input id="_bizName" type="text" class="form-control" placeholder="必填" required>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">业务流程Key:
+            <span class="required" aria-required="true">
+              * </span>
+          </label>
+          <div class="col-md-7">
+            <div class="input-icon">
+              <i class="fa fa-bell-o"></i>
+              <input id="_bizKey" type="text" class="form-control" placeholder="必填" required>
+            </div>
+          </div>
+        </div>
+       <!-- <div class="form-group">
+          <label class="col-md-3 control-label" for="_bizType">工单类型:
+          </label>
+          <div class="col-md-7">
+            <div class="input-icon">
+              <i class="fa fa-bell-o"></i>
+              <select id="_bizType" class="form-control">
+                <option value="" selected>无</option>
+                <option *ngFor="let item of codeList;let refkey=index;" value="{{item.codeValue}}">{{item.codeName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>-->
+        <div class="form-group">
+          <label class="col-md-3 control-label">是否展开:
+            <span class="required" aria-required="true">
+              * </span>
+          </label>
+          <div class="col-md-7">
+            <div class="input-icon">
+              <i class="fa fa-bell-o"></i>
+              <select id="_isOpen" class="form-control">
+                <option value="1">展开</option>
+                <option value="0">关闭</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">详情URL:
+          </label>
+          <div class="col-md-7">
+            <div class="input-icon">
+              <i class="fa fa-bell-o"></i>
+              <input id="_url" type="text" class="form-control" placeholder="" required>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label" for="_editUrl">编辑URL:</label>
+          <div class="col-md-7">
+            <div class="input-icon">
+              <i class="fa fa-bell-o"></i>
+              <input id="_editUrl"  type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">业务描述:
+          </label>
+          <div class="col-md-7">
+            <div class="input-icon">
+              <i class="fa fa-bell-o"></i>
+              <textarea id="_bizDesc" title="请输入业务描述信息" rows="4" class="form-control col-md-5"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn blue" (click)="subAdd()">保存</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<!--确认删除弹窗-->
+<div *ngIf="isShowDelWin" class="div_dialog animated warnMsgWin {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation" style="    width: 150px; margin: 0 auto;">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="取消" style="padding: 4px 17px; font-size: 14px; height: auto;"
+          (click)="closeWin()">取消</span>
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+          (click)="delOk()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin||isShowDelWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

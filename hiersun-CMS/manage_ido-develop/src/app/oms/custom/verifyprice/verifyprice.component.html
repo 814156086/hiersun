@@ -1,0 +1,629 @@
+<!-- BEGIN MODAL-->
+<!-- 定做商品弹窗 -->
+<div class="modal fade" id="modal_verify" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog verify-container">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">添加定做商品明细</h4>
+      </div>
+      <div class="modal-body form-horizontal verity_body">
+        <!-- 1 -->
+        <!-- BEGIN FORM-->
+        <div class="form-body">
+          <div class="form-group">
+            <label class="col-md-2 control-label">线上单据号
+            </label>
+            <div class="col-md-3">
+              <input type="text" class="form-control orderNo" readonly value="{{orderNo}}">
+            </div>
+          </div>
+          <div class="form-group" style="position: absolute;right: 5%;top: 5%;width:45%;margin-bottom: 0px;">
+            <label class="col-md-4 control-label">商品属性
+            </label>
+            <div class="col-md-8">
+              <textarea rows="3" class="form-control shoppeNo" readonly>{{shoppeName}}</textarea>
+            </div>
+          </div>
+          <div class="form-group" style="position: absolute;right: 5%;top: 25%;width:45%;margin-bottom: 0px;">
+            <label class="col-md-4 control-label">买家留言
+            </label>
+            <div class="col-md-8">
+              <!-- <input type="text" class="form-control shoppeName" readonly value="{{shoppeNo}}"> -->
+              <textarea rows="3" class="form-control shoppeName" readonly>{{shoppeNo}}</textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">产品编码
+              <span class="required" aria-required="true">
+                * </span>
+            </label>
+            <div class="col-md-3">
+              <input type="text" class="form-control patternId" autocomplete="off" placeholder="必填" (input)="completeSearch($event)"
+                id="autoPatId" (keydown.enter)="onEnter($event)" />
+              <span style="color:red" class="hint" *ngIf="!isHintSucc">输入产品编码后请回车 </span>
+            </div>
+          </div>
+          <div class="fileinput-new thumbnail" style="position: absolute;width: 130px;height: 130px;right: 45%;top: 5%;margin-bottom: 0px;">
+            <img src="{{imgUrl}}?x-oss-process=image/resize,h_130,w_130" onerror="this.src='http://placehold.it/130x130'">
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">定做指圈号
+              <span class="required" aria-required="true">
+                * </span>
+            </label>
+            <div class="col-md-3">
+              <input type="text" class="form-control fingerRing" placeholder="必填" required (input)="normalInputChange($event)">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">定做金属材质
+              <span class="required" aria-required="true">
+                * </span>
+            </label>
+            <div class="col-md-3">
+              <select class="form-control" id="showColor" (change)="selectMaterial()">
+                <option value="">请选择</option>
+                <option *ngFor="let dicItem of proModelZmtrDic;let pmzkey=index" value="{{dicItem.dicCode}}">{{dicItem.dicName}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">金属颜色
+              <span class="required" aria-required="true">
+                * </span>
+            </label>
+            <div class="col-md-8">
+              <div class="md-radio-inline">
+                <div class="md-radio">
+                  <input type="radio" id="white" name="color" title="白色" value="1" class="md-radiobtn" (change)="showPic('001')">
+                  <label for="white">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    白色 </label>
+                </div>
+                <div class="md-radio" *ngIf="!isColor">
+                  <input type="radio" id="red" name="color" title="红色" value="2" class="md-radiobtn" (change)="showPic('002')">
+                  <label for="red">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    红色</label>
+                </div>
+                <div class="md-radio" *ngIf="!isColor">
+                  <input type="radio" id="yellow" name="color" title="黄色" value="3" class="md-radiobtn" (change)="showPic('003')">
+                  <label for="yellow">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    黄色</label>
+                </div>
+                <div class="md-radio" *ngIf="!isColor">
+                  <input type="radio" id="redwhite" name="color" title="红白分色" value="4" class="md-radiobtn" (change)="showPic('004')">
+                  <label for="redwhite">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    红白分色</label>
+                </div>
+                <div class="md-radio" *ngIf="!isColor">
+                  <input type="radio" id="yellowwhite" name="color" title="黄白粉色" value="5" class="md-radiobtn" (change)="showPic('005')">
+                  <label for="yellowwhite">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    黄白粉色</label>
+                </div>
+                <div class="md-radio" *ngIf="!isColor">
+                  <input type="radio" id="redyellow" name="color" title="红黄分色" value="6" class="md-radiobtn" (change)="showPic('006')">
+                  <label for="redyellow">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    红黄分色</label>
+                </div>
+                <div class="md-radio" *ngIf="!isColor">
+                  <input type="radio" id="rywhite" name="color" title="红黄白三色" value="7" class="md-radiobtn" (change)="showPic('007')">
+                  <label for="rywhite">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    红黄白三色</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">金属表面处理
+              <span class="required" aria-required="true">
+                * </span>
+            </label>
+            <div class="col-md-8">
+              <div class="md-radio-inline">
+                <div class="md-radio">
+                  <input type="radio" id="polish" name="surface" title="抛光" value="1" class="md-radiobtn">
+                  <label for="polish">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    抛光 </label>
+                </div>
+                <div class="md-radio">
+                  <input type="radio" id="drawing" name="surface" title="拉丝" value="2" class="md-radiobtn">
+                  <label for="drawing">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    拉丝</label>
+                </div>
+                <div class="md-radio">
+                  <input type="radio" id="Sandblasting" name="surface" title="喷砂" value="3" class="md-radiobtn">
+                  <label for="Sandblasting">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    喷砂</label>
+                </div>
+                <div class="md-radio">
+                  <input type="radio" id="pobrushed" name="surface" title="抛光拉丝" value="4" class="md-radiobtn">
+                  <label for="pobrushed">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    抛光拉丝</label>
+                </div>
+                <div class="md-radio">
+                  <input type="radio" id="posandblasting" name="surface" title="抛光喷砂" value="5" class="md-radiobtn">
+                  <label for="posandblasting">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    抛光喷砂</label>
+                </div>
+                <div class="md-radio">
+                  <input type="radio" id="brusandblasting" name="surface" title="拉丝喷砂" value="6" class="md-radiobtn">
+                  <label for="brusandblasting">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    拉丝喷砂</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="!isWeightType">
+            <label class="col-md-2 control-label">主石重量/单颗
+              <span class="required" aria-required="true">
+                * </span>
+            </label>
+            <div class="col-md-2">
+              <!-- <input type="text" class="form-control spellCn" placeholder="必填" required> -->
+              <select class="form-control dWeight" (change)="selectScore()">
+                <option value="">请选择</option>
+                <option *ngFor="let dicItem of proModelZlsDmdDic;let pmzkey=index" value="{{dicItem.dicCode}}">{{dicItem.dicName}}</option>
+              </select>
+            </div>
+            <label class="control-label" style="float:left;"><span class="dic_score">{{dicscore}}</span>分</label>
+            <label class="col-md-2 control-label" *ngIf="!certType">证书类别
+              <span class="required" aria-required="true">
+                * </span>
+            </label>
+            <div class="col-md-2" *ngIf="!certType">
+              <select class="form-control certificate" (change)="selectDiamond()">
+                <option *ngFor="let ctypeItem of certTypeList;let pmzkey=index" value="{{ctypeItem.typeCode}}">{{ctypeItem.typeName}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" [hidden]="isNgtc">
+            <label class="col-md-2 control-label">钻石净度
+              <span class="required" aria-required="true">
+                * </span>
+            </label>
+            <div class="col-md-8">
+              <div class="md-radio-inline">
+                <div class="md-radio" [hidden]='isCleaness'>
+                  <input type="radio" id="VVS" name="clarity" title="VVS" value="1" class="md-radiobtn">
+                  <label for="VVS">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    VVS</label>
+                </div>
+                <div class="md-radio">
+                  <input type="radio" id="VS" name="clarity" title="VS" value="2" class="md-radiobtn">
+                  <label for="VS">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    VS</label>
+                </div>
+                <div class="md-radio" [hidden]="tempScoreCode=='04'||tempScoreCode=='05'||zstkCat=='H0'">
+                  <input type="radio" id="SI" name="clarity" title="SI" value="3" class="md-radiobtn">
+                  <label for="SI">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    SI</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" [hidden]="isNgtc">
+            <label class="col-md-2 control-label">钻石颜色
+              <span class="required" aria-required="true">
+                * </span>
+            </label>
+            <div class="col-md-8">
+              <div class="md-radio-inline">
+                <div class="md-radio" [hidden]="isCleaness">
+
+                  <input type="radio" id="DE" name="dicolor" title="D-E" value="1" class="md-radiobtn">
+                  <label for="DE">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    D-E</label>
+                </div>
+                <div class="md-radio" [hidden]="isCleaness">
+                  <input type="radio" id="FG" name="dicolor" title="F-G" value="2" class="md-radiobtn">
+                  <label for="FG">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    F-G</label>
+                </div>
+                <div class="md-radio" [hidden]="isCleaness">
+                  <input type="radio" id="H" name="dicolor" title="H" value="3" class="md-radiobtn">
+                  <label for="H">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    H</label>
+                </div>
+                <div class="md-radio" [hidden]="maxWgt">
+                  <input type="radio" id="IJ" name="dicolor" title="I-J" cvalue="4" lass="md-radiobtn">
+                  <label for="IJ">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    I-J</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="!isGia">
+            <label class="col-md-2 control-label">GIA主石颜色：</label>
+            <div class="col-md-8">
+              <div class="col-md-2">
+                <label class="control-label">净度：</label>
+                <label class="control-label">{{giaMesg.clarity}}</label>
+              </div>
+              <div class="col-md-2">
+                <label class="control-label">切工：</label>
+                <label class="control-label">{{giaMesg.cut}}</label>
+              </div>
+              <div class="col-md-2">
+                <label class="control-label">抛光：</label>
+                <label class="control-label">{{giaMesg.polish}}</label>
+              </div>
+              <div class="col-md-2">
+                <label class="control-label">对称：</label>
+                <label class="control-label">{{giaMesg.symmetry}}</label>
+              </div>
+              <div class="col-md-2">
+                <label class="control-label">荧光：</label>
+                <label class="control-label"></label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">刻字内容
+              <span class="required" aria-required="true">
+                * </span>
+            </label>
+            <div class="col-md-8">
+              <div class="md-radio-inline col-md-3" style="padding-left: 0;">
+                <div class="md-radio">
+                  <input type="radio" id="notlettering" name="lettering" title="0" class="md-radiobtn" (change)="letter(1)">
+                  <label for="notlettering">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    无</label>
+                </div>
+                <div class="md-radio">
+                  <input type="radio" id="islettering" name="lettering" title="1" class="md-radiobtn" (change)="letter(2)">
+                  <label for="islettering">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    其他</label>
+                </div>
+              </div>
+              <label class="control-label" style="float:left;">刻字内容</label>
+              <div class="col-md-3">
+                <input type="text" class="form-control letterContent">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">是否加急
+              <span class="required" aria-required="true">
+                * </span>
+            </label>
+            <div class="col-md-8">
+              <div class="md-radio-inline">
+                <div class="md-radio">
+                  <input type="radio" id="isexpedited" name="expedited" title="Y" class="md-radiobtn">
+                  <label for="isexpedited">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    加急</label>
+                </div>
+                <div class="md-radio">
+                  <input type="radio" id="notexpedited" name="expedited" title="N" class="md-radiobtn">
+                  <label for="notexpedited">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    不加急</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note note-danger">
+            <h4 class="block">顾客须知：</h4>
+            <p>
+              1、定做商品的指圈号误差在±0.5内属于正常，主石重量可±0.02ct，0.02ct-0.30ct的钻石级别默认VS/IJ，0.20ct以下钻石不出分级证书
+            </p>
+            <p>
+              2、刻写汉字不能超过五个字符，英文不能超过八个字符
+            </p>
+            <p>
+              3、最终价格会与商品定价上下浮动10%，属于正常，以最终出货价格为准
+            </p>
+            <p>
+              4、报关流程调整GIA钻石预计取货时间自动延长20天
+            </p>
+          </div>
+          <!--  -->
+        </div>
+        <!-- END FORM-->
+        <!-- 1 -->
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <!-- <button type="button" class="btn blue" (click)="subeProMes()">保存</button> -->
+        <!-- <button type="submit" class="btn blue" id="submitBtn" (click)="subPrice()">定制价格</button>
+        <button type="button" class="btn blue" id="submitBtn" (click)="resetPrice()">确定</button> -->
+        <button type="submit" class="btn blue" id="submitBtn" (click)="subPrice(0)">保存</button>
+        <button type="button" class="btn blue" id="submitBtn" (click)="subPrice(1)">提交</button>
+        <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END MODAL-->
+
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 选择裸石弹窗 -->
+<div class="modal fade" id="selDia" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" style="width:50%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">裸石选择</h4>
+      </div>
+      <div class="modal-body">
+        <div class="portlet-body form">
+          <div class="form-horizontal">
+            <div class="form-body">
+              <div class="form-group">
+                <label class="col-md-2 control-label">颜色：</label>
+                <div class="col-md-9">
+                  <div class="md-radio-inline">
+                    <div class="md-radio">
+                      <input type="radio" id="color_D" name="diaColor" title="D" class="md-radiobtn">
+                      <label for="color_D">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        D</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="color_E" name="diaColor" title="E" class="md-radiobtn">
+                      <label for="color_E">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        E</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="color_F" name="diaColor" title="F" class="md-radiobtn">
+                      <label for="color_F">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        F</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="color_G" name="diaColor" title="G" class="md-radiobtn">
+                      <label for="color_G">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        G</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="color_H" name="diaColor" title="H" class="md-radiobtn">
+                      <label for="color_H">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        H</label>
+                    </div>
+                    <div class="md-radio" *ngIf="bsWeight&&zstkCat!='H0'">
+                      <input type="radio" id="color_I" name="diaColor" title="I" class="md-radiobtn">
+                      <label for="color_I">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        I</label>
+                    </div>
+                    <div class="md-radio" *ngIf="bsWeight&&zstkCat!='H0'">
+                      <input type="radio" id="color_J" name="diaColor" title="J" class="md-radiobtn">
+                      <label for="color_J">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        J</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">净度：</label>
+                <div class="col-md-9">
+                  <div class="md-radio-inline">
+                    <div class="md-radio">
+                      <input type="radio" id="cla_VS1" name="dclarity" title="VS1" class="md-radiobtn">
+                      <label for="cla_VS1">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        VS1</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="cla_VS2" name="dclarity" title="VS2" class="md-radiobtn">
+                      <label for="cla_VS2">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        VS2</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="cla_SI1" name="dclarity" title="SI1" class="md-radiobtn" *ngIf="bsWeight&&zstkCat!='H0'">
+                      <label for="cla_SI1">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        SI1</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="cla_IF" name="dclarity" title="IF" class="md-radiobtn">
+                      <label for="cla_IF">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        IF</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="cla_VVS1" name="dclarity" title="VVS1" class="md-radiobtn">
+                      <label for="cla_VVS1">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        VVS1</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="cla_VVS2" name="dclarity" title="VVS2" class="md-radiobtn">
+                      <label for="cla_VVS2">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        VVS2</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">切工：</label>
+                <div class="col-md-9">
+                  <div class="md-radio-inline">
+                    <div class="md-radio">
+                      <input type="radio" id="cut_VG" name="cut" title="VG" class="md-radiobtn" checked>
+                      <label for="cut_VG">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        VG</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="cut_EX" name="cut" title="EX" class="md-radiobtn">
+                      <label for="cut_EX">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        EX</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">抛光：</label>
+                <div class="col-md-9">
+                  <div class="md-radio-inline">
+                    <div class="md-radio">
+                      <input type="radio" id="pol_VG" name="polish" title="VG" class="md-radiobtn" checked>
+                      <label for="pol_VG">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        VG</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="pol_EX" name="polish" title="EX" class="md-radiobtn">
+                      <label for="pol_EX">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        EX</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">对称：</label>
+                <div class="col-md-9">
+                  <div class="md-radio-inline">
+                    <div class="md-radio">
+                      <input type="radio" id="sym_VG" name="symmetry" title="VG" class="md-radiobtn" checked>
+                      <label for="sym_VG">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        VG</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="sym_EX" name="symmetry" title="EX" class="md-radiobtn">
+                      <label for="sym_EX">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        EX</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--  -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <button type="button" class="btn blue" id="btn_diamond" (click)="subDiamond()">确定</button>
+        <button type="button" class="btn default" (click)="queryReset()">取消</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+
+.operation{
+    display: flex;
+}
+.operation a{
+    flex: 1;
+}
+.modify{
+    padding: 15px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    background: white;
+}
+
+.form-control[readonly]{
+    cursor: auto !important;
+    background-color: #eeeeee;
+}

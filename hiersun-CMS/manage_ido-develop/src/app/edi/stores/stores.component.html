@@ -1,0 +1,200 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>EDI对接店铺管理
+        <small>EDI stores</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <!--筛选-->
+          <div class="choosesx">
+            <!--格式一-->
+            <div class="form-inline">
+              <div class="form-group col-md-4">
+                <label for="edi-stores-f-channel"> 渠道/平台：</label>
+                <select style="max-width: 200px" class="form-control input-large input-inline platform"
+                        id="edi-stores-f-channel">
+                  <option value="">—请选择—</option>
+                  <option *ngFor="let p of getPlatforms();" value="{{p.platform}}">{{p.platformName}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="edi-stores-f-brand"> 品牌：</label>
+                <select style="max-width: 200px" class="form-control input-large input-inline platform"
+                        id="edi-stores-f-brand">
+                  <option value="">—请选择—</option>
+                  <option *ngFor="let brand of getBrands();" value="{{brand.brandSid}}">{{brand.brandName}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label for="edi-stores-f-enabled"> 是否启用：</label>
+                <select style="max-width: 200px" id="edi-stores-f-enabled"
+                        class="form-control input-large input-inline enabled">
+                  <option value="">—请选择—</option>
+                  <option value="true">启用</option>
+                  <option value="false">禁用</option>
+                </select>
+              </div>
+              <div style="text-align:center">
+                <button style="margin-bottom: 10px" class="btn green btn-default" (click)="search()">查询</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button style="margin-bottom: 10px" class="btn green btn-default" (click)="resetAndSearch()">重置</button>&nbsp;&nbsp;&nbsp;
+                <button style="margin-bottom: 10px" class="btn green btn-default" data-toggle="modal"
+                        href="#edi-store-editor" (click)="showEdit(null)">新增
+                </button>
+              </div>
+            </div>
+          </div>
+          <!--筛选-->
+          <div class="portlet box blue-hoki">
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>EDI对接店铺
+              </div>
+              <div class="tools">
+                <a href="javascript:" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <!--列表end-->
+            <!--body-->
+            <div class="portlet-body">
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="stores"
+                       role="grid" aria-describedby="stores_info">
+                  <thead>
+                  <tr>
+                    <th class="col-md-1">订单渠道</th>
+                    <th class="col-md-2">绑定门店号</th>
+                    <th class="col-md-2">商家名称</th>
+                    <th class="col-md-2">渠道/平台</th>
+                    <th class="col-md-2">品牌</th>
+                    <th class="col-md-1">状态</th>
+                    <th class="col-md-2">操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr role="row" class="odd" *ngFor="let item of getStores()">
+                    <td>{{getOrderChannelName(item.channel)}}</td>
+                    <td>{{item.shopNo}}</td>
+                    <td>{{item.sellerName}}</td>
+                    <td>{{getPlatformName(item.platform)}}</td>
+                    <td>{{getBrandName(item.brand)}}</td>
+                    <td *ngIf="item.enabled">启用</td>
+                    <td *ngIf="!item.enabled">禁用</td>
+                    <td>
+                      <a class="btn btn-xs btn-info" *ngIf="!item.enabled" (click)="enable(item)">
+                        <i class="fa fa-edit"></i> 启用 </a>
+                      <a class="btn btn-xs btn-info" *ngIf="item.enabled" (click)="disable(item)">
+                        <i class="fa fa-edit"></i> 禁用 </a>
+                      <a class="btn btn-xs btn-info" data-toggle="modal"
+                         href="#edi-store-editor" (click)="showEdit(item)">
+                        <i class="fa fa-edit"></i> 编辑 </a>
+                    </td>
+                  </tr>
+                  <tr *ngIf="getStores().length === 0">
+                    <td colspan="5" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="edi-store-editor" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;" *ngIf="editing">编辑EDI对接店铺</span>
+            <span style="vertical-align: inherit;" *ngIf="!editing">增加EDI对接店铺</span>
+          </span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="control-label col-md-4" for="edi-store-editor-channel">订单渠道：</label>
+          <div class="col-md-7">
+            <!--suppress XmlDuplicatedId -->
+            <input class="form-control" type="text" id="edi-store-editor-channel" *ngIf="editing" disabled
+                   value="{{getOrderChannelName(storeEditing.channel)}}" placeholder="必填"/>
+            <!--suppress XmlDuplicatedId -->
+            <select class="form-control" id="edi-store-editor-channel" *ngIf="!editing" [value]="storeEditing.channel"
+                    required>
+              <option value="">-请选择-</option>
+              <option *ngFor="let item of getOrderChannels();"
+                      value="{{item.channelCode}}">{{item.channelName}}</option>
+            </select>
+          </div>
+          <br>
+          <label for="edi-store-editor-oms-code">门店号：</label>
+          <input id="edi-store-editor-oms-code" value="{{storeEditing.shopNo}}" required placeholder="必填"/>
+          <br>
+          <label for="edi-store-editor-name">商家名称：</label>
+          <input id="edi-store-editor-name" value="{{storeEditing.sellerName}}" required placeholder="必填"/>
+          <br>
+          <label for="edi-store-editor-platform">渠道/平台：</label>
+          <select id="edi-store-editor-platform" [value]="storeEditing.platform" required>
+            <option value="">-请选择-</option>
+            <option *ngFor="let item of getPlatforms();" value="{{item.platform}}">{{item.platformName}}</option>
+          </select>
+          <br>
+          <label for="edi-store-editor-brand">品牌：</label>
+          <select id="edi-store-editor-brand" [value]="storeEditing.brand" required>
+            <option value="">-请选择-</option>
+            <option *ngFor="let item of getBrands();" value="{{item.brandSid}}">{{item.brandName}}</option>
+          </select>
+          <br>
+          <label for="edi-store-editor-enabled">启用：</label>
+          <select id="edi-store-editor-enabled" [value]="storeEditing.enabled" required>
+            <option value="true">启用</option>
+            <option value="false">禁用</option>
+          </select>
+          <br>
+          <label for="edi-store-editor-app-key">授权APP_KEY/APP_ID：</label>
+          <input id="edi-store-editor-app-key" value="{{storeEditing.appId}}" required placeholder="必填"/>
+          <br>
+          <label for="edi-store-editor-app-secret">授权APP_SECRET：</label>
+          <input id="edi-store-editor-app-secret" value="{{storeEditing.appSecret}}" required placeholder="必填"/>
+          <br>
+          <label for="edi-store-editor-session-key">授权TOKEN/SESSION_KEY：</label>
+          <input id="edi-store-editor-session-key" value="{{storeEditing.accessToken}}" required
+                 placeholder="必填"/>
+          <br>
+        </div>
+        <p style="color:red" *ngIf="editorError">{{editorError}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn blue" (click)="addStore()" *ngIf="!editing">确认</button>
+        <button type="button" class="btn blue" (click)="updateStore()" *ngIf="editing">修改</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--默认加载图标-->
+<div class="spinner" *ngIf="shouldShowSpinner()">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<!--默认加载图标end-->
+<div id="hint" *ngIf="shouldShowHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

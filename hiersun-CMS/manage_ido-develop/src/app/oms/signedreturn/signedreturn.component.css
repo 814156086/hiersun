@@ -1,0 +1,45 @@
+a {
+  text-decoration: none;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+td {
+  white-space: nowrap;
+}
+
+/* 顶部搜索框 */
+.form-control {
+  height: 30px;
+  padding: 2px 12px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.table-scrollable {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid #dddddd;
+  margin: 10px 0 !important;
+}
+
+.table-bordered {
+  border: 1px solid #CCC;
+}
+
+.sale-container {
+  width: 70%;
+}
+
+/*tab 表格 垂直滚动条 */
+.table-ofy {
+  overflow-y: auto;
+  height: 250px;
+}
+

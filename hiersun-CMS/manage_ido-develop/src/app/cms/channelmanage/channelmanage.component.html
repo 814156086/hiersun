@@ -1,0 +1,424 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>频道管理
+      <small>Channel Manage</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="tabbable tabbable-custom tabbable-noborder tabbable-reversed">
+      <ul id="myTab" class="nav nav-tabs">
+        <li *ngFor="let item of list;let key=index" [ngClass]="{ 'active' : key == 0 }">
+          <a data-toggle="tab" id="{{item.id}}" (click)="sitechoose(item.id)">{{item.name}}</a>
+        </li>
+      </ul>
+      <input type="hidden" id="choosesite" />
+      <div class="contenttab">
+        <!--tree-->
+        <div class="col-md-3 lefttree">
+          <div class="content_wrap">
+            <input type="hidden" name="mymsg">
+            <!--拖拽-->
+            <input type="hidden" name="movetype" />
+            <input type="hidden" name="movepageid" />
+            <input type="hidden" name="movepagepid" />
+            <input type="hidden" name="mypageid" />
+            <!--右击-->
+            <input type="hidden" name="rightmsg" />
+            <!--<input type="hidden" class="delsure" >-->
+            <button class="myclick" (click)="myclick()"></button>
+            <button class="moveclick" (click)="moveclick()"></button>
+            <button class="rightclick" (click)="rightclick()"></button>
+            <div class="zTreeDemoBackground">
+              <ul id="treeDemo" class="ztree"></ul>
+            </div>
+            <!--右键菜单-->
+            <div id="rMenu" style="position:absolute; display:none;">
+              <ul class="clearfix">
+                <li (click)="addChannel()" id="add-chanel">
+                  <font style="vertical-align: inherit;">添加频道</font>
+                </li>
+                <li (click)="setMsg2()" id="edit-chanel">
+                  <font style="vertical-align: inherit;">编辑频道</font>
+                </li>
+                <li (click)="lookHref()" id="look-chanel">
+                  <font style="vertical-align: inherit;">查看</font>
+                </li>
+                <li id="delete-chanel">
+                  <a href="#myModal3" data-toggle="modal" (click)="delchannel()">
+                    <font style="vertical-align: inherit;color:#fff;font-size:14px">删除频道</font>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!---->
+          </div>
+        </div>
+        <!--tree end-->
+        <!--right-->
+        <div class="col-md-9 rightcon">
+          <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+              <div class="caption">频道信息</div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title="">
+                </a>
+                <a data-original-title="" title="" (click)="channelreload()">
+                  <i class="fa fa-refresh" style="color:#fff;position: relative;top:-2px;"></i>
+                </a>
+              </div>
+            </div>
+            <div class="portlet-body msg_box">
+              <div class="form-group clearfix changeUrl" style="display: none;">
+                <label class="col-md-2 control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">频道类型&nbsp; </font>
+                  </font>
+                </label>
+                <div class="col-md-5">
+                  <div class="kg_btnbox left" (click)="changeUrl()">
+                    <div class="kg_btn">
+                      <div class="lanse">频道</div>
+                      <div></div>
+                      <div class="huise">链接</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!---->
+              <div class="form-group clearfix changeUrles" style="display: none;">
+                <label class="col-md-2 control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">频道类型&nbsp; </font>
+                  </font>
+                </label>
+                <div class="col-md-5">
+                  <div class="kg_btnbox left" *ngIf="istype!=2" style="left:0px;">
+                    <div class="kg_btn" *ngIf="istype!=2" style="left:0px;">
+                      <div class="lanse" style="background:#eee">频道</div>
+                      <div></div>
+                      <div class="huise">链接</div>
+                    </div>
+                  </div>
+                  <div class="kg_btnbox left" *ngIf="istype==2" style="left:0px;">
+                    <div class="kg_btn" *ngIf="istype==2" style="left:-80px;">
+                      <div class="lanse">频道</div>
+                      <div></div>
+                      <div class="huise">链接</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!---->
+              <div class="form-group clearfix">
+                <label class="col-md-2 control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">频道名称
+                      <font style="color:red;">*</font>
+                    </font>
+                  </font>
+                </label>
+                <div class="col-md-5 channelTitle">
+                  <input type="text" [(ngModel)]="msgTitle" name="msgTitle" class="form-control input-inline input-medium" placeholder="请输入频道名称"
+                  />
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              <div class="form-group clearfix noUrl" style="display:none;">
+                <label class="col-md-2 control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">英文名称
+                      <font style="color:red;">*</font>
+                    </font>
+                  </font>
+                </label>
+                <div class="col-md-7 channelEng" style="white-space: nowrap;">
+                  <!--没链接的频道添加-->
+                  <input type="text" [(ngModel)]="msgEnglish" name="msgEnglish" class="form-control input-inline input-medium" placeholder="请输入频道英文名称"
+                  />
+                  <div style="display: inline-block;" *ngIf="isSetmsg">
+                    <button type="button" class="btn default blue-hoki" data-toggle="modal" data-target="#myModal">系列管理</button>
+                    <button type="button" class="btn default blue-hoki" data-toggle="modal" data-target="#proModal">商品款式</button>
+                  </div>
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              <div class="form-group clearfix">
+                <label class="col-md-2 control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">显示名称
+                      <font style="color:red;">*</font>
+                    </font>
+                  </font>
+                </label>
+                <div class="col-md-5 showmsgTitle">
+                  <input type="text" [(ngModel)]="showmsgTitle" name="showmsgTitle" class="form-control input-inline input-medium" placeholder="请输入显示名称"
+                  />
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              <div class="form-group clearfix">
+                <label class="col-md-2 control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">频道描述
+                    </font>
+                  </font>
+                </label>
+                <div class="col-md-5 channeldesc">
+                  <input type="text" [(ngModel)]="channeldesc" name="channeldesc" class="form-control input-inline input-medium" placeholder="请输入频道名称"
+                  />
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              <div class="form-group clearfix" style="line-height: 40px">
+                <label class="col-md-2 control-label" style="line-height: 40px;">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">频道logo&nbsp; </font>
+                  </font>
+                </label>
+                <div class="col-md-3">
+                  <span class="channelLogo">
+                    <img src="" alt="">
+                  </span>
+                  <span class="btn blue-hoki fileinput-button" *ngIf="isSetmsg">
+                    <i class="fa fa-plus"></i>
+                    <span>选择文件</span>
+                    <input type="file" name="logofile" accept="image/png, image/jpeg ,image/jpg" (change)="logofile($event)">
+                  </span>
+                </div>
+              </div>
+              <div class="form-group clearfix">
+                <label class="col-md-2 control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">频道排序&nbsp; </font>
+                  </font>
+                </label>
+                <div class="col-md-5">
+                  <input type="text" (keyup)="justnumber($event)" [(ngModel)]="msgIndex" name="msgIndex" class="form-control input-inline input-medium"
+                    placeholder="请输入频道排序" />
+                </div>
+              </div>
+              <div class="form-group clearfix haveUrl" style="display:none;">
+                <label class="col-md-2 control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">频道链接
+                      <font style="color:red;">*</font>
+                    </font>
+                  </font>
+                </label>
+                <div class="col-md-5 channelUrl">
+                  <!--有链接的频道添加-->
+                  <input type="text" [(ngModel)]="msgUrl" name="msgUrl" class="form-control input-inline input-medium" placeholder="请输入频道链接"
+                  />
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              
+              <!--首页-->
+              <div class="clearfix" *ngIf="istype==1">
+                <button type="button" class="btn blue-hoki addChannel" (click)="addChannel()">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">添加频道</font>
+                  </font>
+                </button>
+                <button type="button" *ngIf="isSetmsg" class="btn btn-info" (click)="saveMsg()">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">保存</font>
+                  </font>
+                </button>
+                <button type="button" *ngIf="isSetmsg" class="btn yellow" (click)="channelreload()">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">取消</font>
+                  </font>
+                </button>
+              </div>
+              <!--type==2的频道-->
+              <div class="clearfix" *ngIf="istype==2">
+                <button type="button" class="btn green addChannel" (click)="addChannel()">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">添加频道</font>
+                  </font>
+                </button>
+                <button type="button" class="btn blue setMsg" (click)="setMsg()">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">编辑频道</font>
+                  </font>
+                </button>
+                <button type="button" *ngIf="isSetmsg" class="btn btn-info" (click)="saveMsg()">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">保存</font>
+                  </font>
+                </button>
+                <button type="button" *ngIf="isSetmsg" class="btn yellow" (click)="channelreload()">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">取消</font>
+                  </font>
+                </button>
+                <button type="button" class="btn blue-hoki" (click)="lookHref()" *ngIf="islook">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">查看</font>
+                  </font>
+                </button>
+                <a href="#myModal3" data-toggle="modal" *ngIf="isCandel" (click)="delchannel()" class="btn red">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">删除频道</font>
+                  </font>
+                </a>
+              </div>
+              <!--type=1的频道-->
+              <div class="clearfix btn_box" *ngIf="istype==3">
+                <button type="button" class="btn green addChannel" (click)="addChannel()">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">添加频道</font>
+                  </font>
+                </button>
+                <!--如果type==1的时候没子集,不能添加-->
+                <button type="button" class="btn blue setMsg" (click)="setMsg()">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">编辑频道</font>
+                  </font>
+                </button>
+                <button type="button" class="btn btn-info" *ngIf="isSetmsg" (click)="saveMsg()">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">保存</font>
+                  </font>
+                </button>
+                <button type="button" *ngIf="isSetmsg" class="btn btn-info" (click)="channelreload()">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">取消</font>
+                  </font>
+                </button>
+                <a href="#myModal3" data-toggle="modal" *ngIf="isCandel" (click)="delchannel()" class="btn red">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">删除频道</font>
+                  </font>
+                </a>
+              </div>
+              <div class="jubuload">
+                <div class="spinner">
+                  <div class="bounce1"></div>
+                  <div class="bounce2"></div>
+                  <div class="bounce3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--right end-->
+      </div>
+      <div class="clearfix" style="background:#fff"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <tr>
+            <td>请选择</td>
+            <td>系列名称</td>
+            <td>系列编码</td>
+            <td>系列描述</td>
+          </tr>
+          <tr *ngFor="let item of serieslists">
+            <td>
+              <input type="radio" name="series" value="{{item.id}}" />
+            </td>
+            <td>{{item.name}}</td>
+            <td class="seriescode">{{item.code}}</td>
+            <td class="seriesdesc">{{item.name}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" (click)="seriesmanage()">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="proModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body" style="height:600px;overflow:auto">
+        <form class="form-inline">
+          <div class="form-group">
+            <label>款式编码：</label>
+            <input type="text" class="form-control ksbm" placeholder="请输入款式编码" />
+          </div>
+          <div class="form-group">
+            <label>中文名称：</label>
+            <input type="text" class="form-control chinesaname" placeholder="请输入中文名称" />
+          </div>
+          <br/>
+          <div class="form-group">
+            <label>系列名称：</label>
+            <select class="form-control profl">
+              <option value="">请选择</option>
+              <option *ngFor="let item of serieslists" value="{{item.code}}">
+                {{item.name}}
+              </option>
+            </select>
+          </div>
+          <button type="submit" class="btn green-meadow btn-sm" (click)="searchimg()">查询</button>
+        </form>
+        <table class="table table-bordered">
+          <tr>
+            <td>请选择</td>
+            <td>系列名称</td>
+            <td>款式编码</td>
+            <td>商品款式中文主名称 </td>
+          </tr>
+          <tr *ngFor="let item of prolists">
+            <td>
+              <input type="radio" name="product" value="{{item.id}}" />
+            </td>
+            <td>{{item.seriesName}}
+              <input value="{{item.seriesCode}}" type="hidden" class="fkcode" />
+            </td>
+            <td class="kuanshicode">
+              <span>{{item.code}}</span>
+              <input value="{{item.pairJoin}}" type="hidden" class="double" />
+            </td>
+            <td class="seriesdesc">{{item.name}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" (click)="productmanage()">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+<div id="myModal3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          确定要删除吗？
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button data-dismiss="modal" class="btn blue delsure" (click)="sure()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>

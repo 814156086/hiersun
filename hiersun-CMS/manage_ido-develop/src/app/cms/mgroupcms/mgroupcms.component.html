@@ -1,0 +1,460 @@
+<div class="allwrap">
+    <form class="form-horizontal" [formGroup]="formModel" (submit)="tmpzcsave(2)">
+        <div class="operation">
+            <!-- <button type="button" class="btn btn-default" (click)="tmpzcsave(1)">暂存</button> -->
+            <button type="submit" class="btn btn-default" [disabled]="formModel.invalid">保存</button>
+            <button type="button" class="btn btn-default preview" (click)="preview(2)" style="display:none;">预览</button>
+            <button type="button" class="btn btn-default" (click)="tmpzcsave(3)">发布</button>
+        </div>
+        <div class="portlet box blue-hoki" style="margin-top:10px;">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="glyphicon glyphicon-headphones"></i>页面描述
+                </div>
+                <div class="tools pagedesec">
+                    <a href="javascript:;" class="collapse" data-original-title="" title="">
+                    </a>
+                    <!-- <a href="javascript:;" class="remove" data-original-title="" title="">
+                </a> -->
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" style="text-align: right;">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">页面名称 :</font>
+                            </font>
+                        </label>
+                        <div class="col-md-5" style="display: inline-block;">
+                            <input class="form-control" [class.hasError]="formModel.get('msgTitle').invalid && formModel.get('msgTitle').touched" type="text"
+                                formControlName="msgTitle" name="newChildCn" [(ngModel)]="msgTitles" placeholder="请输入页面名称">
+                            <div [hidden]="formModel.get('msgTitle').untouched">
+                                <div class="formtips" [hidden]="!formModel.hasError('required',['msgTitle'])">
+                                    页面名称必填
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" style="text-align: right;">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">英文名称 :</font>
+                            </font>
+                        </label>
+                        <div class="col-md-5" style="display: inline-block;">
+                            <!-- <input type="text" name="newChildEn" [(ngModel)]="msgEnglish" class="form-control input-inline input-medium" placeholder="请输入英文名称"> -->
+                            <input class="form-control" [class.hasError]="formModel.get('msgEnglish').invalid && formModel.get('msgEnglish').touched"
+                                type="text" formControlName="msgEnglish" name="newChildEn" [(ngModel)]="msgEnglishs" placeholder="请输入英文名称"
+                            />
+                            <div [hidden]="formModel.get('msgEnglish').untouched">
+                                <div class="formtips" [hidden]="!formModel.hasError('required',['msgEnglish'])">
+                                    英文名称必填
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 childpage" style="display: inline-block;">
+                            <button type="button" class="btn default blue-hoki" data-toggle="modal" data-target="#smyModal">系列管理</button>
+                            <button type="button" class="btn default blue-hoki" data-toggle="modal" data-target="#proModal">商品款式</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-1 control-label">标题(T)：</label>
+                        <div class="col-md-11">
+                            <input name="title" id="" class="form-control mytitle" value="{{title}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-1 control-label">描述(D)：</label>
+                        <div class="col-md-11">
+                            <textarea name="description" id="" cols="" rows="" class="form-control mydescription" style="resize: none;min-height: 100px;">{{description}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-1 control-label">关键词(K)：</label>
+                        <div class="col-md-11">
+                            <textarea name="keyword" id="" cols="" rows="" class="form-control mykeyword" style="resize: none;min-height: 100px;">{{keyword}}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="pagesgroup clearfix">
+            <!--左侧模板区域-->
+            <div class="portlet box blue-hoki modelstemplate" style="margin-top:0px;">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="glyphicon glyphicon-headphones"></i>请选择模板
+                    </div>
+                    <div class="tools templatemodels">
+                        <a href="javascript:;" class="collapse" data-original-title="" title="">
+                        </a>
+                        <!-- <a href="javascript:;" class="remove" data-original-title="" title="">
+                    </a> -->
+                    </div>
+                </div>
+                <div class="portlet-body" style="display:block;background:#fff;padding-bottom:200px;">
+                    <div class="templetgroup">
+                        <div id="products">
+                            <div id="catalog">
+                                <ul class="clearfix">
+                                    <li class="user-defined">
+                                        <div class="htmlcon clearfix" style="display:none">
+                                            <div class="mpagehtml">
+                                                <div class="mmyhtml  clearfix">
+                                                    <div class="mimg_box">
+                                                        <img src="" />
+                                                    </div>
+                                                    <div class="mfixedbtn btn-group-vertical">
+                                                        <a class="btn purple meditpic">编辑图片</a>
+                                                        <a class="btn purple maddlinks">添加链接</a>
+                                                        <a class="btn purple mdeletemoban">删除模板</a>
+                                                        <a class="btn purple up">向上移动</a>
+                                                        <a class="btn purple down">向下移动</a>
+                                                    </div>
+                                                    <div class="mbtngroup">
+                                                        <div class="linkbox">宽(%)：
+                                                            <input type="text" class="widths" />
+                                                        </div>
+                                                        <div class="linkbox">高(%)：
+                                                            <input type="text" class="heights" />
+                                                        </div>
+                                                        <div class="methodlink">链接方式：
+                                                            <select class="methods">
+                                                                <option value="0" selected>网址</option>
+                                                                <option value="1">在线客服</option>
+                                                                <option value="2">视频</option>
+                                                                <option value="3">图片</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="linkbox weblink">链接网址：
+                                                            <input type="text" name="link" value="http://" class="linkval">
+                                                            <a class="linkchoose">
+                                                                <i class="fa fa-paper-plane"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="linkbox viewsp">视频封面：
+                                                            <input type="text" name="view" value="http://" class="viewimg" />
+                                                            <a class="imgchoose">
+                                                                <i class="fa fa-file-image-o"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="linkbox viewsp">视频网址：
+                                                            <input type="text" name="view" value="http://" class="viewval">
+                                                        </div>
+                                                        <div class="linkbox imgaddress">图片地址：
+                                                            <input type="text" name="img" value="http://" class="picadress" />
+                                                            <a class="imgchoose">
+                                                                <i class="fa fa-file-image-o"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="linkbox imgaddress">
+                                                            图片链接：
+                                                            <input type="text" name="linkadress" value="http://" class="linkadress">
+                                                            <a class="linkchoose">
+                                                                <i class="fa fa-paper-plane"></i>
+                                                            </a>
+                                                        </div>
+                                                        <button type="button" class="btn purple maddmylink">添加</button>
+                                                        <button type="button" class="btn blue mcancellink">取消</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tmppic">
+                                            <img src="../../../assets/global/img/mdefined.jpg" />
+                                        </div>
+                                    </li>
+                                    <li *ngFor="let item of list">
+                                        <div class="htmlcon" [innerHTML]="item.content | innerhtml" style="display:none"></div>
+                                        <!--  <div class="tmpname">{{item.name}}</div> -->
+                                        <div class="tmppic">
+                                            <img src="{{item.thumbnail}}" />
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--右侧组装页面区域-->
+            <div class="fullpage">
+                <div id="page">
+                    <div class="ui-widget-content">
+                        <div class="here" id="mhere" style="width:100%">
+                            <div class="placeholder">请拖拽到这里</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="edithtml"></div>
+            <!--模板1编辑-->
+            <div id="dialog-index" title="编辑">
+                <div>
+                    <button type="button" class="btn purple mlbtshow" style="display: none;">增加链接</button>
+                    <button type="button" class="btn purple mlbtshow2" style="display: none;">增加客服</button>
+                </div>
+                <div class="mshowimgpro" style="display: none;">
+                    <button type="button" class="btn purple lbtshows maddproimg">增加</button>
+                    <span style="color: red;">*不能小于5张</span>
+                </div>
+                <form class="form-horizontal form-bordered ">
+                    <div class="form-body dialog-table"></div>
+                </form>
+            </div>
+        </div>
+    </form>
+    <!--链接库-->
+    <div id="modallink" title="链接地址" style="display:none">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="f1">页面英文:</label>
+                <input type="text" id="f1" class="form-control pageeng" placeholder="请输入页面英文" />
+            </div>
+            <!--  <div class="form-group">
+                <label class="f1">页面类型:</label>
+                <select class="form-control  pagelx">
+                    <option value="0">请选择</option>
+                    <option value="1">首页</option>
+                    <option value="2">系列页</option>
+                    <option value="3">详情页</option>
+                    <option value="4">活动页</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="f1">系列名称:</label>
+                <select class="form-control seriesname">
+                    <option value="0">请选择</option>
+                    <option *ngFor="let item of yxseries"  value="{{item.code}}" >
+                            {{item.name}}
+                    </option>
+                </select>
+            </div> -->
+            <button type="button" class="btn green-meadow btn-sm" (click)="searchlink()">查询</button>
+        </form>
+        <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <tr>
+                    <th>
+                        <i class="fa"></i>请选择
+                    </th>
+                    <th class="hidden-xs">
+                        <i class="fa"></i>页面英文
+                    </th>
+                    <th class="hidden-xs">
+                        <i class="fa"></i>页面名称
+                    </th>
+                    <th>
+                        <i class="fa"></i>页面类型
+                    </th>
+                    <th>
+                        <i class="fa"></i>链接
+                    </th>
+                </tr>
+                <tr *ngFor="let item of alllinks">
+                    <td>
+                        <input type="radio" name="linkradio" class="linkradio">
+                    </td>
+                    <td>{{item.fileName}}</td>
+                    <td>{{item.comm}}</td>
+                    <td>
+                        <span *ngIf="item.pageType == 1">首页</span>
+                        <span *ngIf="item.pageType == 2">系列页</span>
+                        <span *ngIf="item.pageType == 3">详情页</span>
+                    </td>
+                    <td class="linkdetail">{{item.url}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!--图片库-->
+    <div id="imggroup" title="请选择图片" style="display:none;z-index:10001">
+        <div class="clearfix">
+            <form class="form-inline">
+                <!-- <div class="form-group">
+                    <label for="f1">标签：</label>
+                    <select class="form-control tagpic">
+                        <option value="">全部</option>
+                        <option *ngFor="let item of tagimg" value="{{item.id}}">
+                            {{item.name}}
+                        </option>
+                    </select>
+                </div> -->
+                <!-- <div class="form-group">
+                    <label for="f2">分组：</label>
+                    <select class="form-control grouppic">
+                        <option value="">全部</option>
+                        <option *ngFor="let item of groupimg" value="{{item.id}}">
+                            {{item.name}}
+                        </option>
+                    </select>
+                </div> -->
+                <div class="form-group">
+                    <label for="f3" class="sr-only">图片名称：</label>
+                    <input type="text" class="form-control picnames" placeholder="请输入图片名称" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn green-meadow btn-sm" (click)="searchimg()">查询</button>
+                </div>
+                <input type="text" class="chooseimgname" style="border:1px solid #ccc;width:60%;background:none;margin-left:20px;" />
+            </form>
+        </div>
+        <ul class="listimg clearfix">
+            <li *ngFor="let item of tplList;let i = index;">
+                <div class="groupimg" (dblclick)="selectpic($event.target)">
+                    <span>
+                        <img src="{{item.pictureUrl}}" (click)="mypic(i)" />
+                        <input type="hidden" value="{{item.picHeight}}" class="imgheight" />
+                    </span>
+                    <div class="maximg">
+                        <img src="{{item.pictureUrl}}" />
+                    </div>
+                </div>
+                <span>{{item.picName}}</span>
+            </li>
+        </ul>
+        <div class="clearfix">
+            <!-- <ul class="pagination">
+                <li class="paginate_button previous " aria-controls="sample_6" tabindex="0" id="sample_6_previous">
+                    <a (click)="goPage(9999)">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                </li>
+                <li class="paginate_button" *ngFor="let item of pageList;let i = index;" aria-controls="sample_6" tabindex="0">
+                    <a (click)="goPage(i)">{{i + 1}}</a>
+                </li>
+                <li class="paginate_button next" aria-controls="sample_6" tabindex="0" id="sample_6_next">
+                    <a (click)="goPage(-1)">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+            </ul> -->
+            <div id="pagination1" class="page fr" style="margin:0px;"></div>
+        </div>
+    </div>
+    <!--系列选择-->
+    <div class="modal fade" id="smyModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>请选择</td>
+                            <td>系列名称</td>
+                            <td>系列编码</td>
+                            <td>系列描述</td>
+                        </tr>
+                        <tr *ngFor="let item of serieslists">
+                            <td>
+                                <input type="radio" name="series" value="{{item.id}}" />
+                            </td>
+                            <td>{{item.name}}</td>
+                            <td class="seriescode">{{item.code}}</td>
+                            <td class="seriesdesc">{{item.name}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <span class="namerepeat"></span>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" (click)="seriesmanage()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--商品款式-->
+    <div class="modal fade" id="proModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="height:600px;overflow:auto">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label>款式编码：</label>
+                            <input type="text" class="form-control ksbm" placeholder="请输入款式编码" />
+                        </div>
+                        <div class="form-group">
+                            <label>中文名称：</label>
+                            <input type="text" class="form-control chinesaname" placeholder="请输入中文名称" />
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label>系列名称：</label>
+                            <select class="form-control profl">
+                                <option value="">请选择</option>
+                                <option *ngFor="let item of serieslists" value="{{item.code}}">
+                                    {{item.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn green-meadow btn-sm" (click)="searchpro()">查询</button>
+                        </div>
+                    </form>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>请选择</td>
+                            <td>系列名称</td>
+                            <td>款式编码</td>
+                            <td>商品款式中文主名称 </td>
+                        </tr>
+                        <tr *ngFor="let item of prolists">
+                            <td>
+                                <input type="radio" name="product" value="{{item.id}}" />
+                            </td>
+                            <td>{{item.seriesName}}
+                                <input value="{{item.seriesCode}}" type="hidden" class="fkcode" />
+                            </td>
+                            <td class="kuanshicode">
+                                <span>{{item.code}}</span>
+                                <input value="{{item.pairJoin}}" type="hidden" class="double" />
+                            </td>
+                            <td class="seriesdesc">{{item.name}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <span class="enamerepeat"></span>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" (click)="productmanage()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--颜色选择器-->
+    <div id="cModal" title="请选择颜色" style="display:none">
+        <input [style.background]="color" [(colorPicker)]="color" class="colorc" style="width:80px;margin:20px;" />
+    </div>
+    <!--字体大小-->
+    <div id="fModal" title="请选择字体大小" style="display:none">
+        <input type="text" id="amount" value="12" />
+        <div id="f-slider"></div>
+    </div>
+    <!---->
+    <div class="modal fade" id="pageModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">页面模板提示</h4>
+                </div>
+                <div class="modal-body">
+                    当前页面的页面模板同站点的页面模板不一致是否进行替换
+                </div>
+                <div class="modal-footer">
+                    <span class="enamerepeat"></span>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" (click)="surepageid()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!---->
+    <div id="hint" *ngIf="isHint">
+        <div class="hintMsg">
+            <i *ngIf="warning" class="warningMsg"></i>
+            <i *ngIf="!warning" class="ok"></i>
+            <span>{{hintMsg}}</span>
+        </div>
+    </div>

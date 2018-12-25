@@ -1,0 +1,380 @@
+<div class="page-head">
+  <div class="page-title">
+    <h1>
+      用户分组
+      <small> User The Group</small>
+    </h1>
+  </div>
+</div>
+<div class="portlet-body">
+  <div class="contenttab" style="padding:10px 10px;">
+    <div class="add">
+      <a class="btn blue-hoki" style="margin-bottom:20px;" routerLink='/auth/groupadd'>添加小组</a>
+    </div>
+    <div class="portlet box blue-hoki" style="border-left: 2px solid #869ab3;">
+      <!-- 列表的标题 -->
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-globe"></i>小组信息
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+        </div>
+      </div>
+      <!-- 列表的标题end -->
+      <!-- body -->
+      <div class="portlet-body">
+        <div class="col-md-12">
+        <div class="table-scrollable">
+          <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_1" role="grid"
+            aria-describedby="sample_1_info">
+            <thead>
+              <tr>
+                <th id="key" class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:20%">
+                  编号
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:15%">
+                  名称
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:5%">
+                  状态
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:25%">
+                  操作
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let item of list;let i = index">
+                <!-- *ngFor="let item of list;let id =index;" -->
+                <td>{{item.key}}</td>
+                <td>{{item.name}}</td>
+                <td *ngIf="item.enabled">启用</td>
+                <td *ngIf="!item.enabled">禁用</td>
+                <td>
+                  <a class="btn btn-xs yellow" routerLink='/auth/groupedit/{{item.id}}'>
+                    <i class="fa fa-edit"></i>
+                    编辑
+                  </a>
+                  <a class="btn btn-xs btn-info" (click)="link(item.key)">
+                    <i class="fa fa-search"></i>
+                    关联用户
+                  </a>
+                  <a class="btn btn-xs red" (click)="operation(item.id,'false')" *ngIf="item.enabled">
+                    <i class="fa fa-trash-o"></i>
+                    禁用
+                  </a>
+                  <a class="btn btn-xs green" (click)="operation(item.id,'true')" *ngIf="!item.enabled">
+                    <i class="fa fa-trash-o"></i>
+                    启用
+                  </a>
+                  <a class="btn btn-xs green" (click)="allot(item.key)" data-toggle="modal" data-target="#myModal2">
+                    <i class="fa fa-trash-o"></i>
+                    分配角色
+                  </a>
+                  <a class="btn btn-xs red" (click)='operation(item.id,"del")' *ngIf="!item.enabled && item.noDelete">删除</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+        <!--pagema-->
+        <div class="clearfix box">
+          <div id="pagination1" class="page fr"></div>
+        </div>
+        <!--pagema-->
+      </div>
+      <!-- body end -->
+    </div>
+  </div>
+</div>
+<!--操作弹框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+          <h4 class="modal-title">操作</h4>
+        </div>
+        <div class="modal-body">{{message}}</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="subStatus()">确定</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+<!--操作弹框end-->
+
+<!-- 关联用户弹框 -->
+<div id="myModal1" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3"
+  aria-hidden="true">
+  <div class="modal-dialog" style="width:1000px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" (click)="cancel()" data-dismiss="modal" aria-hidden="false">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">关联用户</font>
+          </font>
+        </h4>
+      </div>
+      <div class="modal-body col-md-12">
+        <div class="col-md-3" style="padding-right:1px;">
+          <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>部门信息
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="pleftTree">
+                <input type="hidden" name="mymsg">
+                <button class="myclick" (click)="myclick()"></button>
+                <div class="zTreeDemoBackground">
+                  <ul id="ztree" class="ztree"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="col-md-12" style="padding:0;">
+            <div class="portlet box blue-hoki">
+              <div class="portlet-title">
+                <div class="caption">
+                  <i class="fa fa-globe"></i>关联用户
+                </div>
+                <div class="tools">
+                  <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                </div>
+              </div>
+              <div class="portlet-body">
+
+                <!-- <nz-select id="nzSelect" style="width: 100%" [(ngModel)]="tagValue" [nzSize]="size" nzMode="tags"
+                  nzPlaceHolder="请选择要关联的用户">
+                  <nz-option *ngFor="let option of grouplist" [nzLabel]="option.name" [nzValue]="option.username"></nz-option>
+                </nz-select> -->
+                <div class="portlet-body">
+                  <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_2" role="grid"
+                      aria-describedby="sample_1_info">
+                      <thead>
+                        <tr>
+                          <th>用户名</th>
+                          <th>名称</th>
+                          <th>部门名称</th>
+                          <th>职位名称</th>
+                          <th>操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of list1">
+                          <td>{{item.username}}</td>
+                          <td>{{item.name}}</td>
+                          <td>{{item.deptName}}</td>
+                          <td>{{item.dutyName}}</td>
+                          <td>
+                            <button class="btn btn-xs green" (click)="operation2(item.key,item.uid,'adduser')" *ngIf="item.noUserGroup">添加关联</button>
+                            <button class="btn btn-xs red" (click)="operation2(item.key,item.uid,'deluser')" *ngIf="!item.noUserGroup">取消关联</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="clearfix box">
+                    <div id="pagination2" class="page fr"></div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 关联用户弹框end -->
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+<!-- 默认加载图标 -->
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<!-- 默认加载图标end -->
+<div class="scieen" (click)="scieen()">
+
+</div>
+<div id="myModal2" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" style="width:50%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">分配角色</font>
+          </font>
+        </h4>
+      </div>
+      <div class="modal-body col-md-12">
+        <div class="col-md-3">
+          <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>系统信息
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="pleftTree">
+                <input type="hidden" name="appmsg" />
+                <button class="appclick" (click)="appclick()"></button>
+                <div class="zTreeDemoBackground">
+                  <ul id="appZtree" class="ztree"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9">
+            <div class="portlet box blue-hoki">
+              <div class="portlet-title">
+                <div class="caption">
+                  <i class="fa fa-globe"></i>分配角色
+                </div>
+                <div class="tools">
+                  <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                </div>
+              </div>
+              <div class="portlet-body">
+                <div class="portlet-body">
+                  <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_3" role="grid"
+                      aria-describedby="sample_1_info">
+                      <thead>
+                        <tr>
+                          <th>编码</th>
+                          <th>名称</th>
+                          <th>类型</th>
+                          <th>操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of rolelist">
+                          <td>{{item.key}}</td>
+                          <td>{{item.name}}</td>
+                          <td *ngIf="item.type==1">超级管理员</td>
+                          <td *ngIf="item.type==2">普通管理员</td>
+                          <td *ngIf="item.type==3">业务角色</td>
+                          <td>
+                            <button class="btn btn-xs green" (click)="operation2(item.key,item.id,'addrole')" *ngIf="item.noGroupRole">添加关联</button>
+                            <button class="btn btn-xs red" (click)="operation2(item.key,item.id,'delrole')" *ngIf="!item.noGroupRole">取消关联</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="clearfix box">
+                  <div id="pagination3" class="page fr"></div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- <div class="modal-body col-md-12">
+          <div class="head">
+            <select id="selectTag" class="col-md-6" style="border-radius: 5px;height: 35px;">
+              <option value="">请选择角色</option>
+              <option *ngFor='let item of selectList' value="{{item.key}}">{{item.name}}</option>
+            </select>
+            <div class="col-md-6">
+              <button class="btn blue" (click)="newadd()">新增角色</button>
+            </div>
+          </div>
+          <table style="margin-top:50px;" class="table table-striped table-bordered table-hover dataTable no-footer"
+            role="grid" aria-describedby="sample_1_info">
+            <thead>
+              <tr>
+                <th>名称</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <tr *ngFor="let item of lists">
+                <td>{{item.name}}</td>
+                <td>
+                  <button class="btn btn-xs btn-warning" (click)="cancel1(item.key)">取消关联</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <!-- <button class="btn blue delsure" (click)="add()">确认</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--提示语弹框-->
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">提示</h4>
+      </div>
+      <div class="modal-body">{{message}}</div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div  id="myModal5" class="modal fade bs-modal-sm"  data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">操作</h4>
+        </div>
+        <div class="modal-body">{{message2}}</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="subStatus2()">确定</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,118 @@
+
+.bottomm{margin-bottom: 10px;}
+.imgc{margin:0px auto;width:80%;text-align: center;}
+.barcode_image{width: 50px}
+.uploadview{margin-bottom: 20px;}
+tr,td,th{
+    text-align: center;
+    padding-left: 8px!important;
+    padding-right: 8px!important;
+}
+.btn_container{
+    padding-left: 30px;
+}
+.pop_up{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.7)
+}
+.none{
+    display: none;
+}
+.large_img{
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -150px;
+    border: 2px solid #ccc;
+}
+#pagination1{
+    margin: 0 auto;
+}
+.modal-footer{
+    position: relative;
+}
+.desc{
+    color: #f00;
+    position: absolute;
+    top: 5px;
+    left: 50px;
+    max-width: 400px;
+    text-align: left;
+}
+#sample_1{
+    border-bottom : 1px solid #dddddd;
+}
+.row form>div{
+    margin-bottom: 10px
+}
+.row form label{
+    padding: 0 5px;
+}
+.row form select,.row form input{
+    width: 100%;
+}
+#journal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.7);
+    z-index: 1000;
+    display: none;
+}
+.journal_content{
+    width: 800px;
+    height: 535px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -270px;
+    margin-left: -400px;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5)
+}
+.journal_top{
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid #EFEFEF;
+    line-height: 40px;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 0 15px;
+    color: #fff;
+    background: #67809F;
+}
+.journal_list{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+.log{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.pad{
+    padding-left: 0!important;
+    padding-right: 0!important;
+}
+/*.journal_title{
+    margin-bottom: 0;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    background: #67809F;
+    color: #fff;
+}*/

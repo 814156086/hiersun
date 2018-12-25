@@ -1,0 +1,123 @@
+<div class="datalist">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-head">
+      <div class="page-title">
+        <h1>门店评分
+          <small>Reserveorder Status</small>
+        </h1>
+      </div>
+    </div>
+    <!-- END PAGE TITLE -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="portlet-body">
+          <div class="contenttab">
+            <div class="clearfix" style="margin-bottom: 20px;">
+              <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-default" (click)="switchType('verify')">
+                  <input type="radio" class="toggle"> 门店验证 </label>
+                <label class="btn btn-default" (click)="switchType('reserve')">
+                  <input type="radio" class="toggle">订单管理</label>
+                <label class="btn btn-default active" (click)="switchType('score')">
+                  <input type="radio" class="toggle"> 门店评分 </label>
+              </div>
+            </div>
+            <!-- 门店评分 -->
+            <div class="portlet box blue-hoki">
+              <!--列表头-->
+              <div class="portlet-title">
+                <div class="caption">
+                  <i class="fa fa-globe"></i>门店评分
+                </div>
+                <div class="tools">
+                  <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                </div>
+              </div>
+              <!--列表end-->
+              <!--body-->
+              <div class="portlet-body">
+                <div class="table-scrollable">
+                  <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                      <td>门店名称：</td>
+                      <td colspan="7">{{address}}</td>
+                    </tr>
+                    <tr>
+                      <td>门店性质：</td>
+                      <td colspan="7">{{shoptype}}</td>
+                    </tr>
+                    <tr>
+                      <td>评分等级：</td>
+                      <td colspan="7">{{appraisemark | number:'1.0-2'}}</td>
+                    </tr>
+                    <tr>
+                      <td>接待人数：</td>
+                      <td colspan="7">{{population}}</td>
+                    </tr>
+                    <tr>
+                      <td>序号</td>
+                      <td>预约单来源</td>
+                      <td>预约单号</td>
+                      <td>导购编号</td>
+                      <td>到店时间</td>
+                      <td>预约单状态</td>
+                      <td>评分结果</td>
+                      <td>操作</td>
+                    </tr>
+                    <tr *ngFor="let item of scorelist;let key=index">
+                      <td>{{key+1}}</td>
+                      <td>{{item.origin}}</td>
+                      <td>{{item.orderno}}</td>
+                      <td>{{item.signinInfo}}</td>
+                      <td>{{item.signinDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                      <td>{{item.statename}}</td>
+                      <td>
+                        <span *ngIf="item.appraisemark>=1 && item.appraisemark<2">
+                          <nz-rate [ngModel]="1" nzDisabled></nz-rate>平均{{item.appraisemark | number:'1.0-2'}}分
+                        </span>
+                        <span *ngIf="item.appraisemark>=2 && item.appraisemark<3">
+                          <nz-rate [ngModel]="2" nzDisabled></nz-rate>平均{{item.appraisemark | number:'1.0-2'}}分
+                        </span>
+                        <span *ngIf="item.appraisemark>=3 && item.appraisemark<4">
+                          <nz-rate [ngModel]="3" nzDisabled></nz-rate>平均{{item.appraisemark | number:'1.0-2'}}分
+                        </span>
+                        <span *ngIf="item.appraisemark>=4 && item.appraisemark<5">
+                          <nz-rate [ngModel]="4" nzDisabled></nz-rate>平均{{item.appraisemark | number:'1.0-2'}}分
+                        </span>
+                        <span *ngIf="item.appraisemark>=5">
+                          <nz-rate [ngModel]="5" nzDisabled></nz-rate>平均{{item.appraisemark | number:'1.0-2'}}分
+                        </span>
+                      </td>
+                      <td>
+                        <a class="btn btn-xs btn-info green" routerLink='/oms/shoptotalscore' [queryParams]="{id:item.id}">
+                          <i class="fa fa-edit"></i> 查看</a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <!--分页页码-->
+                <div class="clearfix box">
+                  <div id="pagination1" class="page fr"></div>
+                </div>
+                <!--分页页码end-->
+              </div>
+            </div>
+            <!-- 门店评分end -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="spinner" *ngIf="isload">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+  <div id="hint" *ngIf="isHint">
+    <div class="hintMsg">
+      <i *ngIf="warning" class="warningMsg"></i>
+      <i *ngIf="!warning" class="ok"></i>
+      <span>{{hintMsg}}</span>
+    </div>
+  </div>
+  

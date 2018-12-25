@@ -1,0 +1,147 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>视频详情
+      <small>view Detail</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet-body">
+      <div class="contenttab">
+        <div class="portlet box blue-hoki">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-globe"></i>视频详情
+            </div>
+            <div class="tools">
+              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+            </div>
+          </div>
+          <!--body-->
+          <div class="portlet-body">
+            <div class="table-scrollable">
+              <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_1" role="grid" aria-describedby="sample_1_info">
+                <tr>
+                  <td width="12%">视频名称：</td>
+                  <td>{{videoname}}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>视频缩略图：</td>
+                  <td>
+                    <img src="{{videoimg}}" width="100px;" />
+                  </td>
+                  <td>
+                      <a class="btn btn-xs btn-info" style="margin-left:20px;" data-toggle="modal" href="#large">
+                      <i class="fa fa-edit"></i> 修改</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>超清视频地址：</td>
+                  <td>{{videocq}}</td>
+                  <td>
+                      <a class="btn btn-xs btn-info" style="margin-left:20px;" (click)="copypageadd(videocq)">
+                      <i class="fa fa-copy"></i>复制</a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>高清视频地址：</td>
+                  <td>{{videogq}}</td>
+                  <td>
+                      <a class="btn btn-xs btn-info" style="margin-left:20px;" (click)="copypageadd(videogq)">
+                      <i class="fa fa-copy"></i>复制</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>标清视频地址：</td>
+                  <td>{{videobq}}</td>
+                  <td>
+                      <a class="btn btn-xs btn-info" style="margin-left:20px;" (click)="copypageadd(videobq)">
+                      <i class="fa fa-copy"></i>复制</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>流畅视频地址：</td>
+                  <td>{{videolc}}</td>
+                  <td>
+                      <a class="btn btn-xs btn-info" style="margin-left:20px;" (click)="copypageadd(videolc)">
+                      <i class="fa fa-copy"></i>复制</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>原始视频地址：</td>
+                  <td>{{videobq}}</td>
+                  <td>
+                      <a class="btn btn-xs btn-info" style="margin-left:20px;" (click)="copypageadd(videobq)">
+                      <i class="fa fa-copy"></i>复制</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>视频原始大小：</td>
+                  <td>{{videosize}}MB</td>
+                  <td></td>
+                </tr>
+              </table>
+              <div *ngIf="!nodata">请求数据错误，请重试</div>
+            </div>
+            <div class="clearfix back">
+              <button type="button" class="btn default" (click)="goback()">返回</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--上传图片-->
+<div class="modal fade bs-modal-lg" id="large" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="height: 40px;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body" style="min-height: 300px;">
+        <div class="uploadbox">
+          <div *ngIf="isshow">
+            <div class="clearfix">
+              <nz-upload nzAction="/api/cms/picture/thumb-upload?siteId={{chooseid}}" nzListType="picture" nzMultiple="false" (nzChange)="mychange($event)"
+                [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" nzFileType="image/png,image/jpeg,image/gif,image/bmp">
+                <button nz-button>
+                  <i class="anticon anticon-upload"></i>
+                  <span>选择图片</span>
+                </button>
+              </nz-upload>
+            </div>
+          </div>
+          <div *ngIf="!isshow">
+              <div class="clearfix">
+                <nz-upload nzAction="/api/cms/picture/thumb-upload" nzListType="picture" nzMultiple="false" nzDisabled="true"
+                  [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" nzFileType="image/png,image/jpeg,image/gif,image/bmp">
+                  <button nz-button>
+                    <i class="anticon anticon-upload"></i>
+                    <span>选择图片</span>
+                  </button>
+                </nz-upload>
+              </div>
+            </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn default" (click)="saveimgList()">保存</button>
+        <button type="button" class="btn default" data-dismiss="modal" (click)="closeUp()">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="hint" *ngIf="isHint" >
+    <div class="hintMsg">
+        <i class="warningMsg"></i>
+        <span>{{hintMsg}}</span></div>
+  </div>

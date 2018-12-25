@@ -1,0 +1,70 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>编辑客服组
+      <small>Editor custom</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal" [formGroup]="formModel" (submit)="onSubmit()">
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>组类别：
+          </label>
+          <div class="col-md-8">
+            <select class="form-control" [class.hasError]="formModel.get('customclass').invalid && formModel.get('customclass').touched"
+              formControlName="customclass" name="customclass" [(ngModel)]="customclass">
+              <option value="">请选择</option>
+              <option value="1">外呼组</option>
+              <option value="2">在线组</option>
+            </select>
+            <div [hidden]="formModel.get('customclass').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['customclass'])">
+                客服组必选
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---->
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>组编号：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" [class.hasError]="formModel.get('customcode').invalid && formModel.get('customcode').touched"
+              type="text" formControlName="customcode" name="customcode" [(ngModel)]="customcode" />
+            <div [hidden]="formModel.get('customcode').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['customcode'])">
+                组编号必填
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---->
+        <div class="form-group">
+          <label class="col-md-3 control-label">
+            <button type="submit" class="btn purple" [disabled]="formModel.invalid">保存</button>
+            <button type="reset" class="btn blue-hoki">重置</button>
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </label>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

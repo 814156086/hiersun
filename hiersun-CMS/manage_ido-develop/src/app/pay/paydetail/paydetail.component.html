@@ -1,0 +1,212 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>订单详情
+      <small>Order Detail</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal">
+        <div class="form-group">
+          <label class="col-md-2 control-label">支付单号：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{payOrderNo}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">商户ID：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{businessid}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">商户单号：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{businessno}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">金额(元)：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{money}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">币种：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{currency}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">订单状态：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{orderstatus}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">商品标题：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{businesstitle}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">商品内容：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{businessconent}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">渠道单号：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{channelno}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">支付平台：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{pid}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">销售渠道：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{mchChannel}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">支付渠道：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{payChannel}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">客户端IP：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{clientIp}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">设备：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{device}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">通知次数：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{notifyCount}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">错误码：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{errorno}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">错误消息：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{errormsg}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">扩展参数：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{tzcanshu}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">参数1：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{canshu1}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">参数2：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{canshu2}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">通知地址：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{mesaddress}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">失效时间：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" *ngIf="losetime!=null" value="{{losetime | date:'yyyy-MM-dd HH:mm:ss'}}">
+            <input class="form-control" type="text" *ngIf="losetime==null" value="--">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">成功时间：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" *ngIf="successtime!=null" value="{{successtime | date:'yyyy-MM-dd HH:mm:ss'}}">
+            <input class="form-control" type="text" *ngIf="successtime==null" value="--">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">创建时间：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{creattime | date:'yyyy-MM-dd HH:mm:ss'}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">更新时间：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{updatetime | date:'yyyy-MM-dd HH:mm:ss'}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label"></label>
+          <div class="col-md-8">
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

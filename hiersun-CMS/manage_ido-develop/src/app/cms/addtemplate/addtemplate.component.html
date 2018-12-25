@@ -1,0 +1,66 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>添加模板
+      <small>Add Templet</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal ng-untouched ng-pristine ng-valid" [formGroup]="formModel" (submit)="onSubmit()">
+        <div class="form-group">
+          <label class="col-md-1 control-label"><span style="color:red;">*</span>模板描述</label>
+          <div class="col-md-11">
+              <input class="form-control" [class.hasError]="formModel.get('textname').invalid && formModel.get('textname').touched" type="text" formControlName="textname"  maxlength="20" name="textname" [(ngModel)]="textnames" placeholder="模板名称不能大于20字">
+              <div [hidden]="formModel.get('textname').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['textname'])">
+                      模板名称必填
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="form-group" style="position: relative;">
+          <label class="col-md-1 control-label">缩略图</label>
+          <div class="col-md-11">
+            <span class="btn green fileinput-button">
+                <i class="fa fa-plus"></i>
+                <span>选择文件</span>
+                <input type="file"  name="photoFile" accept="image/png, image/jpeg ,image/jpg" (change)="imgadd($event)">
+              </span>
+            <div class="imgbox" style="display:none;">
+              <img class="setimg" src="" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-1 control-label"><span style="color:red;">*</span>模板内容</label>
+          <div class="col-md-11">
+              <textarea class="form-control" [class.hasError]="formModel.get('textcontet').invalid && formModel.get('textcontet').touched" formControlName="textcontet" [(ngModel)]="textcontets" name="textcontet"></textarea>
+              <div [hidden]="formModel.get('textcontet').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['textcontet'])">
+                    模板内容必填
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="operation">
+          <button type="submit" [disabled]="formModel.invalid" class="btn purple">保存</button>
+          <button type="button" class="btn blue-hoki" (click)="resetform()">重置</button>
+          <button type="button" class="btn default" (click)="goback()">返回</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>

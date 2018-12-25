@@ -1,0 +1,136 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>商户信息
+        <small>Business Manage</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <a class="btn blue-hoki" routerLink='/pay/addbusiness' [queryParams]="{page:1,btntype:3}" style="margin-bottom:20px;">
+            <i class="fa fa-plus"></i> 添加</a>
+          <a class="btn blue-hoki" style="margin-bottom:20px;" (click)="addbusinessnew()">
+            <i class="fa fa-plus"></i> 一键添加</a>
+          <!--筛选-->
+          <div class="choosesx">
+            <form class="form-inline clearfix">
+              <div class="form-group col-md-6 col-sm-6 col-xs-12" style='margin-bottom: 10px'>
+                <div class="col-md-3 text-left" style='padding-top: 3px;'>
+                  <label for="f1">商户ID：</label>
+                </div>
+                <div class="col-md-7">
+                  <!-- <select id="businessid" class="form-control pageeng" style="width:100%;" data-placeholder="请输入商户ID">
+                      <option value=""></option>
+                      <option *ngFor="let item of businessidlist;let itemkey=index;" value="{{item}}">{{item}}</option>
+                  </select> -->
+                  <select id="businessid" class="form-control select2me pageeng" data-placeholder="请选择" style="width:100%;">
+                    <option value="">请选择</option>
+                    <option *ngFor="let item of shops;let list=index;" value="{{item.organizationCode}}">{{item.organizationCode}}-{{item.organizationName}}</option>
+                  </select>
+                </div>
+              </div>
+              <!-- <div class="form-group col-md-4 col-sm-6 col-xs-12" style='margin-bottom: 10px'>
+                <div class="col-md-5 text-left" style='padding-top: 3px;'>
+                  <label>商户类型：</label>
+                </div>
+                <div class="col-md-7">
+                  <select style="width:100%;" class="form-control businesslx">
+                    <option value="">所有类型</option>
+                    <option value="1">平台账户</option>
+                    <option value="2">私有账户</option>
+                  </select>
+                </div>
+              </div> -->
+              <div class="form-group col-md-6 col-sm-6 col-xs-12" style='margin-bottom: 10px'>
+                <button class="btn btn-default" type="button" (click)="reset()">重置</button>
+                <button class="btn green btn-default" type="button" (click)="businlist()">查询</button>
+              </div>
+            </form>
+          </div>
+          <!--筛选-->
+          <div class="portlet box blue-hoki">
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>商户列表
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <!--列表end-->
+            <!--body-->
+            <div class="portlet-body">
+
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th style="width:15%">商户ID</th>
+                      <th style="width:15%">商户名称</th>
+                      <!-- <th style="width:10%">商户类型 </th> -->
+                      <th style="width:10%">状态</th>
+                      <th style="width:20%">创建时间</th>
+                      <th style="width:30%">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of businesslist">
+                      <td>{{item.mchId}}</td>
+                      <td>{{item.name}}</td>
+                      <!-- <td>
+                        <span *ngIf="item.type==1">平台账户</span>
+                        <span *ngIf="item.type==2">私有账户</span>
+                      </td> -->
+                      <td>
+                        <span class="label label-sm label-success" *ngIf="item.state==1">启用</span>
+                        <span class="label label-sm label-danger" *ngIf="item.state==0">停用</span>
+                      </td>
+                      <td>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                      <td>
+                        <a class="btn btn-xs btn-info" routerLink='/pay/addbusiness' [queryParams]="{mchId:item.mchId,type:1,page:pageNo}">
+                          <i class="fa fa-file-pdf-o"></i> 详情</a>
+                        <a class="btn btn-xs btn-info green" routerLink='/pay/addbusiness' [queryParams]="{mchId:item.mchId,type:2,page:pageNo}">
+                          <i class="fa fa-edit"></i> 编辑</a>
+                        <a class="btn btn-xs btn-info blue" routerLink='/pay/paymethod' [queryParams]="{mchId:item.mchId,page:1}">
+                          <i class="fa fa-edit"></i> 查看支付渠道</a>
+                      </td>
+                    </tr>
+                    <tr *ngIf="nodata==true">
+                      <td colspan="6" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--分页页码-->
+              <div class="clearfix box">
+                <div id="pagination1" class="page fr"></div>
+              </div>
+              <!--分页页码end-->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>
+<!-- 模态框 -->
+<app-mchmsg #mchmsg [isadd]="isadd" (businesslist)="businlist()"></app-mchmsg>

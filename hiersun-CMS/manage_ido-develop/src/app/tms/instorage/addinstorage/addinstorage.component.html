@@ -1,0 +1,322 @@
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          入库单管理
+        </div>
+      </div>
+      <div class="portlet-body">
+        <form class="horizontal-form">
+          <!--line1-->
+          <div class="row col-md-12">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">入库单编号：</font>
+                  </font>
+                </label>
+                <input id="instorageorder" name="instorageorder" type="text" class="form-control"  placeholder="可不填，自动生成" readonly>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">入库单类型：</font>
+                  </font>
+                </label>
+                <select id="instoragestatus" class="form-control select2me" data-placeholder=" " *ngIf="flag==1">
+                  <option value="">请选择入库类型</option>
+                  <option *ngFor="let item of storagetypes" value="{{item.code}}">{{item.name}}</option>
+                </select>
+                <select *ngIf="flag==2" id="rklx" class="form-control"  readonly>
+                  <option *ngFor="let item of storagetypes"  value="{{item.code}}">{{item.name}}</option>
+                </select>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">关联订单号：</font>
+                  </font>
+                </label>
+                <input id="linkorder" name="linkorder" type="text" class="form-control" placeholder="请输入关联订单号" />
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">仓库：</font>
+                  </font>
+                </label>
+                <select id="storage" class="form-control select2me" data-placeholder=" " *ngIf="flag==1">
+                  <option value="">请选择仓库</option>
+                  <option *ngFor="let item of storehouses" value="{{item.storageNum}}">{{item.storageName}}</option>
+                </select>
+                <select id="ck" class="form-control" readonly *ngIf="flag==2">
+                  <option *ngFor="let item of storehouses" value="{{item.storageNum}}">{{item.storageName}}</option>
+                </select>
+                <span class="help-block"></span>
+              </div>
+            </div>
+          </div>
+          <!--line2-->
+          <div class="row col-md-12">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">供应商编号：</font>
+                  </font>
+                </label>
+                <select id="suppliercode" class="form-control select2me" data-placeholder=" ">
+                  <option value="">所有</option>
+                </select>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">供应商名称：</font>
+                  </font>
+                </label>
+                <input id="suppliername" name="suppliername" type="text" class="form-control" placeholder="请输入供应商名称" />
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">供应商联系人：</font>
+                  </font>
+                </label>
+                <input id="supplierman" name="supplierman" type="text" class="form-control" placeholder="请输入供应商联系人" />
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">供应商联系方式：</font>
+                  </font>
+                </label>
+                <input id="suppliertel" name="suppliertel" type="text" class="form-control" placeholder="请输入供应商联系方式" />
+                <span class="help-block"></span>
+              </div>
+            </div>
+          </div>
+          <!--line3-->
+          <div class="row col-md-12">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">制单时间：</font>
+                  </font>
+                </label>
+                <input type="text" id="creatdata" class="creatdata form-control" readonly/>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">制单人：</font>
+                  </font>
+                </label>
+                <input id="tableman" name="tableman" type="text" class="form-control" placeholder="请输入制单人" />
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">备注：</font>
+                  </font>
+                </label>
+                <input type="text" id="remark" class="remark form-control" placeholder="请输入备注" />
+                <span class="help-block"></span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div id="sample_6_wrapper" class="dataTables_wrapper no-footer">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover allList">
+              <thead>
+                <tr class="text-center">
+                  <th> 请选择</th>
+                  <th> 产品名称</th>
+                  <th> 产品编码</th>
+                  <th> 产品条码</th>
+                  <th> 规格</th>
+                  <th> 批次</th>
+                  <th> 单价</th>
+                  <th> 入库数</th>
+                  <th> 总价</th>
+                  <th> 库位</th>
+                  <th> 操作</th>
+                </tr>
+              </thead>
+              <tbody class="product_list">
+                <tr role="row" class="odd text-center" *ngFor="let item of productlist;let key=index">
+                  <td>
+                    <input type="checkbox" />
+                  </td>
+                  <td>{{item.productName}}</td>
+                  <td>{{item.productCode}}</td>
+                  <td>{{item.barcode}}</td>
+                  <td>{{item.size}}</td>
+                  <td>{{item.batchNum}}</td>
+                  <td>{{item.inPrice}}</td>
+                  <td>{{item.num}}</td>
+                  <td>{{item.amount}}</td>
+                  <td>{{item.localNum}}</td>
+                  <td>
+                    <a href="javascript:;" class="btn btn-xs red" (click)="deletecurrentpro(key)">
+                      删除
+                      <i class="fa fa-trash-o"></i>
+                    </a>
+                  </td>
+                </tr>
+                <tr *ngIf="recordTotal==0">
+                  <td class="text-center" colspan="10">没有相关记录~</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--pagestart-->
+          <div class="clearfix">
+            <div id="pagination1" class="page"></div>
+          </div>
+          <!--pagesend-->
+        </div>
+        <div class="clearfix" style="margin-bottom:20px;">
+          <button type="button" class="btn  btn-primary" data-toggle="button" (click)="addproduct()">
+            <i class="fa fa-plus"></i>
+            新增产品</button>
+          <button type="button" class="btn green" data-toggle="button" (click)="saveinstorage()">
+            <i class="fa fa-check"></i>
+            保存</button>
+          <button type="button" class="btn red" data-toggle="button" (click)="cancelins()">
+            <i class="fa fa-times-circle-o"></i>
+            取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--新增产品-->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+  <div class="modal-dialog" style="width:30%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">新增产品</font>
+          </font>
+        </h4>
+      </div>
+      <div class="modal-body addproduct">
+        <form class="templatecon form-horizontal">
+          <div class="form-group">
+            <label class="col-md-3 control-label">产品编码：</label>
+            <div class="col-md-8">
+              <input class="form-control codeproduct" type="text" placeholder="双击选择产品" (dblclick)="choosepros()" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">产品条码：</label>
+            <div class="col-md-8">
+              <input class="form-control barcodeproduct" type="text" readonly/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">产品名称：</label>
+            <div class="col-md-8">
+              <input class="form-control nameproduct" type="text" readonly/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">规格：</label>
+            <div class="col-md-8">
+              <input class="form-control ggproduct" type="text" readonly/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">单价：</label>
+            <div class="col-md-8">
+              <input class="form-control priceproduct" type="text" />
+            </div>
+            <div class="col-md-1 control-label" style="position:relative">
+              <span style="position:absolute;left:0px;">元</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">产品批次：</label>
+            <div class="col-md-8">
+              <input class="form-control ppc" type="text" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">入库库位：</label>
+            <div class="col-md-8">
+              <input class="form-control storagemy" type="text" placeholder="双击选择库位" (dblclick)="choosestorage()" />
+              <input type="hidden" class="storagecode" />
+              <input type="hidden" class="localtype" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">数量：</label>
+            <div class="col-md-8">
+              <input class="form-control pnum" type="text" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <button type="button" class="btn default" (click)="sureproduct()">确定</button>
+        <button type="button" class="btn default" (click)="cancelpro()">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--新增产品-->
+<!--选择产品-->
+<app-choosepro #choosepro></app-choosepro>
+<!--选择库位-->
+<app-storagepro #storagepro [storename]="storename"></app-storagepro>
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

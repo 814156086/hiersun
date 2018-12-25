@@ -1,0 +1,501 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>页面管理
+      <small>Page Manage</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="tabbable tabbable-custom tabbable-noborder tabbable-reversed">
+      <ul id="myTab" class="nav nav-tabs">
+        <li *ngFor="let item of list;let key=index" [ngClass]="{'active':key == 0}">
+          <a data-toggle="tab" id="{{item.id}}" (click)="sitechoose(item.id)">{{item.name}}</a>
+        </li>
+      </ul>
+      <input type="hidden" id="choosesite" />
+      <div class="contenttab">
+        <!--tree-->
+        <div class="col-md-3 lefttree">
+          <div class="content_wrap">
+            <input type="hidden" name="mymsg" />
+            <button class="myclick" (click)="myclick()"></button>
+            <div class="zTreeDemoBackground">
+              <ul id="treeDemo" class="ztree"></ul>
+            </div>
+            <!--右键菜单-->
+            <!--右击-->
+            <input type="hidden" name="rightmsg" />
+            <button class="rightclick" (click)="rightclick()"></button>
+            <div id="rMenu" style="width:100px;position:absolute; display:none;">
+              <ul>
+                <li style="display:block" id="pcground" (click)="clickme()">
+                  <a target="_blank" style="margin-bottom:10px;font-size:14px;color:#fff;text-decoration:none;text-align:center;" [routerLink]="['/cms/groupcms/']"
+                    [queryParams]="{siteId:siteId,id:'',channelId:channelid}">
+                    添加页面</a>
+                </li>
+                <li style="display:block" id="mground" (click)="clickme()">
+                  <a target="_blank" style="margin-bottom:10px;font-size:14px;color:#fff;text-decoration:none;text-align:center;" [routerLink]="['/cms/mgroupcms/']"
+                    [queryParams]="{siteId:siteId,id:'',channelId:channelid}">
+                    添加页面</a>
+                </li>
+                <li data-toggle="modal" data-target="#exsitingpage">
+                  <a target="_blank" style="margin-bottom:10px;font-size:14px;color:#fff;text-decoration:none;text-align:center;">
+                    添加已有页面</a>
+                </li>
+              </ul>
+            </div>
+            <!---->
+          </div>
+        </div>
+        <!--tree end-->
+        <!--right-->
+        <!--频道名称链接详情-->
+        <div class="col-md-9 rightcon" *ngIf="istype!=2">
+          <span class="btn blue-hoki fileinput-button">
+            <span>批量上传TDK</span>
+            <input type="file" multiple="multiple" id="imgFile" accept=".xlsx" (change)="selectTDK($event)" />
+          </span>
+          <!-- <a class="btn blue-hoki addChildpage" (click)="addnewchild(false,'null')" style="margin-bottom:10px;" >添加页面</a> -->
+          <a target="_blank" *ngIf="siteType == 1" class="btn blue-hoki" style="margin-bottom:10px;" [routerLink]="['/cms/groupcms/']"
+            [queryParams]="{siteId:siteId,id:'',channelId:channelid}">
+            <i class="fa fa-edit"></i> 添加页面</a>
+          <a target="_blank" *ngIf="siteType == 2" class="btn blue-hoki" style="margin-bottom:10px;" [routerLink]="['/cms/mgroupcms/']"
+            [queryParams]="{siteId:siteId,id:'',channelId:channelid}">
+            <i class="fa fa-edit"></i> 添加页面</a>
+          <a class="btn blue-hoki" *ngIf="siteType !=null" style="margin-bottom:10px;" data-toggle="modal" data-target="#exsitingpage">
+            <i class="fa fa-edit"></i> 添加已有页面</a>
+          <!--green-->
+          <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>页面集合
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                <a data-original-title="" title="" (click)="reloadPage()">
+                  <i class="fa fa-refresh" style="color:#fff;position: relative;top:-2px;"></i>
+                </a>
+              </div>
+            </div>
+            <!--body-->
+            <div class="portlet-body" *ngIf="haveChild">
+              <!-- 系列的子集页面 -->
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_1" role="grid" aria-describedby="sample_1_info">
+                  <thead>
+                    <tr role="row">
+                      <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width: 50px;">
+                        英文名称
+                      </th>
+                      <th class="sorting_asc" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width: 50px;" aria-sort="ascending">
+                        中文描述
+                      </th>
+                      <!-- <th class="col-md-1">
+                              <i class="fa"></i>页面类型
+                            </th> -->
+                      <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width: 50px;">
+                        生效页面URL
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:50px;">
+                        页面状态
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:160px;">
+                        操作
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of childList;let itemi = index;">
+                      <td>
+                        {{item.fileName}}
+                      </td>
+                      <td>
+                        {{item.comm}}
+                      </td>
+                      <!--  <td>
+                              <span *ngIf="item.pageType == 1">首页</span>
+                              <span *ngIf="item.pageType == 2">系列页</span>
+                              <span *ngIf="item.pageType == 3">详情页</span>
+                              <span *ngIf="item.pageType == 4">活动页</span>
+                            </td> -->
+                      <td class="pagelink">
+                        <a href="{{item.url}}" target="_blank">{{item.url}}</a>
+                      </td>
+                      <td>
+                        <!-- <span *ngIf="item.state == 1">暂存</span> -->
+                        <span *ngIf="item.state == 2">未发布</span>
+                        <span *ngIf="item.state == 3">发布</span>
+                        <span *ngIf="item.state == 4">下线</span>
+                        <span *ngIf="item.state == 5">编辑</span>
+                      </td>
+                      <td class="pagebtn">
+                        <a target="_blank" *ngIf="item.siteType == 1" class="btn btn-xs btn-info" [routerLink]="['/cms/groupcms/']" [queryParams]="{siteId:item.siteId,id:item.id,channelId:item.channelId}">
+                          <i class="fa fa-edit"></i> 编辑</a>
+                        <a target="_blank" *ngIf="item.siteType == 2" class="btn btn-xs btn-info" [routerLink]="['/cms/mgroupcms/']" [queryParams]="{siteId:item.siteId,id:item.id,channelId:item.channelId}">
+                          <i class="fa fa-edit"></i> 编辑</a>
+                        <a href="javascript:;" class="btn blue btn-xs" (click)="copyId(item.id,item.siteId)" data-toggle="modal" data-target="#copymodel">
+                          <i class="fa fa-copy"></i> 复制</a>
+                        <a href="javascript:;" class="btn green btn-xs" (click)="removeId(item.id,item.siteId)" data-toggle="modal" data-target="#removemodel">
+                          <i class="fa fa-copy"></i> 移动</a>
+                        <!-- <span *ngIf="item.state == 1">
+                                <a href="#myModal3" data-toggle="modal" class="btn red btn-xs" (click)="delMsg(item.id)">
+                                  <i class="fa fa-trash-o"></i> 删除</a>
+                              </span> -->
+                        <span *ngIf="item.state == 2">
+                          <a href="javascript:;" (click)="publishOne(item.id,'page')" class="btn blue-madison btn-xs">
+                            <i class="fa fa-save"></i> 发布 </a>
+                          <a href="#myModal3" data-toggle="modal" class="btn red btn-xs" (click)="delMsg(item.id)">
+                            <i class="fa fa-trash-o"></i> 删除</a>
+                        </span>
+                        <span *ngIf="item.state == 3">
+                          <!-- <a href="javascript:;" (click)="publishOne(item.id,'page')" class="btn blue-madison btn-xs">
+                                  <i class="fa fa-save"></i> 发布 </a> -->
+                          <a href="javascript:;" class="btn yellow btn-xs" (click)="downUrl(item.id,'page')">
+                            <i class="fa fa-chain-broken"></i> 下线 </a>
+                        </span>
+                        <span *ngIf="item.state == 4">
+                          <a href="javascript:;" (click)="publishOne(item.id,'page')" class="btn blue-madison btn-xs">
+                            <i class="fa fa-save"></i> 发布 </a>
+                          <a href="#myModal3" data-toggle="modal" class="btn red btn-xs" (click)="delMsg(item.id)">
+                            <i class="fa fa-trash-o"></i> 删除</a>
+                        </span>
+                        <span *ngIf="item.state == 5">
+                          <a href="javascript:;" (click)="publishOne(item.id,'page')" class="btn blue-madison btn-xs">
+                            <i class="fa fa-save"></i> 发布 </a>
+                          <!-- <a href="javascript:;" class="btn yellow btn-xs" (click)="downUrl(item.id,'page')">
+                                  <i class="fa fa-chain-broken"></i> 下线 </a> -->
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--pagema-->
+              <div class="clearfix box">
+                <div id="pagination1" class="page fr"></div>
+              </div>
+              <!--pagema-->
+            </div>
+            <!--bodyend-->
+          </div>
+          <!--greenend-->
+        </div>
+        <div class="col-md-9 rightwl" *ngIf="istype==2">
+          <div class="wlinkstips">此频道为外链频道，不能添加子页面</div>
+        </div>
+        <!--right end-->
+      </div>
+      <div class="clearfix" style="background:#fff"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <tr>
+            <td>请选择</td>
+            <td>系列名称</td>
+            <td>系列编码</td>
+            <td>系列描述</td>
+          </tr>
+          <tr *ngFor="let item of serieslists">
+            <td>
+              <input type="radio" name="series" value="{{item.id}}" />
+            </td>
+            <td>{{item.name}}</td>
+            <td class="seriescode">{{item.code}}</td>
+            <td class="seriesdesc">{{item.name}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn blue" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" (click)="seriesmanage()">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="proModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body" style="height:600px;overflow:auto">
+        <form class="form-inline">
+          <div class="form-group">
+            <label>款式编码：</label>
+            <input type="text" class="form-control ksbm" placeholder="请输入款式编码" />
+          </div>
+          <div class="form-group">
+            <label>中文名称：</label>
+            <input type="text" class="form-control chinesaname" placeholder="请输入中文名称" />
+          </div>
+          <br/>
+          <div class="form-group">
+            <label>系列名称：</label>
+            <select class="form-control profl">
+              <option value="">请选择</option>
+              <option *ngFor="let item of serieslists" value="{{item.code}}">
+                {{item.name}}
+              </option>
+            </select>
+          </div>
+          <button type="submit" class="btn green-meadow btn-sm" (click)="searchimg()">查询</button>
+        </form>
+        <table class="table table-bordered">
+          <tr>
+            <td>请选择</td>
+            <td>系列名称</td>
+            <td>款式编码</td>
+            <td>商品款式中文主名称 </td>
+          </tr>
+          <tr *ngFor="let item of prolists">
+            <td>
+              <input type="radio" name="product" value="{{item.id}}" />
+            </td>
+            <td>{{item.seriesName}}
+              <input value="{{item.seriesCode}}" type="hidden" class="fkcode" />
+            </td>
+            <td class="kuanshicode">
+              <span>{{item.code}}</span>
+              <input value="{{item.pairJoin}}" type="hidden" class="double" />
+            </td>
+            <td class="seriesdesc">{{item.name}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn blue" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" (click)="productmanage()">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+<!--编辑和添加页面信息-->
+<div id="addnew_box">
+  <div class="portlet box">
+    <div class="portlet-title" style="background: #ddd;">
+      <div class="caption">页面信息</div>
+    </div>
+    <div class="portlet-body">
+      <div class="form-group" style="height:40px;line-height: 40px;">
+        <label class="col-md-2 control-label" style="text-align: right;">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">页面名称 :</font>
+          </font>
+        </label>
+        <div class="col-md-5" style="display: inline-block;">
+          <input type="text" name="newChildCn" class="form-control input-inline input-medium" placeholder="请输入页面名称">
+        </div>
+      </div>
+      <div class="form-group" style="height:40px;line-height: 40px;">
+        <label class="col-md-2 control-label" style="text-align: right;">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">英文名称 :</font>
+          </font>
+        </label>
+        <div class="col-md-5" style="display: inline-block;">
+          <input type="text" name="newChildEn" class="form-control input-inline input-medium" placeholder="请输入英文名称">
+        </div>
+        <div class="col-md-5 childpage" style="display: inline-block;">
+          <button type="button" class="btn default green-meadow" data-toggle="modal" data-target="#myModal">系列管理</button>
+          <button type="button" class="btn default green-meadow" data-toggle="modal" data-target="#proModal">商品款式</button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-info" (click)="saveChild()">
+        <font style="vertical-align: inherit;">
+          <font style="vertical-align: inherit;">保存</font>
+        </font>
+      </button>
+      <button type="button" class="btn btn-info" (click)="closechild()">
+        <font style="vertical-align: inherit;">
+          <font style="vertical-align: inherit;">取消</font>
+        </font>
+      </button>
+    </div>
+  </div>
+</div>
+<div id="myModal3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          确定要删除吗？
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button data-dismiss="modal" class="btn blue" (click)="sure()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="width: 100%;height: 100%;background: rgba(0,0,0,.6);position: fixed;top:0;left:0;overflow-y:auto" *ngIf="isTDK">
+  <div style="width: 50%;height:66%;overflow-y:auto;border-radius: 4px!important;background: #fff;position: absolute;top: 150px;left:25%;">
+    <h4 style="text-align: center;height: 30px;line-height: 30px;">{{TDKhint}}</h4>
+    <div style="text-align: center;line-height: 24px;" *ngFor="let tdk of tdklist">{{tdk}}</div>
+    <div class="clearfix" style="padding:5px 20px;">
+      <button type="button" style="margin-left: 20px;" class="btn red fr" (click)="closeTDK()">取消</button>
+      <button type="button" class="btn green-meadow fr" (click)="tdkSue()">发布</button>
+    </div>
+  </div>
+</div>
+<!--站点复制-->
+<div class="modal fade" id="copymodel" role="dialog" aria-labelledby="copymodel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">请选择所要复制的频道</h4>
+      </div>
+      <div class="modal-body">
+        <!-- <ul id="myTab" class="nav nav-tabs">
+                    <li *ngFor="let item of list;let key=index" [ngClass]="{'active':key == 0}" >
+                      <a data-toggle="tab" class="copysiteid" (click)="copysiteid(item.id)">{{item.name}}</a>
+                    </li>
+                </ul> -->
+        <div>请选择站点:
+          <select class="form-control copysiteid" (change)="copysiteid()" style="width:50%;">
+            <option *ngFor="let item of list;let key=index" value="{{item.id}}">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="sitedetail">
+          <div class="detailleft">
+            <!--tree-->
+            <input type="hidden" class="currentp" />
+            <div class="zTreeDemoBackground">
+              <ul id="treeDemo1" class="ztree"></ul>
+            </div>
+            <!--tree-->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span class="copytips" style="margin-right:20px;color:#f00;"></span>
+        <button class="btn blue copysave" (click)="copySave()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--频道移动-->
+<div class="modal fade" id="removemodel" role="dialog" aria-labelledby="removemodel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">请选择所要移动到的频道</h4>
+      </div>
+      <div class="modal-body">
+        <div>请选择站点:
+          <select class="form-control removesiteid" (change)="removesiteid()" style="width:50%;">
+            <option *ngFor="let item of list;let key=index" value="{{item.id}}">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="sitedetail">
+          <div class="detailleft">
+            <!--tree-->
+            <input type="hidden" class="removect" />
+            <div class="zTreeDemoBackground">
+              <ul id="treeDemo2" class="ztree"></ul>
+            </div>
+            <!--tree-->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span class="removepagetips" style="margin-right:20px;color:#f00;"></span>
+        <button class="btn blue copysave" (click)="removepageSave()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--已有页面-->
+<div class="modal fade" id="exsitingpage" role="dialog" aria-labelledby="removemodel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">添加已有页面</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-bordered table-hover dataTable" id="sample_1" role="grid" aria-describedby="sample_1_info">
+          <thead>
+            <tr role="row">
+              <th style="width:20%;">
+                请选择
+              </th>
+              <th style="width:40%;">
+                英文名称
+              </th>
+              <th style="width:40%;">
+                中文描述
+              </th>
+              <!--                   <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:20%;">
+                    生效页面URL
+                  </th>
+                  <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:20%;">
+                    页面状态
+                  </th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of extchildList;let itemi = index;">
+              <td>
+                <div class="md-radio">
+                  <input type="radio" id="regular{{itemi}}" name="opeType" title="{{item.id}}" class="md-radiobtn" (change)="showRegular()">
+                  <label for="regular{{itemi}}">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                  </label>
+                </div>
+              </td>
+              <td>
+                {{item.fileName}}
+              </td>
+              <td>
+                {{item.comm}}
+              </td>
+              <!-- 
+                  <td class="pagelink">
+                      <a href="{{item.url}}" target="_blank">{{item.url}}</a>
+                  </td>
+                  <td>
+                    <span *ngIf="item.state == 2">未发布</span>
+                    <span *ngIf="item.state == 3">发布</span>
+                    <span *ngIf="item.state == 4">下线</span>
+                    <span *ngIf="item.state == 5">编辑</span>
+                  </td> -->
+            </tr>
+          </tbody>
+        </table>
+        <!--pagema-->
+        <div class="clearfix box">
+          <div id="pagination2" class="page fr"></div>
+        </div>
+        <!--pagema-->
+      </div>
+      <div class="modal-footer">
+        <span class="exitpagetips" style="margin-right:20px;color:#f00;"></span>
+        <button class="btn blue copysave" (click)="addexitpage()">保存</button>
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--已有页面end-->

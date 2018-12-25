@@ -1,0 +1,9 @@
+.logo{
+    background: url(https://img.ido-love.com/pc.png) no-repeat 0 0;
+    cursor: pointer;
+    width: 96px;
+    height: 40px;
+    background-position: -332px -18px;
+    display: block;
+    margin: 0 auto;
+}

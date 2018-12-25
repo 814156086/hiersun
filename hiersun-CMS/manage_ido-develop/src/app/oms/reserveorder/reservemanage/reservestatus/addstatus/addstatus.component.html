@@ -1,0 +1,88 @@
+<div class="page-head">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-title">
+      <h1>编辑预约单状态
+        <small>Reserve Status</small>
+      </h1>
+    </div>
+    <!-- END PAGE TITLE -->
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="contenttab">
+        <form class="templatecon form-horizontal" [formGroup]="formModel" (submit)="onSubmit()">
+          <div class="form-group">
+            <label class="col-md-2 control-label">
+              <span style="color:red;">*</span>状态名称：</label>
+            <div class="col-md-8">
+              <input class="form-control" [class.hasError]="formModel.get('name').invalid && formModel.get('name').touched"
+                type="text" formControlName="name" name="name" [(ngModel)]="name" placeholder="请输入状态名称">
+              <div [hidden]="formModel.get('name').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['name'])">
+                  状态名称必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">
+              <span style="color:red;">*</span>其它渠道状态名称：</label>
+            <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('nameone').invalid && formModel.get('nameone').touched"
+                type="text" formControlName="nameone" name="nameone" [(ngModel)]="nameone" placeholder="请输入其他渠道状态名称">
+              <div [hidden]="formModel.get('nameone').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['nameone'])">
+                    其它渠道状态名称必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">
+              <span style="color:red;">*</span>状态描述：</label>
+            <div class="col-md-8">
+              <input class="form-control" [class.hasError]="formModel.get('describing').invalid && formModel.get('describing').touched"
+                type="text" formControlName="describing" name="describing" [(ngModel)]="describing" placeholder="请输入状态描述">
+              <div [hidden]="formModel.get('describing').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['describing'])">
+                  状态描述必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">
+              <span style="color:red;">*</span>状态序号：</label>
+            <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('sequence').invalid && formModel.get('sequence').touched"
+                type="text" formControlName="sequence" name="sequence" [(ngModel)]="sequence" placeholder="请输入状态序号">
+              <div [hidden]="formModel.get('sequence').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['sequence'])">
+                  状态序号必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">
+              <button type="submit" class="btn purple" id="save" [disabled]="formModel.invalid">保存</button>
+              <button type="reset" class="btn blue-hoki">重置</button>
+              <button type="button" class="btn default" (click)="goback()">返回</button>
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="spinner" *ngIf="isload">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+  <div id="hint" *ngIf="isHint">
+    <div class="hintMsg">
+      <i *ngIf="warning" class="warningMsg"></i>
+      <i *ngIf="!warning" class="ok"></i>
+      <span>{{hintMsg}}</span>
+    </div>
+  </div>

@@ -1,0 +1,307 @@
+<div class="page-head">
+  <div class="page-title">
+    <h1>
+      职位信息
+      <small>Position The Information</small>
+    </h1>
+  </div>
+</div>
+<div class="portlet-body col-md-12" style="background:white;padding-left: 0px;">
+  <div class="col-md-3" style="padding-left:11px;">
+    <div class="portlet box blue-hoki" style="overflow:hidden;">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-globe"></i>部门信息
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+        </div>
+      </div>
+      <div class="portlet-body msg_box">
+        <div class="pleftTree">
+          <input type="hidden" name="mymsg1" />
+          <input type="hidden" name="deptmymsg1" />
+          <button class="myclick1" (click)="myclick1()"></button>
+          <button class="deptmyclick1" (click)="deptmyclick1()"></button>
+          <div class="zTreeDemoBackground">
+            <ul id="ztree" class="ztree"></ul>
+          </div>
+          <!--右键菜单-->
+          <div id="deptMenu" style="position:absolute; display:none;">
+            <ul class="clearfix">
+              <li (click)="useduty()">
+                <font style="vertical-align: inherit;">默认模板</font>
+              </li>
+              <!-- <li (click)="dutyup()" id="edit-chanel">
+                    <font style="vertical-align: inherit;">自定义</font>
+                  </li> -->
+              <li (click)="addduty()">
+                <font style="vertical-align: inherit;">添加职位</font>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="portlet box blue-hoki" style="overflow:hidden;">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-globe"></i>相关职位信息
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+          <a data-original-title="" title="" (click)="reloadPage()">
+            <i class="fa fa-refresh" style="color:#fff;position: relative;top:-2px;"></i>
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body msg_box">
+        <!-- <div *ngIf="showlist">
+          当前部门暂无相关职位
+        </div> -->
+        <div class="pleftTree">
+          <!-- 拖拽 -->
+            <input type="hidden" name="movetype" />
+            <input type="hidden" name="movepageid" />
+            <input type="hidden" name="movepagepid" />
+            <input type="hidden" name="mypageid" />
+          <!-- 点击 -->
+          <input type="hidden" name="mymsg2" />
+          <input type="hidden" name="dutymymsg2"/>
+          <button class="moveclick" (click)="moveclick()"></button>
+          <button class="myclick2" (click)="myclick2()"></button>
+          <button class="dutymyclick2" (click)="dutymyclick2()"></button>
+          <div class="zTreeDemoBackground">
+            <ul id="rztree" class="ztree"></ul>
+          </div>
+          <div id="dutyMenu" style="position:absolute; display:none;">
+            <ul class="clearfix">
+              <li (click)="addduty2()">
+                <font style="vertical-align: inherit;">添加职位</font>
+              </li>
+              <li (click)="enable()" *ngIf="!editenabled">
+                <font style="vertical-align: inherit;">启用</font>
+              </li>
+              <li (click)="disable()" id="edit-chanel" *ngIf="editenabled">
+                <font style="vertical-align: inherit;">禁用</font>
+              </li>
+              <li (click)="editduty()" data-toggle="modal" data-target="#editduty">
+                <font style="vertical-align: inherit;">修改职位</font>
+              </li>
+              <li (click)="delduty()" *ngIf="noDelete && !editenabled">
+                <font style="vertical-align: inherit;">删除职位</font>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 默认加载图标 -->
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<!--操作弹框 end-->
+
+<!-- 添加职位弹框 -->
+<div class="modal fade" id="addduty" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">添加职位</h4>
+      </div>
+        <div class="col-md-12">
+          <div class="form-group col-md-12">
+            <label class="col-md-2 control-label" style="text-align:right;">
+              <font style="vertical-align: inherit;">
+                <span style="color: red;">*</span>
+                名称:
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input class="form-control" placeholder="请输入职位名称" id="addname" type="text">
+            </div>
+
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2 control-label" style="text-align:right;">
+              描述:
+            </label>
+            <div class="col-md-10">
+              <input class="form-control" placeholder="请输入相关描述" id="addcomm" type="text">
+            </div>
+
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2 control-label" style="text-align:right;">
+              <font style="vertical-align: inherit;">
+                <span style="color: red;">*</span>
+                状态:
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input type="radio" name="enabled" checked value="true" />启用
+              <input type="radio" name="enabled" style="margin-left:15px;" value="false" />禁用
+            </div>
+
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" (click)="adddutysure()">确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+<!-- 添加职位弹框 end-->
+<!-- 添加职位弹框 -->
+<div class="modal fade" id="addduty2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">添加职位</h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12">
+          <div class="form-group col-md-12">
+            <label class="col-md-2 control-label" style="text-align:right;">
+              <font style="vertical-align: inherit;">
+                <span style="color: red;">*</span>
+                名称:
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input class="form-control" placeholder="请输入职位名称" id="addname2" type="text">
+            </div>
+
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2 control-label" style="text-align:right;">
+              描述:
+            </label>
+            <div class="col-md-10">
+              <input class="form-control" placeholder="请输入相关描述" id="addcomm2" type="text">
+            </div>
+
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2 control-label" style="text-align:right;">
+              <font style="vertical-align: inherit;">
+                <span style="color: red;">*</span>
+                状态:
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input type="radio" name="enabled2" checked value="true" />启用
+              <input type="radio" name="enabled2" style="margin-left:15px;" value="false" />禁用
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" (click)="addsure()">确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+<!-- 添加职位弹框 end-->
+
+<!-- 修改职位弹框 -->
+<div class="modal fade" id="editduty" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="">修改职位</h4>
+      </div>
+        <div class="col-md-12" *ngFor="let item of deptList">
+          <div class="form-group col-md-12">
+            <label class="col-md-2 control-label" style="text-align:right;">
+              <font style="vertical-align: inherit;">
+                <span style="color: red;">*</span>
+                编号:
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input class="form-control" readonly id="ekey" type="text" value="{{item.key}}" />
+            </div>
+
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2 control-label" style="text-align:right;">
+              <font style="vertical-align: inherit;">
+                <span style="color: red;">*</span>
+                名称:
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input class="form-control" id="ename" type="text" value="{{item.name}}" />
+            </div>
+
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2 control-label" style="text-align:right;">
+              描述:
+            </label>
+            <div class="col-md-10">
+              <input class="form-control" id="ecomm" type="text" value="{{item.comm}}">
+            </div>
+
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2 control-label" style="text-align:right;">
+              <font style="vertical-align: inherit;">
+                <span style="color: red;">*</span>
+                状态:
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input type="radio" *ngIf="item.enabled" checked name="eenabled" value="true" />
+              <input type="radio" *ngIf="!item.enabled" name="eenabled" value="true" />
+              启用
+              <input type="radio" *ngIf="!item.enabled" checked name="eenabled" style="margin-left:15px;" value="false" />
+              <input type="radio" *ngIf="item.enabled" name="eenabled" style="margin-left:15px;" value="false" />
+              禁用
+            </div>
+
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" (click)="editsure()">确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+<!-- 修改职位弹框 end-->
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+
+<div class="modal fade" id="operation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">操作</h4>
+          </div>
+          <div class="modal-body">
+            {{operation}}
+                <ul *ngIf="operationtype==1" id="showztree" class="ztree"></ul>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-primary" (click)="operationSure()">确认</button>
+          </div>
+      </div>
+  </div>
+</div>

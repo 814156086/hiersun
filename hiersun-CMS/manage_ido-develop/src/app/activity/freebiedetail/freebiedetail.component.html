@@ -1,0 +1,77 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>赠品信息
+      <small>Freebie Message</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal">
+        <div class="form-group">
+          <label class="col-md-2 control-label">ID：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" name="sid" value="{{sid}}" disabled/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">活动规则编号：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" name="activityRuleSid" value="{{activityRuleSid}}" disabled>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">SKU编码：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" name="skuCode" value="{{skuCode}}" disabled>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">SKU名称：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" name="skuName" value="{{skuName}}" disabled >
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">创建时间：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" name="createTime" value="{{createTime | date:'yyyy-MM-dd HH:mm:ss'}}" disabled>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">更新时间：
+          </label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" name="updateTime" value="{{updateTime | date:'yyyy-MM-dd HH:mm:ss'}}" disabled>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label"></label>
+          <div class="col-md-8">
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

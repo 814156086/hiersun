@@ -1,0 +1,9 @@
+#promote label{
+    text-align: right;
+}
+.active{
+    background: #ccc!important;
+}
+td,th{
+    text-align: center;
+}

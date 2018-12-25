@@ -1,0 +1,16 @@
+a {
+    text-decoration: none;
+  }
+  
+  th,
+  td {
+    text-align: center;
+  }
+  
+  td {
+    white-space: nowrap;
+  }
+  .note{
+    margin: 0;
+    padding: 5px 30px 5px 15px;
+  }  

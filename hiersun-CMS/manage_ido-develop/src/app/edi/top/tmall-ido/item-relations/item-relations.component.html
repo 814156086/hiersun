@@ -1,0 +1,194 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>天猫商品关联关系管理
+        <small>Item Relations</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <div class="choosesx">
+            <form class="form-inline" role="form">
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <label for="item-relation-condition-top-item-id" class="control-label col-md-3">天猫ID :</label>
+                <div class='col-md-8'>
+                  <input id="item-relation-condition-top-item-id" class='topItemId form-control' style='width: 100%'
+                         type="text" placeholder="请输入天猫ID">
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <label for="item-relation-condition-item-code" class="control-label col-md-3">商家编码 :</label>
+                <div class='col-md-8'>
+                  <input id="item-relation-condition-item-code" class='itemCode form-control' style='width: 100%'
+                         type="text" placeholder="请输入商家编码">
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <label for="item-relation-condition-top-name-query" class="control-label col-md-3">商品名称 :</label>
+                <div class='col-md-8'>
+                  <input id="item-relation-condition-top-name-query" class='topItemNameQuery form-control'
+                         style='width: 100%' type="text" placeholder="请输入商品名称">
+                </div>
+              </div>
+              <div class="btn_container col-md-6" style="text-align: left;margin-bottom: 15px">
+                <button type="button" style='margin-left:15px' class="btnstyle btn default"
+                        (click)='correlation()'>手动关联
+                  <i class="fa fa-link"></i>
+                </button>
+                <button type="button" style='margin-left:15px' class="btnstyle btn default"
+                        (click)='autoCorrelation()'>自动关联
+                  <i class="fa fa-link"></i>
+                </button>
+              </div>
+              <div class="btn_container col-md-6" style="text-align: left;margin-bottom: 15px">
+                <button id="btnSearch" style='margin-left:15px' type="button" class="btnstyle btn default"
+                        (click)="reloadGrid()">查询
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnReset" type="button" class="btnstyle btn default" (click)="clearCondition()">清空
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div style="clear:both;height:10px;"></div>
+          <div class="portlet box blue-hoki" style="margin-top: 15px;">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>天猫商品关联
+              </div>
+              <div class="tools">
+                <a href="javascript:" class="collapse" data-original-title="" title=""></a>
+                <a data-original-title="" title="" (click)="reloadGrid()">
+                  <i class="fa fa-refresh" style="color:#fff;position: relative;top:-2px;"></i>
+                </a>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="table-scrollable">
+                <table style="border-bottom:none"
+                       class="table text-center table-striped table-bordered table-hover dataTable no-footer" id="item-types"
+                       role="grid" aria-describedby="item-types_info">
+                  <thead>
+                  <tr role="row">
+                    <th class="col-md-2" aria-controls="item-types">天猫ID</th>
+                    <th class="col-md-1" aria-controls="item-types">中台商家编码</th>
+                    <th class="col-md-1" aria-controls="item-types">商品类型</th>
+                    <th class="col-md-3" aria-controls="item-types">天猫商品名称</th>
+                    <th class="col-md-2" aria-controls="item-types">天猫SKU编码</th>
+                    <th class="col-md-2" aria-controls="item-types">中台SKU编码</th>
+                    <th class="col-md-2" aria-controls="item-types">操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr role="row" class="odd" *ngFor="let item of pageContent()">
+                    <td *ngIf="!item.topUrl">{{item.topItemId}}</td>
+                    <td *ngIf="item.topUrl"><!--suppress HtmlUnknownTarget -->
+                      <a href="{{item.topUrl}}" target="_blank">{{item.topItemId}}</a></td>
+                    <td>{{item.itemCode}}</td>
+                    <td *ngIf="item.itemType" >{{itemTypeMap.get(item.itemType)}}</td>
+                    <td *ngIf="!item.itemType" >未知</td>
+                    <td>{{item.topItemName}}</td>
+                    <td>{{item.topSkuId}}</td>
+                    <td>{{item.skuCode}}</td>
+                    <td>
+                      <a class="btn red btn-xs btn-info" data-toggle="modal" (click)="release(item)">
+                        <i class="fa fa-unlink"></i> 解除关联
+                      </a>
+                    </td>
+                  </tr>
+                  <tr *ngIf='noData'>
+                    <td colspan="11" style="text-align:center;padding:10px;">暂时还没有数据~</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="clearfix">
+                <div id="item-relation-pagination" class="page"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spinner" *ngIf="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>
+<!--手动关联-->
+<div id="correlation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bindshop" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;">×</span>
+          </span>
+        </button>
+        <h4 class="modal-title">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;">手动关联</span>
+          </span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="ffSearch">
+          <div class="row margin-search height-30">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label col-md-3">天猫商品ID：</label>
+                <div class="col-md-7">
+                  <input class='form-control' id="item-relation-manual-id" style='width: 100%' type="text"
+                         placeholder="请输入商品ID">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a class="desc"></a>
+        <button class="btn blue delsure" (click)="manualCorrelation()">确认</button>
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--解除关联-->
+<div id="removerelation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bindshop" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;">×</span>
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>是否确认解除关联</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button data-dismiss="modal" class="btn blue delsure" (click)="releaseRelation()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>

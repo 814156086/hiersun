@@ -1,0 +1,976 @@
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+  <!-- BEGIN SIDEBAR -->
+  <div class="page-sidebar-wrapper">
+    <div class="page-sidebar navbar-collapse collapse">
+      <!-- BEGIN SIDEBAR MENU -->
+      <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+        <li class="start" id="onetab">
+          <a href="javascript:">
+            <i class="icon-basket"></i>
+            <span class="title">CMS</span>
+            <span class="arrow "></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a routerLink="/cms/cmsmanage">
+                <i class="fa fa-sitemap"></i>
+                站点管理</a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa fa-cubes"></i>
+                资源管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu mytab">
+                <li>
+                  <a routerLink="/cms/imggallery">
+                    <i class="fa fa-file-picture-o"></i>
+                    图片管理</a>
+                </li>
+                <li>
+                  <a routerLink="/cms/videomanage">
+                    <i class="fa  fa-file-movie-o"></i> 视频管理</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a routerLink="">
+                <i class="fa fa-sliders"></i>
+                模板管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu mytab">
+                <li>
+                  <a routerLink="/cms/pagetemplate">
+                    <i class="fa fa-file-picture-o"></i>
+                    页面模板</a>
+                </li>
+                <li>
+                  <a routerLink="/cms/fragmenttmp">
+                    <i class="fa  fa-file-movie-o"></i> 片段模板</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a routerLink="/cms/channelmanage">
+                <i class="fa fa-exchange"></i>
+                频道管理</a>
+            </li>
+            <li>
+              <a routerLink="/cms/pagemanage">
+                <i class="icon-docs"></i>
+                页面管理</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="javascript:">
+            <i class="icon-home"></i>
+            <span class="title">文章管理</span>
+            <span class="selected"></span>
+            <span class="arrow open"></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a routerLink="/article/classify">
+                <i class="fa icon-docs"></i>
+                文章管理</a>
+            </li>
+
+            <li>
+              <a routerLink="/article/statistics">
+                <i class="fa fa-comments"></i>
+                评论管理</a>
+            </li>
+            <li>
+              <a routerLink="/article/sensitive">
+                <i class="fa fa-sitemap"></i>
+                敏感字管理</a>
+            </li>
+            <li>
+              <a routerLink="/article/swiperadmin">
+                <i class="fa fa-sitemap"></i>
+                轮播图管理</a>
+            </li>
+            <li>
+              <a routerLink="/article/arttag">
+                <i class="fa fa-sitemap"></i>
+                标签管理</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a routerLink="/activity">
+            <i class="icon-home"></i>
+            <span class="title">活动管理</span>
+            <span class="selected"></span>
+            <span class="arrow open"></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a routerLink="/activity/activity">
+                <i class="fa fa-sitemap"></i>
+                活动管理</a>
+            </li>
+            <li>
+              <a routerLink="/activity/label">
+                <i class="fa fa-sitemap"></i>
+                活动标签</a>
+            </li>
+            <li>
+              <a routerLink="/activity/freebie">
+                <i class="fa fa-sitemap"></i>
+                活动赠品</a>
+            </li>
+            <li>
+              <a routerLink="/activity/rule">
+                <i class="fa fa-sitemap"></i>
+                活动规则</a>
+            </li>
+            <li>
+              <a routerLink="/activity/scope">
+                <i class="fa fa-sitemap"></i>
+                活动范围</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="javascript:">
+            <i class="icon-home"></i>
+            <span class="title">权限管理</span>
+            <span class="selected"></span>
+            <span class="arrow open"></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a routerLink="/auth/group">
+                <i class="fa fa-group"></i>
+                分组管理
+              </a>
+            </li>
+            <li>
+              <a routerLink="/auth/duty">
+                <i class="fa icon-users"></i>
+                职位管理
+              </a>
+            </li>
+            <li>
+              <a routerLink="/auth/role">
+                <i class="fa icon-user"></i>
+                角色管理
+              </a>
+            </li>
+            <li>
+              <a routerLink="/auth/app">
+                <i class="fa fa-linux"></i>
+                系统管理
+              </a>
+            </li>
+            <li>
+              <a routerLink="/auth/dept">
+                <i class="fa fa-sitemap"></i>
+                部门管理
+              </a>
+            </li>
+            <li>
+              <a routerLink="/auth/user">
+                <i class="icon-user-follow"></i>
+                用户管理
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- begin commodity -->
+        <li class="start">
+          <a routerLink="/pcm">
+            <i class="icon-diamond"></i>
+            <span class="title">商品管理</span>
+            <span class="arrow "></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a href="javascript:">
+                <i class="icon-settings"></i> 组织结构管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/pcm/organization">
+                    <i class="icon-camera"></i> 组织管理</a>
+                </li>
+                <!--                <li>
+                                 <a routerLink="/pcm/company">
+                                   <i class="icon-camera"></i> 公司管理</a>
+                               </li> -->
+                <li>
+                  <a routerLink="/pcm/store">
+                    <i class="icon-link"></i> 门店管理</a>
+                </li>
+                <li>
+                  <a routerLink="/pcm/channel">
+                    <i class="icon-pointer"></i> 销售渠道管理</a>
+                </li>
+                <li>
+                  <a routerLink="/pcm/region">
+                    <i class="icon-pointer"></i> 行政区域管理</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">
+                <i class="icon-globe"></i> 品牌信息管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/pcm/brand">
+                    <i class="icon-tag"></i> 品牌管理</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">
+                <i class="icon-diamond"></i> 分类属性管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/pcm/attribute">
+                    <i class="icon-puzzle"></i>属性管理</a>
+                </li>
+                <li>
+                  <a routerLink="/pcm/commodityCategory">
+                    <i class="icon-puzzle"></i>产品分类管理</a>
+                </li>
+                <li>
+                  <a routerLink="/pcm/dispcategory">
+                    <i class="icon-puzzle"></i>展示分类管理</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">
+                <i class="icon-globe"></i> 商品信息管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/pcm/product">
+                    <i class="icon-puzzle"></i>产品管理</a>
+                </li>
+                <li>
+                  <a routerLink="/pcm/skumanage">
+                    <i class="icon-puzzle"></i>商品管理</a>
+                </li>
+                <li>
+                  <a routerLink="/pcm/commodity">
+                    <i class="icon-puzzle"></i>条码管理</a>
+                </li>
+                <!--<li>
+                  <a routerLink="/pcm/tag">
+                    <i class="icon-tag"></i>促销活动标签管理</a>
+                </li>-->
+              </ul>
+            </li>
+            <li>
+              <a href="#">
+                <i class="icon-globe"></i> 库存信息管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/pcm/stock">
+                    <i class="icon-puzzle"></i>库存管理</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <!-- <a href="#">
+              <i class="icon-globe"></i>商品精包装
+              <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+              <li>
+                <a routerLink="/pcm/commodity/commoditydesc">
+                  <i class="icon-puzzle"></i> UEditor Demo</a>
+              </li>
+            </ul> -->
+            </li>
+            <!-- <li>
+              <a routerLink="/shopcode/codemanage">
+                <i class="icon-bar-chart"></i>
+                其他 </a>
+            </li> -->
+          </ul>
+        </li>
+        <!-- end commodity -->
+        <!-- start oms -->
+        <li class="start">
+          <a routerLink="/oms">
+            <i class="icon-book-open"></i>
+            <span class="title">销售管理</span>
+            <span class="arrow "></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a href="javascript:;">
+                <i class="icon-folder"></i> 销售信息查询
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/oms/order/1">
+                    <i class="icon-docs"></i> 线上订单查询</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/salesorder/1">
+                    <i class="icon-layers"></i> 门店订单查询</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/returnrequest/1">
+                    <i class="icon-layers"></i> 退货申请单查询</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/returnorder/1">
+                    <i class="icon-layers"></i> 退货单查询</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/abnormalorder">
+                    <i class="icon-layers"></i> 异常订单查询</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/package">
+                    <i class="icon-layers"></i> 包裹单信息</a>
+                </li>
+
+              </ul>
+            </li>
+
+            <li>
+              <a href="javascript:">
+                <i class="icon-folder"></i> 预约单管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/oms/reserveactive" [queryParams]="{role:'sale'}">
+                    <i class="icon-layers"></i> 预约单赠品管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/reservelist" [queryParams]="{role:'sale'}">
+                    <i class="icon-layers"></i> 预约单列表</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/salelist">
+                    <i class="icon-layers"></i> 预约单关联销售单</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <!-- end oms -->
+        <!--  -->
+        <!--<li>
+          <a href="javascript:">
+            <i class="icon-folder"></i> 预约单管理页面
+            <span class="arrow"></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a routerLink="/oms/reservestatus">
+                <i class="icon-layers"></i> 预约单状态管理</a>
+            </li>
+            <li>
+              <a routerLink="/oms/reserveactive">
+                <i class="icon-layers"></i> 预约单赠品管理</a>
+            </li>
+            <li>
+              <a routerLink="/oms/reservelist">
+                <i class="icon-layers"></i> 预约单列表</a>
+            </li>
+            <li>
+              <a routerLink="/oms/kefureservemanage">
+                <i class="icon-layers"></i> 客服预约单管理</a>
+            </li>
+            <li>
+              <a routerLink="/oms/kefureservelist">
+                <i class="icon-layers"></i> 未处理预约单</a>
+            </li>
+            <li>
+              <a routerLink="/oms/reclaimreserveirder">
+                <i class="icon-layers"></i> 预约单回收站</a>
+            </li>
+            <li>
+              <a routerLink="/oms/recoveryreservelist">
+                <i class="icon-layers"></i> 预约单回收功能</a>
+            </li>
+            <li>
+              <a routerLink="/oms/reserveordersrore">
+                <i class="icon-layers"></i> 预约评分管理</a>
+            </li>
+            <li>
+              <a routerLink="/oms/salelist">
+                <i class="icon-layers"></i> 预约单关联销售单</a>
+            </li>
+          </ul>
+        </li>-->
+        <!--</li>-->
+        <!--门店签到strart-->
+        <li class="start">
+          <a routerLink="/oms/verify">
+            <i class="icon-briefcase"></i>
+            <span class="title">门店签到</span>
+            <span class="arrow "></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a routerLink="/oms/storeaccount">
+                <i class="fa fa-asterisk"></i>
+                门店账号管理</a>
+            </li>
+            <li>
+              <a routerLink="/oms/verify">
+                <i class="fa fa-asterisk"></i>
+                门店签到验证</a>
+            </li>
+            <li>
+              <a routerLink="/oms/reserve">
+                <i class="fa fa-asterisk"></i>
+                预约单管理</a>
+            </li>
+            <li>
+              <a routerLink="/oms/score">
+                <i class="fa fa-asterisk"></i>
+                门店预约评分管理</a>
+            </li>
+          </ul>
+        </li>
+        <!--门店签到 end-->
+        <!-- start  客服-->
+        <li class="start">
+          <a routerLink="/oms">
+            <i class="icon-book-open"></i>
+            <span class="title">客服管理</span>
+            <span class="arrow "></span>
+          </a>
+          <ul class="sub-menu">
+
+            <li>
+              <a href="javascript:">
+                <i class="icon-folder"></i> 销售管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/oms/order/2">
+                    <i class="icon-layers"></i> 线上订单管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/salesorder/2">
+                    <i class="icon-layers"></i> 门店订单管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/pricelist">
+                    <i class="icon-layers"></i> 定做单管理</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:">
+                <i class="icon-folder"></i> 退货/退款管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/oms/returnrefunds">
+                    <i class="icon-layers"></i> 退货/退款信息管理</a>
+                </li>
+                <!-- <li>
+                  <a routerLink="/oms/shipreturn/2">
+                    <i class="icon-layers"></i> 发货前退货信息管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/rejectedreturn/2">
+                    <i class="icon-layers"></i> 拒收退货信息管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/signedreturn/2">
+                    <i class="icon-layers"></i> 已签收退货信息管理</a>
+                </li> -->
+                <li>
+                  <a routerLink="/oms/returnrequest/2">
+                    <i class="icon-layers"></i> 退货申请单信息管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/returnorder/2">
+                    <i class="icon-layers"></i> 退货单信息管理</a>
+                </li>
+                <!-- <li>
+                  <a routerLink="/oms/shipreturn/3">
+                    <i class="icon-layers"></i> 京东发货前退货信息管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/signedreturn/3">
+                    <i class="icon-layers"></i> 京东已签收退货信息管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/rejectedreturn/3">
+                    <i class="icon-layers"></i> 京东拒收退货信息管理</a>
+                </li> -->
+                <li>
+                  <a routerLink="/oms/returnagio">
+                    <i class="icon-layers"></i> 退差价管理</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:">
+                <i class="icon-folder"></i> 运营管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+
+                <li>
+                  <a routerLink="/oms/gift">
+                    <i class="icon-layers"></i> 补寄管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/operations">
+                    <i class="icon-layers"></i> 运营管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/customer">
+                    <i class="icon-layers"></i> 待办管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/customered">
+                    <i class="icon-layers"></i> 已办管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/bpayment_notice">
+                    <i class="icon-layers"></i> 尾款通知单管理</a>
+                </li>
+                <!-- <li>
+                  <a routerLink="/oms/maintenance">
+                    <i class="icon-layers"></i> 返厂保养单</a>
+                </li> -->
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:">
+                <i class="icon-folder"></i> 预约单管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/custom/customlist">
+                    <i class="fa fa-users"></i>
+                    客服组管理</a>
+                </li>
+                <li>
+                  <a routerLink="/custom/customergroup">
+                    <i class="fa fa-users"></i>
+                    客服组管理</a>
+                </li>
+                <li>
+                  <a routerLink="/custom/customidmanage">
+                    <i class="fa fa-users"></i>
+                    客服账号管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/reserveactive" [queryParams]="{role:'kefu'}">
+                    <i class="icon-layers"></i> 预约单赠品管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/reservelist" [queryParams]="{role:'kefu'}">
+                    <i class="icon-layers"></i> 预约单列表</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/kefureservemanage">
+                    <i class="icon-layers"></i> 客服预约单管理</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/kefureservelist">
+                    <i class="icon-layers"></i> 未处理预约单</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/reclaimreserveirder">
+                    <i class="icon-layers"></i> 预约单回收站</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/recoveryreservelist">
+                    <i class="icon-layers"></i> 预约单回收功能</a>
+                </li>
+                <li>
+                  <a routerLink="/oms/reserveordersrore">
+                    <i class="icon-layers"></i> 预约评分管理</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <!-- end 客服 -->
+        <!-- start  财务-->
+        <li class="start">
+          <a routerLink="/oms">
+            <i class="icon-book-open"></i>
+            <span class="title">财务管理</span>
+            <span class="arrow "></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a href="javascript:">
+                <i class="icon-folder"></i> 退款管理页面
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/oms/refundmoney">
+                    <i class="icon-layers"></i> 退款信息管理</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:">
+                <i class="icon-folder"></i> 财务报表管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a href="/pay/financial/financialstatement">
+                    <i class="icon-layers"></i> 财务明细</a>
+                </li>
+                <li>
+                  <a href="/pay/financial/settlement">
+                    <i class="icon-layers"></i> 日结算明细</a>
+                </li>
+                <li>
+                  <a href="/pay/financial/monthly">
+                    <i class="icon-layers"></i> 月报表明细</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <!-- end 财务 -->
+        <!-- start  工作流-->
+        <li class="start">
+          <a routerLink="/oms">
+            <i class="icon-book-open"></i>
+            <span class="title">工作流管理</span>
+            <span class="arrow "></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a routerLink="/oms/activiti_editor">
+                <i class="icon-layers"></i> 流程管理</a>
+            </li>
+            <li>
+              <a routerLink="/oms/act-biz-model">
+                <i class="icon-layers"></i> 业务管理</a>
+            </li>
+          </ul>
+        </li>
+        <!-- end 工作流 -->
+        <!-- start tms -->
+        <li class="start">
+          <a routerLink="/tms">
+            <i class="icon-book-open"></i>
+            <span class="title">仓储物流</span>
+            <span class="arrow "></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a href="javascript:">
+                <i class="icon-folder"></i> 基础信息
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/tms/storage">
+                    <i class="icon-docs"></i> 仓库管理</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/location">
+                    <i class="icon-docs"></i> 库位管理</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/logisticsCompany">
+                    <i class="icon-docs"></i> 承运商管理</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/faretemplate">
+                    <i class="icon-docs"></i> 运费模板</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/wavetemplate">
+                    <i class="icon-docs"></i> 波次模板</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:;">
+                <i class="icon-folder"></i> 发货管理
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                 <li>
+                  <a routerLink="/tms/saleship/1">
+                    <i class="icon-docs"></i> 销售单查询</a>
+                </li>
+                <!--<li>
+                  <a routerLink="/tms/saleship/2">
+                    <i class="icon-docs"></i> 待发货查询</a>
+                </li>-->
+                <li>
+                  <a routerLink="/tms/shipsale">
+                    <i class="icon-docs"></i> 拣货单管理</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/wavalist">
+                    <i class="icon-docs"></i> 波次单管理</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/orderreview">
+                    <i class="icon-docs"></i> 订单复核</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/deliveryreceitp">
+                    <i class="icon-docs"></i> 交接单管理</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/interceptor">
+                    <i class="icon-docs"></i> 拦截单管理</a>
+                </li>
+              </ul>
+            </li>
+            <!--  -->
+            <li>
+              <a href="javascript:;">
+                <i class="icon-folder"></i>仓库作业
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a routerLink="/tms/instorage">
+                    <i class="icon-docs"></i> 入库管理</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/allocate">
+                    <i class="icon-docs"></i> 调拨管理</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/prodslist">
+                    <i class="icon-docs"></i> 商品信息</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/prodstock">
+                    <i class="icon-docs"></i> 商品库存</a>
+                </li>
+                <li>
+                  <a routerLink="/tms/checklist">
+                    <i class="icon-docs"></i> 盘点管理</a>
+                </li>
+              </ul>
+            </li>
+            <!---->
+          </ul>
+        </li>
+        <!-- end tms -->
+        <li class="code_container">
+          <a href='#'>
+            <i class="fa fa-institution"></i>
+            <span class="title"> 门店管理</span>
+            <span class="arrow "></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a routerLink="/oms/storeaccount">
+                <i class="fa fa-file-o"></i>
+                门店账号管理
+              </a>
+            </li>
+            <li>
+              <a routerLink="/shopcode/codemanage">
+                <i class="fa fa-file-o"></i>
+                线下门店二维码管理
+              </a>
+            </li>
+            <li>
+              <a routerLink="/shopcode/shopdemand">
+                <i class="fa fa-file-o"></i>
+                门店绑定查询
+              </a>
+            </li>
+            <!--<li>
+              <a routerLink="/shopcode/ditchqrcode">
+                <i class="fa fa-file-o"></i>
+                渠道活动二维码查询
+              </a>
+            </li>-->
+            <li>
+              <a routerLink="/shopcode/ditchmanage">
+                <i class="fa fa-file-o"></i>
+                会员渠道管理
+              </a>
+            </li>
+            <li>
+              <a routerLink="/shopcode/infomanage">
+                <i class="fa fa-file-o"></i>
+                会员信息查询
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- end oms -->
+        <!--基本配置-->
+        <li class="start">
+          <a routerLink="/pay">
+            <i class="icon-briefcase"></i>
+            <span class="title">支付</span>
+            <span class="arrow "></span>
+          </a>
+          <ul class="sub-menu">
+            <!-- <li>
+              <a routerLink="/pay/paytype">
+                <i class="fa fa-asterisk"></i>
+                支付类型</a>
+            </li> -->
+            <li>
+              <a routerLink="/pay/paymedium">
+                <i class="fa fa-sliders"></i>
+                支付介质</a>
+            </li>
+            <li>
+              <a routerLink="/pay/businessinfo">
+                <i class="fa fa-cube"></i>
+                商户信息</a>
+            </li>
+            <li>
+              <a routerLink="/pay/paymethod">
+                <i class="fa fa-file-sound-o"></i>
+                支付渠道</a>
+            </li>
+            <li>
+              <a routerLink="/pay/businessmsg">
+                <i class="fa fa-file-sound-o"></i>
+                商户通知</a>
+            </li>
+            <li>
+              <a routerLink="/pay/paymanage">
+                <i class="fa fa-barcode"></i>
+                支付订单</a>
+            </li>
+            <!-- <li>
+              <a routerLink="/pay/transactionmsg">
+                <i class="fa fa-legal"></i>
+                交易信息</a>
+            </li> -->
+            <li>
+              <a routerLink="/pay/refundorder">
+                <i class="fa fa-file-powerpoint-o"></i>
+                退款订单</a>
+            </li>
+            <!-- <li>
+              <a routerLink="/pay/refundmsg">
+                <i class="fa fa-exclamation"></i>
+                退款信息</a>
+            </li> -->
+            <li>
+              <a href="#">
+                <i class="fa fa-circle-o-notch"></i>
+                第三方回调日志
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu mytab">
+                <li>
+                  <a routerLink="/pay/alipay">
+                    <i class="fa fa-android"></i>
+                    支付宝</a>
+                </li>
+                <li>
+                  <a routerLink="/pay/wechat">
+                    <i class="fa fa-wechat"></i>
+                    微信支付</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <!--基本配置end-->
+        <!-- edi -->
+        <li class="start">
+          <a href="javascript:">
+            <i class="icon-link"></i>
+            <span class="title">EDI</span>
+            <span class="arrow "></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a href="javascript:">
+                <i class="icon-bag"></i>
+                <span class="title">淘宝天猫平台管理</span>
+                <span class="arrow"></span>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a href="javascript:">
+                    <i class="icon-folder"></i>天猫IDO旗舰店管理
+                    <span class="arrow"></span>
+                  </a>
+                  <ul class="sub-menu">
+                    <li>
+                      <a routerLink="/edi/top/tmall-ido/store-item-code-types">
+                        <i class="icon-docs"></i>商品类型管理</a>
+                    </li>
+                    <li>
+                      <a routerLink="/edi/top/tmall-ido/item-relations">
+                        <i class="icon-docs"></i>天猫商品关联关系管理</a>
+                    </li>
+                    <li>
+                      <a routerLink="/edi/top/tmall-ido/refunds">
+                        <i class="icon-docs"></i>退款查询</a>
+                    </li>
+                    <li>
+                      <a routerLink="/edi/top/tmall-ido/trades">
+                        <i class="icon-docs"></i>交易管理</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a routerLink="/edi/top/logistics-company">
+                    <i class="icon-docs"></i>物流公司映射关系管理</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a routerLink="/edi/stores">
+                <i class="icon-bag"></i>
+                <span class="title">EDI对接店铺管理</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- edi end  -->
+      </ul>
+      <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+      <div class="page-content" style="min-height:987px">
+        <!--加载右边页面-->
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <!-- END CONTENT -->
+  </div>
+  <!-- END CONTAINER -->
+</div>
+<!-- END SIDEBAR -->
+<!-- 添加弹框  end-->
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>

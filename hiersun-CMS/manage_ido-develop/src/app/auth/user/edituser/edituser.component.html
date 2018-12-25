@@ -1,0 +1,748 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue-hoki" id="form_wizard_1">
+      <div class="portlet-title">
+        <div class="caption">
+          <span class="step-title">
+            编辑用户 </span>
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <form action="#" class="form-horizontal" id="submit_form" method="POST">
+          <div class="form-wizard col-md-12" style="background:white">
+            <div class="form-body">
+              <ul class="nav nav-pills nav-justified steps">
+                <li disabled="true" id="one" class="active">
+                  <a class="step">
+                    <span class="number">
+                      1 </span>
+                    <span class="desc">
+                      <i class="fa fa-check"></i>基本信息</span>
+                  </a>
+                </li>
+                <li disabled="true" id="two">
+                  <a class="step">
+                    <span class="number">
+                      2 </span>
+                    <span class="desc">
+                      <i class="fa fa-check"></i>功能权限</span>
+                  </a>
+                </li>
+                <li disabled="true" id="three">
+                  <a class="step active">
+                    <span class="number">
+                      3 </span>
+                    <span class="desc">
+                      <i class="fa fa-check"></i>数据权限</span>
+                  </a>
+                </li>
+                <li disabled="true" id="four">
+                  <a class="step">
+                    <span class="number">
+                      4 </span>
+                    <span class="desc">
+                      <i class="fa fa-check"></i>确认信息</span>
+                  </a>
+                </li>
+              </ul>
+              <div id="bar" class="progress progress-striped" role="progressbar">
+                <div class="progress-bar progress-bar-success" style="width:25%">
+                </div>
+              </div>
+              <div class="tab-content col-md-12">
+                <!-- 基本信息 -->
+                <div class="tab-pane active col-md-12" id="tab1" style="padding:25px;">
+                  <div class="col-md-6">
+                    <div class="col-md-12" style="margin-top:10px;">
+                      <div class="col-md-12">
+                        <label class="col-md-4 control-label" style="text-align:right;">
+                          <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">
+                              <span style="color:red;">*</span>用户名：</font>
+                          </font>
+                        </label>
+                        <div class="col-md-8">
+                          <input type="text" placeholder="请输入用户名" name="username" [(ngModel)]="username" class="form-control username" />
+                          <div class="formtips" style="display:none">
+                            请输入用户名
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px;">
+                      <div class="col-md-12">
+                        <label class="col-md-4 control-label" style="text-align:right;">
+                          <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">
+                              <span style="color:red;">*</span>姓名：</font>
+                          </font>
+                        </label>
+                        <div class="col-md-8">
+                          <input placeholder="请输入姓名" type="text" name="name" class="form-control name" [(ngModel)]="name">
+                          <div class="formtips" style="display:none">
+                            请输入姓名
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px;" *ngIf="pagetype==0">
+                      <div class="col-md-12">
+                        <label class="col-md-4 control-label" style="text-align:right;">
+                          <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">
+                              <span style="color:red;">*</span>密码：</font>
+                          </font>
+                        </label>
+                        <div class="col-md-8">
+                          <input placeholder="请输入密码" type="text" name="pwd" class="form-control pwd" [(ngModel)]="pwd">
+                          <div class="formtips" style="display:none">
+                            请输入大于6位的密码
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px;" *ngIf="pagetype==0">
+                        <div class="col-md-12">
+                          <label class="col-md-4 control-label" style="text-align:right;">
+                            <font style="vertical-align: inherit;">
+                              <font style="vertical-align: inherit;">
+                                <span style="color:red;">*</span>确认密码：</font>
+                            </font>
+                          </label>
+                          <div class="col-md-8">
+                            <input placeholder="请输入确认密码" type="text" name="confirmpwd" class="form-control confirmpwd" [(ngModel)]="confirmpwd">
+                            <div class="formtips" style="display:none">
+                              两次输入密码不一致
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-md-12" style="margin-top:10px;">
+                      <div class="col-md-12">
+                        <span class="col-md-4 control-label" style="text-align:right;">
+                          <span style="color:red;">*</span>手机号：</span>
+                        <div class="col-md-8">
+                          <input placeholder="请输入手机号" type="text" class="form-control mobile" name="mobile" maxlength="11" [(ngModel)]="mobile">
+                          <div class="formtips" style="display:none">
+                            请输入正确的手机号
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px;">
+                      <div class="col-md-12">
+                        <span class="col-md-4 control-label" style="text-align:right;">
+                          <span style="color:red;">*</span>邮箱：</span>
+                        <div class="col-md-8">
+                          <input placeholder="请输入邮箱" type="text" class="form-control email" name="email" [(ngModel)]="email">
+                          <div class="formtips" style="display:none">
+                            请输入正确的邮箱
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px;">
+                      <div class="col-md-12">
+                        <span class="col-md-4 control-label" style="text-align:right;">
+                          <span style="color:red;">*</span>员工编号：</span>
+                        <div class="col-md-8">
+                          <input placeholder="请输入员工编号" name="employeeId" type="text" class="form-control employeeId" [(ngModel)]="employeeId">
+                          <div class="formtips" style="display:none">
+                            请输入员工编号
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="col-md-12">
+                      <label class="col-md-4 control-label" style="text-align:right;">
+                        <font style="vertical-align: inherit;">
+                          <font style="vertical-align: inherit;">
+                            <span style="color:red;">*</span>部门：</font>
+                        </font>
+                      </label>
+                      <div class="col-md-8">
+                        <nz-tree-select [nzDefaultExpandedKeys]="expandKeys" name="standalone" [nzNodes]="Nodes" nzPlaceHolder="请选择部门" [(ngModel)]="value"
+                          (ngModelChange)="departchange($event)" nzPlaceHolder="{{deptName}}" [nzDropdownStyle]="{ 'max-height': '300px' }" style="width: 250px;" id="department">
+                        </nz-tree-select>
+                        <div class="formtips deptName" style="display:none">
+                          请选择部门
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px">
+                      <label class="col-md-4 control-label" style="text-align:right;">
+                        <font style="vertical-align: inherit;">
+                          <font style="vertical-align: inherit;">
+                            <span style="color:red;"></span>职位：</font>
+                        </font>
+                      </label>
+                      <div class="col-md-8">
+                        <nz-tree-select name="dutyname" [nzNodes]="dutyNodes" nzPlaceHolder="请选择职位" [(ngModel)]="dutyvalue" (ngModelChange)="onDutyChange($event)"
+                          nzPlaceHolder="{{dutyName}}" style="width: 250px" id="dutyname" [nzDropdownStyle]="{ 'max-height': '300px' }">
+                        </nz-tree-select>
+                        <div class="formtips deptName" style="display:none">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="col-md-12" style="margin-top:10px;">
+                        <span class="col-md-4 control-label" style="text-align:right;">有效时间：</span>
+                        <div class="col-md-8">
+                          <!-- <input class="form-control" id="beginDt" name="startTime" type="text" [(ngModel)]="startTime" placeholder="请选择开始时间" style="width:110px;float:left"
+                            (click)="starttime()">
+                          <input class="form-control" id="endDt" type="text" name="endTime" [(ngModel)]="endTime" placeholder="请选择结束时间" style="width:110px;float:right"
+                            (click)="endtime()"> -->
+                            <input id="beginDt" readonly class='start_time form-control' style="width: 45%;float:left" type="text" placeholder="请选择开始时间">
+                            <input id="endDt" readonly class='end_time form-control' style="width: 45%;margin-left:10%;float:left; " type="text" placeholder="请选择结束时间">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="col-md-12" style="margin-top:4px;">
+                        <span class="col-md-4 control-label" style="text-align:right;">状态：</span>
+                        <div class="col-md-8" style="margin-top:8px">
+                          <div class="md-radio-inline">
+                            <div class="md-radio">
+                              <input type="radio" id="status1" name="isdislpay" title="0" class="md-radiobtn" checked (click)="changestatus()">
+                              <label for="status1">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span>
+                                启用</label>
+                            </div>
+                            <div class="md-radio has-error">
+                              <input type="radio" id="status2" name="isdislpay" title="1" class="md-radiobtn" (click)="changestatus()">
+                              <label for="status2">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span>
+                                禁用</label>
+                            </div>
+                            <div class="md-radio has-error">
+                              <input type="radio" id="status3" name="isdislpay" title="2" class="md-radiobtn" (click)="changestatus()">
+                              <label for="status3">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span>
+                                锁定</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12" style="padding:20px 0 0 0;">
+                    <button class="btn yellow" (click)="goback()">返回</button>
+                    <button class="btn green" (click)="tab2()">
+                      <a href="" data-toggle="tab" class="stepone">
+                        下一页
+                      </a>
+                    </button>
+                  </div>
+                </div>
+                <!-- 权限 -->
+                <div class="tab-pane col-md-12" id="tab2">
+                  <div class="tabbable-custom">
+                    <ul class="nav nav-tabs tab-sales">
+                      <li class="active">
+                        <a href="#tab_5_1" class="stab_1" data-toggle="tab">
+                          关联角色</a>
+                      </li>
+                      <li>
+                        <a href="#tab_5_5" data-toggle="tab" (click)="loadGroupList()">
+                          关联用户组</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content">
+                      <!--关联角色-->
+                      <div class="tab-pane active table-scrollable table-ofy" id="tab_5_1" style="border:none">
+                        <!--left-->
+                        <div class="portlet box blue-hoki col-md-3">
+                          <div class="portlet-title">
+                            <div class="caption">
+                              <i class="fa fa-globe"></i>系统信息
+                            </div>
+                            <div class="tools">
+                              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                            </div>
+                          </div>
+                          <div class="portlet-body msg_box col-md-12">
+                            <!-- 系统树 -->
+                            <div class="pleftTree">
+                              <input type="hidden" name="appmsg" />
+                              <button class="appclick" (click)="appclick()" style="display:none"></button>
+                              <div class="zTreeDemoBackground">
+                                <ul id="appztree" class="ztree"></ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--left end-->
+                        <div class="portlet box blue-hoki col-md-8" style="margin-left:1%;">
+                          <div class="portlet-title">
+                            <div class="caption">
+                              <i class="fa fa-globe"></i>相关角色
+                            </div>
+                            <div class="tools">
+                              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                            </div>
+                          </div>
+                          <div class="portlet-body msg_box col-md-12" style="margin-bottom:0;">
+                            <div class="col-md-12" style="margin-bottom:15px;">
+                              <select id="selectTag" class="col-md-6" style="border-radius: 5px;height: 35px;">
+                                <option value="">请选择角色</option>
+                                <option *ngFor='let item of roleList' value="{{item.key}}">{{item.name}}</option>
+                              </select>
+                              <div class="col-md-6">
+                                <button class="btn blue" (click)="addlink()">添加关联角色</button>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <table class="table table-striped table-bordered table-hover" id="sample_3">
+                                <thead>
+                                  <tr>
+                                    <th>名称</th>
+                                    <th>操作</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                  <tr *ngFor="let item of selectList;let key=index">
+                                    <td>{{item.name}}</td>
+                                    <td>
+                                      <button class="btn red btn-xs" (click)="dellink(key)">取消关联</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <!--right-->
+                      </div>
+                      <!--关联用户组-->
+                      <div class="tab-pane table-scrollable table-ofy" id="tab_5_5">
+                        <div class="portlet box blue-hoki col-md-12">
+                          <div class="portlet-title">
+                            <div class="caption">
+                              <i class="fa fa-globe"></i>关联用户组
+                            </div>
+                            <div class="tools">
+                              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                            </div>
+                          </div>
+                          <div class="portlet-body">
+                            <div class="clearfix" style="margin-bottom:10px">
+                              <select id="selectTag2" class="col-md-6" style="border-radius: 5px;height: 35px;">
+                                <option value="">请选择用户组</option>
+                                <option *ngFor='let item of groupList' value="{{item.key}}">{{item.name}}</option>
+                              </select>
+                              <div class="col-md-6">
+                                <button class="btn blue" (click)="addgroupList()">添加关联用户组</button>
+                              </div>
+                            </div>
+                            <div>
+                              <table class="table table-striped table-bordered table-hover" style="margin-top:10px">
+                                <thead>
+                                  <tr>
+                                    <th>名称</th>
+                                    <th>操作</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="tbody1">
+                                  <tr *ngFor="let item of groupselect;let key=index">
+                                    <td>{{item.name}}</td>
+                                    <td>
+                                      <button class="btn red btn-xs" (click)="delgrouplink(key)">取消关联</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12" style="padding:20px 0;">
+                    <button (click)="tab1()" class="btn yellow">
+                      <a href="#tab1" data-toggle="tab" class="step">
+                        上一页
+                      </a>
+                    </button>
+                    <button (click)="tab3()" class="btn green">
+                      <a href="tab3" id="totab3" data-toggle="tab" class="step">
+                        下一页
+                      </a>
+                    </button>
+                  </div>
+                </div>
+                <!-- 数据权限 -->
+                <div class="tab-pane col-md-12" id="tab3">
+                  <div class="tabbable-custom">
+                    <ul class="nav nav-tabs tab-sales">
+                      <li class="active">
+                        <a href="#tab_3_1" class="stab_1" data-toggle="tab" (click)="shoplist()">
+                          门店</a>
+                      </li>
+                      <li>
+                        <a href="#tab_3_2" data-toggle="tab" (click)="brandlist()">
+                          品牌</a>
+                      </li>
+                      <li>
+                        <a href="#tab_3_3" data-toggle="tab" (click)="channellist()">
+                          渠道</a>
+                      </li>
+                      <li>
+                        <a href="#tab_3_4" data-toggle="tab" (click)="classlist()">
+                          分类</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content">
+                      <!--门店-->
+                      <div class="tab-pane active table-scrollable table-ofy" id="tab_3_1" style="border:none">
+                        <div class="col-md-12">
+                          <div class="portlet box blue-hoki">
+                            <div class="portlet-title">
+                              <div class="caption">
+                                <i class="fa fa-globe"></i>门店
+                              </div>
+                              <div class="tools">
+                                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                              </div>
+                            </div>
+                            <div class="portlet-body">
+                              <div class="clearfix" style="margin-bottom:10px">
+                                <select id="selectTag3" class="col-md-6" style="border-radius: 5px;height: 35px;">
+                                  <option value="">请选择门店</option>
+                                  <option *ngFor='let item of addstoreList' value="{{item.key}}">{{item.name}}</option>
+                                </select>
+                                <div class="col-md-6">
+                                  <button class="btn blue" (click)="addstorelink()">添加门店</button>
+                                </div>
+                              </div>
+                              <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>名称</th>
+                                    <th>操作</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="tbody2">
+                                  <tr *ngFor="let item of storeselect;let key=index">
+                                    <td>{{item.dataName}}</td>
+                                    <td>
+                                      <button class="btn red btn-xs" (click)="delstorelink(key)">取消关联</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--品牌-->
+                      <div class="tab-pane table-scrollable table-ofy" id="tab_3_2" style="border:none">
+                        <div class="col-md-12">
+                          <div class="portlet box blue-hoki">
+                            <div class="portlet-title">
+                              <div class="caption">
+                                <i class="fa fa-globe"></i>品牌
+                              </div>
+                              <div class="tools">
+                                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                              </div>
+                            </div>
+                            <div class="portlet-body">
+                              <div class="clearfix" style="margin-bottom:10px">
+                                <select id="selectTag4" class="col-md-6" style="border-radius: 5px;height: 35px;">
+                                  <option value="">请选择品牌</option>
+                                  <option *ngFor='let item of addbrandList' value="{{item.key}}">{{item.name}}</option>
+                                </select>
+                                <div class="col-md-6">
+                                  <button class="btn blue" (click)="addbrandlink()">添加品牌</button>
+                                </div>
+                              </div>
+                              <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>名称</th>
+                                    <th>操作</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="tbody3">
+                                  <tr *ngFor="let item of brandselect;let key=index">
+                                    <td>{{item.dataName}}</td>
+                                    <td>
+                                      <button class="btn red btn-xs" (click)="delbrandlink(key)">取消关联</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--渠道-->
+                      <div class="tab-pane table-scrollable table-ofy" id="tab_3_3" style="border:none">
+                        <div class="col-md-12">
+                          <div class="portlet box blue-hoki">
+                            <div class="portlet-title">
+                              <div class="caption">
+                                <i class="fa fa-globe"></i>渠道
+                              </div>
+                              <div class="tools">
+                                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                              </div>
+                            </div>
+                            <div class="portlet-body">
+                              <div class="clearfix" style="margin-bottom:10px">
+                                <select id="selectTag5" class="col-md-6" style="border-radius: 5px;height: 35px;">
+                                  <option value="">请选择渠道</option>
+                                  <option *ngFor='let item of addchannelList' value="{{item.key}}">{{item.name}}</option>
+                                </select>
+                                <div class="col-md-6">
+                                  <button class="btn blue" (click)="addchannellink()">添加渠道</button>
+                                </div>
+                              </div>
+                              <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>名称</th>
+                                    <th>操作</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="tbody4">
+                                  <tr *ngFor="let item of channelselect;let key=index">
+                                    <td>{{item.dataName}}</td>
+                                    <td>
+                                      <button class="btn red btn-xs" (click)="delchannellink(key)">取消关联</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane table-scrollable table-ofy" id="tab_3_4" style="border:none">
+                        <div class="col-md-12">
+                          <div class="portlet box blue-hoki">
+                            <div class="portlet-title">
+                              <div class="caption">
+                                <i class="fa fa-globe"></i>分类
+                              </div>
+                              <div class="tools">
+                                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                              </div>
+                            </div>
+                            <div class="portlet-body">
+                              <div class="clearfix" style="margin-bottom:10px">
+                                <select id="selectTag6" class="col-md-6" style="border-radius: 5px;height: 35px;">
+                                  <option value="">请选择分类</option>
+                                  <option *ngFor='let item of classlistes' value="{{item.code}}">{{item.name}}</option>
+                                </select>
+                                <div class="col-md-6">
+                                  <button class="btn blue" (click)="addclasslink()">添加分类</button>
+                                </div>
+                              </div>
+                              <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>名称</th>
+                                    <th>操作</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="tbody5">
+                                  <tr *ngFor="let item of classlistchoose;let key=index">
+                                    <td>{{item.dataName}}</td>
+                                    <td>
+                                      <button class="btn red btn-xs" (click)="delclasslink(key)">取消关联</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12" style="padding:20px 0;">
+                    <button (click)="tab22()" class="btn yellow">
+                      <a href="#tab1" data-toggle="tab" class="step">
+                        上一页
+                      </a>
+                    </button>
+                    <button (click)="tab4()" class="btn green">
+                      <a href="tab3" id="totab3" data-toggle="tab" class="step">
+                        下一页
+                      </a>
+                    </button>
+                  </div>
+                </div>
+                <!-- 确认信息 -->
+                <div class="tab-pane " id="tab4">
+                  <h3 class="block col-md-12">请确认填写信息</h3>
+                  <h4 class="form-section col-md-12">基本信息</h4>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label col-md-3">用户名：</label>
+                      <div class="col-md-4">
+                        <p class="form-control-static" data-display="username">
+                          {{username?username:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">姓名：</label>
+                      <div class="col-md-4">
+                        <p class="form-control-static">
+                          {{name?name:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">手机号：</label>
+                      <div class="col-md-4">
+                        <p class="form-control-static">
+                          {{mobile?mobile:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">邮箱：</label>
+                      <div class="col-md-4">
+                        <p class="form-control-static">
+                          {{email?email:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">员工编号：</label>
+                      <div class="col-md-4">
+                        <p class="form-control-static">
+                          {{employeeId?employeeId:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label col-md-3">部门：</label>
+                      <div class="col-md-4">
+                        <p class="form-control-static">
+                          {{choosedepatname?choosedepatname:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">职位：</label>
+                      <div class="col-md-4">
+                        <p class="form-control-static">
+                          {{choosedutyname?choosedutyname:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">有效时间：</label>
+                      <div class="col-md-4">
+                        <p class="form-control-static">
+                          {{startTime}}--{{endTime}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">状态：</label>
+                      <div class="col-md-4">
+                        <p class="form-control-static">
+                          <span *ngIf="enabled==1">启用</span>
+                          <span *ngIf="enabled==0">禁用</span>
+                          <span *ngIf="enabled==-1">锁定</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <h4 class="form-section col-md-12">功能权限</h4>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label col-md-3">已关联角色：</label>
+                      <div class="col-md-9">
+                        <p class="form-control-static" data-display="fullname">
+                          {{selectListshow?selectListshow:'--'}}
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label col-md-3">已关联用户组：</label>
+                      <div class="col-md-9">
+                        <p class="form-control-static" data-display="gender">
+                          {{groupselectshow?groupselectshow:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <h4 class="form-section col-md-12">数据权限</h4>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label col-md-3">门店：</label>
+                      <div class="col-md-9">
+                        <p class="form-control-static" data-display="card_name">
+                          {{storeselectshow?storeselectshow:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">品牌：</label>
+                      <div class="col-md-9">
+                        <p class="form-control-static" data-display="card_name">
+                          {{brandselectshow?brandselectshow:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label col-md-3">渠道：</label>
+                      <div class="col-md-9">
+                        <p class="form-control-static" data-display="card_number">
+                          {{channelselectshow?channelselectshow:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">分类：</label>
+                      <div class="col-md-9">
+                        <p class="form-control-static" data-display="card_number">
+                          {{classlistchooseshow?classlistchooseshow:'--'}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12" style="padding:20px 0;">
+                    <button class="btn yellow">
+                      <a href="" data-toggle="tab" class="step" (click)="tab3()">
+                        上一页</a>
+                    </button>
+                    <button class="btn green" (click)="addSure()">提交</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="hint" *ngIf="isHint">
+    <div class="hintMsg">
+        <i *ngIf="warning" class="warningMsg"></i>
+        <i *ngIf="!warning" class="ok"></i>
+        <span>{{hintMsg}}</span>
+    </div>
+</div>

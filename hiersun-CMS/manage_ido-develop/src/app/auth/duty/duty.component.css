@@ -1,0 +1,27 @@
+.col-md-12{
+    padding: 10px;
+    box-sizing: border-box;
+    background: white;
+
+}
+#myModal table tr{
+    text-align: center;
+}
+.contenttab{
+    padding: 20px 10px;
+}
+.pleftTree{
+    width: 90%;
+    height: 500px;
+    overflow: hidden
+}
+.zTreeDemoBackground{
+    width: 107%;
+    height: 490px;
+    overflow: auto;
+}
+#deptMenu{background: #67809F;border-radius: 4px;color: #FFF;display: none;}
+#deptMenu ul li{line-height: 30px;height:30px;width:80px; cursor: pointer;text-align: center; }
+#dutyMenu{background: #67809F;border-radius: 4px;color: #FFF;display: none;}
+#dutyMenu ul li{line-height: 30px;height:30px;width:80px; cursor: pointer;text-align: center; }
+.pleftTree button{border: none;background: none;}

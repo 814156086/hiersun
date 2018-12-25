@@ -1,0 +1,145 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>添加标签
+      <small>Tag add</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet-body">
+      <div class="contenttab">
+        <form class="form-horizontal" [formGroup]="formModel" (submit)="submit()">
+          <div class="form-body">
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>标签标识：</label>
+              <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('tagCode').invalid && formModel.get('tagCode').touched"
+                  type="text" formControlName="tagCode" name="tagCode" [(ngModel)]="tagCodes" placeholder="请输入标签标识">
+                <div [hidden]="formModel.get('tagCode').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['tagCode'])">
+                    标签标识必填
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>标签名称：</label>
+              <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('tagName').invalid && formModel.get('tagName').touched"
+                  type="text" formControlName="tagName" name="tagName" [(ngModel)]="tagNames" placeholder="请输入标签名称">
+                <div [hidden]="formModel.get('tagName').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['tagName'])">
+                    标签名称必填
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>置顶值：</label>
+              <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('topValue').invalid && formModel.get('topValue').touched"
+                  type="text" formControlName="topValue" name="topValue" [(ngModel)]="topValues" placeholder="请输入置顶值" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                <div [hidden]="formModel.get('topValue').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['topValue'])">
+                    置顶值必填
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>开启活动：</label>
+              <div class="col-md-6">
+                <select class="form-control" [class.hasError]="formModel.get('isActives').invalid && formModel.get('isActives').touched"
+                   formControlName="isActives" name="isActives" id="isActives" [(ngModel)]="isActives" (click)="select_activity()">
+                  <option value=" ">请选择</option>
+                  <option value="true">是</option>
+                  <option value="false">否</option>
+                </select>
+                <div [hidden]="formModel.get('isActives').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['isActives'])">
+                    是否开启活动必填
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3" id="select_swiper"  *ngIf="isActives">
+                <button  class="btn default blue-hoki" data-target="#myModal" data-toggle="modal" type="button">轮播图管理</button>
+              </div>
+            </div>
+
+            <div class="form-group" *ngIf="isActives" id="select_img">
+              <div class="col-md-1"></div>
+              <div class="col-md-8">
+                <div class="showPic" enctype="multipart/form-data">
+                  <div class="item_pic tag_imgs" *ngFor="let picItem of selPicsList;" >
+                   <div class="img_close" (click)="delimg(picItem.id)">x</div>
+                    <img src="{{picItem.picPath}}" alt=""  style="width: 195px;height: 150px;">
+                    <span>{{picItem.picTitle}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--  -->
+          </div>
+          <div class="form-actions" style="text-align:center;">
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+            <button type="submit" class="btn green" [disabled]="formModel.invalid">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" style="width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">轮播图</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="showPic" enctype="multipart/form-data">
+          <div class="item_pic" *ngFor="let picItem of repeatPicList;">
+          <img src="{{picItem.picPath}}" alt="" style="width: 195px;height: 150px;">
+          <div class="md-checkbox">
+            <input type="checkbox"  title="{{picItem.picPath}}"  value="{{picItem.id}}" id="checkbox{{picItem.id}}"
+                   name="uplpic" class="md-check uplpic">
+            <!--<input type="hidden" class="in_picTitle" value="{{picItem.picTitle}}">-->
+            <label for="checkbox{{picItem.id}}">
+              <span></span>
+              <span class="check"></span>
+              <span class="box"></span>
+            </label>
+            <span class="in_picTitle">{{picItem.picTitle}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer" style="text-align: center">
+      <button type="button" class="btn blue" (click)="subSelectPics()">确定</button>
+      <button type="button" class="btn default" data-dismiss="modal">取消</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

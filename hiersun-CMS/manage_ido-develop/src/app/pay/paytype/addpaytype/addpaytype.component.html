@@ -1,0 +1,76 @@
+<div class="page-head">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-title">
+      <h1>添加商户
+        <small>Add Business</small>
+      </h1>
+    </div>
+    <!-- END PAGE TITLE -->
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="contenttab">
+        <form class="templatecon form-horizontal" [formGroup]="formModel" (submit)="onSubmit()">
+          <div class="form-group">
+            <label class="col-md-2 control-label">
+              <span style="color:red;">*</span>支付类型id：</label>
+            <div class="col-md-8">
+              <input class="form-control paytypeid" [class.hasError]="formModel.get('paytypeid').invalid && formModel.get('paytypeid').touched"
+                type="text" formControlName="paytypeid" name="paytypeid" [(ngModel)]="paytypeid" placeholder="请输入支付类型id">
+              <div [hidden]="formModel.get('paytypeid').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['paytypeid'])">
+                    支付类型id必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">
+              <span style="color:red;">*</span>支付名称：</label>
+            <div class="col-md-8">
+              <input class="form-control" [class.hasError]="formModel.get('payname').invalid && formModel.get('payname').touched"
+                type="text" formControlName="payname" name="payname" [(ngModel)]="payname" placeholder="请输入支付名称">
+              <div [hidden]="formModel.get('payname').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['payname'])">
+                    支付名称必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--商户详情-->
+          <div class="form-group" *ngIf="timeshowhide">
+            <label class="col-md-2 control-label">
+              <span style="color:red;"></span>创建时间：</label>
+            <div class="col-md-8">
+              <input class="form-control" name="creattime" value="{{creattime | date:'yyyy-MM-dd HH:mm:ss'}}" type="text">
+            </div>
+          </div>
+          <div class="form-group" *ngIf="btnshowhide">
+            <label class="col-md-3 control-label">
+              <button type="submit" class="btn purple" [disabled]="formModel.invalid">保存</button>
+              <button type="reset" class="btn blue-hoki">重置</button>
+              <button type="button" class="btn default" (click)="goback()">返回</button>
+            </label>
+          </div>
+          <div class="form-group" *ngIf="!btnshowhide">
+            <label class="col-md-2 control-label"></label>
+            <div class="col-md-8">
+              <button type="button" class="btn default" (click)="goback()">返回</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="spinner" *ngIf="isload">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+  <div id="hint" *ngIf="isHint">
+    <div class="hintMsg">
+      <i *ngIf="warning" class="warningMsg"></i>
+      <i *ngIf="!warning" class="ok"></i>
+      <span>{{hintMsg}}</span>
+    </div>
+  </div>

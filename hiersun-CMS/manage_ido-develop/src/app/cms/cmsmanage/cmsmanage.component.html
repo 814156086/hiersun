@@ -1,0 +1,82 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>站点管理
+      <small>Site Manage</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet-body">
+      <div class="contenttab">
+        <a class="btn blue-hoki" routerLink="/cms/sitemap/all" style="margin-bottom:20px;">新建站点</a>
+        <div class="portlet box blue-hoki">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-globe"></i>站点列表
+            </div>
+            <div class="tools">
+              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+            </div>
+          </div>
+          <!--body-->
+          <div class="portlet-body">
+
+            <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_1" role="grid" aria-describedby="sample_1_info">
+                <thead>
+                  <tr>
+                      <th style="width:15%">
+                        站点名称
+                      </th>
+                      <th style="width:25%">
+                      站点地址
+                    </th>
+                    <th style="width:15%">
+                      站点类型
+                    </th>
+                    <th style="width:30%">
+                      操作
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of list">
+                    <td>{{item.name}}</td>
+                    <td>{{item.baseUrl}}</td>
+                    <td *ngIf="item.siteType==1">PC</td>
+                    <td *ngIf="item.siteType==2">移动</td>
+                    <td>
+                      <a routerLink="/cms/sitemap/{{item.id}}" class="btn btn-xs btn-info">
+                        <i class="fa fa-edit"></i> 编辑 </a>
+                      <!-- <a routerLink="/cms/channeltree/{{item.id}}" class="btn default btn-xs blue-hoki">
+                                  <i class="fa"></i>频道</a> -->
+                      <a class="btn blue-madison btn-xs" (click)="issue(item.id)">
+                          <i class="fa fa-save"></i> 一键发布</a>
+                      <a class="btn blue btn-xs" (click)="copy(item.id)">
+                          <i class="fa fa-copy"></i> 复制</a>
+                      <a class="btn green btn-xs" routerLink="/cms/seomanage" [queryParams]="{siteid:item.id}">
+                        <i class="fa fa-lightbulb-o"></i> SEO优化</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spinner" *ngIf="isload">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>

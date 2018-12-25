@@ -1,0 +1,317 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>预约单列表
+        <small>Reserveorder List</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <!--shopeType从接口获取-->
+          <a class="btn blue-hoki" routerLink='/oms/addreserveorder' style="margin-bottom:20px" *ngIf="role=='kefu' || shopeType==1">
+              <i class="fa fa-plus"></i>新增预约单</a>
+          <!--筛选-->
+          <div class="choosesx">
+            <form class="form-inline">
+              <div class="col-md-12">
+                <div class="form-group col-md-4">
+                  <label for="f1">订单来源：</label>
+                  <select class="form-control origin">
+                    <option value="">请选择</option>
+                    <option value="本网">本网</option>
+                    <option value="天猫">天猫</option>
+                    <option value="京东">京东</option>
+                    <option value="婚礼纪">婚礼纪</option>
+                    <option value="飞凡">飞凡</option>
+                    <option value="大众点评">大众点评</option>
+                    <option value="洽客">洽客</option>
+                    <option value="婚博">婚博</option>
+                    <option value="尚品">尚品</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label>预约单号：</label>
+                  <input type="text" class="form-control searchorderno" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>联系方式：</label>
+                  <input type="text" class="form-control telephone" />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group col-md-4">
+                  <label>大区筛选：</label>
+                  <!--  <select class="form-control area" (change)="citylist()"> -->
+                  <select id="area" class="form-control select2me area" data-placeholder="请选择门店所在大区" style="width:66%">
+                    <option value="">请选择</option>
+                    <option *ngFor="let item of area;let list=index;" value="{{item}}">{{item}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label>市区筛选：</label>
+                  <!-- <select class="form-control city" (change)="shoplist()"> -->
+                  <select id="city" class="form-control select2me city" data-placeholder="请选择门店所在城市" style="width:66%">
+                    <option value="">请选择</option>
+                    <option *ngFor="let item of citys;let list=index;" value="{{item}}">{{item}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label>门店筛选：</label>
+                  <select id="shops" class="form-control select2me shops" data-placeholder="请选择门店" style="width:66%">
+                    <option value="">请选择</option>
+                    <option *ngFor="let item of shops;let list=index;" value="{{item.organizationCode}}">{{item.organizationName}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group col-md-4">
+                  <label>预约日期：</label>
+                  <input type="text" class="form-control reservedata" id="reservedata" placeholder="请选择预约日期" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>预约状态：</label>
+                  <select id="orderstates" class="form-control select2me orderstates" multiple="multiple" style="width:66%">
+                    <option value="">请选择</option>
+                    <option *ngFor="let item of reservestatelist;let list=index;" value="{{item.sequence}}">{{item.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label>门店编号：</label>
+                  <input type="text" class="form-control shopcode" readonly />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group col-md-4">
+                  <label>下单日期：</label>
+                  <input type="text" class="form-control" id="orderdata" placeholder="请选择下单日期" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>验证日期：</label>
+                  <input type="text" class="form-control" id="validatedata" placeholder="请选择验证日期" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>下单客服：</label>
+                  <select id="operatorid" class="form-control select2me operatorid" style="width:66%">
+                    <option value="">请选择</option>
+                    <option *ngFor="let item of kefulist;let list=index;" value="{{item.departmentid}}">{{item.registername}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group col-md-4">
+                  <label>活动名称：</label>
+                  <input class="form-control activityname" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>预约活动：</label>
+                  <select id="activityid" class="form-control select2me activityid" style="width:66%">
+                    <option value="">请选择</option>
+                    <option *ngFor="let item of activelist;let list=index;" value="{{item.id}}">{{item.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label>购买情况：</label>
+                  <select class="form-control purchase">
+                    <option value="">请选择</option>
+                    <option value="1">已购买</option>
+                    <option value="0">未购买</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group col-md-4">
+                  <label>赠品地址：</label>
+                  <select class="form-control personalinfo">
+                    <option value="">请选择</option>
+                    <option value="1">已填</option>
+                    <option value="0">未填</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  提示：
+                  <label>
+                    <span class="label label-sm label-success">&nbsp;&nbsp;&nbsp;&nbsp;</span> 已填写赠品地址
+                    <span class="label label-sm label-danger">&nbsp;&nbsp;&nbsp;&nbsp;</span>未填写赠品地址
+                  </label>
+                </div>
+              </div>
+              <div class="text-center">
+                <span class="searchtips text-dange"></span>
+                <button class="btn btn-default" type="button" (click)="reset()">重置</button>
+                <button class="btn blue btn-default" type="button" (click)="reservelist()">查询</button>
+                <button class="btn blue btn-default" type="button" (click)="export()">导出</button>
+                <button class="btn blue btn-default" type="button" (click)="exportall()">导出全部</button>
+                <button class="btn blue btn-default" type="button" (click)="exportzp()">导出赠品地址</button>
+              </div>
+            </form>
+          </div>
+          <!--筛选-->
+          <div class="portlet box blue-hoki">
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>预约单列表
+              </div>
+              <div class="actions">
+                <div class="btn-group">
+                  <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown">
+                    <i class="fa fa-cogs"></i> 排序
+                    <i class="fa fa-angle-down"></i>
+                  </a>
+                  <ul class="dropdown-menu pull-right">
+                    <li>
+                      <a (click)="reservetimepx(0)">
+                        <i class="fa fa-sliders"></i> 默认排序 </a>
+                    </li>
+                    <li>
+                      <a (click)="reservetimepx(1)">
+                        <i class="fa fa-sort-numeric-desc reservetimepx"></i> 预约成功时间</a>
+                    </li>
+                    <li>
+                      <a (click)="reservetimepx(2)">
+                        <i class="fa fa-sort-numeric-desc validetime"></i> 签到成功时间</a>
+                    </li>
+                  </ul>
+                  <input type="hidden" class="ordertype"/>
+                  <input type="hidden" class="orderxu"/>
+                </div>
+              </div>
+              <!-- <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div> -->
+            </div>
+            <!--列表end-->
+            <!--body-->
+            <div class="portlet-body">
+
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>
+                        <input type="checkbox" id="parentcheckBox" (click)="parentcheckBox()"/>
+                      </th>
+                      <th>序号</th>
+                      <th>预约单来源</th>
+                      <th>活动名称</th>
+                      <th>预约单号</th>
+                      <th>所属门店</th>
+                      <th>预约日期/时间</th>
+                      <th>下单日期</th>
+                      <th>姓名</th>
+                      <th>联系方式</th>
+                      <th>预约备注</th>
+                      <th>预约单状态</th>
+                      <th>购买情况</th>
+                      <th>分配客服</th>
+                      <th>下单客服</th>
+                      <th>提醒门店</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of reservelists;let list=index;">
+                      <td>
+                        <input type="checkbox" name="orderids" value="{{item.orderno}}"/>
+                      </td>
+                      <td>{{list+1}}</td>
+                      <td>{{item.origin}}</td>
+                      <td>
+                        <span *ngIf="item.activityname!=null">{{item.activityname}}</span>
+                        <span *ngIf="item.activityname==null || item.activityname==''">--</span>
+                      </td>
+                      <td>
+                        <!--已填写赠品地址-->
+                        <span *ngIf="item.personalinfo==1" class="label label-sm label-success">{{item.orderno}}</span>
+                        <!--未填写赠品地址-->
+                        <span *ngIf="item.personalinfo==0 || item.personalinfo==null" class="label label-sm label-danger">{{item.orderno}}</span>
+                      </td>
+                      <td>{{item.code}}-{{item.address}}</td>
+                      <td>{{item.reservedate | slice:0:10}} {{item.reservetime}}</td>
+                      <td>{{item.createdate}}</td>
+                      <td>{{item.name}}</td>
+                      <td>{{item.telephone}}</td>
+                      <td>
+                        <span *ngIf="item.remark!=null">{{item.remark}}</span>
+                        <span *ngIf="item.remark==null ||item.remark==''">--</span>
+                      </td>
+                      <td>
+                        <span *ngIf="item.statename!=null">{{item.statename}}</span>
+                        <span *ngIf="item.statename==null || item.statename==''">--</span>
+                      </td>
+                      <td>
+                        <span *ngIf="item.purchase==1">已购买</span>
+                        <span *ngIf="item.purchase!=1">未购买</span>
+                      </td>
+                      <td>
+                        <span *ngIf="item.registername!=null">{{item.registername}}</span>
+                        <span *ngIf="item.registername==null || item.registername==''">--</span>
+                      </td>
+                      <td>
+                        <span *ngIf="item.kefuname!=null">{{item.kefuname}}</span>
+                        <span *ngIf="item.kefuname==null || item.kefuname==''">--</span>
+                      </td>
+                      <td>
+                        <span *ngIf="item.remind" class="label label-sm label-info">已提醒</span>
+                        <span *ngIf="!item.remind" class="label label-sm label-warning">未提醒</span>
+                      </td>
+                      <td>
+                        <a class="btn btn-xs btn-info green" routerLink='/oms/reservedetail' [queryParams]="{id:item.orderno,page:pageNo,role:role}">
+                          <i class="fa fa-edit"></i> 查看</a>
+
+                      </td>
+                    </tr>
+                    <tr *ngIf="nodata">
+                      <td colspan="17" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--分页页码-->
+              <div class="clearfix box">
+                <div id="pagination1" class="page fr"></div>
+              </div>
+              <!--分页页码end-->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>
+<!-- <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <input type="hidden" class="deleteid" /> 确定要删除吗？
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button data-dismiss="modal" class="btn blue" (click)="sure()">确认</button>
+      </div>
+    </div>
+  </div>
+</div> -->

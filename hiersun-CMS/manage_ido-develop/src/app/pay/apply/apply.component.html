@@ -1,0 +1,138 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>支付宝应用列表
+      <small>Apply Manage</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal" [formGroup]="formModel" (submit)="onSubmit()">
+        <!--ftp-->
+        <div class="form-group FTPbox">
+          <div class="form-group">
+            <label class="col-md-3 control-label">
+              <span style="color:red;">*</span>appId：</label>
+            <div class="col-md-8">
+              <input class="form-control" [class.hasError]="formModel.get('appid').invalid && formModel.get('appid').touched" type="text"
+                formControlName="appid" name="appid" [(ngModel)]="appid" placeholder="请输入appId">
+              <div [hidden]="formModel.get('appid').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['appid'])">
+                  appId必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--apply-->
+          <div class="form-group applydetail">
+            <label class="col-md-3 control-label">
+              <span style="color:red;">*</span>支付宝公钥(alipayPublicKey):</label>
+            <div class="col-md-8">
+              <textarea class="form-control" [class.hasError]="formModel.get('alipayPublicKey').invalid && formModel.get('alipayPublicKey').touched"
+                type="text" formControlName="alipayPublicKey" name="alipayPublicKey" [(ngModel)]="alipayPublicKey" placeholder="请输入alipayPublicKey"></textarea>
+              <div [hidden]="formModel.get('alipayPublicKey').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['alipayPublicKey'])">
+                  alipayPublicKey必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group applydetail">
+            <label class="col-md-3 control-label">
+              <span style="color:red;">*</span>商户私钥(privateKey):</label>
+            <div class="col-md-8">
+              <textarea class="form-control" [class.hasError]="formModel.get('privateKey').invalid && formModel.get('privateKey').touched"
+                type="text" formControlName="privateKey" name="privateKey" [(ngModel)]="privateKey" placeholder="请输入privateKey"></textarea>
+              <div [hidden]="formModel.get('privateKey').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['privateKey'])">
+                  privateKey必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group applydetail">
+            <label class="col-md-3 control-label">
+              <span style="color:red;">*</span>商户公钥(publicKey):</label>
+            <div class="col-md-8">
+              <textarea class="form-control" [class.hasError]="formModel.get('publicKey').invalid && formModel.get('publicKey').touched"
+                type="text" formControlName="publicKey" name="publicKey" [(ngModel)]="publicKey" placeholder="请输入publicKey"></textarea>
+              <div [hidden]="formModel.get('publicKey').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['publicKey'])">
+                  publicKey必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group applydetail">
+            <label class="col-md-3 control-label">费率:</label>
+            <div class="col-md-8">
+              <input class="form-control feeRate" type="text" name="feeRate" placeholder="请输入费率" value="0.00" (change)="validnum($event.target)">
+              <div class="formtips" style="display:none">只能输入大于0，小于100的数字</div>
+            </div>
+          </div>
+          <div class="form-group applydetail">
+            <label class="col-md-3 control-label">应用名称:</label>
+            <div class="col-md-8">
+              <input class="form-control yyname" type="text" name="yyname" placeholder="请填写"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">是否启用：</label>
+            <div class="col-md-6">
+              <div class="switch" data-on="success" data-off="warning">
+                <input type="checkbox" checked name="businessenabled" id="businessenabled" />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">是否开启对账功能：</label>
+            <div class="col-md-6">
+              <div class="switch" data-on="success" data-off="warning">
+                <input type="checkbox" checked name="balance" id="balance" />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">是否沙箱：</label>
+            <div class="col-md-6">
+              <div class="switch" data-on="success" data-off="warning">
+                <input type="checkbox" checked name="balance" id="shaxiang" />
+              </div>
+            </div>
+          </div>
+          <!--apply end-->
+          <div class="form-group">
+            <label class="col-md-2 control-label"></label>
+            <div class="col-md-6">
+              <button type="submit" class="btn default green" [disabled]="formModel.invalid" *ngIf="btntype!=1">保存</button>
+              <button type="button" class="btn default" (click)="goback()">返回</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-1"></div>
+          <fieldset class="col-md-10 clearfix">
+            <legend>功能列表</legend>
+            <div class="md-checkbox-inline col-md-12">
+              <div class="md-checkbox col-md-3" *ngFor="let item of funclists;let key=index">
+                <input type="checkbox" id="checkbox{{key}}" class="md-check" name="funcl" title="{{item.id}}" value="{{item.value}}">
+                <label for="checkbox{{key}}">
+                  <span class="inc"></span>
+                  <span class="check"></span>
+                  <span class="box"></span>
+                  {{item.value}}</label>&nbsp;
+                <a title="详情" data-container="body" data-toggle="popover" data-placement="top" data-content="" id="{{key}}" (click)="detailshow(key,$event.target,item.comm)">
+                  <i class="fa fa-question-circle"></i>
+                </a>
+              </div>
+            </div>
+          </fieldset>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

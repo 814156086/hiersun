@@ -1,0 +1,128 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>京东财务明细
+        <!--<small>edi-channel</small>-->
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <!--筛选-->
+          <div class="choosesx row">
+            <!--格式一-->
+            <div class="form-inline" id="search">
+              
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 平台单据号：</label>
+                <div class="col-md-7">
+                  <input style="width: 100%"  id="outTradeNo" type="text" class="col-md-7 form-control brand" placeholder="请输入平台单据号">
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 业务类型：</label>
+                <div class="col-md-7">
+                  <select style="width: 100%" id="type" class="form-control">
+                    <option value="">请选择</option>
+                    <option value="R">退款</option>
+                    <option value="S">交易</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4" style="margin-top:10px;">
+                <label class="control-label col-md-4"> 付款时间 ：</label>
+                <div class="col-md-7">
+                  <input style="width: 100%"  id="startPayTime" type="text" class="col-md-7 beginDate form-control brand" placeholder="请输入付款时间">
+                </div>
+              </div>
+              <div class="col-md-12 text-center">
+                <button style="margin: 10px" (click)='search()' class="btn green btn-default">查询</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button style="margin: 10px" class="btn green btn-default" (click)='loadAgain()'>重置</button>
+              </div>
+            </div>
+          </div>
+          <!--财务报表明细-->
+          <div class="portlet box blue-hoki" style="margin-top: 15px;">
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>京东财务明细列表
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <!--列表end-->
+            <!--body-->
+            <div class="portlet-body">
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_1" style="border: none;" role="grid" aria-describedby="sample_1_info">
+                  <thead>
+                    <tr>
+                      <th>订单编号</th>
+                      <th>单据编号</th>
+                      <th>单据类型</th>
+                      <th>商品编号</th>
+                      <th>商户订单号</th>
+                      <th>商品名称</th>
+                      <th>费用发生时间</th>
+                      <th>费用计费时间</th>
+                      <th>费用结算时间</th>
+                      <th>费用项</th>
+                      <th>金额</th>
+                      <th>币种</th>
+                      <th>商家应收/应付</th>
+                      <th>钱包结算备注</th>
+                      <th>店铺号</th>
+                      <th>京东门店编号</th>
+                      <th>品牌门店编号</th>
+                      <th>门店名称</th>
+                      <th>备注</th>
+                      <th>收支方向</th>
+                      <th>账单日期</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor = 'let item of jdfinanceList'>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                      <td>{{item.aaa}}</td>
+                    </tr>
+                    <tr *ngIf="nodata == true">
+                        <td colspan="12" style="text-align:center;padding:10px;">暂时还没有数据~</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="clearfix">
+                  <div id="pagination1" class="page"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          包裹单信息
+        </div>
+      </div>
+      <div class="portlet-body">
+        <form class="form-horizontal" id="ffSearch">
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">发货时间：</label>
+                <div class="col-md-7">
+                  <input type="text" id="sendTime" class="saleDate form-control" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">销售单号：</label>
+                <div class="col-md-7">
+                  <input id="saleNo" name="saleNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">快递单号：</label>
+                <div class="col-md-7">
+                  <input id="deliveryNo" name="deliveryNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <button id="btnSearch" type="button" class="btn default" (click)="initPackageInfo()">查询
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnReset" type="button" class="btn default" (click)="queryReset()">
+                  <i class="fa fa-times"></i>重置</button>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row margin-search height-30">
+            <div class="">
+              <div class="form-group col-md-12" style="text-align:center;">
+                <button id="btnSearch" type="button" class="btn default" (click)="initPackageInfo()">查询
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnReset" type="button" class="btn default" (click)="queryReset()">
+                  <i class="fa fa-times"></i>重置</button>
+              </div>
+            </div>
+          </div> -->
+        </form>
+        <div class="dataTables_wrapper no-footer">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th> 销售单号</th>
+                  <th> 快递单号</th>
+                  <th> 快递状态</th>
+                  <th> 发送时间</th>
+                  <th> 快递公司</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="recordTotal==0">
+                  <td class="text-center" colspan="5">没有相关记录~</td>
+                </tr>
+                <tr role="row" class="odd" *ngFor="let oditem of packageList;let odkey=index;">
+                  <td>
+                    <a (click)="getSalesMes(oditem.saleNo,1)">{{oditem.saleNo?oditem.saleNo:"——"}}</a>
+                  </td>
+                  <td><a data-toggle="modal" (click)="getDeliveryInfoLIst(oditem.deliveryNo)">{{oditem.deliveryNo?oditem.deliveryNo:"——"}}</a></td>
+                  <td>{{oditem.packageStatusDesc}}</td>
+                  <td>{{oditem.sendTimeStr}}</td>
+                  <td>{{oditem.delComName}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--pagestart-->
+          <div class="clearfix">
+            <div id="pagination1" class="page"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 销售单详情弹窗 -->
+<app-saledetail #saledetail></app-saledetail>
+<!-- 包裹详情弹窗 -->
+<app-deliverychildview #deliverychildview></app-deliverychildview>
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

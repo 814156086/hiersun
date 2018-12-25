@@ -1,0 +1,23 @@
+.brandname,.shopcode,.shopname,.shopbind{
+    margin-right: 10px;
+}
+#bind{
+    min-width: 167px;
+}
+td,th{
+    text-align: center;
+}
+#sample_6{
+    border-bottom : 1px solid #dddddd!important;
+}
+select{
+    min-width: 167px
+}
+.submitbox{
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+}
+.form-group{
+    margin-bottom: 10px
+}

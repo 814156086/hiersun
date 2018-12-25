@@ -1,0 +1,95 @@
+<div class="datalist">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-head">
+      <div class="page-title">
+        <h1>微信交易回调日志
+          <small>Wechat Jouornal</small>
+        </h1>
+      </div>
+    </div>
+    <!-- END PAGE TITLE -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="portlet-body">
+          <div class="contenttab">
+            <!--筛选-->
+            <div class="choosesx">
+              <form class="form-inline">
+                <div class="form-group col-md-4">
+                  <label for="f1">订单号：</label>
+                  <input class="form-control orderno" style="width:70%;" data-placeholder="请输入订单号"/>
+                </div>
+                <button class="btn btn-default" type="button" (click)="reset()">重置</button>
+                <button class="btn green btn-default" type="button" (click)="wechatlist()">查询</button>
+              </form>
+            </div>
+            <!--筛选-->
+            <div class="portlet box blue-hoki">
+              <!--列表头-->
+              <div class="portlet-title">
+                <div class="caption">
+                  <i class="fa fa-globe"></i>支付宝交易记录
+                </div>
+                <div class="tools">
+                  <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                </div>
+              </div>
+              <!--列表end-->
+              <!--body-->
+              <div class="portlet-body">
+  
+                <div class="table-scrollable">
+                  <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>订单号</th>
+                        <th>订单金额</th>
+                        <th>付款时间 </th>
+                        <th>付款银行</th>
+                        <th>现金支付金额</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of jornallist">
+                        <td>{{item.outTradeNo}}</td>
+                        <td>{{item.totalFee}}</td>
+                        <td>{{item.timeEnd}}</td>
+                        <td>{{item.bankType}}</td>
+                        <td>{{item.cashFee}}</td>
+                        <td>
+                          <a class="btn btn-xs btn-info" routerLink='/pay/wechatdetail' [queryParams]="{id:item.sid,type:1,page:pageNo}">
+                            <i class="fa fa-file-pdf-o"></i> 详情</a>
+                        </td>
+                      </tr>
+                      <tr *ngIf="nodata==true">
+                        <td colspan="8" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--分页页码-->
+                <div class="clearfix box">
+                  <div id="pagination1" class="page fr"></div>
+                </div>
+                <!--分页页码end-->
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="spinner" *ngIf="isload">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+  </div>
+  <div id="hint" *ngIf="isHint">
+    <div class="hintMsg">
+        <i *ngIf="warning" class="warningMsg"></i>
+        <i *ngIf="!warning" class="ok"></i>
+        <span>{{hintMsg}}</span>
+    </div>
+  </div>

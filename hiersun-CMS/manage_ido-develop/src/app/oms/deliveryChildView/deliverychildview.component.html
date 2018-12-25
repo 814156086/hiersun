@@ -1,0 +1,52 @@
+<!-- START MODAL-->
+<!-- 订单弹窗 -->
+<div class="modal fade" id="modal_order" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog order-container">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">物流信息详情</h4>
+      </div>
+      <div class="modal-body form-horizontal" style="height:500px;overflow-y:auto">
+        <!-- 1 -->
+        <div class="form-body">
+        </div>
+        <!-- 1 -->
+        <!-- 2 start tab-->
+        <div style="padding-left: 30px;margin-top: 15px;">
+          <nz-timeline>
+            <nz-timeline-item [nzDot]="dotTemplate" *ngFor="let oditem of packageList;let odkey=index;">
+              <p>{{oditem.deliveryRecord}}</p>
+              <p>{{oditem.createTimeStr}}</p>
+            </nz-timeline-item>
+          </nz-timeline>
+          <ng-template #dotTemplate>
+            <i class="anticon anticon-environment" style="font-size: 16px;"></i>
+          </ng-template>
+        </div>
+        <!-- 2 end tab-->
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <!-- <button type="button" class="btn blue" (click)="subeProMes()">保存</button> -->
+        <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END MODAL-->
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+    (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

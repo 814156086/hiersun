@@ -1,0 +1,121 @@
+{
+  "/api/v1/auth-manager": {
+    "target": "http://192.168.30.40:6002",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/v1/auth-manager": ""
+    }
+  },
+  "/pcm-core": {
+    "target": "http://192.168.4.117:7500",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/pcm-core": ""
+    }
+  },
+  "/pcm-admin": {
+    "target": "http://192.168.4.117:7600",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/pcm-admin": ""
+    }
+  },
+  "/pcm-inner": {
+    "target": "http://192.168.4.117:7700",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/pcm-inner": ""
+    }
+  },
+  "/oms-admin": {
+    "target": "http://192.168.4.117:8600",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/oms-admin": ""
+    }
+  },
+  "/oms-workflow": {
+    "target": "http://192.168.4.117:8300",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/oms-workflow": ""
+    }
+  },
+  "/barcode": {
+    "target": "http://192.168.7.113:8040/api/v1/wm-app",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/barcode": ""
+    }
+  },
+  "/tms-admin": {
+    "target": "http://192.168.4.117:9600",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/tms-admin": ""
+    }
+  },
+  "/api/v1": {
+    "target":"http://192.168.7.113:8040",
+    "secure":false,
+    "changeOrigin":true
+  },
+  "/auth": {
+    "target":"http://192.168.7.113:8040",
+    "secure":false,
+    "changeOrigin":true
+  },
+  "/api": {
+    "target":"http://cmstest.ido-love.com",
+    "secure":false,
+    "changeOrigin":true
+  },
+  "/api/v1/pay-mgr": {
+    "target": "http://192.168.30.133:7103",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/financial": ""
+    }
+  },
+  "/edi-admin": {
+    "target": "http://192.168.7.110:89",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/edi-admin": ""
+    }
+  },
+  "/customer": {
+    "target": "http://192.168.30.40:6005",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/customer": ""
+    }
+  },
+  "/api/v1/pay-mgr": {
+    "target":"http://192.168.30.34:7103",
+    "secure":false,
+    "changeOrigin":true,
+    "pathRewrite": {
+      "^/api/v1/pay-mgr": ""
+    }
+  },
+  "/api/v1/activity-mgr": {
+    "target": "http://192.168.30.34:5011",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/v1/activity-mgr": ""
+    }
+  }
+}

@@ -1,0 +1,146 @@
+<div class="page-head">
+  <div class="page-title">
+    <h1>图片管理<small>Image Manage</small></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="tabbable tabbable-custom tabbable-noborder tabbable-reversed">
+        <ul id="myTab" class="nav nav-tabs">
+            <li *ngFor="let item of groupList;let key=index" [ngClass]="{'active':key == 0}">
+              <a  data-toggle="tab"   (click)="choose(item.id)">{{item.name}}</a>
+
+            </li>
+            <a data-toggle="modal" href="#large" class="fr btn blue-hoki" (click)="upload()"><i class="fa fa-plus"></i> 上传图片</a>
+        </ul>
+        <div class="contenttab">
+          <div class="row imgset_box">
+            <div *ngFor="let imgitem of imgMain;let imgK = index;">
+              <span style="height:198px;width:198px;display:table-cell;vertical-align:middle;overflow: hidden;">
+                <img (click)="yulan($event.target)" src="{{imgitem.pictureUrl}}" alt="">
+              </span>
+              <div class="everyset">
+                <span style="z-index: 1;border-right: 1px solid #97999b;" data-toggle="modal" data-target="#myModal3" (click)="imgvalue(imgitem.id)" >删除</span><span (click)="setEvimg(imgitem.id)" data-toggle="modal" data-target="#myModalpic">查看</span>
+              </div>
+            </div>
+          </div>
+          <div class="clearfix">
+            <div id="pagination1" class="page fr"></div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<!--上传图片-->
+<div class="modal fade bs-modal-lg" id="large" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="height: 40px;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body" style="min-height: 300px;">
+        <div class="uploadbox">
+          <div class="clearfix">
+              <nz-upload
+                nzAction="/api/cms/picture/picture-upload?siteId={{chooseid}}"
+                nzListType="picture"
+                nzMultiple="true"
+                (nzChange)="mychange($event)"
+                [(nzFileList)]="fileList"
+                [nzBeforeUpload]="beforeUpload">
+                <button nz-button>
+                  <i class="anticon anticon-upload"></i><span>选择图片</span>
+                </button>
+              </nz-upload>
+            </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <!-- <div class="newgroup">
+          <div style="display: inline-block;padding:8px 10px;" >分组 :</div>
+          <span *ngFor="let groupitem of groupList;let groupkey = index" (click)="celectZU($event.target,groupitem.id)" >{{groupitem.name}}</span>
+        </div> -->
+        <button type="button" class="btn default" (click)="saveimgList()" >保存</button>
+        <button type="button" class="btn default" data-dismiss="modal" (click)="closeUp()" >取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint" >
+  <div class="hintMsg">
+      <i class="warningMsg"></i>
+      <span>{{hintMsg}}</span></div>
+</div>
+<div class="yulan_box" (click)="gbyl()" >
+  <div><img src="" alt=""></div>
+</div>
+<div id="myModal3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <input type="hidden" class="imgid"/>
+          确定要删除吗？
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button data-dismiss="modal" class="btn blue delsure" (click)="delevImg()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--编辑图片-->
+<div id="myModalpic" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalpic" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">编辑图片</font>
+          </font>
+      </h4>
+      </div>
+      <div class="modal-body">
+        <div class="setMiddle" style="min-height: 300px;" *ngFor="let setImgitem of setMsg">
+          <div class="setImgbox" *ngIf="setImgitem.picHeight < setImgitem.picWidth" style="width: 60%;margin:0 auto;">
+            <img style="width: 100%;" src="{{setImgitem.pictureUrl}}" alt="">
+          </div>
+          <div class="setImgbox" *ngIf="setImgitem.picHeight >= setImgitem.picWidth" style="width: 30%;margin:0 auto;">
+            <img style="width: 100%;" src="{{setImgitem.pictureUrl}}" alt="">
+          </div>
+          <div>
+            <h4>图片信息</h4>
+            <div class="clearfix imgMsg">
+              <span class="fl" >宽度 :</span>
+              <span class="fl" >{{setImgitem.picWidth}} px</span>
+              <span class="fl" >高度 :</span>
+              <span class="fl" >{{setImgitem.picHeight}} px</span>
+              <span class="fl" >大小 :</span>
+              <span class="fl" >{{setImgitem.picSize}} MB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--编辑图片结束-->
+
+

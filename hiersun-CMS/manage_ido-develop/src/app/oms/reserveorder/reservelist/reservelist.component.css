@@ -1,0 +1,13 @@
+.choosesx{margin-bottom: 20px;}
+.form-control{width:66%;}
+.col-md-12{margin-bottom: 10px;}
+td {
+    white-space: nowrap;
+  }
+.table-scrollable {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid #dddddd;
+    margin: 10px 0 !important;
+  }

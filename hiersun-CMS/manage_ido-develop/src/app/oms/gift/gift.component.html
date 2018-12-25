@@ -1,0 +1,212 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          补寄管理
+        </div>
+      </div>
+      <div class="portlet-body">
+        <!-- addedit -->
+        <div class="clearfix">
+          <button type="button" class="btn red" routerLink="sendgift">
+            <i class="fa fa-plus"></i>
+            添加 </button>
+        </div>
+        <!-- search -->
+        <form class="form-horizontal" id="ffSearch">
+          <div class="row margin-search sec_line">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">工单编号</label>
+                <div class="col-md-8">
+                  <input id="billNo" name="txtBillNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">订单号</label>
+                <div class="col-md-8">
+                  <input id="docValue" name="txtDocValue" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">店铺名称</label>
+                <div class="col-md-8">
+                  <select id="shopName" class="form-control" data-placeholder=" ">
+                    <option value="">请选择</option>
+                    <option *ngFor="let stoitem of storeList;let stokey=index;" value="{{stoitem.organizationCode}}">{{stoitem.organizationName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">工单状态</label>
+                <div class="col-md-8">
+                  <select id="billStatus" class="form-control">
+                    <option value="">请选择</option>
+                    <option value="1">审批中</option>
+                    <option value="2">已审批</option>
+                    <option value="3">审批不通过</option>
+                    <!-- <option *ngFor="let cityitem of cityList" value="{{cityitem.id}}">{{cityitem.name}}</option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!--  -->
+          </div>
+          <div style="text-align:center">
+            <div class="form-group">
+              <button id="btnSearch" type="button" class="btn default" (click)="initGiftWorkList()">查询
+                <i class="fa fa-search"></i>
+              </button>
+              <button id="btnReset" type="button" class="btn default" (click)="resetGiftList()">
+                <i class="fa fa-times"></i>重置</button>
+            </div>
+          </div>
+        </form>
+        <!-- table -->
+        <div id="sample_6_wrapper" class="dataTables_wrapper no-footer">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_6" role="grid"
+              aria-describedby="sample_6_info">
+              <thead>
+                <tr>
+                  <th> 操作</th>
+                  <th> 工单编号 </th>
+                  <th> 订单号 </th>
+                  <th> 工单状态</th>
+                  <th> 工单类型</th>
+                  <th> 店铺名称</th>
+                  <!-- <th> 凭证类型</th> -->
+                  <!-- <th> 商品名称</th>
+                  <th> 条码</th>
+                  <th> 产品编码</th>
+                  <th> SKU编码</th>
+                  <th> 赠送数量</th>
+                  <th> 品牌名称</th>
+                  <th> 申请原因</th>
+                  <th> 收件人电话</th>
+                  <th> 收件人姓名</th>
+                  <th> 收件地区省份</th>
+                  <th> 收件人城市</th>
+                  <th> 收货地址</th> -->
+                  <th> 创建时间</th>
+                  <th> 创建人</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="recordTotal==0">
+                  <td class="text-center" colspan="19">没有相关记录~</td>
+                </tr>
+                <tr role="row" class="odd" *ngFor="let giftitem of giftOrderList;let key=index">
+                  <td>
+                    <a href="javascript:;" class="btn btn-xs purple" *ngIf="giftitem.billStatus==1" (click)="reviewGift(giftitem.billNo,giftitem.pid,giftitem.billStatus)">
+                      审核 <i class="fa fa-file-o"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs blue" *ngIf="giftitem.billStatus==2" (click)="reviewGift(giftitem.billNo,giftitem.pid,giftitem.billStatus)">
+                      查看 <i class="fa fa-search"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs red" *ngIf="giftitem.billStatus==0||giftitem.billStatus==3"
+                      (click)="editGift(giftitem.billNo,giftitem.billType,giftitem.sid)">
+                      编辑 <i class="fa fa-edit"></i>
+                    </a>
+                  </td>
+                  <td>
+                    {{giftitem.billNo?giftitem.billNo:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.documentValue?giftitem.documentValue:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.billStatusDesc?giftitem.billStatusDesc:"——"}}
+                  </td>
+                  <td><span *ngFor="let wotitem of wotList;let wotkey=index;">{{wotitem.codeValue==giftitem.billType?wotitem.codeName:''}}</span></td>
+                  <td>
+                    {{giftitem.shopName?giftitem.shopName:"——"}}
+                  </td>
+                  <!-- <td *ngIf=" giftitem.documentType!=1">
+                    赠品类型
+                  </td>
+                  <td *ngIf="giftitem.documentType==1">
+                    订单类型
+                  </td> -->
+                  <!-- <td>
+                    {{giftitem.supplyProductName?giftitem.supplyProductName:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.supplyProductNo?giftitem.supplyProductNo:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.spuNo?giftitem.spuNo:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.skuNo?giftitem.skuNo:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.giftNum?giftitem.giftNum:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.brandName?giftitem.brandName:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.reason?giftitem.reason:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.receptPhone?giftitem.receptPhone:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.receptName?giftitem.receptName:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.receptProvName?giftitem.receptProvName:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.receptCityName?giftitem.receptCityName:"——"}}
+                  </td>
+                  <td>
+                    {{giftitem.receptAddress?giftitem.receptAddress:"——"}}
+                  </td> -->
+                  <td>
+                    {{giftitem.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                  </td>
+                  <td>
+                    {{giftitem.createUser?giftitem.createUser:'——'}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="clearfix">
+            <!-- <div class="box"> -->
+            <div id="pagination1" class="page"></div>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 审核弹窗 -->
+<!-- <app-reviewgift #reviewgift></app-reviewgift> -->
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!--确认删除弹窗end-->
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

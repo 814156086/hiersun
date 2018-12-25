@@ -1,0 +1,148 @@
+<!-- START MODAL-->
+<!-- 新增退差价单弹窗 -->
+<div class="modal fade" id="modal_editag" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog reagio-container">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <div class="modal-title">
+          <h4 style="margin-bottom: 0px;">编辑</h4>
+        </div>
+      </div>
+      <div class="modal-body form-horizontal">
+        <!-- 1 start -->
+        <div class="form-body portlet">
+          <div class="row">
+            <div class="col-md-12" *ngFor="let revitem of editItemList;let revikey=index;">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">工单编号：</label>
+                  <label class="control-label"> {{revitem.billNo?revitem.billNo:"——"}}</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">订单号：</label>
+                  <label class="control-label">
+                    {{revitem.orderNo}}
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">外部订单号：</label>
+                  <label class="control-label">
+                    {{revitem.outOrderNo}}
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">工单状态：</label>
+                  <label class="control-label"> {{revitem.billStatusDesc?revitem.billStatusDesc:"——"}}</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">工单来源：</label>
+                  <label class="control-label"> {{revitem.source?revitem.source:"——"}}</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">销售数量：</label>
+                  <label class="control-label"> {{revitem.saleNum?revitem.saleNum:"——"}}</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">销售金额：</label>
+                  <label class="control-label"> {{revitem.saleAmount|number:".2-2"}}</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">支付流水号：</label>
+                  <label class="control-label"> {{revitem.paymentNo?revitem.paymentNo:"——"}}</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">申请原因：</label>
+                  <label class="control-label"> {{revitem.reason?revitem.reason:"——"}}</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" style="float:left;">退款金额</label>
+                  <div class="col-md-6">
+                    <input id="editRefAmount" name="txtRefundAmount" type="text" class="form-control" value="{{revitem.refundAmount}}"
+                      (input)="normalInputChange($event)">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" style="float:left;">退款介质</label>
+                  <!-- <label class="control-label">
+                          {{checkedMesg.refundMedia}}</label> -->
+                  <div class="col-md-6">
+                    <select id="editRefWay" class="form-control" data-placeholder=" ">
+                      <option value="">--请选择--</option>
+                      <option *ngFor="let wayItem of refundWayList" value="{{wayItem.wayCode}}"  [attr.selected]="wayItem.wayCode==revitem.refundWay?true:null">{{wayItem.wayName}}</option>
+                      <!-- <option value="">请选择</option>
+                      <option value="1">支付宝</option>
+                      <option value="2">微信</option>
+                      <option value="3">银联</option> -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" style="float:left;">账号</label>
+                  <div class="col-md-6">
+                    <input id="editbankNo" name="txtBankNo" type="text" class="form-control" value="{{revitem.bankNo}}">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" style="float:left;">开户行</label>
+                  <div class="col-md-6">
+                    <input id="editbankName" name="txtBankName" type="text" class="form-control" value="{{revitem.bankName}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 1 end -->
+        <!-- 2 start-->
+        <!-- 2end -->
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <button type="button" class="btn blue" (click)="subEditAgio(0)">保存</button>
+        <button type="button" class="btn green" (click)="subEditAgio(1)">提交</button>
+        <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END MODAL-->
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

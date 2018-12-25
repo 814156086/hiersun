@@ -1,0 +1,545 @@
+<div class="page-head">
+  <div class="page-title">
+    <h1>
+      角色信息
+      <small> Role The Information</small>
+    </h1>
+  </div>
+</div>
+
+<div class="portlet-body col-md-12" style="background:white;">
+      <div class="col-md-3" style="padding-left:11px;">
+        <div class="portlet box blue-hoki" style="overflow:hidden;">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-globe"></i>系统管理
+            </div>
+            <div class="tools">
+              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              <a data-original-title="" title="" (click)="reloadPage()">
+                <i class="fa fa-refresh" style="color:#fff;position: relative;top:-2px;"></i>
+              </a>
+            </div>
+          </div>
+          <div class="portlet-body msg_box">
+            <div class="pleftTree">
+              <input type="hidden" name="mymsg" />
+              <button class="myclick" (click)="myclick()"></button>
+              <div class="zTreeDemoBackground">
+                <ul id="ztree" class="ztree"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="right_btn" >
+          <button class="btn green" style="margin:0 0 15px 0;" (click)="addRole()" *ngIf="appKey!=0">添加角色</button>
+        </div>
+
+        <div class="right_c col-md-14"  *ngIf="appKey!=0" >
+          <div class="portlet box blue-hoki col-md-12">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>角色列表
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <!-- 列表的标题end -->
+            <!-- body -->
+            <div class="portlet-body col-md-12">
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid"
+                  aria-describedby="sample_1_info">
+                  <thead>
+                    <tr>
+                      <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:20%">
+                        编码
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:20%">
+                        名称
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:10%">
+                        类型
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:5%">
+                        状态
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width:36%">
+                        操作
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of rolelist;let i = index">
+                      <td>{{item.key}}</td>
+                      <td>{{item.name}}</td>
+                      <td *ngIf="item.type == 3">业务角色</td>
+                      <td *ngIf='item.type == 2'>普通管理员</td>
+                      <td *ngIf="item.enabled">启用</td>
+                      <td *ngIf="!item.enabled">禁用</td>
+                      <td>
+                        <a class="btn btn-xs yellow" (click)="editRole(item.id)">
+                          <i class="fa fa-edit"></i>
+                          编辑
+                        </a>
+                        <a class="btn btn-xs red" (click)="operation(item.id,'false')" *ngIf="item.enabled">
+                          <i class="fa fa-trash-o"></i>
+                          禁用
+                        </a>
+                        <a class="btn btn-xs green" (click)="operation(item.id,'true')" *ngIf="!item.enabled">
+                          <i class="fa fa-trash-o"></i>
+                          启用
+                        </a>
+                        <a class="btn btn-xs green" (click)="link(item.key)">
+                          <i class="fa fa-trash-o"></i>
+                          关联小组
+                        </a>
+                        <a class="btn btn-xs yellow" (click)="mutex(item.id,item.key)">
+                          <i class="fa fa-trash-o"></i>
+                          互斥角色
+                        </a>
+                        <a class="btn btn-xs blue" (click)="allot(item.key)">
+                          <i class="fa fa-trash-o"></i>
+                          分配资源
+                        </a>
+                        <a class="btn btn-xs red" style="margin-top:5px" (click)="operation(item.id,'del')" *ngIf="!item.enabled && item.noDelete">
+                          删除
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--pagema-->
+              <div class="clearfix box">
+                <div id="pagination1" class="page fr"></div>
+              </div>
+              <!--pagema-->
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel2">角色添加</h4>
+      </div>
+      <div class="modal-body">
+        <div class="portlet-body col-md-12">
+          <div class="form-group col-md-12">
+            <label class="col-md-2  control-label" style="text-align:right;">
+              <span style="color:red;">
+                <font>*</font>
+              </span>
+              名称：
+            </label>
+            <div class="col-md-10">
+              <input type="text" id="name" class="form-control add_role" value="" style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2  control-label" style="text-align:right;">描述：</label>
+            <div class="col-md-10">
+              <input type="text" id="comm" class="form-control add_role" value="" style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2  control-label" style="text-align:right;">类型：</label>
+            <div class="col-md-10">
+              <input type="radio" name="type" checked value="3">业务角色
+              <input type="radio" style="margin-left:20px;" name="type" value="2">普通管理员
+
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2  control-label" style="text-align:right;">范围：</label>
+            <div class="col-md-10">
+              <input type="radio" checked name="scope" value="3">自身
+              <input style="margin-left:20px;" type="radio" name="scope" value="2">本部门及以下
+              <input style="margin-left:20px;" type="radio" name="scope" value="1">全部
+
+            </div>
+          </div>
+
+          <div class="form-group col-md-12">
+            <label class="col-md-2  control-label" style="text-align:right;">状态：</label>
+            <div class="col-md-10">
+              <input type="radio" checked name="enabled" value="true">启用
+              <input type="radio" style="margin-left:20px;" name="enabled" value="false">禁用
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" (click)="addSure()">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">角色编辑</h4>
+      </div>
+      <div class="modal-body">
+        <div class="portlet-body col-md-12" *ngFor="let item of authRole">
+          <div class="form-group col-md-12">
+            <label class="col-md-2  control-label" style="text-align:right;">编码：</label>
+            <div class="col-md-10">
+              <input type="text" id="ekey" class="form-control" disabled value="{{item.key}}" style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2  control-label" style="text-align:right;">
+              <span style="color:red;">
+                <font>*</font>
+              </span>
+              名称：</label>
+            <div class="col-md-10">
+              <input type="text" id="ename" class="form-control add_role" value="{{item.name}}" style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2  control-label" style="text-align:right;">描述：</label>
+            <div class="col-md-10">
+              <input type="text" id="ecomm" class="form-control add_role" value="{{item.comm}}" style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2  control-label" style="text-align:right;">类型：</label>
+            <div class="col-md-10">
+              <input type="radio" *ngIf="etype==3" checked name="etype" value="3">
+              <input type="radio" *ngIf="etype!=3" name="etype" value="3">
+              业务角色
+              <input type="radio" style="margin-left:20px;" checked *ngIf="etype==2" name="etype" value="2">
+              <input type="radio" style="margin-left:20px;" *ngIf="etype!=2" name="etype" value="2">
+              普通管理员
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2  control-label" style="text-align:right;">范围：</label>
+            <div class="col-md-10">
+              <input *ngIf="escope==3" type="radio" checked name="escope" value="3">
+              <input *ngIf="escope!=3" type="radio" name="escope" value="3">
+              自身
+              <input style="margin-left:20px;" *ngIf="escope==2" type="radio" checked name="escope" value="2">
+              <input style="margin-left:20px;" *ngIf="escope!=2" type="radio" name="escope" value="2">
+              本部门及以下
+              <input style="margin-left:20px;" type="radio" *ngIf="escope==1" checked name="escope" value="1">
+              <input style="margin-left:20px;" type="radio" *ngIf="escope!=1" name="escope" value="1">
+              全部
+            </div>
+          </div>
+
+          <div class="form-group col-md-12">
+            <label class="col-md-2  control-label" style="text-align:right;">状态：</label>
+            <div class="col-md-10">
+              <input type="radio" *ngIf="eenabled==true" checked name="eenabled" value="true">
+              <input type="radio" *ngIf="eenabled!=true" name="eenabled" value="true">启用
+              <input type="radio" *ngIf="eenabled==false" style="margin-left:20px;" checked name="eenabled" value="false">
+              <input type="radio" *ngIf="eenabled!=false" style="margin-left:20px;" name="eenabled" value="false">
+              禁用
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" (click)="editSure()">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--关联用户弹框-->
+<div id="myModal1" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3"
+  aria-hidden="true">
+  <div class="modal-dialog" style="width:50%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">关联小组</font>
+          </font>
+        </h4>
+      </div>
+      <div class="modal-body col-md-12">
+        <div class="head">
+          <select id="selectTag" class="col-md-6" style="border-radius: 5px;height: 35px;">
+            <option value="">请选择小组</option>
+            <option *ngFor='let item of checkList' value="{{item.key}}">{{item.name}}</option>
+          </select>
+          <div class="col-md-6">
+            <button class="btn blue" (click)="newadd()">新增小组</button>
+          </div>
+        </div>
+        <table style="margin-top:50px;" class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_1"
+          role="grid" aria-describedby="sample_1_info">
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <!-- <tr *ngFor="let item of relevanList"> -->
+            <tr *ngFor="let item of selectList">
+              <td>{{item.name}}</td>
+              <td>
+                <button class="btn btn-xs btn-warning" (click)="cancel(item.key)">取消关联</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button class="btn blue delsure" (click)="add()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--互斥角色弹框-->
+<div id="myModal3" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3"
+  aria-hidden="true">
+  <div class="modal-dialog" style="width:50%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">互斥关联</font>
+          </font>
+        </h4>
+      </div>
+      <div class="modal-body col-md-12">
+        <div class="head">
+          <select id="selectRole" class="col-md-6" style="border-radius: 5px;height: 35px;">
+            <option value="">请选择角色</option>
+            <option *ngFor='let item of checkRoleList' value="{{item.key}}">{{item.name}}</option>
+          </select>
+          <div class="col-md-6">
+            <button class="btn blue" (click)="newMutex()">新增互斥</button>
+          </div>
+        </div>
+        <table style="margin-top:50px;" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid"
+          aria-describedby="sample_1_info">
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="tbody1">
+            <!-- <tr *ngFor="let item of relevanList"> -->
+            <tr *ngFor="let item of selectMutexList">
+              <td>{{item.name}}</td>
+              <td>
+                <button class="btn btn-xs btn-warning" (click)="cancelMutex(item.key)">取消互斥</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button data-dismiss="modal" class="btn blue delsure" (click)="addMutex()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--关联用户弹框 end-->
+<!--分配资源-->
+<!-- <div id="allot" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3"
+  aria-hidden="true" style="margin-top:5%;z-index:999;">
+  <div class="modal-dialog" style="width:75%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" (click)="zcancel()">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">分配资源</font>
+          </font>
+        </h4>
+      </div>
+      <div class="modal-body col-md-12">
+        <div class="col-md-4">
+          <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>应用信息
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <input type="hidden" name="appmymsg" />
+              <button class="appmyclick" (click)="appmyclick()"></button>
+              <div class="zTreeDemoBackground">
+                <ul id="appztree" class="ztree"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>资源信息
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <nz-tree-select style="width: 100%" [nzNodes]="nodes" [nzAllowClear]="false" [nzShowExpand]="true"
+                [nzCheckable]="true" nzPlaceHolder="请选择" [(ngModel)]="value" [nzMultiple]="true" (ngModelChange)="onChange($event)">
+              </nz-tree-select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true" (click)="back()">取消</button>
+        <button data-dismiss="modal" class="btn blue delsure" (click)="resourceadd()">确认</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div id="allot" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" (click)="zcancel()">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">分配资源</font>
+          </font>
+        </h4>
+      </div>
+      <div class="modal-body col-md-12">
+
+        <!-- <div class="pleftTree">
+          <input type="hidden" name="mymsg" />
+          <button class="resourceztreeClick" (click)="resourceztreeClick()"></button>
+          <div class="zTreeDemoBackground">
+            <ul id="reztree" class="ztree"></ul>
+          </div>
+        </div> -->
+        <nz-tree [nzData]="treenodes" nzCheckable="true" nzMultiple="true" nzShowIcon="true" [nzCheckedKeys]="defaultCheckedKeys"
+          [nzExpandedKeys]="defaultExpandedKeys" [nzSelectedKeys]="defaultSelectedKeys" (nzClick)="nzEvent($event)"
+          (nzExpandChange)="nzEvent($event)" (nzCheckBoxChange)="nzEvent($event)">
+        </nz-tree>
+        <!--
+        树的数据
+        节点前添加 Checkbox 复选框
+        是否多选
+        指定选中复选框的树节点,双向绑定
+        展开指定的树节点,双向绑定
+        指定选中的树节点,双向绑定
+        点击树节点触发
+        点击展开树节点图标触发
+        点击树节点 Checkbox 触发
+       -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true" (click)="back()">取消</button>
+        <button data-dismiss="modal" class="btn blue delsure" (click)="resourceadd()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--分配资源 end-->
+
+
+<!--操作弹框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">管理</h4>
+      </div>
+      <div class="modal-body">{{message}}</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="subStatus()">确定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="back()">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--操作弹框end-->
+<!--提示语弹框-->
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">提示</h4>
+      </div>
+      <div class="modal-body">{{message}}</div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+<!-- 默认加载图标 -->
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<!-- 默认加载图标end -->
+<div class="scieen" (click)="scieen()">
+
+</div>

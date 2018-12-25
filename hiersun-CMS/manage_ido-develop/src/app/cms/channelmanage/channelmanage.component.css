@@ -1,0 +1,220 @@
+.row{display: none;}
+.shu_box .one > li {
+    cursor: pointer;
+    line-height: 40px;
+  }
+  .shu_box .one > li > div {
+    text-indent: 20px;
+    position: relative;
+    color:#53565a;
+    font-size: 16px;
+  }
+  
+  .one > li .twoChange,
+  .one > li .threeChange,
+  .one > li .fourChange {
+    position: absolute;
+    top: 9px;
+    left: -18px;
+    width: 18px;
+    height: 18px;
+    background: url("../../../assets/global/img/index.png") no-repeat -8px -6px;
+  }
+   .one > li  .oneChange {
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    background: url("../../../assets/global/img/index.png") no-repeat -8px -6px;
+  }
+  .shu_box .one > li  a {
+    text-decoration: none;
+    color:#53565a;
+  }
+  .two {
+    display: none;
+    padding-left: 30px;
+    position: relative;
+  }
+  .two > li {
+    position: relative;
+  }
+  .three {
+    display: none;
+    padding-left: 15px;
+    position: relative;
+  }
+  .three > li {
+    position: relative;
+  }
+  .four {
+      display: none;
+      padding-left: 15px;
+      position: relative;
+  }
+  .four > li {
+    position: relative;
+  }
+  .one .choose .oneChange {
+    background: url("../../../assets/global/img/index.png") no-repeat -40px -6px;
+  }
+  .one .twochoose .twoChange {
+    background: url("../../../assets/global/img/index.png") no-repeat -40px -6px;
+  }
+  .one .threechoose .threeChange {
+    background: url("../../../assets/global/img/index.png") no-repeat -40px -6px;
+  }
+  .one .choose .two {
+    display: block;
+  }
+  .one .twochoose .three {
+    display: block;
+  }
+  .one .threechoose .four {
+    display: block;
+  }
+  .channelLogo{
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+  }
+  .channelLogo img{
+    width: 100%;
+    height: 100%;
+  }
+  .logofile{
+    display: inline-block;
+  }
+  /*.setMsg{
+    display: none;
+  }*/
+  .btn_box{
+    position: relative;
+  }
+  .ismore{
+      position: absolute;
+      width: 120px;
+      line-height: 30px;
+      text-align: center;
+      right: 0;
+      bottom: 36px;
+      border-radius: 4px !important;
+      background: #eee;
+  }
+  /*.ismore a{
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    border-bottom: 1px solid #e0e1dd;
+    color: #333;
+  }*/
+  .ismore a{
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-family: Times New Roman, 宋体;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #e0e1dd;
+  }
+  .ismore>div>a:nth-last-child(1){
+    border:none;
+  }
+  #addnew_box{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,.6);
+  
+  }
+  #addnew_box .box{
+    width: 660px;
+    margin:100px auto 0;
+  }
+  .twoNo{
+    display: none;
+  }
+  .kg_btnbox {
+      width: 170px;
+      overflow: hidden;
+      height: 32px;
+      line-height: 32px;
+      position: relative;
+      top:6px;
+      border: 1px solid #e5e5e5;
+  }
+  .kg_btn{
+      width: 240px;
+      height: 32px;
+      white-space: nowrap;
+      position: absolute;
+      left: 0;
+      top: 0;
+  }
+  .kg_btn>div{
+      display: inline-block;
+      width: 80px;
+      text-align: center;
+  }
+  .lanse{
+      background: skyblue;
+  }
+  .huise{
+      background: #eee;
+  }
+  .moreset a{
+    display: block;
+    padding:8px 0 8px 10px;
+    text-decoration: none;
+    color:#333;
+  }
+  .moreset a:hover{
+    background: #e5e5e5;
+  }
+  .content_wrap{margin-top:-20px}
+  .sitetips{margin:20px auto;width:100%;text-align: center;color:#ccc;}
+  .form-group>label{
+    line-height: 32px;
+  }
+  .help-block{
+    height: 14px;
+    font-size: 12px;
+    color:red;
+  }
+  .msg_box{
+    position: relative;
+  }
+  .jubuload{
+    display: none;
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+    left:0%;
+    top:-10%;
+  }
+  .jubuload img{
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin:100px auto 0;
+  } 
+  .myclick,.moveclick,.rightclick{border:none;background: none;}
+  .lefttree{
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 4px 16px rgba(153, 153, 153, 0.2);
+    min-height: 600px;
+  }
+  .rightcon{    
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 4px 16px rgba(153, 153, 153, 0.2);
+    min-height: 600px;
+  
+  }
+  #rMenu{background: #67809F;border-radius: 4px;color: #fff;}
+  #rMenu ul li{line-height: 30px;height:30px;width:80px; cursor: pointer;text-align: center; display: none;}

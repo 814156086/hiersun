@@ -1,0 +1,16 @@
+th,
+td {
+  text-align: center;
+}
+td {
+  white-space: nowrap;
+}
+.portlet{
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+.portlet.light {
+    padding: 5px 20px 5px 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}

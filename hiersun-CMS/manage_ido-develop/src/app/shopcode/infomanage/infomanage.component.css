@@ -1,0 +1,29 @@
+*{
+    outline:none;
+}
+select,.pid{
+    width: 167px!important;
+}
+input{
+    width: 167px!important;
+}
+label{
+    margin-top: 5px;
+}
+.form-inline{
+    padding: 5px;
+}
+.form-group{
+    margin-right: 10px;
+    margin-bottom: 10px!important;
+    width: 310px;
+}
+.table{
+    border-top: 1px #ccc solid!important;
+}
+tr,td,th{
+    text-align: center;
+}
+.infoborder{
+    border: none;
+}

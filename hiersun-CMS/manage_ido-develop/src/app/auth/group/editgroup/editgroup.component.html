@@ -1,0 +1,92 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>修改小组信息
+        <small>Group edit</small>
+      </h1>
+    </div>
+  </div>
+   <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body col-md-12" style="background:white;">
+        <div class="contenttab">
+          <form class="form-horizontal" [formGroup]="formModel">
+            <div class="form-body"  *ngFor="let item of list">
+              <div class="form-group">
+                <label class="col-md-1 control-label" style="text-align: right;">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">
+                      <span style="color:red;">*</span>编号 :</font>
+                  </font>
+                </label>
+                <div class="col-md-11">
+                  <input id="key" class="form-control" value="{{item.key}}" readonly>
+
+                </div>
+              </div>
+              <!---->
+             <div class="form-group">
+                <label class="col-md-1 control-label" style="text-align: right;">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">
+                      <span style="color:red;">*</span>名称 :</font>
+                  </font>
+                </label>
+                <div class="col-md-11">
+                  <input id="name" class="form-control" [class.hasError]="formModel.get('name').invalid && formModel.get('name').touched" type="text"
+                    formControlName="name" name="name" [(ngModel)]="names" placeholder="请输入名称"  value="{{item.name}}">
+                  <div [hidden]="formModel.get('name').untouched">
+                    <div class="formtips" [hidden]="!formModel.hasError('required',['name'])">
+                      名称必填
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+              <div class="form-group">
+                  <label class="col-md-1 control-label" style="text-align: right;">
+                    <font style="vertical-align: inherit;">
+                      <font style="vertical-align: inherit;">描述：</font>
+                    </font>
+                  </label>
+                  <div class="col-md-11">
+                   <textarea id="textarea" style="width:100%;height:80px;">{{item.comm}}</textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-1 control-label" style="text-align:right;">
+                      <font style="vertical-align: inherit;">
+                          <font style="vertical-align: inherit;">状态：</font>
+                        </font>
+                  </label>
+                  <div class="col-md-11">
+                      <input  type="radio" *ngIf="item.enabled==true" checked name="eenabled" value="true">
+                      <input  type="radio" *ngIf="item.enabled!=true" name="eenabled" value="true">启用
+                    <input  type="radio" *ngIf="item.enabled==false"  style="margin-left:20px;" checked name="eenabled" value="false">
+                    <input  type="radio" *ngIf="item.enabled!=false"  style="margin-left:20px;" name="eenabled" value="false">
+                    禁用
+                  </div>
+                </div>
+              <!-- -->
+            </div>
+            <div class="form-group col-md-12">
+              <div class="col-md-1">
+
+              </div>
+              <div class="form-actions right1 col-md-11">
+                <button type="button" class="btn default" (click)="goback()">返回</button>
+                <button  class="btn blue" (click)="save()" [disabled]="formModel.invalid">保存</button><!-- [disabled]="formModel.invalid"-->
+              </div>
+
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>

@@ -1,0 +1,21 @@
+input {
+  border: 1px solid rgb(169, 169, 169);
+}
+
+th,
+td {
+  text-align: center;
+}
+
+td {
+  white-space: nowrap;
+}
+
+.gifts-container {
+  width: 70%;
+}
+
+/* .table-scrollable {
+  max-height: 300px;
+  overflow-y: auto;
+} */

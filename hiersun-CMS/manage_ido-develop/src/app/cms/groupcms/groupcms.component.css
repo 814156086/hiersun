@@ -1,0 +1,40 @@
+.allwrap{position: absolute;top:0px;left:0px;background: #fff;width:100%;padding:10px 10px 0;}
+.pagesgroup{margin-top:10px;padding-bottom:30px;}
+.modelstemplate{width:200px;background: #fff;float:left;}
+.templetgroup{width:180px;height:600px;background: #fff;float:left;overflow:hidden;padding-bottom:100px;}
+.fullpage{min-width:1000px;height:100%;overflow:auto;margin-left:20px;float:right;}
+ul,li{ list-style: none;margin:0px;padding:0px;}
+#catalog{overflow:auto;}
+#catalog ul{height:600px;overflow: auto;}
+#catalog li{border:1px solid #ccc;width:84%;float:left;margin:4%;position:relative;text-align: center;overflow: hidden;}
+.here{height: 100%;min-height: 600px;background: none;overflow: auto}
+.tmppic{width:100%;height: 100%;}
+.tmppic img{width:100%;height:100%}
+.linkchoose{margin-right:10px}
+#imggroup{height:300px;overflow: auto;}
+.listimg{margin-top:20px;overflow: auto}
+#imggroup ul.listimg li{float:left;list-style: none;width:100px;height: 140px;margin-left:15px;margin-right:15px;position:relative}
+#imggroup ul.listimg div.groupimg{border:1px solid #ccc;width:100px;height: 80px;/* display:table; */overflow:hidden;}
+#imggroup ul.listimg div.groupimg span{ display:table-cell;vertical-align:middle;width:100%;}
+#imggroup ul.listimg div.groupimg img{width:100%;}
+.maximg{position: fixed;right:0px;top:116px;width:300px;display: none;z-index:10;background:#fff;}
+.maximg img{width: 100%;}
+.imgsearchs{margin-bottom: 20px}
+.pagination{position: absolute;right: 10px;bottom: 10px;}
+#imggroup ul.listimg li div.activeborder{border:1px solid red}
+.listimg span{width: 100px;text-align: center;display: block;overflow: hidden;}
+.here .maodian{position: absolute; padding: 5px 10px; border-right: 5px; background: #000; filter:alpha(opacity=40); -moz-opacity:0.4; opacity:0.4;top:10px;left:10px;cursor: pointer;}
+.here .maodian a{color: #FFF; text-decoration: none;display: block;}
+.viewsp,.imgaddress{display: none}
+.portlet{margin-top:80px;}
+.colpick{z-index:10000;}
+#picker{width:206px;position: absolute;left:0;top:0;}
+.colorc{position: absolute;left:0px;top:0;width:20px;}
+#amount{margin-bottom:20px;}
+.leftfiexed{position: fixed;left:10px;top:80px;}
+.namerepeat,.enamerepeat{color:red;margin-right:20px;}
+.methodlink{margin-bottom: 10px;margin-top:10px;}
+.btngroup button{margin-top:10px;}
+.dialog-table label.control-label{vertical-align: top;}
+.portlet.box > .portlet-body{background: #fff;display: block}
+.form-group{margin-bottom:20px;margin-right:10px}

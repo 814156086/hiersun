@@ -1,0 +1,238 @@
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          退款信息管理
+        </div>
+      </div>
+      <div class="portlet-body">
+        <form class="form-horizontal">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">创建时间：</label>
+                <div class="col-md-7">
+                  <input type="text" id="allRefTime" class="refTime form-control" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退款单号：</label>
+                <div class="col-md-7">
+                  <input id="refundMonNo" name="txtrefundMonNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退款成功时间</label>
+                <div class="col-md-7">
+                  <input type="text" id="confirmRefMonTime" class="RefMonTime form-control" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退货单号：</label>
+                <div class="col-md-7">
+                  <input id="refundNum" name="txtRefundNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">原订单号：</label>
+                <div class="col-md-7">
+                  <input id="orderNo" name="txtorderNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">渠道订单号：</label>
+                <div class="col-md-7">
+                  <input id="outOrderNo" name="txtoutOrderNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row margin-search height-30">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">销售单号：</label>
+                <div class="col-md-7">
+                  <input id="saleNo" name="txtsaleNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">销售渠道：</label>
+                <div class="col-md-7">
+                  <select id="saleChannel" class="form-control select2me" data-placeholder=" ">
+                    <option value=""></option>
+                    <option *ngFor="let sourceitem of sourceList;let sourcekey=index;" value="{{sourceitem.channelCode}}">{{sourceitem.channelName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退款状态：</label>
+                <div class="col-md-7">
+                  <select id="reMonStatus" class="form-control">
+                    <option value="">所有</option>
+                    <option value="0">未退款</option>
+                    <option value="1">退款成功</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row margin-search height-30">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group col-md-12" style="text-align:center;">
+                <button id="btnSearch" type="button" class="btn default" (click)="loadRefundInfo()">查询
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnReset" type="button" class="btn default" (click)="queryReset()">
+                  <i class="fa fa-times"></i>重置</button>
+                <button id="btnReset" type="button" class="btn default" (click)="exportInfo()">
+                  <i class="fa fa-pencil"></i>导出</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div id="sample_6_wrapper" class="dataTables_wrapper no-footer">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover" id="sample_6" role="grid" aria-describedby="sample_6_info">
+              <thead>
+                <tr class="text-center">
+                  <th> 操作</th>
+                  <th> 退款单号</th>
+                  <th> 原订单号</th>
+                  <th> 销售单号</th>
+                  <th> 退货单号</th>
+                  <th> 销售渠道</th>
+                  <th> 渠道订单号</th>
+                  <th> 客户登录账号</th>
+                  <th> 客户编号</th>
+                  <th> 退款状态</th>
+                  <th> 创建类型</th>
+                  <th> 退款金额</th>
+                  <th> 退款介质</th>
+                  <th> 开户行</th>
+                  <th> 开户人</th>
+                  <th> 卡号</th>
+                  <th> 审核人</th>
+                  <th> 财务备注</th>
+                  <th> 创建时间</th>
+                  <th> 退款成功时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="recordTotal==0">
+                  <td class="text-center" colspan="20">没有相关记录~</td>
+                </tr>
+                <tr role="row" class="odd" *ngFor="let rfItem of refundList;let rfkey=index;">
+                  <!-- 操作 -->
+                  <td>
+                    <a href="javascript:;" class="btn btn-xs blue" (click)="viewProInfo(rfItem.refundNo,rfItem.refundMonNo,rfItem.reMonStatus,rfItem.financeMemo)">
+                      <i class="fa fa-search"></i> 查看
+                    </a>
+                  </td>
+                  <!-- <td><button type="button" class="btn green-meadow" (click)="viewProInfo(rfItem.refundNo,rfItem.refundMonNo,rfItem.reMonStatus,rfItem.financeMemo)">查看</button></td> -->
+                  <!-- 退款单号 -->
+                  <td> {{rfItem.refundNo?rfItem.refundMonNo:"——"}}</td>
+                  <!-- 原订单号 -->
+                  <td>
+                    <a (click)="getOrderItemInfo(rfItem.orderNo,1)"> {{rfItem.orderNo}}</a>
+                  </td>
+                  <!-- 销售单号 -->
+                  <td>
+                    <a (click)="getSalesMes(rfItem.saleNo,1)"> {{rfItem.saleNo}}</a>
+                  </td>
+                  <!-- 退货单号 -->
+                  <td>
+                    <a (click)="getReturnMes(rfItem.refundNo)"> {{rfItem.refundNo}}</a>
+                  </td>
+                  <!-- 销售渠道 -->
+                  <td><span *ngFor="let sourceitem of sourceList;let stokey=index;">{{sourceitem.channelCode==rfItem.orderSource?sourceitem.channelName:''}}</span></td>
+                  <!-- 渠道订单号 -->
+                  <td> {{rfItem.outOrderNo?rfItem.outOrderNo:"——"}}</td>
+                  <!-- 客户登录账号 -->
+                  <td> {{rfItem.orderNo?rfItem.orderNo:"——"}}</td>
+                  <!-- 客户编号 -->
+                  <td> {{rfItem.memberNo?rfItem.memberNo:"——"}}</td>
+                  <!-- 退款状态 -->
+                  <!-- <td> {{rfItem.reMonStatus?rfItem.reMonStatus:"——"}}</td> -->
+                  <td *ngIf="rfItem.reMonStatus==0">
+                    <span class="label label-sm label-danger">未退款</span>
+                  </td>
+                  <td *ngIf="rfItem.reMonStatus==1">
+                    <span class="label label-sm label-success">退款成功</span>
+                  </td>
+                  <td *ngIf="rfItem.reMonStatus!=0&&rfItem.reMonStatus!=1">
+                    ——
+                  </td>
+                  <!-- 创建类型 -->
+                  <td> {{rfItem.orderNo?rfItem.orderNo:"——"}}</td>
+                  <!-- 退款金额 -->
+                  <td> {{rfItem.needRefundMon?rfItem.needRefundMon:"——"}}</td>
+                  <!-- 退款介质 -->
+                  <td> {{rfItem.paymentType?rfItem.paymentType:"——"}}</td>
+                  <!-- 开户行 -->
+                  <td> {{rfItem.bankName?rfItem.bankName:"——"}}</td>
+                  <!-- 开户人 -->
+                  <td> {{rfItem.bankUser?rfItem.bankUser:"——"}}</td>
+                  <!-- 卡号 -->
+                  <td> {{rfItem.orderNo?rfItem.orderNo:"——"}}</td>
+                  <!-- 审核人 -->
+                  <td> {{rfItem.allRefUser?rfItem.allRefUser:"——"}}</td>
+                  <!-- 财务备注 -->
+                  <td> {{rfItem.financeMemo?rfItem.financeMemo:"——"}}</td>
+                  <!-- 创建时间 -->
+                  <td> {{rfItem.allRefTimeStr?rfItem.allRefTimeStr:"——"}}</td>
+                  <!-- 退款成功时间 -->
+                  <td> {{rfItem.confirmRefundTimeStr?rfItem.confirmRefundTimeStr:"——"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--pagestart-->
+          <div class="clearfix">
+            <div id="pagination1" class="page"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 订单详情弹窗 -->
+<app-orderdetail #orderdetail></app-orderdetail>
+<!-- 销售单详情弹窗 -->
+<app-saledetail #saledetail></app-saledetail>
+<!-- 退货单详情弹窗 -->
+<app-returndetail #returndetail></app-returndetail>
+
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

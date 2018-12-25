@@ -1,0 +1,372 @@
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption" *ngIf="flag==1">
+          退货单信息查询
+        </div>
+        <div class="caption" *ngIf="flag==2">
+          退货单信息管理
+        </div>
+      </div>
+      <div class="portlet-body">
+        <form class="form-horizontal" id="ffSearch">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退货时间：</label>
+                <div class="col-md-7">
+                  <input type="text" id="returnTime" class="returnDate form-control" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退货申请单号</label>
+                <div class="col-md-7">
+                  <input id="requestNum" name="txtRequestNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退货单号：</label>
+                <div class="col-md-7">
+                  <input id="refundNum" name="txtReturnNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">订单号：</label>
+                <div class="col-md-7">
+                  <input id="orderNum" name="txtOrderNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">原销售单号：</label>
+                <div class="col-md-7">
+                  <input id="originalSalesNum" name="txtoSaleNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">门店：</label>
+                <div class="col-md-7">
+                  <select id="storeCode" class="form-control select2me" data-placeholder=" ">
+                    <option value=""></option>
+                    <option *ngFor="let stoitem of storeList;let stokey=index;" value="{{stoitem.organizationCode}}">{{stoitem.organizationName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">小票号：</label>
+                <div class="col-md-7">
+                  <input id="receiptNum" name="txtReceiptNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div> -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退款状态：</label>
+                <div class="col-md-7">
+                  <select id="rebateStatus" class="form-control">
+                    <option value="">所有</option>
+                    <option value="9101">待支付</option>
+                    <option value="9102">已支付</option>
+                    <option value="9103">备货中</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退货类型：</label>
+                <div class="col-md-7">
+                  <select id="refundType" class="form-control">
+                    <option value="">所有</option>
+                    <option value="1">线上</option>
+                    <option value="2">线下</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退货单状态</label>
+                <div class="col-md-7">
+                  <select id="refundStatus" class="form-control">
+                    <option value="">所有</option>
+                    <option *ngFor="let refitem of refsList;let refkey=index;" value="{{refitem.codeValue}}">{{refitem.codeName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退货类别：</label>
+                <div class="col-md-7">
+                  <select id="returnClass" class="form-control">
+                    <option value="">所有</option>
+                    <option value="RequestReturn">正常退</option>
+                    <option value="RejectReturn">拒收退货</option>
+                    <option value="RequestCancelReturn">发货前退货</option>
+                    <option value="OOSReturn">缺货退货</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">会员卡号：</label>
+                <div class="col-md-7">
+                  <input id="memberNo" name="txtAccountNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">外部订单号：</label>
+                <div class="col-md-7">
+                  <input id="outOrderNum" name="txtOutOrderNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">手机号：</label>
+                <div class="col-md-7">
+                  <input id="receptPhone" name="txtReceptPhone" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row margin-search height-30">
+            <div class="">
+              <div class="form-group col-md-12" style="text-align:center;">
+                <button id="btnSearch" type="button" class="btn default" (click)="initReturnOrderInfo()">查询
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnReset" type="button" class="btn default" (click)="queryReset()">
+                  <i class="fa fa-times"></i>重置</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="dataTables_wrapper no-footer">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th> 操作</th>
+                  <th> 退货单号</th>
+                  <th> 订单号</th>
+                  <th> 退货申请单号</th>
+                  <th> 原销售单号</th>
+                  <th> 外部订单号</th>
+                  <th> 手机号</th>
+                  <th> 退货单状态</th>
+                  <th> 退款状态</th>
+                  <th> 会员卡号</th>
+                  <th> 退货类型</th>
+                  <th> 退货类别</th>
+                  <th> 退款路径</th>
+                  <th> 第三方退货单号</th>
+                  <th> 应退金额</th>
+                  <th> 实退金额</th>
+                  <th> 退货总数</th>
+                  <th> 门店名称</th>
+                  <th> 受理人</th>
+                  <th> 受理门店</th>
+                  <th> 退货时间</th>
+                  <th> 最后修改人</th>
+                  <th> 最后修改时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="recordTotal==0">
+                  <td class="text-center" colspan="22">没有相关记录~</td>
+                </tr>
+                <tr role="row" class="odd" *ngFor="let roitem of returnOrderList;let rokey=index;">
+                  <!-- 操作 -->
+                  <td>
+                    <!-- <a class="btn btn-xs red" href="javascript:;" *ngIf="reqitem.refundStatus==1" (click)="reviewRequest(reqitem.refundApplyNo)">
+                                          审核 <i class="fa fa-edit"></i></a> -->
+                    <a class="btn btn-xs blue" href="javascript:;" (click)="viewRequest(roitem.refundApplyNo)"><i class="fa  fa-search"></i>
+                      查看 </a>
+                    <a class="btn btn-xs green" href="javascript:;" *ngIf="flag==2&&roitem.refundStatus == '19' && roitem.refundClass != 'RequestCancelReturn' &&roitem.refundClass != 'OOSReturn'"
+                      (click)="invalidRequest(roitem.refundNo)">
+                      作废<i class="fa fa-eraser"></i></a>
+                  </td>
+                  <!-- 退货单号 -->
+                  <td>
+                    <a (click)="getReturnMes(roitem.refundNo)">{{roitem.refundApplyNo}}</a>
+                  </td>
+                  <!-- 订单号 -->
+                  <td>
+                    <a (click)="getOrderItemInfo(roitem.orderNo,1)">
+                      {{roitem.orderNo}}</a>
+                  </td>
+                  <!-- 退货申请单号 -->
+                  <td>
+                    <a (click)="getApplyItemInfo(roitem.refundApplyNo)">
+                      {{roitem.refundApplyNo}}</a>
+                  </td>
+                  <!-- 原销售单号 -->
+                  <td>
+                    <a (click)="getSalesMes(roitem.originalSalesNo,1)"> {{roitem.originalSalesNo}}</a>
+
+                  </td>
+                  <!-- 外部订单号 -->
+                  <td>
+                    <a (click)="getDetailShow(roitem.outOrderNo)"> {{roitem.outOrderNo}}</a>
+                  </td>
+                  <!-- 手机号 -->
+                  <td> {{roitem.receptPhone?roitem.receptPhone:"——"}}</td>
+                  <!-- 退货单状态 -->
+                  <td> {{roitem.refundStatusDesc?roitem.refundStatusDesc:"——"}}</td>
+                  <!-- <td *ngIf="roitem.refundStatus==1">
+                    <span class="label label-sm label-warning">待审核</span>
+                  </td>
+                  <td *ngIf="roitem.refundStatus==2">
+                    <span class="label label-sm label-danger">审核不通过</span>
+                  </td>
+                  <td *ngIf="roitem.refundStatus==4">
+                    <span class="label label-sm label-success">审核通过</span>
+                  </td>
+                  <td *ngIf="roitem.refundStatus==5">
+                    <span class="label label-sm label-primary">取消成功</span>
+                  </td>
+                  <td *ngIf="roitem.refundStatus!=1&&roitem.refundStatus!=2&&roitem.refundStatus!=4&&
+                    roitem.refundStatus!=5">
+                    ——
+                  </td> -->
+                  <!-- 退款状态 -->
+                  <td> {{roitem.rebateStatus?roitem.rebateStatus:"——"}}</td>
+                  <!-- 会员卡号 -->
+                  <td> {{roitem.memberCardNo?roitem.memberCardNo:"——"}}</td>
+                  <!-- 退货类型 -->
+                  <td *ngIf="roitem.refundType==1">
+                    <span class="label label-sm label-success">线上</span>
+                  </td>
+                  <td *ngIf="roitem.refundType==2">
+                    <span class="label label-sm label-primary">线下</span>
+                  </td>
+                  <td *ngIf="roitem.refundType!=1&&roitem.refundType!=2">
+                    ——
+                  </td>
+                  <!-- 退货类别 -->
+                  <td *ngIf="roitem.refundClass=='RequestReturn'">
+                    <span class="label label-sm label-success">正常退</span>
+                  </td>
+                  <td *ngIf="roitem.refundClass=='RejectReturn'">
+                    <span class="label label-sm label-danger">拒收退货</span>
+                  </td>
+                  <td *ngIf="roitem.refundClass=='RequestCancelReturn'">
+                    <span class="label label-sm label-primary">发货前退货</span>
+                  </td>
+                  <td *ngIf="roitem.refundClass=='OOSReturn'">
+                    <span class="label label-sm label-warning">缺货退货</span>
+                  </td>
+                  <td *ngIf="roitem.refundClass!='RequestReturn'&&roitem.refundClass!='RejectReturn'&&roitem.refundClass!='RequestCancelReturn'&&roitem.refundClass!='OOSReturn'">
+                    ——
+                  </td>
+                  <!-- 退款路径 -->
+                  <td> {{roitem.refundTarget?roitem.refundTarget:"——"}}</td>
+                  <!-- 第三方退货单号 -->
+                  <td> {{roitem.externalRefundNo?roitem.externalRefundNo:"——"}}</td>
+                  <!-- 应退金额 -->
+                  <td> {{roitem.refundAmount?roitem.refundAmount:"——"}}</td>
+                  <!-- 实退金额 -->
+                  <td> {{roitem.needRefundAmount?roitem.needRefundAmount:"——"}}</td>
+                  <!-- 退货总数 -->
+                  <td> {{roitem.refundNum?roitem.refundNum:"——"}}</td>
+                  <!-- 门店名称 -->
+                  <td> {{roitem.shopName?roitem.shopName:"——"}}</td>
+                  <!-- 受理人 -->
+                  <td> {{roitem.operator?roitem.operator:"——"}}</td>
+                  <!-- 受理门店 -->
+                  <td> {{roitem.operatorStore?roitem.operatorStore:"——"}}</td>
+                  <!-- 退货时间 -->
+                  <td> {{roitem.refundTimeStr?roitem.refundTimeStr:"——"}}</td>
+                  <!-- 最后修改人 -->
+                  <td> {{roitem.latestUpdateMan?roitem.latestUpdateMan:"——"}}</td>
+                  <!-- 最后修改时间 -->
+                  <td> {{roitem.latestUpdateTimeStr?roitem.latestUpdateTimeStr:"——"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--pagestart-->
+          <div class="clearfix">
+            <div id="pagination1" class="page"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 作废退货申请弹窗 -->
+<!-- BEGIN MODAL-->
+<div class="modal fade" id="invalid_return" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">作废退货申请单</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+        <!-- 1 -->
+        <div class="form-body">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">作废原因：</label>
+                <div class="col-md-7">
+                  <input type="text" id="invalidText" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 1 -->
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <button type="button" class="btn blue" (click)="subReason()">确定</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 退货单详情弹窗 -->
+<app-returndetail #returndetail></app-returndetail>
+<!-- 订单详情弹窗 -->
+<app-orderdetail #orderdetail (outer)="getDetailShow($event)"></app-orderdetail>
+<!-- 退货申请详情弹窗 -->
+<app-applydetail #applydetail></app-applydetail>
+<!-- 销售单详情弹窗 -->
+<app-saledetail #saledetail (outer)="getDetailShow($event)"></app-saledetail>
+<!-- 外部订单号 -->
+<app-tradedetail #tradedetail></app-tradedetail>
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

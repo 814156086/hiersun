@@ -1,0 +1,42 @@
+.showPic {
+  overflow: hidden;
+}
+
+.item_pic {
+  float: left;
+  margin: 0 15px 5px 2px;
+  width: 195px;
+  height: 170px;
+  position: relative;
+  text-align: center;
+}
+
+.item_pic img {
+  width: 195px;
+  height: 150px;
+  margin-bottom: 2px;
+  padding-top: 5px;
+}
+/* 选择框居中 */
+.md-checkbox {
+  float: left;
+  left: 25%;
+  /*position: relative;*/
+  /*width: 18px;*/
+  /*margin: 0 auto;*/
+}
+.img_close{
+  position: absolute;
+  top: 0px;
+  right: -6px;
+  border-radius: 30px;
+  height: 20px;
+  width: 20px;
+  font-size: 18px;
+  text-align: center;
+  line-height: 15px;
+  background: red;
+  color: #fff;
+  cursor: pointer;
+}
+

@@ -1,0 +1,126 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>介质
+      <small>Paymedium</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal" [formGroup]="formModel" (submit)="onSubmit()">
+        <div class="form-group">
+          <label class="col-md-2 control-label">介质名称：</label>
+          <div class="col-md-8">
+            <input class="form-control" [class.hasError]="formModel.get('name').invalid && formModel.get('name').touched"
+              type="text" formControlName="name" name="name" [(ngModel)]="name" placeholder="请输入介质名称">
+            <div [hidden]="formModel.get('name').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['name'])">
+                介质名称必填
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">介质编号：</label>
+          <div class="col-md-8">
+            <input class="form-control" [class.hasError]="formModel.get('code').invalid && formModel.get('code').touched"
+              type="text" formControlName="code" name="code" [(ngModel)]="code" placeholder="请输入介质编号">
+            <div [hidden]="formModel.get('code').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['code'])">
+                介质名称必填
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">父级编号：</label>
+          <div class="col-md-8">
+            <input class="form-control pCode" type="text" value="{{pCode}}" disabled/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">是否开发票：</label>
+          <div class="col-md-8">
+            <select  class="form-control invoice">
+              <option value="true">是</option>
+              <option value="false">否</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">备注：</label>
+          <div class="col-md-8">
+            <input class="form-control comm" type="text" value="{{comm}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">客户的类型：</label>
+          <div class="col-md-8">
+            <select  class="form-control clientType">
+                <option value="0">不限</option>
+                <option value="1">PC</option>
+                <option value="2">移动</option>
+              </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">支付类型编号：</label>
+          <div class="col-md-8">
+              <select class="form-control typeCode">
+                <option *ngFor="let item of paytype" value="{{item.id}}">{{item.value}}</option>
+              </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">版本号：</label>
+          <div class="col-md-8">
+            <input class="form-control version" type="text" value="{{version}}" />
+          </div>
+        </div>
+        <!--商户详情-->
+        <div class="form-group" *ngIf="timeshowhide">
+          <label class="col-md-2 control-label">
+            <span style="color:red;"></span>创建时间：</label>
+          <div class="col-md-8">
+            <input class="form-control" name="creattime" value="{{createTime | date:'yyyy-MM-dd HH:mm:ss'}}" type="text">
+          </div>
+        </div>
+        <div class="form-group" *ngIf="timeshowhide">
+          <label class="col-md-2 control-label">
+            <span style="color:red;"></span>更新时间：</label>
+          <div class="col-md-8">
+            <input class="form-control" name="updatetime" value="{{updateTime | date:'yyyy-MM-dd HH:mm:ss'}}" type="text">
+          </div>
+        </div>
+        <div class="form-group" *ngIf="btnshowhide">
+          <label class="col-md-3 control-label">
+            <button type="submit" class="btn purple" id="save" [disabled]="formModel.invalid">保存</button>
+            <button type="reset" class="btn blue-hoki">重置</button>
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </label>
+        </div>
+        <div class="form-group" *ngIf="!btnshowhide">
+          <label class="col-md-2 control-label"></label>
+          <div class="col-md-8">
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

@@ -1,0 +1,841 @@
+<!-- 订单详情 -->
+<div class="modal fade" id="modal_order" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="overflow: hidden!important">
+  <div class="modal-dialog order-container" style="width: 1100px">
+    <div class="modal-content" style="max-height: 600px;overflow-y: auto">
+      <div class="modal-header" style="padding: 15px 20px 0 20px;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <div class="modal-title">
+          <h4>订单详情</h4>
+        </div>
+      </div>
+      <div class="modal-body form-horizontal">
+        <!-- 1 -->
+        <div class="form-body" style="width: 1050px">
+          <div class="table-fofy" *ngFor="let oditem of detailOrder">
+            <fieldset id="fiel" name="fiel">
+              <legend style="font-size: 16px">订单详情：</legend>
+              <div class="row" style="margin-left:0px;">
+                <div class="col-md-12">
+                  <div class="col-md-6"  *ngIf='!oditem.checkPassed'>
+                    <div class="form-group">
+                      <label class="control-label">是否异常订单：</label>
+                      <label class="control-label"><span class="label label-sm label-danger">是</span></label>
+                    </div>
+                  </div>
+                  <div class="col-md-12" *ngIf='oditem.checkMsg'>
+                    <div class="form-group">
+                      <label class="control-label" style="float: left">订单异常信息：</label>
+                      <label class="control-label col-md-10" style="text-align: left;color: #f00">{{oditem.checkMsg}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">天猫交易号：</label>
+                      <label class="control-label"> {{oditem.tid}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">支付宝交易号：</label>
+                      <label class="control-label">{{oditem.alipayNo}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">天猫交易状态：</label>
+                      <label class="control-label" *ngIf='"TRADE_NO_CREATE_PAY" == oditem.status'>等待付款</label>
+                      <label class="control-label" *ngIf='"WAIT_BUYER_PAY" == oditem.status'>等待付款</label>
+                      <label class="control-label" *ngIf='"SELLER_CONSIGNED_PART" == oditem.status'>部分发货</label>
+                      <label class="control-label" *ngIf='"WAIT_SELLER_SEND_GOODS" == oditem.status'>等待发货</label>
+                      <label class="control-label" *ngIf='"WAIT_BUYER_CONFIRM_GOODS" == oditem.status'>已发货</label>
+                      <label class="control-label" *ngIf='"TRADE_BUYER_SIGNED" == oditem.status'>已签收</label>
+                      <label class="control-label" *ngIf='"TRADE_FINISHED" == oditem.status'>交易完成</label>
+                      <label class="control-label" *ngIf='"TRADE_CLOSED" == oditem.status'>发货前退款</label>
+                      <label class="control-label" *ngIf='"TRADE_CLOSED_BY_TAOBAO" == oditem.status'>未支付取消</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">是否预售交易：</label>
+                      <label class="control-label" *ngIf='oditem.topPreSale'>是</label>
+                      <label class="control-label" *ngIf='!oditem.topPreSale'>否</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <div class="row" style="margin-left: 0px;" *ngIf='oditem.omsErrorMsg'>
+              <div class="col-md-2 control-label" style="text-align: center">
+                异常信息：
+              </div>
+              <div class="col-md-10">
+                <div class="col-md-6" *ngIf='oditem.omsErrorMsg'>
+                  <div class="form-group">
+                    <label class="control-label" style="float: left">异常信息：</label>
+                    <label class="control-label col-md-9" style="text-align: left">{{oditem.omsErrorMsg}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--<div class="row" style="margin-left:0px;">
+              <div class="col-md-2 control-label" style="text-align: center">
+                支付信息：
+              </div>
+              <div class='col-md-10'>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">交易总金额：</label>
+                    <label class="control-label">
+                      {{oditem.totalFee}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">使用积分：</label>
+                    <label class="control-label">{{oditem.pointFee}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">邮费：</label>
+                    <label class="control-label">{{oditem.postFee}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">交易优惠：</label>
+                    <label class="control-label">{{oditem.discountFee}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">实际应付金额：</label>
+                    <label class="control-label">
+                      {{oditem.payment}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">付款时间：</label>
+                    <label class="control-label">
+                      {{oditem.payTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">确认收货金额：</label>
+                    <label class="control-label"> {{oditem.receivedPayment}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">交易佣金：</label>
+                    <label class="control-label">
+                      {{oditem.commissionFee}}
+                      </label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">剩余确认收货金额：</label>
+                    <label class="control-label"> {{oditem.availableConfirmFee}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="margin-left:0px;">
+              <div class="col-md-2 control-label" style="text-align: center">
+                发票信息：
+              </div>
+              <div class='col-md-10'>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">发票抬头：</label>
+                    <label class="control-label">
+                      {{oditem.invoiceName}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">发票类型：</label>
+                    <label class="control-label">
+                      {{oditem.invoiceType}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="margin-left:0px;">
+              <div class="col-md-2" style="text-align: center">
+                其他信息：
+              </div>
+              <div class="col-md-10">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">买家支付宝账号：</label>
+                    <label class="control-label">
+                      {{oditem.buyerAlipayNo}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">邮件地址：</label>
+                    <label class="control-label">
+                      {{oditem.buyerEmail}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">买家昵称：</label>
+                    <label class="control-label">
+                      {{oditem.buyerNick}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">买家获得积分：</label>
+                    <label class="control-label">
+                      {{oditem.buyerObtainPointFee}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">定制：</label>
+                    <label class="control-label" *ngIf='!oditem.hasCustomizationOrder'>无订制商品</label>
+                    <label class="control-label" *ngIf='oditem.hasCustomizationOrder && !oditem.hasAllCOrderBind'>有且需要定制核价</label>
+                    <label class="control-label" *ngIf='oditem.hasCustomizationOrder && oditem.hasAllCOrderBind && !oditem.hasAllCOrderPass'>均已定制核价但有未审核</label>
+                    <label class="control-label" *ngIf='oditem.hasCustomizationOrder && oditem.hasAllCOrderBind && oditem.hasAllCOrderPass'>全部已审核</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label" style="float: left">订单号：</label>
+                    <label class="control-label col-md-9" style="text-align: left">{{oditem.omsOrderNo}}</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label" style="float: left">买家留言：</label>
+                    <label class="control-label col-md-9" style="text-align: left" *ngIf='oditem.checkMsg'>{{oditem.buyerMessage}}</label>
+                    <label class="control-label col-md-9" *ngIf='!oditem.checkMsg'>-</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label" style="float: left">卖家备注：</label>
+                    <label class="control-label col-md-9" style="text-align: left">{{oditem.sellerMemo}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>-->
+          </div>
+        </div>
+
+        <div class="form-body">
+          <div class="portlet-tabs" style="margin-top: 10px">
+            <ul class="nav nav-tabs tab-orders title">
+              <li class="active">
+                <a href="#detailtab_5_1" class="detailtab_1" data-toggle="tab">
+                  支付信息 </a>
+              </li>
+              <li>
+                <a href="#detailtab_5_2" class="detailtab_2" data-toggle="tab">
+                  发票信息 </a>
+              </li>
+              <li>
+                <a href="#detailtab_5_3" class="detailtab_3" data-toggle="tab">
+                  其他信息 </a>
+              </li>
+              <li>
+                <a href="#detailtab_5_4" class="detailtab_4" data-toggle="tab">
+                  天猫订单行 </a>
+              </li>
+              <li id="discounts">
+                <a href="#detailtab_5_5" class="detailtab_5" data-toggle="tab">
+                  优惠信息 </a>
+              </li>
+            </ul>
+            <div class="tab-content" id="ttab">
+              <div  *ngFor='let oditem of detailOrder;let i = index' class="tab-pane active table-scrollable table-ofy" id="detailtab_5_1">
+                <div class="row" style="margin-left:0px;">
+                  <!--<div class="col-md-2 control-label" style="text-align: center">
+                    支付信息：
+                  </div>-->
+                  <div class='col-md-12'>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">交易总金额：</label>
+                        <label class="control-label payment_info">
+                          {{oditem.totalFee |  number:'.2-2'}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">使用积分：</label>
+                        <label class="control-label payment_info">{{oditem.pointFee |  number:'.2-2'}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">邮费：</label>
+                        <label class="control-label payment_info">{{oditem.postFee |  number:'.2-2'}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">交易优惠：</label>
+                        <label class="control-label payment_info">{{oditem.discountFee |  number:'.2-2'}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">实际应付金额：</label>
+                        <label class="control-label payment_info">
+                          {{oditem.payment | number:'.2-2'}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">付款时间：</label>
+                        <label class="control-label">
+                          {{oditem.payTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">确认收货金额：</label>
+                        <label class="control-label payment_info"> {{oditem.receivedPayment | number:'.2-2'}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">交易佣金：</label>
+                        <label class="control-label payment_info2">
+                          {{oditem.commissionFee | number:'.2-2'}}
+                          </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">剩余确认收货金额：</label>
+                        <label class="control-label payment_info"> {{oditem.availableConfirmFee | number:'.2-2'}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div  *ngFor='let oditem of detailOrder;let i = index' class="tab-pane table-scrollable table-ofy" id="detailtab_5_2">
+                <div class="row" style="margin-left:0px;">
+                  <!--<div class="col-md-2 control-label" style="text-align: center">
+                    发票信息：
+                  </div>-->
+                  <div class='col-md-12'>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="control-label">发票抬头：</label>
+                        <label class="control-label">
+                          {{oditem.invoiceName}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="control-label">发票类型：</label>
+                        <label class="control-label">
+                          {{oditem.invoiceType}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6" *ngIf='oditem.buyerTaxNO'>
+                      <div class="form-group">
+                        <label class="control-label">纳税人识别号：</label>
+                        <label class="control-label">
+                          {{oditem.buyerTaxNO}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div  *ngFor='let oditem of detailOrder;let i = index' class="tab-pane table-scrollable table-ofy" id="detailtab_5_3">
+                <div class="row" style="margin-left:0px;">
+                  <!--<div class="col-md-2" style="text-align: center">
+                    其他信息：
+                  </div>-->
+                  <div class="col-md-12">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">买家支付宝账号：</label>
+                        <label class="control-label">
+                          {{oditem.buyerAlipayNo}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">邮件地址：</label>
+                        <label class="control-label">
+                          {{oditem.buyerEmail}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">买家昵称：</label>
+                        <label class="control-label">
+                          {{oditem.buyerNick}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">买家获得积分：</label>
+                        <label class="control-label">
+                          {{oditem.buyerObtainPointFee}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">创建时间：</label>
+                        <label class="control-label">
+                          {{oditem.created | date:'yyyy-MM-dd HH:mm:ss'}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">修改时间：</label>
+                        <label class="control-label">
+                          {{oditem.modified | date:'yyyy-MM-dd HH:mm:ss'}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">发货时间：</label>
+                        <label class="control-label">
+                          {{oditem.consignTime | date:'yyyy-MM-dd HH:mm:ss'}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">定制：</label>
+                        <label class="control-label" *ngIf='!oditem.hasCustomizationOrder'>无订制商品</label>
+                        <label class="control-label" *ngIf='oditem.hasCustomizationOrder && !oditem.hasAllCOrderBind'>有且需要定制核价</label>
+                        <label class="control-label" *ngIf='oditem.hasCustomizationOrder && oditem.hasAllCOrderBind && !oditem.hasAllCOrderPass'>均已定制核价但有未审核</label>
+                        <label class="control-label" *ngIf='oditem.hasCustomizationOrder && oditem.hasAllCOrderBind && oditem.hasAllCOrderPass'>全部已审核</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label" style="float: left">订单号：</label>
+                        <label class="control-label col-md-9" style="text-align: left">{{oditem.omsOrderNo}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="control-label" style="float: left">买家留言：</label>
+                        <label class="control-label col-md-9" style="text-align: left" *ngIf='oditem.checkMsg'>{{oditem.buyerMessage}}</label>
+                        <label class="control-label col-md-9" *ngIf='!oditem.checkMsg'>-</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="control-label" style="float: left">卖家备注：</label>
+                        <label class="control-label col-md-9" style="text-align: left">{{oditem.sellerMemo}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style='border: none' class="tab-pane table-scrollable table-ofy" id="detailtab_5_4">
+                <div class="form-body">
+                  <div class="portlet-tabs">
+                    <ul id="tabs-nav" class="nav nav-tabs tab-orders"></ul>
+                    <div id="tab-content" class="tab-content">
+                      <div style="border: none" *ngFor='let item of topChildOrders;let i = index' class="tab-pane table-scrollable table-ofy" id="otab_{{i}}">
+
+                        <div class="form-body">
+                          <div class="portlet-tabs">
+                            <ul id="child-tabs-nav" class="nav nav-tabs tab-orders ">
+                              <li class="active">
+                                <a href="#childtab_{{i}}_1" class="childtab_{{i}}_1" data-toggle="tab">
+                                  订单状态 </a>
+                              </li>
+                              <li>
+                                <a href="#childtab_{{i}}_2" class="childtab_{{i}}_2" data-toggle="tab">
+                                  支付信息 </a>
+                              </li>
+                              <li>
+                                <a href="#childtab_{{i}}_3" class="childtab_{{i}}_3" data-toggle="tab">
+                                  商品信息 </a>
+                              </li>
+                            </ul>
+                            <div id="childcontent" class="tab-content">
+                              <div style="border: none" class="tab-pane active table-scrollable table-ofy" id="childtab_{{i}}_1">
+                                <!--<fieldset>
+                                  <legend style="font-size: 16px">订单状态：</legend>-->
+                                  <div class="row" style="margin:0px;">
+                                    <div class="col-md-12">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-2">异常信息：</label>
+                                        <label class="control-label col-md-10" style="color: #f00" *ngIf='item.error'>{{item.error}}</label>
+                                        <label class="control-label col-md-10" *ngIf='!item.error'>正常订单</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-12" *ngIf='item.error'>
+                                      <div class="form-group">
+                                        <button id="btnSearch" style='margin-left:15px' type="button" class="btnstyle btn default" (click)="updateOrder(item)">修改子订单
+                                          <i class="fa fa-wrench"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">子订单编号：</label>
+                                        <label class="control-label col-md-7"> {{item.oid}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-6">OMS订单商品行号：</label>
+                                        <label class="control-label col-md-6">{{item.orderItemSid}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">销售单号：</label>
+                                        <label class="control-label col-md-7">{{item.subOrderSid}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">所属EDI拆单号：</label>
+                                        <label class="control-label col-md-7" *ngIf='item.splitTid'>{{item.splitTid}}</label>
+                                        <label class="control-label col-md-7" *ngIf='!item.splitTid'>EDI未能成功拆单</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">商家Sku编号：</label>
+                                        <label class="control-label col-md-7"> {{item.outerSkuId}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">购买数量：</label>
+                                        <label class="control-label col-md-7">{{item.num}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">发货状态：</label>
+                                        <label class="control-label col-md-7">{{item.sendStatus}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">卖家发货时间：</label>
+                                        <label class="control-label col-md-7">{{item.consignTime | date:'yyyy-MM-dd HH:mm:ss'}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">快递公司名称：</label>
+                                        <label class="control-label col-md-7">{{item.logisticsCompany}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">运单号：</label>
+                                        <label class="control-label col-md-7">{{item.logisticsNo}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">退款状态：</label>
+                                        <label *ngIf='item.refundStatus=="NO_REFUND"' class="control-label col-md-7">无退款</label>
+                                        <label *ngIf='item.refundStatus=="WAIT_SELLER_AGREE"' class="control-label col-md-7">退款申请审核中</label>
+                                        <label *ngIf='item.refundStatus=="WAIT_BUYER_RETURN_GOODS"' class="control-label col-md-7">审核通过待退货</label>
+                                        <label *ngIf='item.refundStatus=="WAIT_SELLER_CONFIRM_GOODS"' class="control-label col-md-7">等待卖家确认收货</label>
+                                        <label *ngIf='item.refundStatus=="SELLER_REFUSE_BUYER"' class="control-label col-md-7">卖家拒绝退款</label>
+                                        <label *ngIf='item.refundStatus=="CLOSED"' class="control-label col-md-7">退款关闭</label>
+                                        <label *ngIf='item.refundStatus=="SUCCESS"' class="control-label col-md-7">退款成功</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">最近退款ID：</label>
+                                        <label class="control-label col-md-7">{{item.refundId}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">交易结束时间：</label>
+                                        <label class="control-label col-md-7">{{item.endTime | date:'yyyy-MM-dd HH:mm:ss'}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">修改时间：</label>
+                                        <label class="control-label col-md-7">{{item.modified | date:'yyyy-MM-dd HH:mm:ss'}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-4">订单状态：</label>
+                                        <label class="control-label col-md-8" *ngIf='item.status == "TRADE_NO_CREATE_PAY"'>没有创建支付宝交易</label>
+                                        <label class="control-label col-md-8" *ngIf='item.status == "WAIT_BUYER_PAY"'>等待买家付款</label>
+                                        <label class="control-label col-md-8" *ngIf='item.status == "WAIT_SELLER_SEND_GOODS"'>等待卖家发货(买家已付款)</label>
+                                        <label class="control-label col-md-8" *ngIf='item.status == "WAIT_BUYER_CONFIRM_GOODS"'>等待买家确认收货(卖家已发货)</label>
+                                        <label class="control-label col-md-8" *ngIf='item.status == "TRADE_BUYER_SIGNED"'>买家已付款(货到付款专用)</label>
+                                        <label class="control-label col-md-8" *ngIf='item.status == "TRADE_FINISHED"'>交易成功</label>
+                                        <label class="control-label col-md-8" *ngIf='item.status == "TRADE_CLOSED"'>付款后用户退款成功,交易关闭</label>
+                                        <label class="control-label col-md-8" *ngIf='item.status == "TRADE_CLOSED_BY_TAOBAO"'>付款前,买家或卖家主动关闭交易</label>
+                                        <label class="control-label col-md-8" *ngIf='item.status == "PAY_PENDING"'>国际信用卡支付付款确认中</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-3">SKU属性值：</label>
+                                        <label class="control-label col-md-8">{{item.skuPropertiesName}}</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                <!--</fieldset>-->
+                              </div>
+                              <div style="border: none" class="tab-pane table-scrollable table-ofy" id="childtab_{{i}}_2">
+                                <!--<fieldset>-->
+                                  <!--<legend style="font-size: 16px">支付信息：</legend>-->
+                                  <div class="row" style="margin: 0">
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">应付金额：</label>
+                                        <label class="control-label col-md-7"> {{item.totalFee |  number:'.2-2'}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">子订单优惠金额：</label>
+                                        <label class="control-label col-md-7">{{item.discountFee |  number:'.2-2'}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">主订单优惠分摊：</label>
+                                        <label class="control-label col-md-7">{{item.partMjzDiscount |  number:'.2-2'}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">分摊后实付金额：</label>
+                                        <label class="control-label col-md-7">{{item.divideOrderFee |  number:'.2-2'}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">子订单实付金额：</label>
+                                        <label class="control-label col-md-7">{{item.payment |  number:'.2-2'}}</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                <!--</fieldset>-->
+                              </div>
+                              <div style="border: none" class="tab-pane table-scrollable table-ofy" id="childtab_{{i}}_3">
+                                <!--<fieldset>-->
+                                  <!--<legend style="font-size: 16px">商品信息：</legend>-->
+                                  <div class="row" style="margin:0px;">
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">商品类型：</label>
+                                        <label class="control-label col-md-7" *ngIf='"V_CODE" == item.itemType'>V条码商品</label>
+                                        <label class="control-label col-md-7" *ngIf='"MODEL_IN_STOCK" == item.itemType'>版库现货</label>
+                                        <label class="control-label col-md-7" *ngIf='"MODEL_CUSTOMIZATION" == item.itemType'>版库定制</label>
+                                        <label class="control-label col-md-7" *ngIf='"PATCH" == item.itemType'>起版费</label>
+                                        <label class="control-label col-md-7" *ngIf='!item.itemType'>未知</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">商品数字ID：</label>
+                                        <label class="control-label col-md-7"> {{item.numIid}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">商家商品编码：</label>
+                                        <label class="control-label col-md-7">{{item.outerIid}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-5">商品价格：</label>
+                                        <label class="control-label col-md-7">{{item.price |  number:'.2-2'}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                      <div class="form-group">
+                                        <label class="control-label col-md-3">商品标题：</label>
+                                        <label class="control-label col-md-8">{{item.title}}</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                <!--</fieldset>-->
+                              </div>
+                            </div>
+                          </div>
+                        </div> 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style='border: none' class="tab-pane table-scrollable table-ofy" id="detailtab_5_5">
+                <div class="form-body">
+                  <div class="portlet-tabs">
+                    <ul id="tabs-nav2" class="nav nav-tabs tab-orders"></ul>
+                    <div id="tab-content2" class="tab-content">
+                      <div *ngFor='let item of discounts;let i = index' class="tab-pane table-scrollable table-ofy" id="tab_{{i}}">
+                        <div class="row" style="margin:0px;" *ngIf='!item.giftItemNum'>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label col-md-5">优惠信息的名称：</label>
+                              <label class="control-label col-md-7">{{item.promotionName}}</label>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label col-md-5">优惠活动的描述：</label>
+                              <label class="control-label col-md-7"> {{item.promotionDesc}}</label>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label col-md-5">优惠金额：</label>
+                              <label class="control-label col-md-7"> {{item.discountFee |  number:'.2-2'}}</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row" style="margin:0px;" *ngIf='!item.giftItemNum'>
+                          <div class="col-md-4">
+                            <div class="form-group" *ngIf='item.oid'>
+                              <label class="control-label col-md-5">子订单号：</label>
+                              <label class="control-label col-md-7">{{item.oid}}</label>
+                            </div>
+                          </div>
+                          <div class="col-md-4" *ngIf='item.error'>
+                            <div class="form-group">
+                              <label class="control-label col-md-5">异常信息：</label>
+                              <label class="control-label col-md-7">{{item.error}}</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row" style="margin:0px;" *ngIf='item.giftItemNum'>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label col-md-5">满赠商品名称：</label>
+                              <label class="control-label col-md-7"> {{item.giftItemName}}</label>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label col-md-5">满赠礼物数量：</label>
+                              <label class="control-label col-md-7">{{item.giftItemNum}}</label>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label col-md-5">优赠品的宝贝id：</label>
+                              <label class="control-label col-md-7">{{item.giftItemId}}</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row" style="margin:0px;" *ngIf='item.giftItemNum'>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label col-md-5">赠送商品编码：</label>
+                              <label class="control-label col-md-7">{{item.itemCode}}</label>
+                            </div>
+                          </div>
+                          <!--<div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label col-md-5">赠品商品类型：</label>
+                              <label class="control-label col-md-7"> {{item.itemType}}</label>
+                            </div>
+                          </div>-->
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label col-md-5">子订单号：</label>
+                              <label class="control-label col-md-7">{{item.oid}}</label>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label col-md-5">异常信息：</label>
+                              <label class="control-label col-md-7">{{item.error}}</label>
+                            </div>
+                          </div> 
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--更新子订单商家编码和sku-->
+<div id="item-update-order" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;">×</span>
+          </span>
+        </button>
+        <h4 class="modal-title">
+          <span style="vertical-align: inherit;">
+            <span style="vertical-align: inherit;">更新商家编码和sku</span>
+          </span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="ffSearch">
+          <div class="row margin-search height-30">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">子订单编号：</label>
+                <div class="col-md-7">
+                  <input class='form-control' disabled='disabled' id="item-update-order-oid" style='width: 100%' type="text" placeholder="请输入子订单编号">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">商家商品编码：</label>
+                <div class="col-md-7">
+                  <input class='form-control' id="item-update-order-outerIid" style='width: 100%' type="text" placeholder="请输入商家外部编码">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">商家sku编码：</label>
+                <div class="col-md-7">
+                  <input class='form-control' id="item-update-order-outerSkuId" style='width: 100%' type="text"
+                         placeholder="请输入网点自定义sku编号">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a class="desc"></a>
+        <button class="btn blue delsure" (click)="updateOrdering()">确认</button>
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+      </div>
+    </div>
+  </div>
+</div>

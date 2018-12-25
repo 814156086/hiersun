@@ -1,0 +1,122 @@
+<div class="datalist">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-head">
+      <div class="page-title">
+        <h1>支付渠道
+          <small>Pay Manage</small>
+        </h1>
+      </div>
+    </div>
+    <!-- END PAGE TITLE -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="portlet-body">
+          <div class="contenttab">
+            <a class="btn blue-hoki" routerLink='/pay/addchannel' [queryParams]="{page:pageNo}" style="margin-bottom:20px;">
+              <i class="fa fa-plus"></i> 添加</a>
+            <!--筛选-->
+            <div class="choosesx">
+              <form class="form-inline clearfix">
+                <div class="form-group col-md-4 col-sm-6 col-xs-12" style='margin-bottom: 10px'>
+                  <div class="col-md-4" style='padding-top: 3px'>
+                    <label>商户ID：</label>
+                  </div>
+                  <div class="col-md-8">
+                    <select id="businessid" class="form-control pageeng" style="width:100%;">
+                        <option value=""></option>
+                        <option *ngFor="let item of businessidlist;let itemkey=index;" value="{{item.mchId}}">{{item.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                  <button class="btn btn-default" type="button" (click)="reset()">重置</button>
+                  <button class="btn green btn-default" type="button" (click)="payqudaolist()">查询</button>
+                </div>
+              </form>
+            </div>
+            <!--筛选-->
+            <div class="portlet box blue-hoki">
+              <!--列表头-->
+              <div class="portlet-title">
+                <div class="caption">
+                  <i class="fa fa-globe"></i>渠道列表
+                </div>
+                <div class="tools">
+                  <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                </div>
+              </div>
+              <!--列表end-->
+              <!--body-->
+              <div class="portlet-body">
+  
+                <div class="table-scrollable">
+                  <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>商户ID</th>
+                        <th>渠道名称</th>
+                        <th>支付渠道</th>
+                        <th>平台名称</th>
+                        <th>平台编号</th>
+                        <th>备注</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of qudaolist">
+                        <td>{{item.mchId}}</td>
+                        <td>{{item.mchChannel}}</td>
+                        <td>
+                          <span *ngIf="item.channel=='WXPAY'">微信</span>
+                          <span *ngIf="item.channel!='WXPAY'">支付宝</span>
+                        </td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.pid}}</td>
+                        <td>
+                            <span *ngIf="item.remark==null">--</span>
+                            <span *ngIf="item.remark!=null">{{item.remark}}</span>
+                        </td>
+                        <td>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>
+                          <a class="btn btn-xs btn-info" routerLink='/pay/addchannel' [queryParams]="{mchid:item.mchId,mchchannel:item.mchChannel,pid:item.pid,type:1,page:pageNo}">
+                              <i class="fa fa-file-pdf-o"></i> 详情</a>
+                          <a class="btn btn-xs btn-info green" routerLink='/pay/addchannel' [queryParams]="{mchid:item.mchId,mchchannel:item.mchChannel,pid:item.pid,type:2,page:pageNo}">
+                            <i class="fa fa-edit"></i> 编辑</a>
+                            <a class="btn btn-xs btn-info yellow" *ngIf="item.channel=='WXPAY'" routerLink='/pay/wxapply' [queryParams]="{mchid:item.mchId,mchchannel:item.mchChannel,pid:item.pid}">
+                              <i class="fa fa-edit"></i> 应用</a>
+                              <a class="btn btn-xs btn-info yellow" *ngIf="item.channel!='WXPAY'" routerLink='/pay/zfbapplylist' [queryParams]="{mchid:item.mchId,mchchannel:item.mchChannel,pid:item.pid}">
+                                  <i class="fa fa-edit"></i> 应用</a>
+                        </td>
+                      </tr>
+                      <tr *ngIf="nodata">
+                        <td colspan="8" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--分页页码-->
+                <div class="clearfix box">
+                  <div id="pagination1" class="page fr"></div>
+                </div>
+                <!--分页页码end-->
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="spinner" *ngIf="isload">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+  </div>
+  <div id="hint" *ngIf="isHint">
+    <div class="hintMsg">
+      <i *ngIf="warning" class="warningMsg"></i>
+      <i *ngIf="!warning" class="ok"></i>
+      <span>{{hintMsg}}</span>
+    </div>
+  </div>

@@ -1,0 +1,131 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="glyphicon glyphicon-chevron-left back_hand" (click)="goBack()"></i>编辑模板信息
+        </div>
+        <!-- <div class="tools">
+          <a href="javascript:;" class="collapse">
+          </a>
+          <a href="javascript:;" class="reload">
+          </a>
+        </div> -->
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <div class="form-horizontal">
+          <div class="form-body">
+            <div class="form-group">
+              <label class="col-md-3 control-label">模板名称
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="text" class="form-control _modelName" placeholder="必填" required value="{{editInfo.name}}">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">模板业务key
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="text" class="form-control _modelKey" value="{{editInfo.businessKey}}" placeholder="点击选择模板业务" readonly style="cursor: pointer" (click)="initBizTreeModal()" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">模板描述
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="text" class="form-control _modelDesc" placeholder="必填" value="{{editInfo.desc}}" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">模板类型
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <select id="_modelType" class="form-control" data-placeholder=" ">
+                  <option value="0" selected >BPMN</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn blue" (click)="subUpdateModelInfo()">保存</button>
+                <button type="reset" class="btn default" (click)="goBack()">取消</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END FORM-->
+      </div>
+    </div>
+  </div>
+</div>
+<!--业务树modal-->
+<div class="modal fade" id="bizTreeModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="top: 15%;width: 350px;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">选择业务信息</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+        <div class="content_wrap">
+          <input type="hidden" name="mymsg">
+          <button class="myclick" (click)="selectedBizInfo()" style="opacity: 0;"></button>
+          <div class="zTreeDemoBackground">
+            <ul id="bizTree" class="ztree"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 提示信息 -->
+<!-- <div id="hint" *ngIf="!isHint">
+  <div class="hintMsg">{{hintMsg}}
+  </div>
+</div>-->
+<!-- <div id="sureBack" *ngIf="!isBack">
+  <div class="back_box">
+    <div class="back_title">温馨提示</div>
+    <div class="backHint">添加成功，返回列表页！</div>
+    <div class="sure_back" (click)="goBack()">确定</div>
+  </div>
+</div>  -->
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+
+<!-- 加载动图 -->
+ <div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

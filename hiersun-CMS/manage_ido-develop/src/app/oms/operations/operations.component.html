@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet light">
+      <div class="portlet-title">
+        <div class="caption">
+          <span class="caption-subject bold uppercase">运营管理</span>
+        </div>
+      </div>
+            <!-- 0 start-->
+      <div class="portlet-body">
+        <div class="note note-info">
+          <span class="block">合并尾款销售单</span>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label class="control-label" style="float: left;">主销售单号：</label>
+              <div class="col-md-8">
+                <input id="originalWKOrderNo" name="txtOriOrderNo" type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label class="control-label" style="float: left;">尾款销售单号：</label>
+              <div class="col-md-8">
+                  <input id="newWKOrderNo" name="txtNewOrderNo" type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn green-meadow" (click)="mergeWKOrder()">合并</button>
+        </div>
+      </div>
+      <!-- 0 end -->
+      <!-- 1 start-->
+      <div class="portlet-body">
+          <div class="note note-info">
+            <span class="block">合并差价销售单</span>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="form-group">
+                <label class="control-label" style="float: left;">主销售单号：</label>
+                <div class="col-md-8">
+                  <input id="originalCJOrderNo" name="txtOriOrderNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="form-group">
+                <label class="control-label" style="float: left;">差价销售单号：</label>
+                <div class="col-md-8">
+                    <input id="newCJOrderNo" name="txtNewOrderNo" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn green-meadow" (click)="mergeCJOrder()">合并</button>
+          </div>
+        </div>
+      <!-- 1 end -->
+      <!-- 2.1 start-->
+
+      <!-- 2.1 end -->
+    </div>
+  </div>
+</div>
+
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

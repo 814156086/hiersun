@@ -1,0 +1,22 @@
+a {
+  text-decoration: none;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+td {
+  white-space: nowrap;
+}
+
+/* 顶部搜索框 */
+.form-control {
+  height: 30px;
+  padding: 2px 12px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}

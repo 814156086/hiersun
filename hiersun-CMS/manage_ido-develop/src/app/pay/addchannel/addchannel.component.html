@@ -1,0 +1,163 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>渠道信息
+      <small>Channel Manage</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal">
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>商户ID：
+          </label>
+          <div class="col-md-6">
+            <div [hidden]="btntype==1 || btntype==2">
+              <select id="shops" class="form-control select2me shops" data-placeholder="请选择">
+                <option value="">请选择</option>
+                <option *ngFor="let item of businessidlist;let list=index;" value="{{item.mchId}}">{{item.name}}</option>
+              </select>
+              <div class="formtips" style="display:none">请选择商户ID</div>
+            </div>
+            <div *ngIf="timeshowhide || btntype==2">
+              <select class="form-control bussshow" disabled>
+                  <option *ngFor="let item of businessidlist;let list=index;" value="{{item.mchId}}">{{item.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="type==2">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>销售渠道：
+          </label>
+          <div class="col-md-6">
+              <div [hidden]="btntype==1 || btntype==2">
+            <select id="channle" class="form-control select2me channle" data-placeholder="请选择">
+              <option value="">请选择</option>
+              <option *ngFor="let item of channellists;let list=index;" value="{{item.channelCode}}">{{item.channelName}}</option>
+            </select>
+            <div class="formtips" style="display:none">请选择销售渠道</div>
+            </div>
+            <div *ngIf="timeshowhide || btntype==2">
+                <select class="form-control qudaosale" disabled>
+                    <option *ngFor="let item of channellists;let list=index;" value="{{item.channelCode}}">{{item.channelName}}</option>
+                </select>
+              </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>支付渠道：
+          </label>
+          <div class="col-md-6">
+            <select class="form-control channelname" *ngIf="btntype==2" disabled>
+              <option value="ALIPAY">ALIPAY</option>
+              <option value="WXPAY">WXPAY</option>
+            </select>
+            <select class="form-control channelname" *ngIf="btntype!=2" (change)="ptbh()">
+                <option value="ALIPAY">ALIPAY</option>
+                <option value="WXPAY">WXPAY</option>
+              </select>
+            <div class="formtips"></div>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="pidptbh==1">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>平台编号：
+          </label>
+          <div class="col-md-6">
+            <input class="form-control pindaonum" type="text" name="chanelbussid" [(ngModel)]="chanelbussid" placeholder="请输入平台编号" *ngIf="btntype==2" disabled>
+            <input class="form-control pindaonum" type="text" name="chanelbussid" [(ngModel)]="chanelbussid" placeholder="请输入平台编号" *ngIf="btntype!=2">
+            <div class="formtips" style="display:none">请输入数字或者字母</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>平台名称：
+          </label>
+          <div class="col-md-6">
+            <input class="form-control ptname" type="text" name="ptname" [(ngModel)]="ptname" placeholder="请输入平台名称">
+            <div class="formtips" style="display:none">请输入平台名称</div>
+          </div>
+        </div>
+        <div class="form-group applydetail">
+            <label class="col-md-2 control-label">费率:</label>
+            <div class="col-md-6">
+              <input class="form-control feeRate" type="text" name="feeRate" placeholder="请输入费率" value="0.00" (input)="validnum($event.target)">
+              <div class="formtips" style="display:none">只能输入大于0，小于100的数字</div>
+            </div>
+          </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>是否启用：</label>
+          <div class="col-md-6">
+            <div class="switch" data-on="success" data-off="warning">
+              <input type="checkbox" checked name="businessenabled" id="businessenabled" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>是否开启对账功能：</label>
+          <div class="col-md-6">
+            <div class="switch" data-on="success" data-off="warning">
+              <input type="checkbox" checked name="balance" id="balance" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">备注：</label>
+          <div class="col-md-6">
+            <textarea class="form-control remark" type="text" value="{{remark}}"></textarea>
+            <div class="formtips"></div>
+          </div>
+        </div>
+
+        <!--商户详情-->
+        <div class="form-group" *ngIf="timeshowhide">
+          <label class="col-md-2 control-label">
+            <span style="color:red;"></span>创建时间：</label>
+          <div class="col-md-6">
+            <input class="form-control" type="text" value="{{creattime | date:'yyyy-MM-dd HH:mm:ss'}}">
+          </div>
+        </div>
+        <div class="form-group" *ngIf="timeshowhide">
+          <label class="col-md-2 control-label">
+            <span style="color:red;"></span>更新时间：</label>
+          <div class="col-md-6">
+            <input class="form-control" type="text" value="{{updatetime | date:'yyyy-MM-dd HH:mm:ss'}}">
+          </div>
+        </div>
+        <div class="form-group" *ngIf="btnshowhide">
+          <label class="col-md-3 control-label">
+            <button type="submit" class="btn purple" (click)="onSubmit()">保存</button>
+            <button type="reset" class="btn blue-hoki">重置</button>
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </label>
+        </div>
+        <div class="form-group" *ngIf="!btnshowhide">
+          <label class="col-md-2 control-label"></label>
+          <div class="col-md-8">
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

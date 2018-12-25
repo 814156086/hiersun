@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption" *ngIf="flag==1">
+          <i class="glyphicon glyphicon-chevron-left back_hand" (click)="goBack()"></i>添加交接单
+        </div>
+        <div class="caption" *ngIf="flag==2">
+          <i class="glyphicon glyphicon-chevron-left back_hand" (click)="goBack()"></i>编辑交接单
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <div class="form-horizontal">
+          <div class="form-body">
+            <div class="form-group">
+              <label class="col-md-3 control-label">交接单名称：
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <input type="text" class="form-control deliveryname" value="{{deliveryname}}" placeholder="请输入交接单名称">
+                </div>
+              </div>
+            </div>
+            <!---->
+            <div class="form-group">
+              <label class="col-md-3 control-label">物流公司：
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <select id="expCompany" class="form-control" *ngIf="flag==2" disabled>
+                    <option value="">请选择</option>
+                    <option *ngFor="let expitem of expComList;let expkey=index;" value="{{expitem.logisticsCompanyCode}}">{{expitem.logisticsCompanyName}}</option>
+                  </select>
+                  <select id="expCompany" class="form-control" *ngIf="flag==1">
+                    <option value="">请选择</option>
+                    <option *ngFor="let expitem of expComList;let expkey=index;" value="{{expitem.logisticsCompanyCode}}">{{expitem.logisticsCompanyName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!---->
+            <div class="form-group">
+              <label class="col-md-3 control-label">备注： </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <textarea type="text" class="form-control remark" placeholder="请填写备注">{{remark}}</textarea>
+                </div>
+              </div>
+            </div>
+            <!---->
+            <div class="form-group">
+              <label class="col-md-3 control-label">运单号：
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <input type="text" class="form-control wiliuorderno" value="" placeholder="请填写运单号" (keydown.enter)="onEnter($event)">
+                </div>
+              </div>
+            </div>
+            <!---->
+            <div class="form-group">
+              <label class="col-md-3 control-label"> </label>
+              <div class="col-md-4">
+                <table class="table table-striped table-bordered table-hover">
+                  <tr>
+                    <th>运单号</th>
+                    <th>订单号</th>
+                    <th>操作</th>
+                  </tr>
+                  <tbody class="orderdetail">
+                    <tr *ngFor="let item of list;">
+                      <td>{{item.expressNo}}</td>
+                      <td>{{item.orderNo}}</td>
+                      <td>
+                        <a class="btn btn-xs btn-info" (click)="deletehanadorder($event,item.sid)">
+                          <i class="fa fa-file-pdf-o"></i> 删除</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-offset-3 col-md-9">
+                <button type="button" class="btn blue" (click)="save()">保存</button>
+                <!--<button type="button" class="btn green" (click)="reset()">重置</button>-->
+                <button type="reset" class="btn default" (click)="goBack()">返回</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END FORM-->
+      </div>
+    </div>
+  </div>
+</div>
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

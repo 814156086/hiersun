@@ -1,0 +1,18 @@
+a{
+    text-decoration: none;
+  }
+  th,
+  td {
+    text-align: center;
+  }
+  .delist input{
+    width:10%;
+    text-align: center;
+  }
+  .delist label,.conlist label{
+    text-align: center;
+  }
+  .conlist input{
+    width:15%;
+    text-align: center;
+  }

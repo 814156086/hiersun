@@ -1,0 +1,202 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          流程管理
+        </div>
+      </div>
+      <div class="portlet-body">
+        <!-- addedit -->
+        <div class="clearfix">
+          <button type="button" class="btn red" routerLink="addModelInfo" (click)="addProcessModel()">
+            <i class="fa fa-plus"></i>
+            添加流程模板 </button>
+        </div>
+        <!-- search -->
+        <form class="form-horizontal" id="ffSearch">
+          <div class="row margin-search sec_line">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">模板名称:</label>
+                <div class="col-md-8">
+                  <input id="modelName" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">业务名称:</label>
+                <div class="col-md-8">
+                  <input id="bussName"  type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">创建时间:</label>
+                <div class="col-md-8">
+                  <input type="text" id="createTime" class="endDate form-control" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">部署状态:</label>
+                <div class="col-md-8">
+                  <select id="deployStatus" class="form-control" style="border: 1px solid rgb(169, 169, 169);">
+                    <option value="">请选择</option>
+                    <option value="0">未部署</option>
+                    <option value="1">已部署</option>
+                    <option value="-1">已废弃</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="text-align:center;">
+            <div class="form-group">
+              <button id="btnSearch" type="button" class="btn default" (click)="initProcessorList()">查询
+                <i class="fa fa-search"></i>
+              </button>
+              <button id="btnReset" type="button" class="btn default" (click)="restProcessorList()">
+                <i class="fa fa-times"></i>重置</button>
+            </div>
+          </div>
+          <!--  -->
+        </form>
+        <!-- table -->
+        <div id="sample_6_wrapper" class="dataTables_wrapper no-footer">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_6" role="grid"
+                   aria-describedby="sample_6_info">
+              <thead>
+              <tr>
+                <th> 序号 </th>
+                <th> 名称 </th>
+                <th> 业务 </th>
+                <th> 版本号 </th>
+                <th> 是否部署 </th>
+                <th> 创建时间 </th>
+                <th width="10%"> 操作 </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngIf="recordTotal==0">
+                <td class="text-center" colspan="7">没有相关记录~</td>
+              </tr>
+              <tr role="row" class="odd" *ngFor="let item of processorList;let key=index">
+                <td> {{key+1}}</td>
+                <td> {{item.name?item.name:"——"}}</td>
+                <td>{{item.businessKey}}</td>
+                <td>v{{item.version}}</td>
+                <!-- 状态 -->
+                <td *ngIf="item.deployStatus==1">
+                  <span class="label label-sm label-warning">已部署</span>
+                </td>
+                <td *ngIf="item.deployStatus==0">
+                  <span class="label label-sm label-success">未部署</span>
+                </td>
+                <td *ngIf="item.deployStatus==-1">
+                  <span class="label label-sm label-danger">已废弃</span>
+                </td>
+                <td>
+                  {{item.createTime? '':"——"}}
+                  {{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                </td>
+                <td>
+                  <a *ngIf="item.deployStatus==0" href="javascript:;" class="btn btn-xs blue" (click)="editProcess(item.id)">
+                    编辑 <i class="fa fa-edit"></i>
+                  </a>
+                  <a *ngIf="item.deployStatus==0" href="javascript:;" class="btn btn-xs green" (click)="editProcessModel(item.id)">
+                    设计流程图 <i class="fa fa-pencil-square-o"></i>
+                  </a>
+                 <!-- <a *ngIf="true" href="javascript:;" class="btn btn-xs blue" (click)="editProcessPoint(item.id)">
+                    节点设置 <i class="	fa fa-gear"></i>
+                  </a>-->
+                  <a *ngIf="true" href="javascript:;" class="btn btn-xs yellow" (click)="showProcessInfo(item.id)">
+                    查看流程图 <i class="fa fa-eye"></i>
+                  </a>
+                  <a *ngIf="item.deployStatus==0" href="javascript:;" class="btn btn-xs green" (click)="deployProcess(item.id)">
+                    部署 <i class="fa fa-send-o"></i>
+                  </a>
+                  <a *ngIf="item.deployStatus==0" href="javascript:;" class="btn btn-xs red" (click)="delProcess(item.id)">
+                    删除 <i class="fa fa-remove"></i>
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="clearfix">
+            <div id="pagination1" class="page"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--model 编辑模型图-->
+<div class="modal fade" style="" id="modal_edit" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" style="width: 81%;">
+    <div class="spinner" *ngIf="!ifreamIsload" style="left: 47%;margin-top: 50px;">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+    <div id="editIfremContainer" class="modal-content" style="margin-top: 3%; height: 690px; overflow-y: hidden;overflow-x: hidden">
+    </div>
+  </div>
+</div>
+<!--model 预览模型图-->
+<div class="modal fade" style="" id="modal_view" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" style="width: 81%;">
+    <div class="spinner" *ngIf="!viewIfreamIsload" style="left: 47%;margin-top: 50px;">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+    <div id="viewIfremContainer" class="modal-content" style="margin-top: 5%; height: 650px; overflow-y: hidden;overflow-x: hidden">
+    </div>
+  </div>
+</div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<!--确认消息提示框-->
+<div *ngIf="isShowWarnWin" class="warnMsgWin div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+          (click)="closeWin()">确定</span>
+  </div>
+</div>
+
+<!--删除-->
+<div *ngIf="isShowDelWin" class="div_dialog animated warnMsgWin {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation" style="    width: 150px; margin: 0 auto;">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="取消" style="padding: 4px 17px; font-size: 14px; height: auto;"
+          (click)="closeWin()">取消</span>
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+          (click)="delOk()">确定</span>
+  </div>
+</div>
+<!--部署-->
+<div *ngIf="isShowDeployWin" class="div_dialog animated warnMsgWin {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation" style="    width: 150px; margin: 0 auto;">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="取消" style="padding: 4px 17px; font-size: 14px; height: auto;"
+          (click)="closeWin()">取消</span>
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+          (click)="deployOk()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin||isShowDelWin||isShowDeployWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+

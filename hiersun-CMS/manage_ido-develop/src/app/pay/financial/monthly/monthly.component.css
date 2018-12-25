@@ -1,0 +1,80 @@
+th,td{
+    text-align: center;
+}
+#btnbox{
+    text-align: center;
+}
+#btnbox input{
+    margin: 0 15px;
+    border: none;
+    padding: 5px 10px;
+    color: #000;
+}
+#update-oeder-type,#month-update{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    display: none;
+}
+.zz{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.update_content{
+    width: 600px;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 100px;
+    margin-left: -300px;
+}
+.update_header{
+    border-bottom: 1px solid #e5e5e5;
+    height: 30px;
+}
+.update_header span{
+    display: block;
+    height: 30px;
+    width: 30px;
+    float: right;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    margin-right: 15px
+}
+.update_info{
+    box-sizing: border-box;
+    padding: 15px;
+    width: 100%;
+}
+.update_info p{
+    font-size: 14px;
+    font-family: '宋体'
+}
+.bottom{
+    width: 100%;
+    box-sizing: border-box;
+    height: 65px;
+    padding: 15px;
+    border-top: 1px solid #e5e5e5;
+    text-align: right;
+}
+.bottom button{
+    display: block;
+    width: 56px;
+    height: 34px;
+    line-height: 34px;
+    background: #E5E5E5;
+    text-align: center;
+    float: right;
+    border: none;
+    outline: none;
+    margin-left: 15px;
+}

@@ -1,0 +1,484 @@
+<!-- <div class="page-head">
+  <div class="page-title">
+    <h1>审核 <small>审核</small></h1>
+  </div>
+</div> -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet light">
+      <div class="portlet-title">
+        <div class="caption">
+          <span class="caption-subject bold uppercase">退货商品信息</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="note note-info">
+          <span class="block">退货商品和数量</span>
+        </div>
+        <div class="table-scrollable">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr class="text-center">
+                <th> 订单号</th>
+                <th> 销售单号</th>
+                <th> 商品编号</th>
+                <th> 商品名称</th>
+                <th> 商品价格</th>
+                <th> 数量</th>
+                <th> 可退数量</th>
+                <th> 退货数量</th>
+                <th> 退货原因</th>
+                <th> 退货图片</th>
+                <th> 备注</th>
+                <th> 商品应退金额</th>
+                <th> 商品应退金额(不含优惠券)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr role="row" class="odd" *ngFor="let proitem of proList;let prokey=index;">
+                <!-- 订单号 -->
+                <td> {{proitem.orderNo?proitem.orderNo:"——"}}</td>
+                <!-- 销售单号 -->
+                <td> {{proitem.c3?proitem.c3:"——"}}</td>
+                <!-- 商品编号 -->
+                <td> {{proitem.products[0].barCode?proitem.products[0].barCode:"——"}}</td>
+                <!-- 商品名称 -->
+                <td>{{proitem.products[0].shoppeProName?proitem.products[0].shoppeProName:"——"}}</td>
+                <!-- 商品价格 -->
+                <td> {{proitem.products[0].salePrice?proitem.products[0].salePrice:"——"}}</td>
+                <!-- 数量 -->
+                <td>{{proitem.refundNum}}</td>
+                <!-- 可退数量 -->
+                <td> {{proitem.products[0].allowRefundNum}}</td>
+                <!-- 退货数量 -->
+                <td> {{proitem.refundNum}}</td>
+                <!-- 退货原因 -->
+                <td> {{proitem.products[0].refundReasionDesc?proitem.products[0].refundReasionDesc:"——"}}</td>
+                <!-- 退货图片 -->
+                <td>
+                  <img src="{{proitem.products[0].refundPcitureUrl}}?x-oss-process=image/resize,h_50,w_50" onerror="this.src='http://placehold.it/50x50'">
+                </td>
+                <!-- 备注 -->
+                <td>{{proitem.customerComments?proitem.products[0].customerComments:"——"}} </td>
+                <!-- 商品应退金额 -->
+                <td> {{proitem.refundAmount}}</td>
+                <!-- 商品应退金额(不含优惠券) -->
+                <td> {{proitem.needRefundAmount}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- 2 start-->
+        <div class="portlet-body">
+          <div class="note note-info">
+            <span class="block">退货方式</span>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退货方式:
+                </label>
+                <div class="col-md-7">
+                  <select id="returnStatus" class="form-control">
+                    <option value="">所有</option>
+                    <option value="9101">待确认</option>
+                    <option value="9102">待退款</option>
+                    <option value="9103">取消成功</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退货地址：</label>
+                <div class="col-md-7">
+                  <input id="orderNum" name="txtOrderNo" type="text" class="form-control" readonly>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <!-- 2 end -->
+        <!-- 2.1 start-->
+        <div class="portlet-body" *ngIf="botflag==1">
+          <div class="note note-info">
+            <span class="block">退货物流信息</span>
+          </div>
+          <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <div class="form-group">
+                <label class="control-label" style="float: left;">快递公司：</label>
+                <div class="col-md-8">
+                  <input id="expressCompanyName" name="txtexpressCompanyName" type="text" class="form-control" value="{{refundMesg.expressCompanyName}}" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <div class="form-group">
+                <label class="control-label" style="float: left;">快递单号：</label>
+                <div class="col-md-8">
+                  <input id="courierNumber" name="txtCourierNumber" type="text" class="form-control" value="{{refundMesg.courierNumber}}" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <div class="form-group">
+                <label class="control-label" style="float: left;">退货地址：</label>
+                <div class="col-md-8">
+                  <input id="warehouseAddress" name="txtWarehouseAddress" type="text" class="form-control" value="{{refundMesg.warehouseAddress}}" />
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn" (click)="subDelivery()">提交</button>
+
+          </div>
+        </div>
+        <!-- 2.1 end -->
+        <!-- 3 start-->
+        <div class="portlet-body">
+          <div class="note note-info">
+            <span class="block">订单赠品信息</span>
+          </div>
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th> 订单号</th>
+                  <th> 销售单号</th>
+                  <th> 商品编号</th>
+                  <th> 商品名称</th>
+                  <th> 价格</th>
+                  <!-- <th> 活动编码</th> -->
+                  <!-- <th> 活动名称</th> -->
+                  <th> 数量</th>
+                  <th> 可退数量</th>
+                  <th> 返回数量</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="giftList.length">
+                <tr role="row" class="odd" *ngFor="let giftitem of giftList;let giftkey=index;">
+                  <!-- 订单号 -->
+                  <td> {{giftitem.orderNo}}</td>
+                  <!-- 销售单号 -->
+                  <td> {{giftitem.saleNo}}</td>
+                  <!-- 商品编号 -->
+                  <td> {{giftitem.barCode}}</td>
+                  <!-- 商品名称 -->
+                  <td>{{giftitem.shoppeProName}} </td>
+                  <!-- 价格 -->
+                  <td> {{giftitem.salePrice}}</td>
+                  <!-- 活动编码 -->
+                  <!-- <td>{{giftitem.orderNo}} </td> -->
+                  <!-- 活动名称 -->
+                  <!-- <td> {{giftitem.orderNo}}</td> -->
+                  <!-- 数量 -->
+                  <td> {{giftitem.refundNum}}</td>
+                  <!-- 可退数量 -->
+                  <td> {{giftitem.allowRefundNum}}</td>
+                  <!-- 返回数量 -->
+                  <td> {{giftitem.orderNo}}</td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="!giftList.length">
+                <tr>
+                  <td class="text-center" colspan="8">无相关赠品信息~</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        <!-- 3 end -->
+        <!-- 4 start-->
+        <div class="portlet-body">
+          <div class="note note-info">
+            <span class="block">退货扣款</span>
+          </div>
+          <div class="table-scrollable" style="width:70%;">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th> 原因</th>
+                  <th> 扣款额</th>
+                  <th> 扣款说明</th>
+                  <th> 操作</th>
+                </tr>
+              </thead>
+              <tbody class="alldeli">
+                <tr role="row" class="odd deliItem" *ngFor="let duitem of deduList;let dukey=index;">
+                  <!-- 原因 -->
+                  <td>
+                    <select id="deduReason" class="form-control" data-placeholder="">
+                      <option value="">请选择</option>
+                      <option *ngFor="let reasonitem of deductionList;let reasonkey=index;" value="{{reasonitem.deduType}}">{{reasonitem.deduName}}</option>
+                    </select>
+                  </td>
+                  <!-- 扣款额 -->
+                  <td>
+                    <input id="deduAmount" name="txtDeduAmount" type="text" class="form-control dedu_{{dukey}}" (blur)="countAmount()" (input)="normalInputChange($event)">
+                  </td>
+                  <!-- 扣款说明 -->
+                  <td>
+                    <input id="deduDesc" name="txtDeduDesc" type="text" class="form-control">
+                  </td>
+                  <!-- 操作 -->
+                  <td>
+                    <a href="javascript:;" class="btn btn-xs red" (click)="delItem(dukey)">删除 <i class="fa fa-trash-o"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4">
+                    <a href="javascript:;" (click)="addItem()"> 添加退货扣款</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 4 end -->
+        <!-- 5 start-->
+        <div class="portlet-body">
+          <div class="note note-info">
+            <span class="block">积分信息</span>
+          </div>
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th> 须退回积分</th>
+                  <th> 当前账户</th>
+                  <th> 需要补扣积分</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr role="row" class="odd" *ngFor="let roitem of returnOrderList;let rokey=index;"> -->
+                <tr>
+                  <!-- 须退回积分 -->
+                  <!-- <td> 20</td> -->
+                  <!-- 当前账户 -->
+                  <!-- <td> 1275we20</td> -->
+                  <!-- 需要补扣积分 -->
+                  <!-- <td> 20</td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 5 end -->
+        <!-- 6 start-->
+        <div class="portlet-body">
+          <div class="note note-info">
+            <span class="block">退货商品关联返券信息</span>
+          </div>
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th> 优惠券编码</th>
+                  <th> 优惠券名称</th>
+                  <th> 优惠券面值</th>
+                  <th> 活动编码</th>
+                  <th> 优惠券状态</th>
+                  <th> 是否退回</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr role="row" class="odd" *ngFor="let roitem of returnOrderList;let rokey=index;"> -->
+                <tr>
+                  <!-- <td> we2018</td> -->
+                  <!-- <td> 1275we20</td> -->
+                  <!-- <td> 20</td> -->
+                  <!-- <td> 21213210</td> -->
+                  <!-- <td> 210</td> -->
+                  <!-- <td> 是</td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 6 end -->
+        <!-- 6 start-->
+        <div class="portlet-body">
+          <div class="note note-info">
+            <span class="block">差价工单分摊信息</span>
+          </div>
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th> 工单号</th>
+                  <th> 订单号</th>
+                  <th> 退款金额</th>
+                  <th> 工单状态</th>
+                  <th> 账号</th>
+                  <th> 开户行</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr role="row" class="odd" *ngFor="let billitem of billOrderList;let billkey=index;">
+                  <td> {{billitem.billNo}}</td>
+                  <td> {{billitem.orderNo}}</td>
+                  <td> {{billitem.refundAmount}}</td>
+                  <td> {{billitem.billStatusDesc}}</td>
+                  <td> {{billitem.bankNo}}</td>
+                  <td> {{billitem.bankName}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 6 end -->
+        <!-- 7 start-->
+        <div class="portlet-body">
+          <div class="note note-info">
+            <span class="block">退款信息(退回顾客使用的A券)</span>
+          </div>
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th> 优惠券编码</th>
+                  <th> 优惠券名称</th>
+                  <th> 面值</th>
+                  <th> 是否退回</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr role="row" class="odd" *ngFor="let roitem of returnOrderList;let rokey=index;"> -->
+                <tr>
+                  <!-- <td> we2018</td> -->
+                  <!-- <td> 1275we20</td> -->
+                  <!-- <td> 20</td> -->
+                  <!-- <td> 是</td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 7 end -->
+        <div class="portlet-body">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label">实退款金额：</label>
+                <label class="control-label"> {{refundMesg.needRefundAmount | number:'.2-2'}}</label>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label">现金类支付金额(不含运费)：</label>
+                <label class="control-label"> {{refundMesg.needRefundAmount-refundMesg.quanAmount | number:'.2-2'}}</label>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label">其中，优惠券：</label>
+                <label class="control-label"> {{refundMesg.quanAmount | number:'.2-2'}}</label>
+              </div>
+            </div>
+            <div class="col-md-5 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label">是否退运费：</label>
+                <div style="display: inline-block;">
+                  <div class="md-radio-inline" style="margin:0 0;">
+                    <div class="md-radio">
+                      <input type="radio" id="ishow" name="isdislpay" title="0" class="md-radiobtn" (change)="setFare()">
+                      <label for="ishow">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        是 </label>
+                    </div>
+                    <div class="md-radio has-error">
+                      <input type="radio" id="ihide" name="isdislpay" title="1" class="md-radiobtn" checked="" (change)="hideFare()">
+                      <label for="ihide">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        否</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label" style="float: left;">应退运费金额：</label>
+                <label class="control-label" *ngIf="isFare==0">{{fare | number:'.2-2'}}</label>
+                <div class="col-md-4" *ngIf="isFare==1">
+                  <input type="text" class="col-md-3 form-control input-sm refundfare" placeholder="请输入运费" (change)="vertify()">
+                </div>
+              </div>
+            </div>
+            <!--  -->
+            <!-- <div class="div_dialog animated success fadeIn fareModal">
+              <div class="title_dialog" style="font-size: 19px;line-height: 16px;">请输入运费:</div>
+              <div class="discription_dialog" style="font-size: 15px;">
+                <input type="text" class="form-control input-sm refundfare" placeholder="请输入运费">
+              </div>
+              <div class="dialog_divOperation ">
+                <span class="btn_span yellow_win_btn_hover_success one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+                  (click)="setFare1()">确定</span>
+                <span class="btn_span yellow_win_btn_hover_warning one_btn_span warning" data-name="取消" style="padding: 4px 17px; font-size: 14px; height: auto;  background: #FFBD7A;"
+                  (click)="hideFare1()">取消</span>
+              </div>
+            </div> -->
+            <!--  -->
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label class="control-label">退回顾客优惠券金额：</label>
+                <label class="control-label">{{refundMesg.quanAmount | number:'.2-2'}}</label>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label class="control-label">扣款金额合计：</label>
+                <label class="control-label">{{deduAmount | number:'.2-2'}} </label>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label class="control-label">实际退款金额合计(含运费)：</label>
+                <label class="control-label"> {{refundMesg.needRefundAmount-deduAmount + fare |
+                  number:'.2-2'}} </label>
+              </div>
+            </div>
+            <!-- 000 -->
+          </div>
+        </div>
+        <!-- 8 end -->
+        <!-- 9 start-->
+        <div class="portlet-body">
+          <div class="row">
+            <div class="form-group col-md-12" style="text-align:center;">
+              <button id="btnSearch" type="button" class="btn green-meadow" *ngIf="botflag!=1" (click)="approved(4)">
+                审核通过</button>
+              <button id="btnReset" type="button" class="btn yellow-crusta" *ngIf="botflag!=1" (click)="approved(2)">
+                审核不通过</button>
+              <button id="btnReset" type="button" class="btn red-sunglo" (click)="goBack()">
+                取消</button>
+            </div>
+          </div>
+        </div>
+        <!-- 9 end -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

@@ -1,0 +1,3734 @@
+<div class="page-head">
+  <div class="page-title">
+    <h1>
+      系统管理
+      <small>
+        APP The Management
+      </small>
+    </h1>
+  </div>
+</div>
+<div class="portlet-body col-md-12" style="background:white;">
+  <div class="col-md-12" style="margin-top:10px;">
+    <div class="col-md-3" style="padding-left:11px;">
+      <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class="fa fa-globe"></i>系统
+          </div>
+          <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="pleftTree">
+            <input type="hidden" name="mymsg"/>
+            <button class="myclick" (click)="myclick()"></button>
+            <div class="zTreeDemoBackground">
+              <ul id="ztree" class="ztree"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!treetype" class="col-md-9">
+      <!-- 选中app展示详情 -->
+      <div class="right_p col-md-12" *ngIf="treePid!=null">
+        <div class="portlet box blue-hoki" style="overflow:hidden;">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-globe"></i>系统信息
+            </div>
+            <div class="tools">
+              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+            </div>
+          </div>
+          <div class="portlet-body col-md-12" *ngFor="let item of list1">
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">编号：</label>
+              <div class="col-md-10">
+                <input type="text" id="key" class="form-control" value="{{item.key}}" readonly
+                       style="margin-bottom: 15px;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                    <span style="color:red;">*</span>短码 :</font>
+                </font>
+              </label>
+              <div class="col-md-10">
+                <input name="xq-shortCode" placeholder="请输入短码"
+                       onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+                       onblur="this.v();" type="text" id="xq-shortCode" readonly class="form-control"
+                       value="{{item.shortCode}}"
+                       style="margin-bottom: 15px;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">
+                  <span style="color:red;">
+                    <font>*</font>
+                  </span>
+                名称：</label>
+              <div class="col-md-10">
+                <input type="text" id="name" name="name" class="form-control" value="{{item.name}}" readonly="true"
+                       style="margin-bottom: 15px;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">描述：</label>
+              <div class="col-md-10">
+                <input type="text" id="comm" name="comm" class="form-control" value="{{item.comm}}" readonly="true"
+                       style="margin-bottom: 15px;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">邮箱：</label>
+              <div class="col-md-10">
+                <input name="xq-email" placeholder="请输入邮箱" type="text" id="xq-email" readonly class="form-control"
+                       value="{{item.email}}"
+                       style="margin-bottom: 15px;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">通知地址：</label>
+              <div class="col-md-10">
+                <input name="xq-noticeUrl" placeholder="请输入通知地址" type="text" id="xq-noticeUrl" readonly
+                       class="form-control" value="{{item.noticeUrl}}"
+                       style="margin-bottom: 15px;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">状态：</label>
+              <div class="col-md-10">
+                <input *ngIf="item.enabled" class="form-control" type="text" value="启用" readonly>
+                <input *ngIf="!item.enabled" class="form-control" type="text" value="禁用" readonly>
+              </div>
+            </div>
+            <div class="form-group col-md-12" *ngIf="item.pId!=null&&cancelnum!=0">
+              <label class="col-md-2 control-label" style="text-align:right;">密钥：</label>
+              <input type="hidden" id="pwdtxt" value="{{item.appSecret}}">
+              <div class="col-md-8" *ngIf="pswType">
+                <textarea id="pwdtxtt" style="width: 100%;" class="form-control">{{pwd}}</textarea>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-success" id="create" (click)="create()">生成密钥</button>
+              </div>
+            </div>
+            <div class="form-actions right1 col-md-12">
+              <div class="col-md-1">
+
+              </div>
+              <div class="col-md-11" style="margin-top:10px;">
+                <button class="btn blue" *ngIf="addId!=null&&cancelnum==1" (click)="save(item.id)">保存</button>
+                <button class="btn yellow" *ngIf="cancelnum!=0" (click)="cancel()">返回</button>
+
+                <button class="btn green" (click)="addresource(item.id)" *ngIf="editsavenum!=1">添加资源</button>
+                <button class="btn blue" (click)="editsave()" *ngIf="editsavenum!=1&&item.pId!=null">编辑</button>
+                <button class="btn green" *ngIf="!item.enabled&&item.pId!=null&&cancelnum!=0"
+                        (click)="operation(item.id,item.pId,'true')">启用
+                </button>
+                <button class="btn red" *ngIf="item.enabled && item.noDelete&&cancelnum!=0"
+                        (click)="operation(item.id,item.pId,'false')">禁用
+                </button>
+                <button class="btn red" *ngIf="item.noDelete&&editsavenum!=1&&item.pId!=null&&!item.enabled"
+                        (click)="delapp(item.id)">删除
+                </button>
+                <!-- <div *ngIf="addId!=null"> -->
+
+
+                <button class="btn yellow" *ngIf="item.pId!=null&&cancelnum!=1" data-toggle="modal" data-target="#link"
+                        (click)="link(item.key,item.id)" hidden>关联角色
+                </button>
+                <button class="btn yellow" routerLink="/auth/resource/{{item.key}}" *ngIf="item.pId!=null&&cancelnum!=1"
+                        hidden>资源
+                </button>
+
+                <!-- </div> -->
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- 选中APP展示详情 end -->
+
+      <!--<button class="btn green" style="margin-bottom:15px;" (click)="add()" *ngIf="editsavenum!=1&&treePid==null&&treeid!=null">添加系统</button>-->
+      <button class="btn green" style="margin-bottom:15px;" *ngIf="isPapp" (click)="add()">添加系统</button>
+      <!-- 选中当前的子类展示 -->
+      <div class="right_c col-md-12" *ngIf="treePid==null">
+        <div class="portlet box blue-hoki">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-globe"></i>系统列表
+            </div>
+            <div class="tools">
+              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+            </div>
+          </div>
+
+          <div class="portlet-body">
+            <div class="table-scrollable">
+              <table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid"
+                     aria-describedby="sample_1_info">
+                <thead>
+                <tr>
+                  <th>编号</th>
+                  <th>名称</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor='let item of capp'>
+                  <td>{{item.key}}</td>
+                  <td>{{item.name}}</td>
+                  <td *ngIf="item.enabled">启用</td>
+                  <td *ngIf='!item.enabled'>禁用</td>
+                  <td>
+                    <a class="btn btn-xs yellow" (click)="edit(item.id,item.pId)">
+                      <i class="fa fa-edit"></i>
+                      编辑
+                    </a>
+                    <a class="btn btn-xs green" (click)="operation(item.id,item.pId,'true')" *ngIf="!item.enabled">
+                      <i class="fa fa-key"></i>
+                      启用
+                    </a>
+                    <a class="btn btn-xs red" (click)="operation(item.id,item.pId,'false')" *ngIf="item.enabled">
+                      <i class="fa fa-ban"></i>
+                      禁用
+                    </a>
+                    <a class="btn btn-xs blue" hidden routerLink='/auth/resource/{{item.key}}'>
+                      资源
+                    </a>
+                    <a class="btn btn-xs red" (click)="operation(item.id,item.pId,'del')"
+                       *ngIf="!item.enabled && item.noDelete">
+                      <i class="fa fa-trash-o"></i>
+                      删除
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--pagema-->
+
+            <!--pagema-->
+          </div>
+        </div>
+      </div>
+      <!-- 选中当前的子类展示 end -->
+
+      <!-- 当前系统的资源列表 -->
+      <div class="col-md-12" style="margin-top:10px;" *ngIf="resourcelist">
+        <div class="portlet box blue-hoki">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-globe"></i>资源信息
+            </div>
+            <div class="tools">
+              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+            </div>
+          </div>
+          <div class="portlet-body">
+            <div class="table-scrollable">
+              <table class="table table-striped table-bordered table-hover dataTable no-footer">
+                <thead>
+                <tr>
+                  <th>名称</th>
+                  <th>排序</th>
+                  <th>资源</th>
+                  <th>类型</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of resourceList">
+                  <td>{{item.name}}</td>
+                  <td>{{item.orderBy}}</td>
+                  <td>{{item.resource}}</td>
+                  <td *ngIf="item.type==0">文件夹</td>
+                  <td *ngIf="item.type==1">菜单</td>
+                  <td *ngIf="item.type==2||item.type==3||item.type==4||item.type==5">事件</td>
+                  <td *ngIf="item.enabled">启用</td>
+                  <td *ngIf="!item.enabled">禁用</td>
+                  <td>
+                    <button class="btn btn-warning btn-xs" (click)="redit(item.id)">编辑</button>
+                    <button class="btn btn-danger btn-xs" *ngIf="!item.enabled && item.noDelete"
+                            (click)="reoperation(item.id,item.pId,'del')">删除
+                    </button>
+                    <button class="btn btn-success btn-xs" *ngIf="!item.enabled"
+                            (click)="reoperation(item.id,item.pId,'true')">启用
+                    </button>
+                    <button class="btn btn-danger btn-xs" *ngIf="item.enabled"
+                            (click)="reoperation(item.id,item.pId,'false')">禁用
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- <div class="clearfix box">
+              <div id="pagination1" class="page fr"></div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <!-- 当前系统的资源列表 end-->
+
+
+
+    </div>
+
+    <div class="col-md-9" *ngIf="treetype">
+      <div class="col-md-12">
+        <div class="portlet box blue-hoki" style="overflow:hidden;">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-globe"></i>资源详情
+            </div>
+            <div class="tools">
+              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+            </div>
+          </div>
+          <div class="portlet-body col-md-12" *ngFor="let item of list2">
+            <div class="form-group col-md-12">
+              <label class="col-md-2 control-label" style="text-align:right;">APP：</label>
+              <div class="col-md-9">
+                <input type="text" id="app" class="form-control" value="{{item.app}}" readonly
+                       style="margin-bottom: 15px;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                    <span style="color:red;">*</span>名称：</font>
+                </font>
+              </label>
+              <div class="col-md-9">
+                <input type="text" id="rname" name="name" class="form-control" value="{{item.name}}" readonly="true"
+                       style="margin-bottom: 15px;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">描述：</label>
+              <div class="col-md-9">
+                <input type="text" id="rcomm" name="comm" class="form-control" value="{{item.comm}}" readonly="true"
+                       style="margin-bottom: 15px;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">排序：</label>
+              <div class="col-md-9">
+                <input type="text" id="orderby" onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');" name="comm"
+                       class="form-control" value="{{item.orderBy}}" readonly="true" style="margin-bottom: 15px;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">权限：</label>
+              <div class="col-md-9">
+                <nz-select id="auth" [disabled]="!isDisabled" style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择"
+                           [(ngModel)]="listOfSelectedValue">
+                  <nz-option *ngFor="let option of authList" [nzLabel]="option.name" [nzValue]="option.key"></nz-option>
+                </nz-select>
+              </div>
+
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2 control-label" style="text-align:right;">图标：</label>
+              <div class="col-md-9">
+                <div class="form-control" id="ricon" contenteditable="false" readonly
+                     style="width:50%;float:left;margin-right: 20px;">
+                  <i style="margin-right: 5px;" class="fa {{item.icon}}"></i>{{item.icon}}
+                </div>
+                <span class="btn green fileinput-button" data-toggle="modal" data-target="#chooseModal"
+                      *ngIf="cancelnum==1">
+                    <span>选择图标</span>
+                  </span>
+                <span class="btn green fileinput-button" disabled *ngIf="cancelnum==0">
+                    <span>选择图标</span>
+                  </span>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                    <span style="color:red;">*</span>资源类型：</font>
+                </font>
+              </label>
+              <div class="col-md-9 input">
+                <div style="float: left;" *ngIf="noEvent!=2">
+                  <input style="margin-left:20px;" type="radio" name="xqtype" value="0" disabled="true"
+                         [checked]="xqtype==0" (click)="typeClick(0)"/>文件夹
+                </div>
+                <div style="float: left;" *ngIf="noEvent!=2">
+                  <input style="margin-left:20px;" type="radio" disabled="true" name="xqtype" value="1"
+                         [checked]="xqtype==1" (click)="typeClick(1)"/>菜单
+                </div>
+                <div style="float: left;"  *ngIf="noEvent!=1">
+                  <input style="margin-left:20px;" type="radio" disabled="true" name="xqtype" value="2"
+                         [checked]="xqtype==2|| xqtype==3||xqtype==4||xqtype==5" (click)="typeClick(2)"/>事件
+                </div>
+                <div class="col-md-3 shijian_type" *ngIf="noEvent!=1" [hidden]="xqtype==0||xqtype==1" style="float: left;">
+                    <select disabled="true" class="form-control" id="xqevent">
+                      <option [selected]="xqtype==3"  value="3">新增</option>
+                      <option [selected]="xqtype==4" value="4">修改</option>
+                      <option [selected]="xqtype==5" value="5">删除</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2 control-label" style="text-align: right;">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                    <span style="color:red;">*</span>资源：</font>
+                </font>
+              </label>
+              <div class="col-md-9">
+                <input type="text" name="resource" class="form-control" id="resource" *ngIf="cancelnum==1"
+                       value="{{item.resource}}"
+                       style="margin-bottom: 15px;" placeholder="请输入资源"/>
+                <input type="text" name="resource" class="form-control" *ngIf="cancelnum!=1" value="{{item.resource}}"
+                       style="margin-bottom: 15px;" placeholder="请输入资源" readonly/>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="col-md-2  control-label" style="text-align:right;">状态：</label>
+              <div class="col-md-9">
+                <input *ngIf="item.enabled" class="form-control" type="text" value="启用" readonly>
+                <input *ngIf="!item.enabled" class="form-control" type="text" value="禁用" readonly>
+              </div>
+            </div>
+            <div class="form-actions right1 col-md-12">
+              <div class="col-md-8" style="margin-top:10px;">
+                <button class="btn green" *ngIf="editsavenum==0" (click)="addresource(item.id)">添加子资源</button>
+                <button class="btn blue" *ngIf="editsavenum==0" (click)="reditsave()">编辑</button>
+                <button class="btn blue" *ngIf="editsavenum!=0" (click)="rsave(item.id)">保存</button>
+                <button class="btn yellow" *ngIf="editsavenum!=0" (click)="rcancel()">返回</button>
+                <button class="btn green" *ngIf="!item.enabled&&editsavenum!=0"
+                        (click)="roperation(item.id,item.pId,'true')">启用
+                </button>
+                <button class="btn red" *ngIf="item.enabled&&editsavenum!=0"
+                        (click)="roperation(item.id,item.pId,'false')">禁用
+                </button>
+                <button class="btn red" *ngIf="!item.enabled&&editsavenum!=0" data-toggle="modal"
+                        data-target="#delModal"
+                        (click)="rdel(item.id)">删除
+                </button>
+                <!-- </div> -->
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12" style="margin-top:10px;" *ngIf="childList">
+        <div class="portlet box blue-hoki" style="overflow:hidden;">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-globe"></i>子资源信息
+            </div>
+            <div class="tools">
+              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+            </div>
+          </div>
+          <div class="portlet-body col-md-12">
+            <div class="table-scrollable">
+              <table class="table table-striped table-bordered table-hover dataTable no-footer">
+                <thead>
+                <tr>
+                  <th>名称</th>
+                  <th>排序</th>
+                  <th>资源</th>
+                  <th>类型</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of childResourceList">
+                  <td>{{item.name}}</td>
+                  <td>{{item.orderBy}}</td>
+                  <td>{{item.resource}}</td>
+                  <td *ngIf="item.type==0">文件夹</td>
+                  <td *ngIf="item.type==1">菜单</td>
+                  <td *ngIf="item.type==2||item.type==3||item.type==4||item.type==5">事件</td>
+                  <td *ngIf="item.enabled">启用</td>
+                  <td *ngIf="!item.enabled">禁用</td>
+                  <td>
+                    <button class="btn btn-warning btn-xs" (click)="redit(item.id)">编辑</button>
+                    <button class="btn btn-danger btn-xs" *ngIf="!item.enabled && item.noDelete"
+                            (click)="reoperation(item.id,item.pId,'del')">删除
+                    </button>
+                    <button class="btn btn-success btn-xs" *ngIf="!item.enabled"
+                            (click)="reoperation(item.id,item.pId,'true')">启用
+                    </button>
+                    <button class="btn btn-danger btn-xs" *ngIf="item.enabled"
+                            (click)="reoperation(item.id,item.pId,'false')">禁用
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"-->
+     <!--style="z-index:999;">-->
+  <!--<div class="modal-dialog" style="margin-top:7%;">-->
+    <!--<div class="modal-content">-->
+      <!--<div class="modal-header">-->
+        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+        <!--<h4 class="modal-title">添加子资源</h4>-->
+      <!--</div>-->
+
+      <!--<div class="portlet-body col-md-12">-->
+        <!--<div class="form-group  col-md-12">-->
+          <!--<label class="col-md-3  control-label" style="text-align:right;">APP：</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<input type="text" id="Ckey" class="form-control" value="{{appkey}}" style="margin-bottom: 15px;" readonly>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-3 control-label" style="text-align: right;">-->
+            <!--<font style="vertical-align: inherit;">-->
+              <!--<font style="vertical-align: inherit;">-->
+                <!--<span style="color:red;">*</span>名称 :</font>-->
+            <!--</font>-->
+          <!--</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<input name="newChildCn" [(ngModel)]="name" placeholder="请输入名称"-->
+                   <!--[class.hasError]="formModel.get('name').invalid && formModel.get('name').touched"-->
+                   <!--type="text" id="Cname" class="form-control" value="" style="margin-bottom: 15px;width: 100%;">-->
+            <!--<div [hidden]="formModel.get('name').untouched">-->
+              <!--<div class="formtips" [hidden]="!formModel.hasError('required',['name'])">-->
+                <!--请输入名称-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-3  control-label" style="text-align:right;">描述：</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<input type="text" id="Ccomm" class="form-control" placeholder="请输入描述内容" value=""-->
+                   <!--style="margin-bottom: 15px;">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-3  control-label" style="text-align:right;">权限：</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<nz-select style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择" [(ngModel)]="listOfSelectedValue2">-->
+              <!--<nz-option *ngFor="let option of authList" [nzLabel]="option.name" [nzValue]="option.key"></nz-option>-->
+            <!--</nz-select>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group  col-md-12">-->
+          <!--<label class="col-md-3 control-label" style="text-align:right;">排序：</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<input type="text" id="CorderBy" onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');"-->
+                   <!--class="form-control"-->
+                   <!--value="" style="margin-bottom:15px;"/>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-3  control-label" style="text-align:right;">图标：</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<div class="form-control" id="Caddicon" contenteditable="true"-->
+                 <!--style="width:50%;float:left;margin-right: 20px;">-->
+              <!--&lt;!&ndash; <i style="margin-right: 5px;" class="{{item.icon}}"></i>{{iconName3}} &ndash;&gt;-->
+            <!--</div>-->
+            <!--<span class="btn green fileinput-button" data-toggle="modal" data-target="#chooseModal">-->
+              <!--<span>选择图标</span>-->
+            <!--</span>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-3  control-label" style="text-align:right;">-->
+            <!--<font style="vertical-align: inherit;">-->
+              <!--<font style="vertical-align: inherit;">-->
+                <!--<span style="color:red;">*</span>资源类型 :</font>-->
+            <!--</font>-->
+          <!--</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<input type="radio" name="ctype" value="0" checked>文件夹-->
+            <!--<input style="margin-left:20px;" type="radio" name="ctype" value="1">菜单-->
+            <!--<input style="margin-left:20px;" type="radio" name="ctype" value="2">事件-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group  col-md-12">-->
+          <!--<label class="col-md-3  control-label" style="text-align:right;">-->
+
+            <!--<font style="vertical-align: inherit;">-->
+              <!--<font style="vertical-align: inherit;">-->
+                <!--<span style="color:red;">*</span>资源：</font>-->
+            <!--</font>-->
+          <!--</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<input type="text" id="Caresource" class="form-control"/>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group  col-md-12">-->
+          <!--<label class="col-md-3  control-label" style="text-align:right;">状态：</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<input type="radio" checked name="cenabled" value="true">启用-->
+            <!--<input style="margin-left:20px;" type="radio" name="cenabled" value="false">禁用-->
+
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="modal-footer">-->
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal" (click)="cancel2()">取消</button>-->
+        <!--<button type="button" class="btn btn-primary" (click)="addCsure()">确定</button>-->
+
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+
+<!--<div class="modal fade" id="ceditresource" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
+     <!--aria-hidden="true" style="z-index:999;margin-top:5%;">-->
+  <!--<div class="modal-dialog" style="width:1000px;">-->
+    <!--<div class="modal-content">-->
+      <!--<div class="modal-header">-->
+        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+        <!--<h4 class="modal-title">编辑子资源</h4>-->
+      <!--</div>-->
+      <!--<div class="portlet-body col-md-12" style="padding:40px 20px;" *ngFor="let item of editresource">-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-2 control-label" style="text-align:right;">APP：</label>-->
+          <!--<div class="col-md-10">-->
+            <!--<input type="text" id="creapp" class="form-control" readonly value="{{item.app}}">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-2  control-label" style="text-align:right;"> <span style="color:red;">*</span>名称：</label>-->
+          <!--<div class="col-md-10">-->
+            <!--<input type="text" id="crename" class="form-control" value="{{item.name}}"/>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-2  control-label" style="text-align:right;"> <span style="color:red;">*</span>描述：</label>-->
+          <!--<div class="col-md-10">-->
+            <!--<input type="text" id="crecomm" class="form-control" value="{{item.comm}}"/>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class=""></div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-2  control-label" style="text-align:right;">排序：</label>-->
+          <!--<div class="col-md-10">-->
+            <!--<input type="text" id="creorderby" class="form-control" value="{{item.orderBy}}"/>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-2  control-label" style="text-align:right;">权限：</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<nz-select style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择" [(ngModel)]="editclistOfSelectedValue">-->
+              <!--<nz-option *ngFor="let option of authList" [nzLabel]="option.name" [nzValue]="option.key"></nz-option>-->
+            <!--</nz-select>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-2 control-label" style="text-align:right;">图标：</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<div class="form-control" id="creicon" contenteditable="true"-->
+                 <!--style="width:50%;float:left;margin-right: 20px;">-->
+              <!--<i style="margin-right: 5px;" class="fa {{item.icon}}"></i>{{iconName4}}-->
+            <!--</div>-->
+            <!--<span class="btn green fileinput-button" data-toggle="modal" data-target="#chooseModal">-->
+            <!--<span>选择图标</span>-->
+          <!--</span>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-2  control-label" style="text-align:right;"><span style="color:red;">*</span>资源：</label>-->
+          <!--<div class="col-md-10">-->
+            <!--<input type="text" id="crresource" class="form-control" value="{{item.resource}}"/>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-2  control-label" style="text-align:right;">类型：</label>-->
+          <!--<div class="col-md-10">-->
+            <!--<input type="radio" name="cctype" value="0" checked *ngIf="ctypea==0"/>-->
+            <!--<input type="radio" name="cctype" value="0" *ngIf="ctypea!=0"/>文件夹-->
+            <!--<input style="margin-left:20px;" type="radio" checked name="cctype" value="1" *ngIf="ctypea==1"/>-->
+            <!--<input style="margin-left:20px;" type="radio" name="cctype" value="1" *ngIf="ctypea!=1"/>菜单-->
+            <!--<input style="margin-left:20px;" type="radio" checked name="cctype" value="2" *ngIf="ctypea==2"/>-->
+            <!--<input style="margin-left:20px;" type="radio" name="cctype" value="2" *ngIf="ctypea!=2"/>事件-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-12">-->
+          <!--<label class="col-md-2  control-label" style="text-align:right;">状态：</label>-->
+          <!--<div class="col-md-10">-->
+            <!--<input type="radio" *ngIf="item.enabled==true" checked name="Cenabled" value="true">-->
+            <!--<input type="radio" *ngIf="item.enabled!=true" name="Cenabled" value="true">启用-->
+            <!--<input type="radio" *ngIf="item.enabled==false" style="margin-left:20px;" checked name="Cenabled"-->
+                   <!--value="false">-->
+            <!--<input type="radio" *ngIf="item.enabled!=false" style="margin-left:20px;" name="Cenabled" value="false">禁用-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="modal-footer">-->
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal" (click)="recancel()">取消</button>-->
+        <!--<button type="button" class="btn btn-primary" (click)="recditsure()">保存</button>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<!--操作弹框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">管理</h4>
+      </div>
+      <div class="modal-body">{{message}}</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="subStatus()">确定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myreModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">管理</h4>
+      </div>
+      <div class="modal-body">{{message}}</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="subreStatus()">确定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="rmyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="rmyModalLabel1">管理</h4>
+      </div>
+      <div class="modal-body">{{message}}</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="rsubStatus()">确定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--操作弹框end-->
+<!--编辑弹框-->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel2">子系统编辑</h4>
+      </div>
+      <form class="form-horizontal" [formGroup]="formModel">
+        <div class="portlet-body col-md-12" *ngFor="let item of editList" style="padding:15px;">
+          <div class="form-group">
+            <label class="col-md-2  control-label" style="text-align:right;">编号：</label>
+            <div class="col-md-10">
+              <input type="text" id="ekey" class="form-control" value="{{item.key}}" readonly
+                     style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2  control-label" style="text-align:right;">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">
+                  <span style="color:red;">*</span>短码 :</font>
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input name="shortCode" placeholder="请输入短码"
+                     onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+                     onblur="this.v();" type="text" id="item-shortCode" class="form-control" value="{{item.shortCode}}"
+                     style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label" style="text-align: right;">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">
+                  <span style="color:red;">*</span>名称 :</font>
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input formControlName="name" name="name" [(ngModel)]="names" placeholder="请输入名称"
+                     [class.hasError]="formModel.get('name').invalid && formModel.get('name').touched"
+                     type="text" id="ename" class="form-control" value="{{item.name}}" style="margin-bottom: 15px;">
+              <div [hidden]="formModel.get('name').untouched">
+                <div class="formtips" [hidden]="!formModel.hasError('required',['name'])">
+                  名称必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2  control-label" style="text-align:right;">描述：</label>
+            <div class="col-md-10">
+              <input type="text" id="ecomm" class="form-control" value="{{item.comm}}" style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2  control-label" style="text-align:right;">邮箱：</label>
+            <div class="col-md-10">
+              <input name="email" placeholder="请输入邮箱" type="text" id="item-email" class="form-control"
+                     value="{{item.email}}"
+                     style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2  control-label" style="text-align:right;">通知地址：</label>
+            <div class="col-md-10">
+              <input name="noticeUrl" placeholder="请输入通知地址" type="text" id="item-noticeUrl" class="form-control"
+                     value="{{item.noticeUrl}}"
+                     style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2  control-label" style="text-align:right;">状态：</label>
+            <div class="col-md-10">
+              <input type="radio" *ngIf="item.enabled" checked name="eenabled" value="true">
+              <input type="radio" *ngIf="!item.enabled" name="eenabled" value="true">启用
+              <input type="radio" *ngIf="!item.enabled" style="margin-left:20px;" checked name="eenabled" value="false">
+              <input type="radio" *ngIf="item.enabled" style="margin-left:20px;" name="eenabled" value="false">
+              禁用
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label" style="text-align:right;">密钥：</label>
+            <input type="hidden" id="pwdtxt2" value="{{item.appSecret}}">
+            <div class="col-md-8" *ngIf="pswType2">
+              <textarea id="pwdtxtt2" style="width: 100%;" class="form-control" value="{{pwd}}"></textarea>
+
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-success"  (click)="createP()">生成密钥</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="editSure()">确定</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="editcancel()">取消</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<!--编辑弹框end-->
+
+<!-- 添加弹框 -->
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">添加系统</h4>
+      </div>
+      <form class="form-horizontal" [formGroup]="formModel">
+        <div class="portlet-body col-md-12" style="padding:20px;">
+          <div class="form-group">
+            <label class="col-md-2 control-label" style="text-align: right;">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">
+                  <span style="color:red;">*</span>编号 :</font>
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input name="key" readonly placeholder="请输入编号" type="text" id="akey" class="form-control"
+                     value="{{appkey}}"
+                     style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2  control-label" style="text-align:right;">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">
+                  <span style="color:red;">*</span>短码 :</font>
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input name="shortCode" placeholder="请输入短码"
+                     onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+                     onblur="this.v();" type="text" id="shortCode" class="form-control" value="{{shortCode}}"
+                     style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label" style="text-align: right;">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">
+                  <span style="color:red;">*</span>名称 :</font>
+              </font>
+            </label>
+            <div class="col-md-10">
+              <input name="aname" placeholder="请输入名称" type="text" id="aname" class="form-control" value=""
+                     style="margin-bottom: 15px;"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2  control-label" style="text-align:right;">描述：</label>
+            <div class="col-md-10">
+              <input type="text" id="acomm" class="form-control" value="" style="margin-bottom: 15px;"
+                     placeholder="请输入描述"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2  control-label" style="text-align:right;">邮箱：</label>
+            <div class="col-md-10">
+              <input name="email" placeholder="请输入邮箱" type="text" id="email" class="form-control" value="{{email}}"
+                     style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2  control-label" style="text-align:right;">通知地址：</label>
+            <div class="col-md-10">
+              <input name="noticeUrl" placeholder="请输入通知地址" type="text" id="noticeUrl" class="form-control"
+                     value="{{noticeUrl}}"
+                     style="margin-bottom: 15px;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2  control-label" style="text-align:right;">状态：</label>
+            <div class="col-md-10">
+              <input style="margin-left:20px;" type="radio" checked name="enabled" value="true">启用
+              <input type="radio" name="enabled" value="false">禁用
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label" style="text-align:right;">密钥：</label>
+            <div class="col-md-8">
+              <textarea name="" id="addpwdtxt" class="form-control" style="width: 100%;" cols="30" rows="2"
+                        maxlength="128"></textarea>
+            </div>
+            <button class="btn btn-success" id="addcreate" (click)="addcreate()">生成密钥</button>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" (click)="addSure()">确定</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- 添加弹框 end-->
+
+
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     style="z-index:999;">
+  <div class="modal-dialog" style="margin-top:7%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"  (click)="cancel2()">&times;</button>
+        <h4 class="modal-title">添加资源</h4>
+      </div>
+
+      <div class="portlet-body col-md-12" style="padding:20px 30px 0 0">
+        <div class="form-group  col-md-12">
+          <label class="col-md-3  control-label" style="text-align:right;">APP：</label>
+          <div class="col-md-9">
+            <input type="text" id="Pkey" class="form-control " value="{{appkey}}" style="margin-bottom: 15px;" readonly>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-3 control-label" style="text-align: right;">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">
+                <span style="color:red;">*</span>名称 :</font>
+            </font>
+          </label>
+          <div class="col-md-9">
+            <input name="newChildCn" [(ngModel)]="name" placeholder="请输入名称"
+                   [class.hasError]="formModel.get('name').invalid && formModel.get('name').touched"
+                   type="text" id="Pname" class="form-control add_resourcce" value="" style="margin-bottom: 15px;width: 100%;">
+            <div [hidden]="formModel.get('name').untouched">
+              <div class="formtips" [hidden]="!formModel.hasError('required',['name'])">
+                请输入名称
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-3  control-label" style="text-align:right;">描述：</label>
+          <div class="col-md-9">
+            <input type="text" id="Pcomm" class="form-control add_resourcce" placeholder="请输入描述内容" value=""
+                   style="margin-bottom: 15px;">
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-3  control-label" style="text-align:right;">权限：</label>
+          <div class="col-md-9">
+            <nz-select style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择" [(ngModel)]="listOfSelectedValue2">
+              <nz-option *ngFor="let option of authList" [nzLabel]="option.name" [nzValue]="option.key"></nz-option>
+            </nz-select>
+          </div>
+        </div>
+        <div class="form-group  col-md-12">
+          <label class="col-md-3 control-label" style="text-align:right;">排序：</label>
+          <div class="col-md-9">
+            <input type="text" id="addOrderby" onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');"
+                   class="form-control add_resourcce"
+                   value="" style="margin-bottom:15px;"/>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-3  control-label" style="text-align:right;">图标：</label>
+          <div class="col-md-9">
+            <div class="form-control add_resourcce" id="addicon" contenteditable="true"
+                 style="width:50%;float:left;margin-right: 20px;">
+              <!-- <i style="margin-right: 5px;" class="{{item.icon}}"></i>{{iconName3}} -->
+            </div>
+            <span class="btn green fileinput-button" data-toggle="modal" data-target="#chooseModal">
+              <span>选择图标</span>
+            </span>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-3  control-label" style="text-align:right;">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">
+                <span style="color:red;">*</span>资源类型 :</font>
+            </font>
+          </label>
+          <div class="col-md-9">
+            <div style="float: left;">
+              <input  type="radio" [disabled]="authType"  name="ptype" value="0" checked
+                   (click)="ptypeClick(0)"/>文件夹
+            </div>
+            <div style="float: left;">
+              <input style="margin-left:20px;" type="radio" [disabled]="authType"  name="ptype" value="1"
+                      (click)="ptypeClick(1)"/>菜单
+            </div>
+            <div style="float: left;">
+              <input style="margin-left:20px;" type="radio" [disabled]="authType" [checked]="authType" name="ptype" value="2"
+                     (click)="ptypeClick(2)"/>事件
+            </div>
+            <div class="col-md-4 shijian_type" [hidden]="ptype==0||ptype==1" style="float: left;">
+              <select  class="form-control" id="ptevent">
+                <option value="3">新增</option>
+                <option  value="4">修改</option>
+                <option value="5">删除</option>
+              </select>
+            </div>
+
+
+            <!--<input type="radio" name="ptype" value="0" checked>文件夹
+            <input style="margin-left:20px;" type="radio" name="ptype" value="1">菜单
+            <input style="margin-left:20px;" type="radio" name="ptype" value="2">事件-->
+          </div>
+        </div>
+        <div class="form-group  col-md-12">
+          <label class="col-md-3  control-label" style="text-align:right;">
+
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">
+                <span style="color:red;">*</span>资源：</font>
+            </font>
+          </label>
+          <div class="col-md-9">
+            <input type="text" id="aresource" class="form-control add_resourcce"/>
+          </div>
+        </div>
+        <div class="form-group  col-md-12">
+          <label class="col-md-3  control-label" style="text-align:right;">状态：</label>
+          <div class="col-md-9">
+            <input type="radio" checked name="penabled" value="true">启用
+            <input style="margin-left:15px;" type="radio" name="penabled" value="false">禁用
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="cancel2()">取消</button>
+        <button type="button" class="btn btn-primary" (click)="addPsure()">确定</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 关联角色弹框 -->
+<div class="modal fade" id="link" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">关联角色</h4>
+      </div>
+      <div class="modal-body">
+        <div class="head">
+          <select id="selectTag" class="col-md-6" style="border-radius: 5px;height: 35px;">
+            <option value="">请选择角色</option>
+            <option *ngFor="let item of linkList" value="{{item.key}}">{{item.name}}</option>
+          </select>
+          <div class="col-md-6">
+            <button class="btn blue" (click)="newadd()">添加关联</button>
+          </div>
+
+        </div>
+        <table style="margin-top:50px;" class="table table-striped table-bordered table-hover dataTable no-footer"
+               id="sample_1"
+               role="grid" aria-describedby="sample_1_info">
+          <thead>
+          <tr>
+            <th>名称</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody id="tbody">
+          <tr *ngFor="let item of selectList">
+            <td>{{item.name}}</td>
+            <td>
+              <button class="btn btn-xs btn-warning" (click)="cancelLink(item.key)">取消关联</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" (click)="linkadd()">确定</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal -->
+</div>
+<!-- 关联角色弹框 end -->
+
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+<!-- 默认加载图标 -->
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+
+<div class="modal fade" id="chooseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:80%; height:80%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">选择图标</h4>
+      </div>
+      <div class="modal-body">
+        <nz-tabset [nzType]="'card'">
+          <nz-tab nzTitle="Fontawesome Icons">
+            <nz-tabset>
+              <nz-tab nzTitle="New Icons">
+                <div class="row newIcon" (click)="newIcon($event)"
+                     style="height:350px;overflow-y:auto;overflow-x:hidden;">
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-automobile"></i> fa-automobile (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bank"></i> fa-bank (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-behance"></i> fa-behance
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-behance-square"></i> fa-behance-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bomb"></i> fa-bomb
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-building"></i> fa-building
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cab"></i> fa-cab (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-car"></i> fa-car
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-child"></i> fa-child
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-circle-o-notch"></i> fa-circle-o-notch
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-circle-thin"></i> fa-circle-thin
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-codepen"></i> fa-codepen
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cube"></i> fa-cube
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cubes"></i> fa-cubes
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-database"></i> fa-database
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-delicious"></i> fa-delicious
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-deviantart"></i> fa-deviantart
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-digg"></i> fa-digg
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-drupal"></i> fa-drupal
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-empire"></i> fa-empire
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-envelope-square"></i> fa-envelope-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-fax"></i> fa-fax
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-archive-o"></i> fa-file-archive-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-audio-o"></i> fa-file-audio-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-code-o"></i> fa-file-code-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-excel-o"></i> fa-file-excel-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-image-o"></i> fa-file-image-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-movie-o"></i> fa-file-movie-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-pdf-o"></i> fa-file-pdf-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-photo-o"></i> fa-file-photo-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-picture-o"></i> fa-file-picture-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-powerpoint-o"></i> fa-file-powerpoint-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-sound-o"></i> fa-file-sound-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-video-o"></i> fa-file-video-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-word-o"></i> fa-file-word-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-zip-o"></i> fa-file-zip-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-ge"></i> fa-ge (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-git"></i> fa-git
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-git-square"></i> fa-git-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-google"></i> fa-google
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-graduation-cap"></i> fa-graduation-cap
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-hacker-news"></i> fa-hacker-news
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-header"></i> fa-header
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-history"></i> fa-history
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-institution"></i> fa-institution (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-joomla"></i> fa-joomla
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-jsfiddle"></i> fa-jsfiddle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-language"></i> fa-language
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-life-bouy"></i> fa-life-bouy (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-life-ring"></i> fa-life-ring
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-life-saver"></i> fa-life-saver (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-mortar-board"></i> fa-mortar-board (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-openid"></i> fa-openid
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-paper-plane"></i> fa-paper-plane
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-paper-plane-o"></i> fa-paper-plane-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-paragraph"></i> fa-paragraph
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-paw"></i> fa-paw
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pied-piper"></i> fa-pied-piper
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pied-piper-alt"></i> fa-pied-piper-alt
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pied-piper-square"></i> fa-pied-piper-square (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-qq"></i> fa-qq
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-ra"></i> fa-ra (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-rebel"></i> fa-rebel
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-recycle"></i> fa-recycle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-reddit"></i> fa-reddit
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-reddit-square"></i> fa-reddit-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-send"></i> fa-send (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-send-o"></i> fa-send-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-share-alt"></i> fa-share-alt
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-share-alt-square"></i> fa-share-alt-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-slack"></i> fa-slack
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sliders"></i> fa-sliders
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-soundcloud"></i> fa-soundcloud
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-space-shuttle"></i> fa-space-shuttle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-spoon"></i> fa-spoon
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-spotify"></i> fa-spotify
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-steam"></i> fa-steam
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-steam-square"></i> fa-steam-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-stumbleupon"></i> fa-stumbleupon
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-stumbleupon-circle"></i> fa-stumbleupon-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-support"></i> fa-support (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-taxi"></i> fa-taxi
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tencent-weibo"></i> fa-tencent-weibo
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tree"></i> fa-tree
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-university"></i> fa-university
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-vine"></i> fa-vine
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-wechat"></i> fa-wechat (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-weixin"></i> fa-weixin
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-wordpress"></i> fa-wordpress
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-yahoo"></i> fa-yahoo
+                  </div>
+                </div>
+              </nz-tab>
+              <nz-tab nzTitle=" Application Icons">
+                <div class="row  appIcon" (click)="appIcon($event)"
+                     style="height:350px;overflow-y:auto;overflow-x:hidden;">
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-adjust"></i> fa-adjust
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-anchor"></i> fa-anchor
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-archive"></i> fa-archive
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrows"></i> fa-arrows
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrows-h"></i> fa-arrows-h
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrows-v"></i> fa-arrows-v
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-asterisk"></i> fa-asterisk
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-automobile"></i> fa-automobile (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-ban"></i> fa-ban
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bank"></i> fa-bank (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bar-chart-o"></i> fa-bar-chart-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-barcode"></i> fa-barcode
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bars"></i> fa-bars
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-beer"></i> fa-beer
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bell"></i> fa-bell
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bell-o"></i> fa-bell-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bolt"></i> fa-bolt
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bomb"></i> fa-bomb
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-book"></i> fa-book
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bookmark"></i> fa-bookmark
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bookmark-o"></i> fa-bookmark-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-briefcase"></i> fa-briefcase
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bug"></i> fa-bug
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-building"></i> fa-building
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-building-o"></i> fa-building-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bullhorn"></i> fa-bullhorn
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bullseye"></i> fa-bullseye
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cab"></i> fa-cab (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-calendar"></i> fa-calendar
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-calendar-o"></i> fa-calendar-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-camera"></i> fa-camera
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-camera-retro"></i> fa-camera-retro
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-car"></i> fa-car
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-square-o-down"></i> fa-caret-square-o-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-square-o-left"></i> fa-caret-square-o-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-square-o-right"></i> fa-caret-square-o-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-square-o-up"></i> fa-caret-square-o-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-certificate"></i> fa-certificate
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-check"></i> fa-check
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-check-circle"></i> fa-check-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-check-circle-o"></i> fa-check-circle-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-check-square"></i> fa-check-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-check-square-o"></i> fa-check-square-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-child"></i> fa-child
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-circle"></i> fa-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-circle-o"></i> fa-circle-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-circle-o-notch"></i> fa-circle-o-notch
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-circle-thin"></i> fa-circle-thin
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-clock-o"></i> fa-clock-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cloud"></i> fa-cloud
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cloud-download"></i> fa-cloud-download
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cloud-upload"></i> fa-cloud-upload
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-code"></i> fa-code
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-code-fork"></i> fa-code-fork
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-coffee"></i> fa-coffee
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cog"></i> fa-cog
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cogs"></i> fa-cogs
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-comment"></i> fa-comment
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-comment-o"></i> fa-comment-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-comments"></i> fa-comments
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-comments-o"></i> fa-comments-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-compass"></i> fa-compass
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-credit-card"></i> fa-credit-card
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-crop"></i> fa-crop
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-crosshairs"></i> fa-crosshairs
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cube"></i> fa-cube
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cubes"></i> fa-cubes
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cutlery"></i> fa-cutlery
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-dashboard"></i> fa-dashboard (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-database"></i> fa-database
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-desktop"></i> fa-desktop
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-dot-circle-o"></i> fa-dot-circle-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-download"></i> fa-download
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-edit"></i> fa-edit (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-ellipsis-h"></i> fa-ellipsis-h
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-ellipsis-v"></i> fa-ellipsis-v
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-envelope"></i> fa-envelope
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-envelope-o"></i> fa-envelope-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-envelope-square"></i> fa-envelope-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-eraser"></i> fa-eraser
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-exchange"></i> fa-exchange
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-exclamation"></i> fa-exclamation
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-exclamation-circle"></i> fa-exclamation-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-exclamation-triangle"></i> fa-exclamation-triangle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-external-link"></i> fa-external-link
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-external-link-square"></i> fa-external-link-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-eye"></i> fa-eye
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-eye-slash"></i> fa-eye-slash
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-fax"></i> fa-fax
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-female"></i> fa-female
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-fighter-jet"></i> fa-fighter-jet
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-archive-o"></i> fa-file-archive-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-audio-o"></i> fa-file-audio-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-code-o"></i> fa-file-code-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-excel-o"></i> fa-file-excel-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-image-o"></i> fa-file-image-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-movie-o"></i> fa-file-movie-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-pdf-o"></i> fa-file-pdf-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-photo-o"></i> fa-file-photo-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-picture-o"></i> fa-file-picture-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-powerpoint-o"></i> fa-file-powerpoint-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-sound-o"></i> fa-file-sound-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-video-o"></i> fa-file-video-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-word-o"></i> fa-file-word-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-zip-o"></i> fa-file-zip-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-film"></i> fa-film
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-filter"></i> fa-filter
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-fire"></i> fa-fire
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-fire-extinguisher"></i> fa-fire-extinguisher
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-flag"></i> fa-flag
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-flag-checkered"></i> fa-flag-checkered
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-flag-o"></i> fa-flag-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-flash"></i> fa-flash (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-flask"></i> fa-flask
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-folder"></i> fa-folder
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-folder-o"></i> fa-folder-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-folder-open"></i> fa-folder-open
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-folder-open-o"></i> fa-folder-open-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-frown-o"></i> fa-frown-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-gamepad"></i> fa-gamepad
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-gavel"></i> fa-gavel
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-gear"></i> fa-gear (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-gears"></i> fa-gears (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-gift"></i> fa-gift
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-glass"></i> fa-glass
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-globe"></i> fa-globe
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-graduation-cap"></i> fa-graduation-cap
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-group"></i> fa-group (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-hdd-o"></i> fa-hdd-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-headphones"></i> fa-headphones
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-heart"></i> fa-heart
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-heart-o"></i> fa-heart-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-history"></i> fa-history
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-home"></i> fa-home
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-image"></i> fa-image (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-inbox"></i> fa-inbox
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-info"></i> fa-info
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-info-circle"></i> fa-info-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-institution"></i> fa-institution (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-key"></i> fa-key
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-keyboard-o"></i> fa-keyboard-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-language"></i> fa-language
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-laptop"></i> fa-laptop
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-leaf"></i> fa-leaf
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-legal"></i> fa-legal (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-lemon-o"></i> fa-lemon-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-level-down"></i> fa-level-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-level-up"></i> fa-level-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-life-bouy"></i> fa-life-bouy (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-life-ring"></i> fa-life-ring
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-life-saver"></i> fa-life-saver (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-lightbulb-o"></i> fa-lightbulb-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-location-arrow"></i> fa-location-arrow
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-lock"></i> fa-lock
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-magic"></i> fa-magic
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-magnet"></i> fa-magnet
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-mail-forward"></i> fa-mail-forward (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-mail-reply"></i> fa-mail-reply (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-mail-reply-all"></i> fa-mail-reply-all (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-male"></i> fa-male
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-map-marker"></i> fa-map-marker
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-meh-o"></i> fa-meh-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-microphone"></i> fa-microphone
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-microphone-slash"></i> fa-microphone-slash
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-minus"></i> fa-minus
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-minus-circle"></i> fa-minus-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-minus-square"></i> fa-minus-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-minus-square-o"></i> fa-minus-square-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-mobile"></i> fa-mobile
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-mobile-phone"></i> fa-mobile-phone (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-money"></i> fa-money
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-moon-o"></i> fa-moon-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-mortar-board"></i> fa-mortar-board (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-music"></i> fa-music
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-navicon"></i> fa-navicon (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-paper-plane"></i> fa-paper-plane
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-paper-plane-o"></i> fa-paper-plane-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-paw"></i> fa-paw
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pencil"></i> fa-pencil
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pencil-square"></i> fa-pencil-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pencil-square-o"></i> fa-pencil-square-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-phone"></i> fa-phone
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-phone-square"></i> fa-phone-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-photo"></i> fa-photo (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-picture-o"></i> fa-picture-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-plane"></i> fa-plane
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-plus"></i> fa-plus
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-plus-circle"></i> fa-plus-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-plus-square"></i> fa-plus-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-plus-square-o"></i> fa-plus-square-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-power-off"></i> fa-power-off
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-print"></i> fa-print
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-puzzle-piece"></i> fa-puzzle-piece
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-qrcode"></i> fa-qrcode
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-question"></i> fa-question
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-question-circle"></i> fa-question-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-quote-left"></i> fa-quote-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-quote-right"></i> fa-quote-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-random"></i> fa-random
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-recycle"></i> fa-recycle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-refresh"></i> fa-refresh
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-reorder"></i> fa-reorder (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-reply"></i> fa-reply
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-reply-all"></i> fa-reply-all
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-retweet"></i> fa-retweet
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-road"></i> fa-road
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-rocket"></i> fa-rocket
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-rss"></i> fa-rss
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-rss-square"></i> fa-rss-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-search"></i> fa-search
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-search-minus"></i> fa-search-minus
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-search-plus"></i> fa-search-plus
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-send"></i> fa-send (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-send-o"></i> fa-send-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-share"></i> fa-share
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-share-alt"></i> fa-share-alt
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-share-alt-square"></i> fa-share-alt-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-share-square"></i> fa-share-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-share-square-o"></i> fa-share-square-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-shield"></i> fa-shield
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-shopping-cart"></i> fa-shopping-cart
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sign-in"></i> fa-sign-in
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sign-out"></i> fa-sign-out
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-signal"></i> fa-signal
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sitemap"></i> fa-sitemap
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sliders"></i> fa-sliders
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-smile-o"></i> fa-smile-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sort"></i> fa-sort
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sort-alpha-asc"></i> fa-sort-alpha-asc
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sort-alpha-desc"></i> fa-sort-alpha-desc
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sort-amount-asc"></i> fa-sort-amount-asc
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sort-amount-desc"></i> fa-sort-amount-desc
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sort-asc"></i> fa-sort-asc
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sort-desc"></i> fa-sort-desc
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sort-down"></i> fa-sort-down (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sort-numeric-asc"></i> fa-sort-numeric-asc
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sort-numeric-desc"></i> fa-sort-numeric-desc
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sort-up"></i> fa-sort-up (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-space-shuttle"></i> fa-space-shuttle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-spinner"></i> fa-spinner
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-spoon"></i> fa-spoon
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-square"></i> fa-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-square-o"></i> fa-square-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-star"></i> fa-star
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-star-half"></i> fa-star-half
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-star-half-empty"></i> fa-star-half-empty (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-star-half-full"></i> fa-star-half-full (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-star-half-o"></i> fa-star-half-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-star-o"></i> fa-star-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-suitcase"></i> fa-suitcase
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-sun-o"></i> fa-sun-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-support"></i> fa-support (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tablet"></i> fa-tablet
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tachometer"></i> fa-tachometer
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tag"></i> fa-tag
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tags"></i> fa-tags
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tasks"></i> fa-tasks
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-taxi"></i> fa-taxi
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-terminal"></i> fa-terminal
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-thumb-tack"></i> fa-thumb-tack
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-thumbs-down"></i> fa-thumbs-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-thumbs-o-down"></i> fa-thumbs-o-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-thumbs-o-up"></i> fa-thumbs-o-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-thumbs-up"></i> fa-thumbs-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-ticket"></i> fa-ticket
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-times"></i> fa-times
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-times-circle"></i> fa-times-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-times-circle-o"></i> fa-times-circle-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tint"></i> fa-tint
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-toggle-down"></i> fa-toggle-down (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-toggle-left"></i> fa-toggle-left (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-toggle-right"></i> fa-toggle-right (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-toggle-up"></i> fa-toggle-up (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-trash-o"></i> fa-trash-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tree"></i> fa-tree
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-trophy"></i> fa-trophy
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-truck"></i> fa-truck
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-umbrella"></i> fa-umbrella
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-university"></i> fa-university
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-unlock"></i> fa-unlock
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-unlock-alt"></i> fa-unlock-alt
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-unsorted"></i> fa-unsorted (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-upload"></i> fa-upload
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-user"></i> fa-user
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-users"></i> fa-users
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-video-camera"></i> fa-video-camera
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-volume-down"></i> fa-volume-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-volume-off"></i> fa-volume-off
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-volume-up"></i> fa-volume-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-warning"></i> fa-warning (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-wheelchair"></i> fa-wheelchair
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-wrench"></i> fa-wrench
+                  </div>
+                </div>
+              </nz-tab>
+              <nz-tab nzTitle="File Type Icons">
+                <div class="row  typeIcon" (click)="typeIcon($event)"
+                     style="height:350px;overflow-y:auto;overflow-x:hidden;">
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file"></i> fa-file
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-archive-o"></i> fa-file-archive-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-audio-o"></i> fa-file-audio-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-code-o"></i> fa-file-code-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-excel-o"></i> fa-file-excel-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-image-o"></i> fa-file-image-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-movie-o"></i> fa-file-movie-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-o"></i> fa-file-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-pdf-o"></i> fa-file-pdf-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-photo-o"></i> fa-file-photo-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-picture-o"></i> fa-file-picture-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-powerpoint-o"></i> fa-file-powerpoint-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-sound-o"></i> fa-file-sound-o (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-text"></i> fa-file-text
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-text-o"></i> fa-file-text-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-video-o"></i> fa-file-video-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-word-o"></i> fa-file-word-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-zip-o"></i> fa-file-zip-o (alias)
+                  </div>
+                </div>
+              </nz-tab>
+              <nz-tab nzTitle="Spinner Icons">
+                <div class="row  spinnerIcon" (click)="spinnerIcon($event)"
+                     style="height:350px;overflow-y:auto;overflow-x:hidden;">
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-circle-o-notch"></i> fa-circle-o-notch
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cog"></i> fa-cog
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-gear"></i> fa-gear (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-refresh"></i> fa-refresh
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-spinner"></i> fa-spinner
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-check-square"></i> fa-check-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-check-square-o"></i> fa-check-square-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-circle"></i> fa-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-circle-o"></i> fa-circle-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-dot-circle-o"></i> fa-dot-circle-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-minus-square"></i> fa-minus-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-minus-square-o"></i> fa-minus-square-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-plus-square"></i> fa-plus-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-plus-square-o"></i> fa-plus-square-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-square"></i> fa-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-square-o"></i> fa-square-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bitcoin"></i> fa-bitcoin (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-btc"></i> fa-btc
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cny"></i> fa-cny (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-dollar"></i> fa-dollar (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-eur"></i> fa-eur
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-euro"></i> fa-euro (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-gbp"></i> fa-gbp
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-inr"></i> fa-inr
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-jpy"></i> fa-jpy
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-krw"></i> fa-krw
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-money"></i> fa-money
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-rmb"></i> fa-rmb (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-rouble"></i> fa-rouble (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-rub"></i> fa-rub
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-ruble"></i> fa-ruble (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-rupee"></i> fa-rupee (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-try"></i> fa-try
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-turkish-lira"></i> fa-turkish-lira (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-usd"></i> fa-usd
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-won"></i> fa-won (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-yen"></i> fa-yen (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-align-center"></i> fa-align-center
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-align-justify"></i> fa-align-justify
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-align-left"></i> fa-align-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-align-right"></i> fa-align-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bold"></i> fa-bold
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-chain"></i> fa-chain (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-chain-broken"></i> fa-chain-broken
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-clipboard"></i> fa-clipboard
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-columns"></i> fa-columns
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-copy"></i> fa-copy (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-cut"></i> fa-cut (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-dedent"></i> fa-dedent (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-eraser"></i> fa-eraser
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file"></i> fa-file
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-o"></i> fa-file-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-text"></i> fa-file-text
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-file-text-o"></i> fa-file-text-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-files-o"></i> fa-files-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-floppy-o"></i> fa-floppy-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-font"></i> fa-font
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-header"></i> fa-header
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-indent"></i> fa-indent
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-italic"></i> fa-italic
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-link"></i> fa-link
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-list"></i> fa-list
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-list-alt"></i> fa-list-alt
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-list-ol"></i> fa-list-ol
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-list-ul"></i> fa-list-ul
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-outdent"></i> fa-outdent
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-paperclip"></i> fa-paperclip
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-paragraph"></i> fa-paragraph
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-paste"></i> fa-paste (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-repeat"></i> fa-repeat
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-rotate-left"></i> fa-rotate-left (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-rotate-right"></i> fa-rotate-right (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-save"></i> fa-save (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-scissors"></i> fa-scissors
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-strikethrough"></i> fa-strikethrough
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-subscript"></i> fa-subscript
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-superscript"></i> fa-superscript
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-table"></i> fa-table
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-text-height"></i> fa-text-height
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-text-width"></i> fa-text-width
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-th"></i> fa-th
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-th-large"></i> fa-th-large
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-th-list"></i> fa-th-list
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-underline"></i> fa-underline
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-undo"></i> fa-undo
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-unlink"></i> fa-unlink (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-angle-double-down"></i> fa-angle-double-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-angle-double-left"></i> fa-angle-double-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-angle-double-right"></i> fa-angle-double-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-angle-double-up"></i> fa-angle-double-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-angle-down"></i> fa-angle-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-angle-left"></i> fa-angle-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-angle-right"></i> fa-angle-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-angle-up"></i> fa-angle-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-circle-down"></i> fa-arrow-circle-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-circle-left"></i> fa-arrow-circle-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-circle-o-down"></i> fa-arrow-circle-o-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-circle-o-left"></i> fa-arrow-circle-o-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-circle-o-right"></i> fa-arrow-circle-o-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-circle-o-up"></i> fa-arrow-circle-o-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-circle-right"></i> fa-arrow-circle-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-circle-up"></i> fa-arrow-circle-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-down"></i> fa-arrow-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-left"></i> fa-arrow-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-right"></i> fa-arrow-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrow-up"></i> fa-arrow-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrows"></i> fa-arrows
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrows-alt"></i> fa-arrows-alt
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrows-h"></i> fa-arrows-h
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrows-v"></i> fa-arrows-v
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-down"></i> fa-caret-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-left"></i> fa-caret-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-right"></i> fa-caret-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-square-o-down"></i> fa-caret-square-o-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-square-o-left"></i> fa-caret-square-o-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-square-o-right"></i> fa-caret-square-o-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-square-o-up"></i> fa-caret-square-o-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-caret-up"></i> fa-caret-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-chevron-circle-down"></i> fa-chevron-circle-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-chevron-circle-left"></i> fa-chevron-circle-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-chevron-circle-right"></i> fa-chevron-circle-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-chevron-circle-up"></i> fa-chevron-circle-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-chevron-down"></i> fa-chevron-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-chevron-left"></i> fa-chevron-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-chevron-right"></i> fa-chevron-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-chevron-up"></i> fa-chevron-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-hand-o-down"></i> fa-hand-o-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-hand-o-left"></i> fa-hand-o-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-hand-o-right"></i> fa-hand-o-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-hand-o-up"></i> fa-hand-o-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-long-arrow-down"></i> fa-long-arrow-down
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-long-arrow-left"></i> fa-long-arrow-left
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-long-arrow-right"></i> fa-long-arrow-right
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-long-arrow-up"></i> fa-long-arrow-up
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-toggle-down"></i> fa-toggle-down (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-toggle-left"></i> fa-toggle-left (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-toggle-right"></i> fa-toggle-right (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-toggle-up"></i> fa-toggle-up (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-arrows-alt"></i> fa-arrows-alt
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-backward"></i> fa-backward
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-compress"></i> fa-compress
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-eject"></i> fa-eject
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-expand"></i> fa-expand
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-fast-backward"></i> fa-fast-backward
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-fast-forward"></i> fa-fast-forward
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-forward"></i> fa-forward
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pause"></i> fa-pause
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-play"></i> fa-play
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-play-circle"></i> fa-play-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-play-circle-o"></i> fa-play-circle-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-step-backward"></i> fa-step-backward
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-step-forward"></i> fa-step-forward
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-stop"></i> fa-stop
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-youtube-play"></i> fa-youtube-play
+                  </div>
+
+                </div>
+              </nz-tab>
+
+              <nz-tab nzTitle="Brand Icons">
+                <div class="row  brand" (click)="brand($event)" style="height:350px;overflow-y:auto;overflow-x:hidden;">
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-adn"></i> fa-adn
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-android"></i> fa-android
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-apple"></i> fa-apple
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-behance"></i> fa-behance
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-behance-square"></i> fa-behance-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bitbucket"></i> fa-bitbucket
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bitbucket-square"></i> fa-bitbucket-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-bitcoin"></i> fa-bitcoin (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-btc"></i> fa-btc
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-codepen"></i> fa-codepen
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-css3"></i> fa-css3
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-delicious"></i> fa-delicious
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-deviantart"></i> fa-deviantart
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-digg"></i> fa-digg
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-dribbble"></i> fa-dribbble
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-dropbox"></i> fa-dropbox
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-drupal"></i> fa-drupal
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-empire"></i> fa-empire
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-facebook"></i> fa-facebook
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-facebook-square"></i> fa-facebook-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-flickr"></i> fa-flickr
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-foursquare"></i> fa-foursquare
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-ge"></i> fa-ge (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-git"></i> fa-git
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-git-square"></i> fa-git-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-github"></i> fa-github
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-github-alt"></i> fa-github-alt
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-github-square"></i> fa-github-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-gittip"></i> fa-gittip
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-google"></i> fa-google
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-google-plus"></i> fa-google-plus
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-google-plus-square"></i> fa-google-plus-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-hacker-news"></i> fa-hacker-news
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-html5"></i> fa-html5
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-instagram"></i> fa-instagram
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-joomla"></i> fa-joomla
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-jsfiddle"></i> fa-jsfiddle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-linkedin"></i> fa-linkedin
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-linkedin-square"></i> fa-linkedin-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-linux"></i> fa-linux
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-maxcdn"></i> fa-maxcdn
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-openid"></i> fa-openid
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pagelines"></i> fa-pagelines
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pied-piper"></i> fa-pied-piper
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pied-piper-alt"></i> fa-pied-piper-alt
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pied-piper-square"></i> fa-pied-piper-square (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pinterest"></i> fa-pinterest
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-pinterest-square"></i> fa-pinterest-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-qq"></i> fa-qq
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-ra"></i> fa-ra (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-rebel"></i> fa-rebel
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-reddit"></i> fa-reddit
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-reddit-square"></i> fa-reddit-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-renren"></i> fa-renren
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-share-alt"></i> fa-share-alt
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-share-alt-square"></i> fa-share-alt-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-skype"></i> fa-skype
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-slack"></i> fa-slack
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-soundcloud"></i> fa-soundcloud
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-spotify"></i> fa-spotify
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-stack-exchange"></i> fa-stack-exchange
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-stack-overflow"></i> fa-stack-overflow
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-steam"></i> fa-steam
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-steam-square"></i> fa-steam-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-stumbleupon"></i> fa-stumbleupon
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-stumbleupon-circle"></i> fa-stumbleupon-circle
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tencent-weibo"></i> fa-tencent-weibo
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-trello"></i> fa-trello
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tumblr"></i> fa-tumblr
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-tumblr-square"></i> fa-tumblr-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-twitter"></i> fa-twitter
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-twitter-square"></i> fa-twitter-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-vimeo-square"></i> fa-vimeo-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-vine"></i> fa-vine
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-vk"></i> fa-vk
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-wechat"></i> fa-wechat (alias)
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-weibo"></i> fa-weibo
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-weixin"></i> fa-weixin
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-windows"></i> fa-windows
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-wordpress"></i> fa-wordpress
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-xing"></i> fa-xing
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-xing-square"></i> fa-xing-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-yahoo"></i> fa-yahoo
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-youtube"></i> fa-youtube
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-youtube-play"></i> fa-youtube-play
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-youtube-square"></i> fa-youtube-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-ambulance"></i> fa-ambulance
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-h-square"></i> fa-h-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-hospital-o"></i> fa-hospital-o
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-medkit"></i> fa-medkit
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-plus-square"></i> fa-plus-square
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-stethoscope"></i> fa-stethoscope
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-user-md"></i> fa-user-md
+                  </div>
+                  <div class="fa-item col-md-3 col-sm-4">
+                    <i class="fa fa-wheelchair"></i> fa-wheelchair
+                  </div>
+                </div>
+              </nz-tab>
+            </nz-tabset>
+          </nz-tab>
+          <nz-tab nzTitle="Simple Line Icons">
+            <div class="row  lineIcon" (click)="lineIcon($event)"
+                 style="height:350px;overflow-y:auto;overflow-x:hidden;">
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-user"></i>icon-user
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-user-female"></i>icon-user-female
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-users"></i>icon-users
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-user-follow"></i>icon-user-follow
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-user-following"></i>icon-user-following
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-user-unfollow"></i>icon-user-unfollow
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-trophy"></i>icon-trophy
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-speedometer"></i>icon-speedometer
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-social-youtube"></i>icon-social-youtube
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-social-twitter"></i>icon-social-twitter
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-social-tumblr"></i>icon-social-tumblr
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-social-facebook"></i>icon-social-facebook
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-social-dropbox"></i>icon-social-dropbox
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-social-dribbble"></i>icon-social-dribbble
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-screen-tablet"></i>icon-screen-tablet
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-screen-smartphone"></i>icon-screen-smartphone
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-screen-desktop"></i>icon-screen-desktop
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-plane"></i>icon-plane
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-notebook"></i>icon-notebook
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-moustache"></i>icon-moustache
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-mouse"></i>icon-mouse
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-magnet"></i>icon-magnet
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-magic-wand"></i>icon-magic-wand
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-hourglass"></i>icon-hourglass
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-graduation"></i>icon-graduation
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-ghost"></i>icon-ghost
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-game-controller"></i>icon-game-controller
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-fire"></i>icon-fire
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-eyeglasses"></i>icon-eyeglasses
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-envelope-open"></i>icon-envelope-open
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-envelope-letter"></i>icon-envelope-letter
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-energy"></i>icon-energy
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-emoticon-smile"></i>icon-emoticon-smile
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-disc"></i>icon-disc
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-cursor-move"></i>icon-cursor-move
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-crop"></i>icon-crop
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-credit-card"></i>icon-credit-card
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-chemistry"></i>icon-chemistry
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-bell"></i>icon-bell
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-badge"></i>icon-badge
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-anchor"></i>icon-anchor
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-action-redo"></i>icon-action-redo
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-action-undo"></i>icon-action-undo
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-bag"></i>icon-bag
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-basket"></i>icon-basket
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-basket-loaded"></i>icon-basket-loaded
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-book-open"></i>icon-book-open
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-briefcase"></i>icon-briefcase
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-bubbles"></i>icon-bubbles
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-calculator"></i>icon-calculator
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-call-end"></i>icon-call-end
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-call-in"></i>icon-call-in
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-call-out"></i>icon-call-out
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-compass"></i>icon-compass
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-cup"></i>icon-cup
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-diamond"></i>icon-diamond
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-direction"></i>icon-direction
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-directions"></i>icon-directions
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-docs"></i>icon-docs
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-drawer"></i>icon-drawer
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-drop"></i>icon-drop
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-earphones"></i>icon-earphones
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-earphones-alt"></i>icon-earphones-alt
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-feed"></i>icon-feed
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-film"></i>icon-film
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-folder-alt"></i>icon-folder-alt
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-frame"></i>icon-frame
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-globe"></i>icon-globe
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-globe-alt"></i>icon-globe-alt
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-handbag"></i>icon-handbag
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-layers"></i>icon-layers
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-map"></i>icon-map
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-picture"></i>icon-picture
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-pin"></i>icon-pin
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-playlist"></i>icon-playlist
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-present"></i>icon-present
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-printer"></i>icon-printer
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-puzzle"></i>icon-puzzle
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-speech"></i>icon-speech
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-vector"></i>icon-vector
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-wallet"></i>icon-wallet
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-arrow-down"></i>icon-arrow-down
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-arrow-left"></i>icon-arrow-left
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-arrow-right"></i>icon-arrow-right
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-arrow-up"></i>icon-arrow-up
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-bar-chart"></i>icon-bar-chart
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-bulb"></i>icon-bulb
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-calendar"></i>icon-calendar
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-control-end"></i>icon-control-end
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-control-forward"></i>icon-control-forward
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-control-pause"></i>icon-control-pause
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-control-play"></i>icon-control-play
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-control-rewind"></i>icon-control-rewind
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-control-start"></i>icon-control-start
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-cursor"></i>icon-cursor
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-dislike"></i>icon-dislike
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-equalizer"></i>icon-equalizer
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-graph"></i>icon-graph
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-grid"></i>icon-grid
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-home"></i>icon-home
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-like"></i>icon-like
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-list"></i>icon-list
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-login"></i>icon-login
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-logout"></i>icon-logout
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-loop"></i>icon-loop
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-microphone"></i>icon-microphone
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-music-tone"></i>icon-music-tone
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-music-tone-alt"></i>icon-music-tone-alt
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-note"></i>icon-note
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-pencil"></i>icon-pencil
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-pie-chart"></i>icon-pie-chart
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-question"></i>icon-question
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-rocket"></i>icon-rocket
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-share"></i>icon-share
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-share-alt"></i>icon-share-alt
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-shuffle"></i>icon-shuffle
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-size-actual"></i>icon-size-actual
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-size-fullscreen"></i>icon-size-fullscreen
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-support"></i>icon-support
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-tag"></i>icon-tag
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-trash"></i>icon-trash
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-umbrella"></i>icon-umbrella
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-wrench"></i>icon-wrench
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-ban"></i>icon-ban
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-bubble"></i>icon-bubble
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-camcorder"></i>icon-camcorder
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-camera"></i>icon-camera
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-check"></i>icon-check
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-clock"></i>icon-clock
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-close"></i>icon-close
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-cloud-download"></i>icon-cloud-download
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-cloud-upload"></i>icon-cloud-upload
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-doc"></i>icon-doc
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-envelope"></i>icon-envelope
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-eye"></i>icon-eye
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-flag"></i>icon-flag
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-floder"></i>icon-floder
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-heart"></i>icon-heart
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-info"></i>icon-info
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-key"></i>icon-key
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-link"></i>icon-link
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-lock"></i>icon-lock
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-lock-open"></i>icon-lock-open
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-magnifier"></i>icon-magnifier
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-magnifier-add"></i>icon-magnifier-add
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-magnifier-remove"></i>icon-magnifier-remove
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-paper-clip"></i>icon-paper-clip
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-paper-plane"></i>icon-paper-plane
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-plus"></i>icon-plus
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-pointer"></i>icon-pointer
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-power"></i>icon-power
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-refresh"></i>icon-refresh
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-reload"></i>icon-reload
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-settings"></i>icon-settings
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-star"></i>icon-star
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-symbol-female"></i>icon-symbol-female
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-symbol-male"></i>icon-symbol-male
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-target"></i>icon-target
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-volume-1"></i>icon-volume-1
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-volume-2"></i>icon-volume-2
+              </div>
+              <div class="fa-item col-md-3 col-sm-4">
+                <i class="icon-volume-off"></i>icon-volume-off
+              </div>
+            </div>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" (click)="sure()">确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+
+<div class="scieen" (click)="scieen()">
+
+</div>
+
+<div class="modal fade" id="editresource" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" style="z-index:999;margin-top:5%;">
+  <div class="modal-dialog" style="width:1000px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"  (click)="recancel()">&times;</button>
+        <h4 class="modal-title">编辑资源</h4>
+      </div>
+      <div class="portlet-body col-md-12" style="padding:40px 20px;">
+        <div class="form-group col-md-12">
+          <label class="col-md-2 control-label" style="text-align:right;">APP：</label>
+          <div class="col-md-10">
+            <input type="text" id="reapp" class="form-control" readonly value="{{itemMesg.app}}">
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-2  control-label" style="text-align:right;"> <span
+            style="color:red;">*</span>名称：</label>
+          <div class="col-md-10">
+            <input type="text" id="rename" class="form-control" value="{{itemMesg.name}}"/>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-2  control-label" style="text-align:right;"> <span
+            style="color:red;"></span>描述：</label>
+          <div class="col-md-10">
+            <input type="text" id="recomm" class="form-control" value="{{itemMesg.comm}}"/>
+          </div>
+        </div>
+        <div class=""></div>
+        <div class="form-group col-md-12">
+          <label class="col-md-2  control-label" style="text-align:right;">排序：</label>
+          <div class="col-md-10">
+            <input type="text" class="form-control" id="reorderby" value="{{itemMesg.orderBy}}"/>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-2  control-label" style="text-align:right;">权限：</label>
+          <div class="col-md-9">
+            <nz-select style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择"
+                       [(ngModel)]="listOfSelectedValue">
+              <nz-option *ngFor="let option of authList" [nzLabel]="option.name"
+                         [nzValue]="option.key"></nz-option>
+            </nz-select>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-2 control-label" style="text-align:right;">图标：</label>
+          <div class="col-md-9">
+            <div class="form-control" id="icon" contenteditable="true"
+                 style="width:50%;float:left;margin-right: 20px;">
+              <i style="margin-right: 5px;" class="fa {{itemMesg.icon}}"></i>{{iconName4}}
+            </div>
+            <span class="btn green fileinput-button" data-toggle="modal" data-target="#chooseModal">
+                      <span>选择图标</span>
+                    </span>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-2  control-label" style="text-align:right;"><span
+            style="color:red;">*</span>资源：</label>
+          <div class="col-md-10">
+            <input type="text" id="reresource" class="form-control" value="{{itemMesg.resource}}"/>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-2  control-label" style="text-align:right;">类型：</label>
+          <div class="col-md-10">
+            <div style="float: left;" *ngIf="pnoevent!=2">
+              <input style="margin-left:20px;" type="radio" name="edittype" value="0"
+                     [checked]="edittype==0" (click)="editClick(0)"/>文件夹
+            </div>
+            <div style="float: left;" *ngIf="pnoevent!=2">
+              <input style="margin-left:20px;" type="radio"  name="edittype" value="1"
+                     [checked]="edittype==1" (click)="editClick(1)"/>菜单
+            </div>
+            <div style="float: left;"   *ngIf="pnoevent!=1">
+              <input style="margin-left:20px;" type="radio"  name="edittype" value="2"
+                     [checked]="edittype==2|| edittype==3||edittype==4||edittype==5" (click)="editClick(2)"/>事件
+            </div>
+            <div class="col-md-3 shijian_type"  *ngIf="pnoevent!=1" [hidden]="edittype==0||edittype==1" style="float: left;">
+              <select  class="form-control" id="editevent">
+                <option [selected]="edittype==3"  value="3">新增</option>
+                <option [selected]="edittype==4" value="4">修改</option>
+                <option [selected]="edittype==5" value="5">删除</option>
+              </select>
+            </div>
+            <!--<input type="radio" name="ctype" value="0" checked *ngIf="ctypea==0"/>-->
+            <!--<input type="radio" name="ctype" value="0" *ngIf="ctypea!=0"/>文件夹-->
+            <!--<input style="margin-left:20px;" type="radio" checked name="ctype" value="1" *ngIf="ctypea==1"/>-->
+            <!--<input style="margin-left:20px;" type="radio" name="ctype" value="1" *ngIf="ctypea!=1"/>菜单-->
+            <!--<input style="margin-left:20px;" type="radio" checked name="ctype" value="2" *ngIf="ctypea==2"/>-->
+            <!--<input style="margin-left:20px;" type="radio" name="ctype" value="2" *ngIf="ctypea!=2"/>事件-->
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-2  control-label" style="text-align:right;">状态：</label>
+          <div class="col-md-10">
+            <input type="radio" *ngIf="itemMesg.enabled==true" checked name="tenabled" value="true">
+            <input type="radio" *ngIf="itemMesg.enabled!=true" name="tenabled" value="true">启用
+            <input type="radio" *ngIf="itemMesg.enabled==false" style="margin-left:20px;" checked name="tenabled"
+                   value="false">
+            <input type="radio" *ngIf="itemMesg.enabled!=false" style="margin-left:20px;" name="tenabled"
+                   value="false">
+            禁用
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="recancel()">取消</button>
+        <button type="button" class="btn btn-primary" (click)="reditsure()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>

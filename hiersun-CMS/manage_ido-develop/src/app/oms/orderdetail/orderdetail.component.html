@@ -1,0 +1,648 @@
+<!-- START MODAL-->
+<!-- 订单弹窗 -->
+<div class="modal fade" id="modal_order" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog order-container">
+    <div class="modal-content">
+      <div class="modal-header" style="padding: 15px 20px 0px 20px;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <div class="modal-title">
+          <h4>订单详情</h4>
+        </div>
+      </div>
+      <div class="modal-body form-horizontal">
+        <!-- 1 -->
+        <div class="form-body">
+          <!-- <div class="clearfix" *ngIf="orderMenuList.length>1">
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-default" [ngClass]="{'active':menuItem.menuType=='Master'}" *ngFor="let menuItem of orderMenuList;let menukey=index;" (click)="loadMasterOrder(menuItem.menuType,menuItem.orderNo)">
+                <input type="radio" class="toggle"> {{menuItem.menuName}}</label>
+              </div>
+          </div> -->
+          <div class="tabbable-custom" *ngIf="orderMenuList.length>1">
+            <ul class="nav nav-tabs tab-orders">
+              <li [ngClass]="{'active':menuItem.menuType=='Master'}" *ngFor="let menuItem of orderMenuList;let menukey=index;">
+                <a href="javascript:;" class="menu_{{menukey}}" (click)="loadMasterOrder(menuItem.menuType,menuItem.orderNo,menukey)">
+                  {{menuItem.menuName}} </a>
+              </li>
+            </ul>
+          </div>
+          <div class="table-fofy" *ngFor="let oditem of detailOrderList;let odkey=index;">
+            <div class="row" style="margin-left:15px;">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">订单号：</label>
+                  <label class="control-label"> {{oditem.orderNo?oditem.orderNo:"——"}}</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">外部订单号：</label>
+                  <label class="control-label"><a (click)="getDetailShow(oditem.outOrderNo)"> {{oditem.outOrderNo}}</a></label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">订单状态：</label>
+                  <label class="control-label">
+                    {{oditem.orderStatusDesc?oditem.orderStatusDesc:"——"}}</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">应付金额：</label>
+                  <label class="control-label">
+                    {{oditem.paymentAmount?oditem.paymentAmount:"——"}}</label>
+                </div>
+              </div>
+
+            </div>
+            <div class="row" style="margin-left:15px;">
+              <!-- <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">订单类型：</label>
+                  <label class="control-label">
+                    <span *ngFor="let orderTypeItem of oTypeList;let stokey=index;">{{orderTypeItem.codeValue==oditem.orderType?orderTypeItem.codeName:''}}</span>
+                  </label>
+                </div>
+              </div> -->
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">订单来源：</label>
+                  <label class="control-label"><span *ngFor="let sourceitem of sourceList;let stokey=index;">{{sourceitem.channelCode==oditem.orderSource?sourceitem.channelName:''}}</span></label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">是否需要开发票：</label>
+                  <label class="control-label" *ngIf="oditem.needInvoice!=1"> <span class="label label-sm label-danger">否</span></label>
+                  <label class="control-label" *ngIf="oditem.needInvoice==1"> <span class="label label-sm label-success">是</span></label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">是否货到付款：</label>
+                  <label class="control-label" *ngIf="oditem.isCod!=1"> <span class="label label-sm label-danger">否</span></label>
+                  <label class="control-label" *ngIf="oditem.isCod==1"> <span class="label label-sm label-success">是</span></label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">应收运费：</label>
+                  <label class="control-label">
+                    {{oditem.needSendCost?oditem.needSendCost:"0.00"}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="margin-left:15px;">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">销售时间：</label>
+                  <label class="control-label">
+                    {{oditem.saleTime | date:'yyyy-MM-dd HH:mm:ss'}}</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">COD支付金额：</label>
+                  <label class="control-label" *ngIf="oditem.isCod==1"> {{oditem.cashAmount}}</label>
+                  <label class="control-label" *ngIf="oditem.isCod!=1"> 0.00</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">促销优惠金额：</label>
+                  <label class="control-label">
+                    {{oditem.promotionAmount?oditem.promotionAmount:"0.00"}}</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">实付金额：</label>
+                  <label class="control-label"> {{oditem.cashAmount?oditem.cashAmount:"0.00"}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="margin-left:15px;">
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">取消原因：</label>
+                  <label class="control-label">
+                    {{oditem.cancelReason?oditem.cancelReason:"无"}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="table-fofy" *ngIf="detailOrderList.length==0">
+            无此订单详情
+          </div> -->
+          <!--  -->
+        </div>
+        <!-- 1 -->
+        <!-- 2 start tab-->
+        <div class="form-body">
+          <div class="portlet-tabs">
+            <ul class="nav nav-tabs tab-orders">
+              <li class="active">
+                <a href="#otab_5_1" class="otab_1" data-toggle="tab" (click)="loadOrderItem(orderNo)">
+                  订单商品明细</a>
+              </li>
+              <li>
+                <a href="#otab_5_2" data-toggle="tab" (click)="loadSaleInfo(orderNo)">
+                  销售单信息 </a>
+              </li>
+              <li>
+                <a href="#otab_5_3" data-toggle="tab" (click)="loadPayInfo(orderNo)">
+                  支付信息 </a>
+              </li>
+              <!-- <li>
+                <a href="#otab_5_4" data-toggle="tab" (click)="loadPackageInfo(orderNo)">
+                  包裹信息 </a>
+              </li> -->
+              <li *ngIf='!isChild'>
+                <a href="#otab_5_5" data-toggle="tab" (click)="loadInvoiceInfo(orderNo)">
+                  发票信息 </a>
+              </li>
+              <li *ngIf='!isChild'>
+                <a href="#otab_5_6" data-toggle="tab" (click)="loadDeliveryInfo(orderNo)">
+                  物流信息 </a>
+              </li>
+              <li *ngIf='!isChild'>
+                <a href="#otab_5_7" data-toggle="tab" (click)="loadCustomerInfo(orderNo)">
+                  会员信息 </a>
+              </li>
+              <li>
+                <a href="#otab_5_8" data-toggle="tab" (click)="loadRemarkLog(orderNo)">
+                  客服备注 </a>
+              </li>
+              <li>
+                <a href="#otab_5_9" data-toggle="tab" (click)="loadOrderHisInfo(orderNo)">
+                  历史信息 </a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active table-scrollable table-ofy" id="otab_5_1">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th> 选择 </th>
+                      <th> 行号 </th>
+                      <th> 商品图片 </th>
+                      <th> 商品名称 </th>
+                      <th> 门店名称 </th>
+                      <th> 产品类型</th>
+                      <th> 产品编号 </th>
+                      <th> SKU编号 </th>
+                      <th> 条码编号 </th>
+                      <th> 销售单位 </th>
+                      <th> 品牌名称 </th>
+                      <th *ngFor="let pnitem of propNameList;let pnkey=index;">
+                        {{pnitem}}
+                      </th>
+                      <th> 销售数量 </th>
+                      <th> 销售金额 </th>
+                      <th> 促销优惠分摊金额 </th>
+                      <th> 促销后销售金额 </th>
+                      <th> 退货数量 </th>
+                      <th> 允许退货数量 </th>
+                      <th> 缺货数量 </th>
+                      <th> 是否为赠品 </th>
+                      <th> 运费分摊金额 </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor="let odditem of orderItemList;let oddkey=index;">
+                      <td style="text-align:center;">
+                        <span style="cursor: pointer;" class="glyphicon glyphicon-plus" (click)="detailOrderItem($event.target,odditem.orderItemNo)"></span>
+                      </td>
+                      <td>{{odditem.rowNo?odditem.rowNo:"——"}}</td>
+                      <!-- 商品图片 -->
+                      <td>
+                        <img src="{{odditem.url}}?x-oss-process=image/resize,h_50,w_50" onerror="this.src='http://placehold.it/50x50'">
+                      </td>
+                      <td>{{odditem.shoppeProName?odditem.shoppeProName:"——"}}</td>
+                      <!-- 门店名称 -->
+                      <td> {{odditem.storeName?odditem.storeName:"——"}} </td>
+                      <!-- 产品类型-->
+                      <td>
+                        <span *ngFor="let protitem of proTypeList;let key=index;">{{protitem.code==odditem.erpProductCode?protitem.name:''}}</span>
+                      </td>
+                      <!-- SPU编号 -->
+                      <td> {{odditem.spuNo?odditem.spuNo:"——"}} </td>
+                      <!-- SKU编号 -->
+                      <td> {{odditem.skuNo?odditem.skuNo:"——"}} </td>
+                      <!-- 商品编号 -->
+                      <td>{{odditem.supplyProductNo?odditem.supplyProductNo:"——"}} </td>
+                      <!-- 商品单位 -->
+                      <td> {{odditem.unit?odditem.unit:"——"}} </td>
+                      <!-- 品牌名称 -->
+                      <td>{{odditem.brandName?odditem.brandName:"——"}} </td>
+                      <td *ngFor="let spItem of odditem.salePropList;let spkey=index;">
+                        {{spItem?spItem:"——"}}
+                      </td>
+                      <!-- 销售数量 -->
+                      <td>{{odditem.saleSum?odditem.saleSum:"——"}} </td>
+                      <!-- 销售金额 -->
+                      <td>{{odditem.salesPrice*odditem.saleSum}}</td>
+                      <!-- 促销优惠分摊金额 -->
+                      <td> {{odditem.totalDiscount}} </td>
+                      <!-- 促销后销售金额 -->
+                      <td>{{odditem.paymentAmount}} </td>
+                      <!-- 退货数量 -->
+                      <td>{{odditem.refundNum}} </td>
+                      <!-- 允许退货数量 -->
+                      <td>{{odditem.allowRefundNum}} </td>
+                      <!-- 缺货数量 -->
+                      <td>{{odditem.stockoutAmount}} </td>
+                      <!-- 是否为赠品 -->
+                      <td *ngIf="odditem.isGid!=1">
+                        <span class="label label-sm label-danger">否</span>
+                      </td>
+                      <td *ngIf="odditem.isGid==1">
+                        <span class="label label-sm label-success">是</span>
+                      </td>
+                      <!-- 运费分摊金额 -->
+                      <td>{{odditem.shippingFeeSplit}} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane table-scrollable table-ofy" id="otab_5_2">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th>选择</th>
+                      <th> 销售单号 </th>
+                      <th> 销售单状态 </th>
+                      <th> 支付状态 </th>
+                      <th> 门店名称 </th>
+                      <th> 商品销售金额 </th>
+                      <th> 应付金额 </th>
+                      <th> 运费 </th>
+                      <th> 实付金额 </th>
+                      <th> 积分 </th>
+                      <th> 促销优惠金额 </th>
+                      <th> 使用优惠券金额 </th>
+                      <th> 使用余额金额 </th>
+                      <th> 销售时间 </th>
+                      <th> 最后修改人 </th>
+                      <th> 最后修改时间 </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor="let dsaitem of detailSaleList;let dsakey=index;">
+                      <td>
+                        <span style="cursor: pointer;" class="glyphicon glyphicon-plus" (click)="detailSaleItem($event.target,dsaitem.saleNo)"></span>
+                      </td>
+                      <td>{{dsaitem.saleNo?dsaitem.saleNo:"——"}}</td>
+                      <!-- 销售单状态 -->
+                      <td> {{dsaitem.saleStatusDesc?dsaitem.saleStatusDesc:"——"}}</td>
+                      <!-- 支付状态 -->
+                      <!-- <td> {{dsaitem.payStatus}}</td> -->
+                      <td *ngIf="dsaitem.payStatus==5001">未支付</td>
+                      <td *ngIf="dsaitem.payStatus==5002">定金已支付</td>
+                      <td *ngIf="dsaitem.payStatus==5003">超时未支付</td>
+                      <td *ngIf="dsaitem.payStatus==5004">已支付</td>
+                      <td *ngIf="dsaitem.payStatus==5005">尾款已支付</td>
+                      <td *ngIf="dsaitem.payStatus!=5001&&dsaitem.payStatus!=5002&&dsaitem.payStatus!=5003&&dsaitem.payStatus!=5004&&dsaitem.payStatus!=5005">——</td>
+                      <!-- 门店名称 -->
+                      <td> {{dsaitem.storeName?dsaitem.storeName:"——"}}</td>
+                      <!-- 总金额(含运费) -->
+                      <td> {{dsaitem.saleAmount}}</td>
+                      <!-- 应付金额(含运费) -->
+                      <td> {{dsaitem.paymentAmount}}</td>
+                      <!-- 现金类支付金额(含运费不含积分) -->
+                      <td> {{dsaitem.cashAmount}}</td>
+                      <!-- 积分 -->
+                      <td> {{dsaitem.integral}}</td>
+                      <!-- 运费 -->
+                      <td> {{dsaitem.shippingFee}}</td>
+                      <!-- 促销优惠金额 -->
+                      <td> {{dsaitem.discountAmount}}</td>
+                      <!-- 使用优惠券金额 -->
+                      <td> {{dsaitem.couponAmount}}</td>
+                      <!-- 使用余额金额 -->
+                      <td> {{dsaitem.accountBalanceAmount}}</td>
+                      <!-- 销售时间 -->
+                      <td> {{dsaitem.saleTimeStr?dsaitem.saleTimeStr:"——"}}</td>
+                      <!-- 最后修改人 -->
+                      <td> {{dsaitem.latestUpdateMan?dsaitem.latestUpdateMan:"——"}}</td>
+                      <!-- 最后修改时间 -->
+                      <td> {{dsaitem.latestUpdateTimeStr?dsaitem.latestUpdateTimeStr:"——"}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane table-scrollable table-ofy" id="otab_5_3">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th> 选择 </th>
+                      <th> 交易流水号 </th>
+                      <th> 总金额 </th>
+                      <th> 线上线下标识 </th>
+                      <th> 支付时间 </th>
+                      <th> 收银员号 </th>
+                      <th> 有效状态 </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor="let payItem of payList; let paykey=index;">
+                      <td>
+                        <span style="cursor: pointer;" class="glyphicon glyphicon-plus" (click)="detailPayItem($event.target,payItem.salesPaymentNo)"></span>
+                      </td>
+                      <td>{{payItem.payFlowNo?payItem.payFlowNo:"——"}}</td>
+                      <!--<td>{{payItem.salesPaymentNo?payItem.salesPaymentNo:"——"}}</td>-->
+                      <td>{{payItem.money}}</td>
+                      <td>{{payItem.ooFlag?payItem.ooFlag:"——"}}</td>
+                      <td>{{payItem.payTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                      <td>{{payItem.casher?payItem.casher:"——"}}</td>
+                      <td *ngIf="payItem.deleteFlag==1">
+                        <span class="label label-sm label-danger">无效</span>
+                      </td>
+                      <td *ngIf="payItem.deleteFlag!=1">
+                        <span class="label label-sm label-success">有效</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane table-scrollable table-ofy" id="otab_5_4">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th> 选择 </th>
+                      <th> 订单号 </th>
+                      <th> 内部交货单号 </th>
+                      <th> 内部交货状态 </th>
+                      <th> 快递公司</th>
+                      <th> 快递单号</th>
+                      <th> 快递状态</th>
+                      <th> 发货时间</th>
+                      <th> 自提点编号</th>
+                      <th> 自提点名称</th>
+                      <th> 签收时间</th>
+                      <th> 签收人</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor="let packageItem of packageList; let paykey=index;">
+                      <td>
+                        <span style="cursor: pointer;" class="glyphicon glyphicon-plus" (click)="detailPackageItem($event.target,packageItem.packageNo)"></span>
+                      </td>
+                      <td>{{packageItem.orderNo?packageItem.orderNo:"——"}}</td>
+                      <td>{{packageItem.packageNo?packageItem.packageNo:"——"}}</td>
+                      <td>{{packageItem.packageStatus?packageItem.packageStatus:"——"}}</td>
+                      <td>{{packageItem.delComName?packageItem.delComName:"——"}}</td>
+                      <td>{{packageItem.deliveryNo?packageItem.deliveryNo:"——"}}</td>
+                      <td>{{packageItem.c2?packageItem.c2:"——"}}</td>
+                      <td>{{packageItem.sendTimeStr?packageItem.sendTimeStr:"——"}}</td>
+                      <td>{{packageItem.extPlaceNo?packageItem.extPlaceNo:"——"}}</td>
+                      <td>{{packageItem.extPlaceName?packageItem.extPlaceName:"——"}}</td>
+                      <td>{{packageItem.signTimeStr?packageItem.signTimeStr:"——"}}</td>
+                      <td>{{packageItem.signName?packageItem.signName:"——"}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane table-scrollable table-ofy" id="otab_5_5">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th> 销售单单号 </th>
+                      <th> 发票编号 </th>
+                      <th> 发票金额 </th>
+                      <th> 发票抬头 </th>
+                      <th> 发票明细 </th>
+                      <th> 发票状态 </th>
+                      <th> 发票时间 </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor="let invItem of invoiceList; let invkey=index;">
+                      <td>{{invItem.saleNo?invItem.saleNo:"——"}}</td>
+                      <td>{{invItem.invoiceNo?invItem.invoiceNo:"——"}}</td>
+                      <td>{{invItem.invoiceAmount?invItem.invoiceAmount:"——"}}</td>
+                      <td>{{invItem.invoiceTitle?invItem.invoiceTitle:"——"}}</td>
+                      <td>{{invItem.invoiceDetail?invItem.invoiceDetail:"——"}}</td>
+                      <td>{{invItem.invoiceStatus?invItem.invoiceStatus:"——"}}</td>
+                      <td>{{invItem.createdTime?invItem.createdTime:"——"}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane table-ofy" id="otab_5_6">
+                <!-- <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th>手机</th>
+                      <th>电话</th>
+                      <th>姓名</th>
+                      <th>收货地址</th>
+                      <th>收件城市邮编</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor="let reitem of deliveryList; let paykey=index;">
+                      <td>{{reitem.receptPhone?reitem.receptPhone:"——"}}</td>
+                      <td>{{reitem.receptPhone?reitem.receptPhone:"——"}}</td>
+                      <td>{{reitem.receptName?reitem.receptName:"——"}}</td>
+                      <td>{{reitem.receptProvName}}{{reitem.receptCityName}}{{reitem.receptAddress}}</td>
+                      <td>{{reitem.receptCityCode?reitem.receptCityCode:"——"}}</td>
+                    </tr>
+                  </tbody>
+                </table> -->
+                <div class="panel-heading" style="border-bottom:1px solid #ddd">
+                  <h5 class="panel-title" style="font-size:14px;" *ngFor="let reitem of deliveryList; let paykey=index;">
+                    <span class="icon-direction"></span>&nbsp;&nbsp;
+                    <span>{{reitem.receptName?reitem.receptName:""}}</span>&nbsp;&nbsp;
+                    <span>{{reitem.receptPhone?reitem.receptPhone:""}}</span>&nbsp;&nbsp;
+                    <span>{{reitem.receptProvName}}{{reitem.receptCityName}}{{reitem.receptAddress}}</span>
+                    <a href="javascript:;" class="btn btn-xs red" style="margin-left:10px;" *ngIf="isRemarko!=1">
+                      拦截订单 </a>
+                  </h5>
+                </div>
+                <!-- 包裹start -->
+                <div>
+                  <div id="tab_3" class="tab-pane">
+                    <div id="accordion3" class="panel-group">
+                      <div class="panel panel-default" *ngFor="let packageItem of packageList; let packkey=index;">
+                        <div class="panel-heading">
+                          <h5 class="panel-title" style="font-size:14px;">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#accordion3_{{packkey}}"
+                              (click)="loadDveryItem(packageItem.packageNo)">
+                              物流公司：{{packageItem.delComName}}&nbsp;&nbsp;
+                              物流单号：{{packageItem.deliveryNo}}&nbsp;&nbsp;
+                              物流状态：{{packageItem.packageStatusDesc}}
+                            </a>
+                            <a class="accordion-toggle btn btn-xs blue" data-toggle="collapse" data-parent="#accordion3"
+                              href="#accordion31_{{packkey}}" (click)="loadPackageItem(packageItem.deliveryNo)" style="margin-left:10px;">
+                              物流跟踪 </a>
+                          </h5>
+                        </div>
+                        <div id="accordion3_{{packkey}}" class="panel-collapse collapse">
+                          <div class="panel-body" *ngIf="!isDveryFlag">
+                            <table class="table table-striped table-bordered table-hover dataTable">
+                              <thead>
+                                <tr>
+                                  <th>内部交货单号</th>
+                                  <th>快递单号</th>
+                                  <th>销售单号</th>
+                                  <th>销售单明细号</th>
+                                  <th>数量</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr role="row" class="odd" *ngFor="let reitem of dveryItemList; let paykey=index;">
+                                  <td>{{reitem.packageNo?reitem.packageNo:"——"}}</td>
+                                  <td>{{reitem.deliveryNo?reitem.deliveryNo:"——"}}</td>
+                                  <td>{{reitem.saleNo?reitem.saleNo:"——"}}</td>
+                                  <td>{{reitem.saleItemNo?reitem.saleItemNo:"——"}}</td>
+                                  <td>{{reitem.saleNum?reitem.saleNum:"——"}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div id="accordion31_{{packkey}}" class="panel-collapse collapse">
+                          <div class="panel-body" *ngIf="isDveryFlag">
+                            <nz-timeline>
+                              <nz-timeline-item [nzDot]="dotTemplate" *ngFor="let odditem of deliveryDetailList;let oddkey=index;">
+                                <p style="margin-bottom:0">{{odditem.deliveryRecord}}</p>
+                                <p style="margin-bottom:0">{{odditem.createTimeStr}}</p>
+                              </nz-timeline-item>
+                            </nz-timeline>
+                            <ng-template #dotTemplate>
+                              <i class="anticon anticon-environment" style="font-size: 16px;"></i>
+                            </ng-template>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h4 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#accordion3_4">
+                            4. Wolf moon officia aute, non cupidatat skateboard dolor brunch ? </a>
+                            </h4>
+                          </div>
+                          <div id="accordion3_4" class="panel-collapse collapse">
+                            <div class="panel-body">
+                               3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </div>
+                          </div>
+                        </div> -->
+
+                    </div>
+                  </div>
+                </div>
+                <!-- 包裹end -->
+              </div>
+              <div class="tab-pane table-scrollable table-ofy" id="otab_5_7">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th> 会员卡号 </th>
+                      <th> 会员等级 </th>
+                      <th> 手机号 </th>
+                      <th> 持卡人姓名 </th>
+                      <th> 证件号 </th>
+                      <th> 邮箱 </th>
+                      <th> 昵称 </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!--<tr role="row" class="odd" *ngFor="let genItem of payList; let paykey=index;">
+                      <td>D0011000127810001</td>
+                      <td>D00110</td>
+                      <td>D00110</td>
+                      <td>C7100012781-1</td>
+                      <td>C7100012781-1</td>
+                      <td>C7100012781</td>
+                      <td>C7100012781</td>
+                    </tr>-->
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane table-scrollable table-ofy" id="otab_5_8">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th> 备注时间</th>
+                      <th> 备注人</th>
+                      <th> 备注内容</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor="let remaItem of remarkList; let remakey=index;">
+                      <td>{{remaItem.createTimeStr?remaItem.createTimeStr:"——"}}</td>
+                      <td>{{remaItem.createMan?remaItem.createMan:"——"}}</td>
+                      <td>{{remaItem.remark?remaItem.remark:"——"}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="form-group" style="margin-top:15px;" *ngIf="isRemarko!=1">
+                  <label class="col-md-2 control-label">输入内容：</label>
+                  <div class="col-md-3">
+                    <textarea class="form-control remarkText"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-info" (click)="createRemarkLog()">提交</button>
+                </div>
+              </div>
+              <div class="tab-pane table-scrollable table-ofy" id="otab_5_9">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th> 订单号 </th>
+                      <th> 修改前状态 </th>
+                      <th> 修改后状态 </th>
+                      <th> 修改人 </th>
+                      <th> 系统来源 </th>
+                      <th> 修改时间 </th>
+                      <th> 备注 </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="odd" *ngFor="let hisItem of orderHisList; let hiskey=index;">
+                      <td>{{hisItem.orderNo?hisItem.orderNo:"——"}}</td>
+                      <td>{{hisItem.priviousStatus?hisItem.priviousStatus:"——"}}</td>
+                      <td>{{hisItem.currentStatusDesc?hisItem.currentStatusDesc:"——"}}</td>
+                      <td>{{hisItem.updateMan?hisItem.updateMan:"——"}}</td>
+                      <td>{{hisItem.operatorSource?hisItem.operatorSource:"——"}}</td>
+                      <td>{{hisItem.updateTimeStr?hisItem.updateTimeStr:"——"}}</td>
+                      <td>{{hisItem.remark?hisItem.remark:"——"}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- item tab end -->
+            </div>
+          </div>
+        </div>
+        <!-- 2 end tab-->
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <!-- <button type="button" class="btn blue" (click)="subeProMes()">保存</button> -->
+        <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 外部订单号 -->
+<!-- <app-tradedetail #tradedetail></app-tradedetail> -->
+<!-- END MODAL-->
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

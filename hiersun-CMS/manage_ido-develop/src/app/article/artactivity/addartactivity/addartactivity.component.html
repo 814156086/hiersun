@@ -1,0 +1,174 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>编辑标签
+      <small>Tag edit</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet-body">
+      <div class="contenttab">
+        <form class="form-horizontal" [formGroup]="formModel" (submit)="submit()">
+          <div class="form-body">
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>活动名称：</label>
+              <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('activityTitle').invalid && formModel.get('activityTitle').touched"
+                  type="text" formControlName="activityTitle" name="activityTitle" [(ngModel)]="activityTitle" placeholder="请输入活动名称">
+                <div [hidden]="formModel.get('activityTitle').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['activityTitle'])">
+                    活动名称必填
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>活动时间：</label>
+              <div class="col-md-3">
+                <input class="beginDate form-control" type="text"  name="startDate" id="startDate" value="{{startDate | date:'yyyy-MM-dd HH:mm:ss'}}">
+              </div>
+              <div class="col-md-3">
+                <input class="beginDate form-control" type="text" name="endDate" id="endDate" value="{{endDate | date:'yyyy-MM-dd HH:mm:ss'}}">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>置顶值：</label>
+              <div class="col-md-8">
+                <input class="form-control" [class.hasError]="formModel.get('topValue').invalid && formModel.get('topValue').touched"
+                  type="text" formControlName="topValue" name="topValue" [(ngModel)]="topValues" placeholder="请输入置顶值" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                <div [hidden]="formModel.get('topValue').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['topValue'])">
+                    置顶值必填
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>开启链接：</label>
+              <div class="col-md-8">
+                <select class="form-control" [class.hasError]="formModel.get('isLinkStatus').invalid && formModel.get('isLinkStatus').touched"
+                  type="text" formControlName="isLinkStatus" id="isLinkStatus" name="isLinkStatus" [(ngModel)]="isLinkStatus" (click)="select_link()">
+                  <option value=" ">请选择</option>
+                  <option value="true">是</option>
+                  <option value="false">否</option>
+                </select>
+                <div [hidden]="formModel.get('isLinkStatus').untouched">
+                  <div class="formtips" [hidden]="!formModel.hasError('required',['isLinkStatus'])">
+                    是否开启链接必填
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="isLinkStatus" class="div_link">
+            <div class="form-group" style="position: relative;">
+              <label class="col-md-2 control-label">链接图片:</label>
+              <div class="col-md-8">
+            <span class="btn green fileinput-button">
+                <i class="fa fa-plus"></i>
+                <span>选择文件</span>
+                <input type="file"  name="photoFile" accept="image/png, image/jpeg ,image/jpg" (change)="imgadd($event)">
+              </span>
+                <div class="imgbox">
+                  <img class="setimg" src="{{linkPic}}" alt="">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <span style="color:red;">*</span>链接地址：</label>
+              <div class="col-md-8">
+                <input class="form-control" type="text" [(ngModel)]="linkUrl" [ngModelOptions]="{standalone: true}"  name="linkUrl" id="linkUrl" value="{{linkUrl}}">
+              </div>
+            </div>
+            </div>
+
+            <div *ngIf="!isLinkStatus" class="div_activity">
+              <div class="form-group" style="position: relative;">
+                <label class="col-md-2 control-label">设置标签:</label>
+                <div class="col-md-8">
+                <button  class="btn default blue-hoki" data-target="#myModal" data-toggle="modal" type="button">标签管理</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                  <div class="showTag">
+                    <div class="item_tag tag_imgs" *ngFor="let tagItem of selTagList;" >
+                      <div class="img_close" (click)="deltag(tagItem.id)">x</div>
+                      <span class="tag_span">{{tagItem.tagName}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">活动内容：</label>
+              </div>
+              <div class="form-group">
+              <div class="col-md-12">
+                <ckeditor id="myckeditor"  [(ngModel)]="activityContent" [ngModelOptions]="{standalone: true}" #myckeditor [config]="ckeConfig" debounce="500" (change)="onChange($event)"></ckeditor>
+              </div>
+            </div>
+            </div>
+            <!--  -->
+          </div>
+          <div class="form-actions" style="text-align:center;">
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+            <button type="submit" class="btn green" [disabled]="formModel.invalid">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">标签</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="showTag">
+          <div class="item_tag" *ngFor="let tagItem of repeatTagList;">
+            <div class="md-checkbox">
+              <input type="checkbox" name="check_tags"  title="{{tagItem.tagName}}"  value="{{tagItem.id}}" id="checkbox{{tagItem.id}}" class="md-check">
+              <label for="checkbox{{tagItem.id}}" >
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span>
+              </label>
+              <span>{{tagItem.tagName}}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <button type="button" class="btn blue" (click)="subSelectTags()">确定</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

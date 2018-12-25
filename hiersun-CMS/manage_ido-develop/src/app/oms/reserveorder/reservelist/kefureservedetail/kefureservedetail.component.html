@@ -1,0 +1,150 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>客服列表
+        <small>Kefu List</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <table class="table table-bordered ">
+            <tr>
+              <td class="col-md-2">客服名称：</td>
+              <td>客服-{{registerName}}</td>
+            </tr>
+            <tr>
+              <td>接单数量：</td>
+              <td>共{{reserveOrderNum}}条</td>
+            </tr>
+          </table>
+
+          <div class="portlet box blue-hoki">
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>预约单列表
+              </div>
+            </div>
+            <!--列表end-->
+            <!--body-->
+            <div class="portlet-body">
+              <ul class="customers">
+                <li (click)="detailstate($event.target,1)" class="bg-primary">已预约成功，未确认购物意向()</li>
+                <li (click)="detailstate($event.target,2)" class="bg-info">已确认购物意向，未验证()</li>
+                <li (click)="detailstate($event.target,4)" class="bg-info">已验证，未回访()</li>
+                <li (click)="detailstate($event.target,5)" class="bg-info">已验证，已回访()</li>
+              </ul>
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-advance table-hover">
+                  <tr>
+                    <td>
+                      <input type="checkbox" id="parentcheckBox" (click)="parentcheckBox()" />
+                    </td>
+                    <td>序号</td>
+                    <td>预约单来源</td>
+                    <td>预约单号</td>
+                    <td>所属门店</td>
+                    <td>预约日期/时间</td>
+                    <td>姓名</td>
+                    <td>联系方式</td>
+                    <td>预约单备注</td>
+                    <td>预约单状态</td>
+                    <td>操作</td>
+                  </tr>
+                  <tr *ngFor="let item of reservedetaillist; let key=index">
+                    <td>
+                      <input type="checkbox" name="orderids" value="{{item.orderno}}">
+                    </td>
+                    <td>{{key+1}}</td>
+                    <td>{{item.origin}}</td>
+                    <td>{{item.orderno}}</td>
+                    <td>{{item.address}}</td>
+                    <td>{{item.reservedate}}{{item.reservetime}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.telephone}}</td>
+                    <td>{{item.remark}}</td>
+                    <td>{{item.stateName}}</td>
+                    <td>
+                      <div style="margin:0px auto;text-align:center;width:48px;">
+                        <div *ngIf="detailstatus==1 || detailstatus==2 || detailstatus==4">
+                          <a class="btn blue-hoki" data-toggle="modal" data-target="#myModal" (click)="reserverecly(item.orderno)">
+                            <i></i>回收</a>
+                        </div>
+                        <div *ngIf="detailstatus!=1 && detailstatus!=2 && detailstatus!=4">
+                          <a class="btn blue-hoki" routerLink='/oms/reservedetail' [queryParams]="{orderno:item.orderno,laiyuan:'kefu'}">
+                            <i></i>查看</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-12" style="margin-top:20px;margin-bottom:20px;">
+                <button class="btn default blue" *ngIf="detailstatus==1 || detailstatus==2 || detailstatus==4" data-toggle="modal" data-target="#myModal2">批量回收</button>
+                <button class="btn default" (click)="goback()">返回</button>
+              </div>
+              <!--分页页码-->
+              <div class="clearfix box">
+                <div id="pagination1" class="page fr"></div>
+              </div>
+              <!--分页页码end-->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <input type="hidden" class="orderno" /> 确定要回收吗？
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button data-dismiss="modal" class="btn blue" (click)="surerecly()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--批量回收-->
+<div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        </div>
+        <div class="modal-body">
+          <p>确定要回收吗？</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+          <button data-dismiss="modal" class="btn blue" (click)="surereclyall()">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>

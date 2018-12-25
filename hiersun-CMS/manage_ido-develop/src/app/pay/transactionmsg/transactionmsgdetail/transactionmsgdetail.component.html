@@ -1,0 +1,155 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>信息详情
+      <small>Message Detail</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal">
+        <div class="form-group">
+          <label class="col-md-2 control-label">商户订单号：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{mchOrderNo}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">商户ID：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{mchId}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">用户ID：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{sid}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">订单内容：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{content}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">订单备注：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{comm}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">支付金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{actualAmount}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">优惠券抵扣金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{couponAmount}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">折扣金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{discountAmount}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">商家优惠金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{mchCouponAmount}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">积分对应金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{pointAmount}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">待支付金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{payAmount}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">总金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{totalAmount}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">手续费：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{poundageAmount}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">订单类型：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{type}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">订单状态：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{status}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">交易信息状态：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{enabled}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">客户端ip(消息编号)：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{client}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">终端类型：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{clientType}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">订单创建时间：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{tradeTime | date:'yyyy-MM-dd HH:mm:ss'}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">订单成功时间：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{tradeSuccTime | date:'yyyy-MM-dd HH:mm:ss'}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label"></label>
+          <div class="col-md-8">
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

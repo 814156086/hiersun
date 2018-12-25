@@ -1,0 +1,118 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1 *ngIf="type==2">编辑账号
+      <small>Account Manage</small>
+    </h1>
+    <h1 *ngIf="type!=2">添加账号
+      <small>Account Manage</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal">
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>公共账号&导购：</label>
+          <div class="col-md-8">
+            <select class="form-control accountype" name="accountype">
+              <option value="add" selected>新增导购</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>用户编号：</label>
+          <div class="col-md-8">
+            <input class="form-control userNo" type="text" name="userNo" [(ngModel)]="userNo" placeholder="请输入用户编号">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>用户名：</label>
+          <div class="col-md-8">
+            <input class="form-control userName" type="text"  name="userName" [(ngModel)]="userName" placeholder="请输入用户名">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>性别：</label>
+          <div class="col-md-8">
+              <div class="md-radio-inline">
+                  <div class="md-radio">
+                    <input type="radio" id="regular" name="opeType" title="男" class="md-radiobtn" checked="">
+                    <label for="regular">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span>
+                      男</label>
+                  </div>
+                  <div class="md-radio has-error">
+                    <input type="radio" id="franchise" name="opeType" title="女" class="md-radiobtn">
+                    <label for="franchise">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span>
+                      女</label>
+                  </div>
+                </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">
+            <span style="color:red;">*</span>联系方式：</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control mobile" name="mobile" [(ngModel)]="mobile">
+          </div>
+        </div>
+        <div class="form-group" *ngIf="show==2">
+            <label class="col-md-2 control-label">
+              <span style="color:red;">*</span>密码:</label>
+            <div class="col-md-8" style="position:relative">
+              <input type="password" value="{{password}}" class="form-control">
+              <a style="position:absolute;right:80px;top:6px;color:#666" (click)="reserpwd($event.target)">重置密码</a>
+            </div>
+          </div>
+        <div *ngIf="show==1">
+          <div class="form-group">
+            <label class="col-md-2 control-label">
+              <span style="color:red;">*</span>密码:</label>
+            <div class="col-md-8" style="position:relative">
+              <input type="password" class="form-control pwd" name="password" [(ngModel)]="password">
+              <a *ngIf="show==2" style="position:absolute;right:80px;top:6px;color:#666" (click)="reserpwd($event.target)">重置密码</a>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">
+              <span style="color:red;">*</span>确认密码:</label>
+            <div class="col-md-8">
+              <input type="password" class="form-control conformopwd" name="conpassword" [(ngModel)]="conpassword">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">
+            <button type="submit" class="btn purple" id="save" (click)="onSubmit()">提交</button>
+            <button type="reset" class="btn blue-hoki">重置</button>
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </label>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

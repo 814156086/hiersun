@@ -1,0 +1,19 @@
+/* .searchInput {
+  margin: 0 25px;
+} */
+
+a {
+  text-decoration: none;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+/* 维护 选择框 居中 */
+.md-checkbox {
+  position: relative;
+  width: 18px;
+  margin: 0 auto;
+}

@@ -1,0 +1,49 @@
+a {
+    text-decoration: none;
+  }
+  
+  th,
+  td {
+    text-align: center;
+  }
+  
+  td {
+    white-space: nowrap;
+  }
+  .table-scrollable {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid #dddddd;
+    margin: 10px 0 !important;
+  }
+  
+  .table-bordered {
+    border: 1px solid #CCC;
+  }
+  
+  .reagio-container {
+    width: 75%;
+  }
+  
+  .table-ofy {
+    height: 180px;
+    overflow-y: auto;
+  }
+  
+  .modal-header {
+    padding: 10px;
+  }
+  
+  .portlet-title {
+    border-bottom: 1px solid #eee;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+  
+ 
+/* 去除表格底部横线 */
+
+table.dataTable.no-footer {
+  border-bottom: 1px solid #f9f9f9;
+}

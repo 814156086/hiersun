@@ -1,0 +1,156 @@
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          退差价管理
+        </div>
+      </div>
+      <div class="portlet-body">
+        <!-- addedit -->
+        <div class="clearfix">
+          <button type="button" class="btn red" (click)="addReturnagio()">
+            <i class="fa fa-plus"></i>
+            新增 </button>
+        </div>
+        <form class="form-horizontal" id="ffSearch">
+          <div class="row margin-search height-30">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">工单号</label>
+                <div class="col-md-8">
+                  <input id="billNo" name="txtBillNo" autocomplete="off" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">订单号</label>
+                <div class="col-md-8">
+                  <input id="orderNo" name="txtOrderNo" autocomplete="off" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">工单状态</label>
+                <div class="col-md-8">
+                  <select id="billStatus" class="form-control">
+                    <option value="">请选择</option>
+                    <option value="1">审批中</option>
+                    <option value="2">已审批</option>
+                    <option value="3">审批不通过</option>
+                    <!-- <option *ngFor="let cityitem of cityList" value="{{cityitem.id}}">{{cityitem.name}}</option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <button id="btnSearch" type="button" class="btn default" (click)="loadAgioList()">查询
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnReset" type="button" class="btn default" (click)="resetSearchInfo()">
+                  <i class="fa fa-times"></i>重置
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row" style="text-align: center">
+            <button id="btnSearch" type="button" class="btn default" (click)="loadAgioList()">查询
+              <i class="fa fa-search"></i>
+            </button>
+            <button id="btnReset" type="button" class="btn default" (click)="resetSearchInfo()">
+              <i class="fa fa-times"></i>重置
+            </button>
+          </div> -->
+        </form>
+        <div id="sample_6_wrapper" class="dataTables_wrapper no-footer">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover" id="sample_6" role="grid" aria-describedby="sample_6_info">
+              <thead>
+                <tr>
+                  <th> 操作 </th>
+                  <th> 工单号 </th>
+                  <th> 订单号 </th>
+                  <th> 商品行 </th>
+                  <th> 状态 </th>
+                  <th> 退款流水 </th>
+                  <th> 审核人 </th>
+                  <th> 审核时间 </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="recordTotal==0">
+                  <td class="text-center" colspan="9">没有相关记录~</td>
+                </tr>
+                <tr role="row" class="odd" *ngFor="let reagitem of reagioList;let key=index">
+                  <td>
+                    <!--  *ngIf="reagitem.billStatus==1"   *ngIf="reagitem.billStatus==2"   *ngIf="reagitem.billStatus==0||reagitem.billStatus==3"-->
+                    <a href="javascript:;" class="btn btn-xs purple" *ngIf="reagitem.billStatus==1" (click)="reviewAgio(reagitem.billNo,reagitem.billStatus,reagitem.pid)">
+                      <i class="fa fa-file-o"></i> 审核
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs blue"  *ngIf="reagitem.billStatus==2" (click)="reviewAgio(reagitem.billNo,reagitem.billStatus,reagitem.pid)">
+                      <i class="fa fa-search"></i>查看
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs red"  *ngIf="reagitem.billStatus==0||reagitem.billStatus==3" (click)="editReagio(reagitem)">
+                      <i class="fa fa-edit"></i>编辑
+                    </a>
+                  </td>
+                  <td>
+                    {{reagitem.billNo}}
+                  </td>
+                  <td>
+                    {{reagitem.orderNo}}
+                  </td>
+                  <td>
+                    {{reagitem.saleItemNo}}
+                  </td>
+                  <td>
+                    {{reagitem.billStatusDesc}}
+                  </td>
+                  <td>
+                    {{reagitem.refundAmount}}
+                  </td>
+                  <td>
+                    {{reagitem.createUser}}
+                  </td>
+                  <td>
+                    {{reagitem.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--pagestart-->
+          <div class="clearfix">
+            <div id="pagination1" class="page"></div>
+          </div>
+          <!--pageend-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 新增提示框 -->
+<app-addreagio #addreagio (outer)="refreshChild()"></app-addreagio>
+<!-- 新增提示框 -->
+<app-editreagio #editreagio (outer)="refreshChild()"></app-editreagio>
+<!-- 审核提示框 -->
+<!-- <app-reviewagio #reviewagio></app-reviewagio> -->
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

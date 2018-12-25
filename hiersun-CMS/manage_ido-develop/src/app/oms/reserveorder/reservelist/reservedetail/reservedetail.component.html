@@ -1,0 +1,688 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>预约单详情
+      <small>Reserveorder Detail</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row" style="background:#fff;">
+  <div class="col-md-12">
+    <div class="contenttab"></div>
+    <div *ngIf="orderstatesequence==1 || orderstatesequence==2 || orderstatesequence==3 || orderstatesequence==4">
+      <!--<s:if test='%{#session.kefuType=="1" || #session.shopeType=="1"}'>-->
+      <div *ngIf="role=='kefu' || shopeType==1">
+        <div style="width:96%;margin:0px auto;margin-bottom:20px;position:relative;">
+          <div *ngIf="origin!='洽客'">
+            <div class="actions" style="position:absolute;right:0px;top:-50px;">
+              <div class="btn-group">
+                <a class="btn btn-default blue" href="javascript:;" data-toggle="dropdown">
+                  预约单操作
+                  <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu pull-right" style="min-height:40px; line-height:40px">
+                  <li *ngIf="orderstatesequence==4">
+                    <a data-toggle="modal" data-target="#myModal">回访失败</a>
+                  </li>
+                  <li *ngIf="orderstatesequence==2">
+                    <a data-toggle="modal" data-target="#myModal2">更改预约单</a>
+                    <a data-toggle="modal" data-target="#myModal3">取消预约单</a>
+                    <a id="message" style="border:none;">未验证提醒(共3次)</a>
+                  </li>
+                  <li *ngIf="orderstatesequence!=4 && orderstatesequence!=2">
+                    <a data-toggle="modal" data-target="#myModal2">更改预约单</a>
+                    <a data-toggle="modal" data-target="#myModal3">取消预约单</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="origin=='洽客'">
+            <div *ngIf="orderstatesequence==4">
+              <div class="actions" style="position:absolute;right:0px;top:-50px;">
+                <div class="btn-group">
+                  <a class="btn btn-default blue" href="javascript:;" data-toggle="dropdown">
+                    预约单操作
+                    <i class="fa fa-angle-down"></i>
+                  </a>
+                  <ul class="dropdown-menu pull-right">
+                    <li>
+                      <a data-toggle="modal" data-target="#myModal">回访失败</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--15 line 权限结束-->
+    </div>
+    <!--预约单信息-->
+    <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+      <div class="portlet-title">
+        <div class="caption">预约单信息</div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title="">
+          </a>
+        </div>
+      </div>
+      <!--需要预约单操作的判断，-->
+      <div class="portlet-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <td style="width:50%">预约单号：{{orderno}}
+                <div *ngIf="origin!='洽客'" class="pull-right">
+                  <div *ngIf="orderstatesequence==2 || orderstatesequence==1">
+                    <!--<s:if test='%{#session.kefuType=="1" || #session.shopeType=="1"}'>-->
+                    <div *ngIf="role=='kefu' || shopeType==1">
+                      <div *ngIf="remind==1">
+                        <a class="btn btn-xs btn-info green">
+                          <i class="fa fa-volume-off"></i>&nbsp;&nbsp;已提醒</a>
+                      </div>
+                      <div *ngIf="remind==0">
+                        <a class="btn btn-xs btn-info green" (click)="tremind()">
+                          <i class="fa fa-volume-down"></i>&nbsp;&nbsp;提醒门店</a>
+                      </div>
+                    </div>
+                    <!--79 line 权限判断结束-->
+                  </div>
+                </div>
+              </td>
+              <td>预约日期 / 时间：{{reservedate | slice:0:10}} {{reservetime}}</td>
+            </tr>
+            <tr>
+              <td>预约门店：{{address}}</td>
+              <td>预约内容：
+                <span *ngIf="content!=null || content!=''">{{content}}</span>
+                <span *ngIf="content==null || content==''">--</span>
+              </td>
+            </tr>
+            <tr>
+              <td>姓名：{{name}}</td>
+              <td>联系方式：{{telephone}}</td>
+            </tr>
+            <tr>
+              <td>用户标志：
+                <span *ngIf="reserveid!=null || reserveid!=''">{{reserveid}}</span>
+                <span *ngIf="reserveid==null || reserveid==''">--</span>
+                <div *ngIf="origin!='洽客'" class="pull-right">
+                  <div *ngIf="orderstatesequence==2 || orderstatesequence==1">
+                    <!--<s:if test='%{#session.kefuType=="1" || #session.shopeType=="1"}'>-->
+                    <div *ngIf="role=='kefu' || shopeType==1">
+                      <span *ngIf="messagenum>0" class="label label-sm label-success">已发送提醒短信</span>
+                      <a *ngIf="messagenum==0" class="label label-sm label-warning" (click)="sendmessage()">发送提醒到店短信</a>
+                    </div>
+                    <!--108 line 权限结束-->
+                  </div>
+                </div>
+              </td>
+              <td>订单来源：
+                <span *ngIf="origin!=null || origin!=''">{{origin}}</span>
+                <span *ngIf="origin==null || origin==''">--</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">活动名称：
+                <span *ngIf="activityname!=null || activityname!=''">{{activityname}}</span>
+                <span *ngIf="activityname==null || activityname==''">--</span>
+              </td>
+            </tr>
+            <tr *ngIf="origin=='本网'">
+              <td colspan="2">客户来源：
+                <span *ngIf="origin!=null || origin!=''">{{cusromorigin}}</span>
+                <span *ngIf="origin==null || origin==''">--</span>
+              </td>
+            </tr>
+            <tr *ngIf="origin=='本网'">
+              <td colspan="2">渠道URL：
+                <span *ngIf="origin!=null || origin!=''">{{url}}</span>
+                <span *ngIf="origin==null || origin==''">--</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div *ngIf="id!=null">
+      <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+        <div class="portlet-title">
+          <div class="caption">预约单状态</div>
+          <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title="">
+            </a>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tr>
+                <td style="width:50%">预约单状态：{{statename}}</td>
+                <td>
+                  <div *ngIf="orderstatesequence==2">
+                    <span>未验证，已提醒，{{verifyremind}}次</span>
+                  </div>
+                  <div *ngIf="orderstatesequence==4 || orderstatesequence==5 || orderstatesequence==6">
+                    <p>门店名称：{{signincode}}-{{signinaddress}}</p>
+                    <p>操作人：{{signinshopname}} 编号：{{signinshopcode}}</p>
+                  </div>
+                  <div *ngIf="orderstatesequence==99">
+                    <span>取消预约单的原因：{{cancelreason}}</span>
+                  </div>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div *ngIf="(orderstatesequence==4 || orderstatesequence==5 || orderstatesequence==7) && personalinfo!=null">
+      <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+        <div class="portlet-title">
+          <div class="caption">赠品收货信息</div>
+          <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title="">
+            </a>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="table-responsive">
+            <div *ngIf="zpflag">
+              <table class="table table-bordered">
+                <tr>
+                  <td width="50%">收货人：</td>
+                  <td>{{zpname}}</td>
+                </tr>
+                <tr>
+                  <td>性别：</td>
+                  <td>{{zpage}}</td>
+                </tr>
+                <tr>
+                  <td>联系方式：</td>
+                  <td>{{zptelephone}}</td>
+                </tr>
+                <tr>
+                  <td>收货地址：</td>
+                  <td>{{zpaddress}}</td>
+                </tr>
+                <tr>
+                  <td>活动名称：</td>
+                  <td>{{activityname}}</td>
+                </tr>
+                <tr>
+                  <td>填写时间：</td>
+                  <td>{{zpfilldate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+              </table>
+            </div>
+            <div *ngIf="!zpflag">
+              <table class="table table-bordered">
+                <tr>
+                  <td width="50%">收货人：</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>性别：</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>联系方式：</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>收货地址：</td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+      <div class="portlet-title">
+        <div class="caption">购买意向</div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title="">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <td>品类：</td>
+              <td>
+                <span *ngIf="classifytype==null || classifytype==''">--</span>
+                <span *ngIf="classifytype!=null || classifytype!=''">{{classifytype}}</span>
+              </td>
+              <td>预算：</td>
+              <td>
+                <span *ngIf="tabprice==null || tabprice==''">--</span>
+                <span *ngIf="tabprice!=null || tabprice!=''">{{tabprice}}</span>
+              </td>
+              <td>材质：</td>
+              <td>
+                <span *ngIf="materianame==null || materianame==''">--</span>
+                <span *ngIf="materianame!=null || materianame!=''">{{materianame}}</span>
+              </td>
+              <td>钻重：</td>
+              <td>
+                <span *ngIf="mainstoneinfo==null || mainstoneinfo==''">--</span>
+                <span *ngIf="mainstoneinfo!=null || mainstoneinfo!=''">{{mainstoneinfo}}</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+      <div class="portlet-title">
+        <div class="caption">预约单备注</div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title="">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <td>问题1：意向款/系列</td>
+              <td>答:&nbsp;&nbsp;
+                <span class="quesContent">{{affixcontent1}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>问题2：用途</td>
+              <td>答:&nbsp;&nbsp;
+                <span class="quesContent">{{affixcontent2}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>问题3：使用时间</td>
+              <td>答:&nbsp;&nbsp;
+                <span class="quesContent">{{affixcontent3}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>问题4：是否了解过I DO </td>
+              <td>答:&nbsp;&nbsp;
+                <span class="quesContent">{{affixcontent4}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>问题5：是否了解过珠宝类的知识 </td>
+              <td>答:&nbsp;&nbsp;
+                <span class="quesContent">{{affixcontent5}}</span>
+              </td>
+            </tr>
+          </table>
+          <textarea placeholder="其他备注请注意" style="width:100%;">{{remark}}</textarea>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div *ngIf="orderstatesequence==4 || orderstatesequence==5 || orderstatesequence==2">
+      <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+        <div class="portlet-title">
+          <div class="caption">购物记录</div>
+          <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title="">
+            </a>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="table-responsive">
+            <div *ngIf="!salesize">
+              <!--没有购买记录-->
+              <div class="yesorno">
+                <div>未购买</div>
+                <textarea name="notPurchaseReason" class="noshop" placeholder="其他备注请输入" style="width:100%;margin-top:10px">{{notpurchasereason}}</textarea>
+              </div>
+            </div>
+            <div *ngIf="salesize">
+              <table class="table table-bordered" *ngFor="let item of maplist">
+                <tr class="success">
+                  <td>销售单号：{{item[0].orderno}}</td>
+                  <td>大区：{{item[0].region}}</td>
+                  <td>门店：{{item[0].code}}-{{item[0].address}}</td>
+                  <td>时间：{{item[0].createdate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+                <tr>
+                  <td colspan="4" align="center">
+                    <table class="table table-bordered table-hover">
+                      <tr>
+                        <th>商品系列</th>
+                        <th>交易方式</th>
+                        <th>销售导购</th>
+                      </tr>
+                      <tr *ngFor="let item1 of item">
+                        <td>{{item1.commodityclsname}}</td>
+                        <td>{{item1.payment}}</td>
+                        <td>{{item1.registername}}</td>
+                      </tr>
+                    </table>
+                    <!-- *" -->
+                  </td>
+
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!---->
+      <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+        <div class="portlet-title">
+          <div class="caption">回访信息</div>
+          <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title="">
+            </a>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="table-responsive">
+            <div *ngIf="orderstatesequence==4 || orderstatesequence==2">
+              <ul class="apraise">
+                <li>
+                  <span class="appratitle">1.服务感受(服务意识)</span>
+                  <nz-rate [(ngModel)]="appraiseMark1" nzAllowHalf nzAllowHalf="false"></nz-rate>
+                  <span *ngIf="appraiseMark1" class="ant-rate-text">{{ appraiseMark1 }} 分</span>
+                </li>
+                <li>
+                  <span class="appratitle">2.环境感受(整洁、音乐、气味)</span>
+                  <nz-rate [(ngModel)]="appraiseMark2" nzAllowHalf nzAllowHalf="false"></nz-rate>
+                  <span *ngIf="appraiseMark1" class="ant-rate-text">{{ appraiseMark2 }} 分</span>
+                </li>
+                <li>
+                  <span class="appratitle">3.专业度</span>
+                  <nz-rate [(ngModel)]="appraiseMark3" nzAllowHalf nzAllowHalf="false"></nz-rate>
+                  <span *ngIf="appraiseMark1" class="ant-rate-text">{{ appraiseMark3 }} 分</span>
+                </li>
+                <li>
+                  <span class="appratitle">4.是否符合购物意向</span>
+                  <nz-rate [(ngModel)]="appraiseMark4" nzAllowHalf nzAllowHalf="false"></nz-rate>
+                  <span *ngIf="appraiseMark1" class="ant-rate-text">{{ appraiseMark4 }} 分</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="orderstatesequence!=4 && orderstatesequence!=2">
+              <!--分数查看-->
+              <ul class="apraise">
+                <li>
+                  <span class="appratitle">1.服务感受(服务意识)</span>
+                  <nz-rate [(ngModel)]="appraiseMark1" nzDisabled></nz-rate>
+                  <span *ngIf="appraiseMark1" class="ant-rate-text">{{ appraiseMark1 }} 分</span>
+                </li>
+                <li>
+                  <span class="appratitle">2.环境感受(整洁、音乐、气味)</span>
+                  <nz-rate [(ngModel)]="appraiseMark2" nzDisabled></nz-rate>
+                  <span *ngIf="appraiseMark1" class="ant-rate-text">{{ appraiseMark2 }} 分</span>
+                </li>
+                <li>
+                  <span class="appratitle">3.专业度</span>
+                  <nz-rate [(ngModel)]="appraiseMark3" nzDisabled></nz-rate>
+                  <span *ngIf="appraiseMark1" class="ant-rate-text">{{ appraiseMark3 }} 分</span>
+                </li>
+                <li>
+                  <span class="appratitle">4.是否符合购物意向</span>
+                  <nz-rate [(ngModel)]="appraiseMark4" nzDisabled></nz-rate>
+                  <span *ngIf="appraiseMark1" class="ant-rate-text">{{ appraiseMark4 }} 分</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="orderstatesequence==5">
+              <div class="avg">
+                综合评分为
+                <b>{{appraiseMarkAVG}}</b>分
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="portlet box blue-hoki" style="width:96%;margin-left:2%">
+      <div class="portlet-title">
+        <div class="caption">操作记录</div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title="" title="">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" *ngIf="reservesignins==null">
+            <tr>
+              <th>序号</th>
+              <th>时间</th>
+              <th>操作人</th>
+              <th>内容</th>
+            </tr>
+            <tr>
+              <td colspan="4" align="center">无任何操作记录</td>
+            </tr>
+          </table>
+          <table class="table table-bordered" *ngIf="reservesignins!=null">
+            <tr>
+              <th>序号</th>
+              <th>时间</th>
+              <th>操作人</th>
+              <th>内容</th>
+            </tr>
+            <tr *ngFor="let item of reserveopration;let list=index;">
+              <td>{{list+1}}</td>
+              <td>{{item.enterdate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td>
+                <span *ngIf="origin!='洽客'">{{item.registername}}</span>
+                <span *ngIf="origin=='洽客'">
+                  {{item.registername}}
+                  <span *ngIf="item.code!='' && item.code!=null">({{item.code}})</span>
+                </span>
+              </td>
+              <td>{{item.statename}}</td>
+            </tr>
+          </table>
+          <div *ngIf="orderstatesequence==6">
+            <p>回访失败原因：{{returnreason}}</p>
+            <p>说明：{{reasoncontent}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="text-center" style="padding-bottom:20px;margin-top:20px;">
+      <!-- <s:if test='%{#session.kefuType=="1" || #session.shopeType=="1"}'> -->
+      <div *ngIf="role=='kefu' || shopeType==1">
+        <div *ngIf="origin!='洽客'">
+          <div *ngIf="orderstatesequence==4 || orderstatesequence==2">
+            <button type="button" class="btn default" (click)="addreserve()">确认</button>
+          </div>
+        </div>
+        <div *ngIf="origin=='洽客'">
+          <div *ngIf="orderstatesequence==4">
+            <button type="button" class="btn default" (click)="addreserve()">确认</button>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn default" (click)="goback()">返回</button>
+      <!--484 line 权限判断结束-->
+    </div>
+  </div>
+</div>
+<!--回访失败-->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+        <h4 class="modal-title">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">回访失败</font>
+          </font>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="pull-left" style="line-height:44px">回访失败原因：</div>
+          <div class="md-radio-inline pull-left">
+            <div class="md-radio">
+              <input type="radio" id="regular" name="failreason" title="0" class="md-radiobtn" value="电话无法接通" checked="">
+              <label for="regular">
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span>
+                电话无法接通 </label>
+            </div>
+            <div class="md-radio">
+              <input type="radio" id="franchise" name="failreason" title="1" class="md-radiobtn" value="无效电话">
+              <label for="franchise">
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span>
+                无效电话</label>
+            </div>
+          </div>
+        </div>
+        <div style="clear:both;"></div>
+        <div class="fail_explain">
+          <div style="margin-bottom:10px;">取消说明：</div>
+          <textarea placeholder="| 请输入..." id="explain_decsription" style="width:100%;"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span class="hftips text-danger"></span>
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button class="btn default" (click)="successhf()">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--回访失败end-->
+<!--更改预约单-->
+<div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+      </div>
+      <div class="modal-body">
+        确定要更改预约单？
+      </div>
+      <div class="modal-footer">
+        <span class="hftips text-danger"></span>
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <a class="btn blue-hoki" (click)="editreserve()">确定</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--更改预约单end-->
+<!--取消预约单-->
+<div id="myModal3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">×</font>
+          </font>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="pull-left" style="line-height:44px">取消原因：</div>
+          <div class="md-radio-inline pull-left">
+            <div class="md-radio">
+              <input type="radio" id="replay" name="cancelreason" title="0" class="md-radiobtn" value="重新预约" checked="">
+              <label for="replay">
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span>
+                重新预约</label>
+            </div>
+            <div class="md-radio">
+              <input type="radio" id="telno" name="cancelreason" title="1" class="md-radiobtn" value="无效电话">
+              <label for="telno">
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span>
+                无效电话</label>
+            </div>
+            <div class="md-radio">
+              <input type="radio" id="else" name="cancelreason" title="2" class="md-radiobtn" value="已购它牌">
+              <label for="else">
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span>
+                已购它牌</label>
+            </div>
+            <div class="md-radio">
+              <input type="radio" id="times" name="cancelreason" title="3" class="md-radiobtn" value="时间">
+              <label for="times">
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span>
+                时间</label>
+            </div>
+            <div class="md-radio">
+              <input type="radio" id="addressee" name="cancelreason" title="4" class="md-radiobtn" value="地点">
+              <label for="addressee">
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span>
+                地点</label>
+            </div>
+            <div class="md-radio">
+              <input type="radio" id="qita" name="cancelreason" title="5" class="md-radiobtn" value="其他" (click)="qita()">
+              <label for="qita">
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span>
+                其他</label>
+            </div>
+          </div>
+        </div>
+        <div style="clear:both;"></div>
+        <div class="cancel_explain" style="display:none;">
+          <div style="margin-bottom:10px;">其他说明：</div>
+          <textarea placeholder="| 请输入..." id="cancel_decsription" style="width:100%;"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span class="canceltips text-danger"></span>
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button class="btn default" (click)="cancelreserve()">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--取消预约单end-->
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

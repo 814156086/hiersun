@@ -1,0 +1,32 @@
+.sidewidth{
+    width: 250px;
+}
+.sub-menu.mytab{
+    margin-top: 4px!important;
+}
+.mytab>div{
+    height: 38px;
+    line-height: 38px;
+}
+.mytab>div:hover{
+    background: #f2f6f9;
+}
+.mytab>div:hover a{
+    color: #5b9bd1;
+}
+.mytab>div.choose{
+    background: #f2f6f9;
+}
+.mytab>div>a{
+    display: block;
+    margin-left: 46px;
+    width: 60%;
+    height: 100%;
+    text-decoration: none;
+    color: #485a6a;
+    font-size:14px;
+    /*padding-top:10px;*/
+}
+.mytab>div.choose>a{
+    color: #5b9bd1;
+}

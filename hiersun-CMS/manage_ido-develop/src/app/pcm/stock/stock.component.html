@@ -1,0 +1,297 @@
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          库存管理
+        </div>
+        <!-- <div class="tools">
+          <a href="javascript:;" class="collapse" data-original-title title></a>
+          <a href="javascript:;" class="reload" data-original-title title></a>
+        </div> -->
+      </div>
+      <div class="portlet-body">
+        <div class="clearfix">
+          <button type="button" class="btn btn-info" (click)="editStock()"><i class="fa fa-edit"></i> 修改库存</button>
+          <!-- <button type="button" class="btn btn-success btn-circle"><i class="fa fa-plus"></i> 新增商品</button>
+          <button type="button" class="btn btn-warning btn-circle" (click)="changeSkuStatus(0)"><i class="fa fa-ban"></i> 停用商品</button>
+          <button type="button" class="btn btn-danger btn-circle" (click)="changeSkuStatus(1)"><i class="fa fa-minus"></i> 启用商品</button>
+          <button type="button" class="btn btn-danger btn-circle" (click)="changeSkuSaleStatus(1)"><i class="fa fa-cart-plus"></i> 商品上架</button>
+          <button type="button" class="btn btn-danger btn-circle" (click)="changeSkuSaleStatus(0)"><i class="fa fa-cart-arrow-down"></i> 商品下架</button>-->
+        </div>
+        <form class="form-horizontal" id="ffSearch">
+          <div class="row margin-search height-30">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">所属门店：</label>
+                <div class="col-md-8">
+                  <select id="storeCode" class="form-control select2me" data-placeholder=" ">
+                    <option value=""></option>
+                    <option *ngFor="let item of storeList" value="{{item.organizationCode}}">{{item.organizationName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">产品编码：</label>
+                <div class="col-md-8">
+                  <input id="productCode" name="txtProductNo" type="text" class="form-control" (input)="normalInputChange($event)">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">商品编码：</label>
+                <div class="col-md-8">
+                  <input id="skuCode" name="txtProductNo" type="text" class="form-control" (input)="normalInputChange($event)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row margin-search height-30">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">所属品牌：</label>
+                <div class="col-md-8">
+                  <select id="brandCode" class="form-control select2me" data-placeholder=" ">
+                    <option value=""></option>
+                    <option *ngFor="let item of brandList" value="{{item.brandSid}}">{{item.brandName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">商品类型：</label>
+                <div class="col-md-8">
+                  <select id="skuType" class="form-control" data-placeholder=" ">
+                    <option value="">全部</option>
+                    <option value="1">普通商品</option>
+                    <option value="2">赠品</option>
+                    <option value="3">礼品</option>
+                    <option value="4">虚拟商品</option>
+                    <option value="5">服务类商品</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">商品条码：</label>
+                <div class="col-md-8">
+                  <input id="barcode" name="txtProductNo" type="text" class="form-control" (input)="normalInputChange($event)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row margin-search height-30">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group col-md-12" style="text-align:center;">
+                <button id="btnSearch" type="button" class="btn default" (click)="initStockInfoList()">查询
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnReset" type="button" class="btn default" (click)="queryReset()">
+                  <i class="fa fa-times"></i>重置</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div id="sample_6_wrapper" class="dataTables_wrapper no-footer">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover" id="sample_6" role="grid" aria-describedby="sample_6_info">
+              <thead>
+                <tr class="text-center">
+                  <th style="width:20px;"> 选择</th>
+                  <th> 产品编码</th>
+                  <th> 商品条码</th>
+                  <th> 商品编码</th>
+                  <th> 标准品名</th>
+                  <th> 销售单位</th>
+                  <th> 可售库</th>
+                  <th> 残次品库</th>
+                  <th> 退货库</th>
+                  <th> 锁定库</th>
+                  <th> 商品类型</th>
+                  <th> 品牌</th>
+                  <th> 门店</th>
+                  <th> 库存变动详情</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="recordTotal==0">
+                  <td class="text-center" colspan="14">没有相关记录~</td>
+                </tr>
+                <tr role="row" class="odd" *ngFor="let item of productList;let key=index;">
+                  <td class="tab_zero">
+                    <div class="md-checkbox">
+                      <input type="checkbox" title="{{item.barcode}}" value="{{item.storeCode}}" id="checkbox{{key}}"
+                        class="md-check">
+                      <label for="checkbox{{key}}">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box" style="border: 1px solid #666"></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <a (click)="dtlProducta(item.productCode,1,0)">{{item.productCode}}</a>
+                    <!-- <a>{{item.productCode}}</a> -->
+                  </td>
+                  <td>
+                    <a (click)="dtlCommodity(item.barcode,item.skuCode,1,0)">{{item.barcode}}</a>
+                    <!-- <a>{{item.barcode}}</a> -->
+                  </td>
+                  <td>{{item.skuCode}}</td>
+                  <td>{{item.skuName}}</td>
+                  <td>{{item.unitCode}}</td>
+                  <td>{{item.saleStock}}</td>
+                  <td>{{item.edefectiveStock}}</td>
+                  <td>{{item.returnStock}}</td>
+                  <td>{{item.lockedStock}}</td>
+                  <!--商品类型-->
+                  <td *ngIf="item.productType==1">
+                    普通商品
+                  </td>
+                  <td *ngIf="item.productType==2">
+                    赠品
+                  </td>
+                  <td *ngIf="item.productType==3">
+                    礼品
+                  </td>
+                  <td *ngIf="item.productType==4">
+                    虚拟商品
+                  </td>
+                  <td *ngIf="item.productType==5">
+                    服务类商品
+                  </td>
+                  <td *ngIf="item.productType!=1&&item.productType!=2&&item.productType!=3&&item.productType!=4&&item.productType!=5">
+                    ——
+                  </td>
+                  <td>{{item.brandName}}</td>
+                  <td>{{item.storeName}}</td>
+                  <td>
+                    <a (click)="changeStockDetail(item.barcode)">库存变动详情</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--pagestart-->
+          <div class="clearfix">
+            <div id="pagination1" class="page"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- BEGIN MODAL-->
+<!-- 库存变动详情modal -->
+<div class="modal fade" id="modal_stock" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog stock-container">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">库存历史变动记录</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+        <!-- 1 -->
+        <div class="form-body">
+          <!-- 查询 -->
+          <div class="row margin-search height-30">
+            <!-- <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">所属门店：</label>
+                <div class="col-md-8">
+                  <select id="storeItemCode" class="form-control" (change)="changeDetailStock()">
+                    <option value="">请选择</option>
+                    <option *ngFor="let dstoitem of detailStoreList" value="{{dstoitem.storeCode}}">{{dstoitem.storeName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div> -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">渠道：</label>
+                <div class="col-md-8">
+                  <select id="channelCode" class="form-control">
+                    <option value="">请选择</option>
+                    <option value="0">全渠道</option>
+                    <!-- <option *ngFor="let dstoitem of detailStoreList" value="{{dstoitem.storeCode}}">{{dstoitem.storeName}}</option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">原库位：</label>
+                <div class="col-md-8">
+                  <select id="stockType" class="form-control">
+                    <option value="">全部</option>
+                    <option value="1001">可售库</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <button type="button" class="btn blue" (click)="loadStockHistoryList()">查询</button>
+            </div>
+          </div>
+          <!-- 表格 -->
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th> 单据号</th>
+                  <th> 原库存数量</th>
+                  <th> 变动数量</th>
+                  <th> 变动时间</th>
+                  <th> 备注</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="recordTotal==0">
+                  <td class="text-center" colspan="5">没有相关记录~</td>
+                </tr>
+                <tr role="row" class="odd" *ngFor="let shlitem of stockHistoryList;let dsakey=index;">
+                  <td> {{shlitem.billsNo}}</td>
+                  <td> {{shlitem.proSum}}</td>
+                  <td> {{shlitem.changeSum}}</td>
+                  <td> {{shlitem.changeTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td> {{shlitem.note}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- 分页 -->
+          <div class="clearfix">
+            <div id="pagination2" class="page"></div>
+          </div>
+        </div>
+        <!-- 1 -->
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <button type="button" class="btn default" data-dismiss="modal" (click)="disModal()">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END MODAL-->
+
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

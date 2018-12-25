@@ -1,0 +1,126 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          运费模板
+        </div>
+      </div>
+      <div class="portlet-body">
+        <!-- addedit -->
+        <div class="clearfix">
+          <button type="button" class="btn red" data-toggle="button" routerLink="addtemp">
+            <i class="fa fa-plus"></i>
+            添加运费模板</button>
+        </div>
+        <!-- Menu start -->
+        <div class="portlet light" *ngFor="let tempItem of tempList">
+          <div class="portlet-title">
+            <div class="caption font-purple-plum">
+              <i class="icon-speech font-purple-plum"></i>
+              <span class="caption-subject bold uppercase"> {{tempItem.templateName}}</span>
+            </div>
+            <div class="caption">
+                <span class="caption-helper">最后编辑时间：{{tempItem.updateTime| date:'yyyy-MM-dd HH:mm:ss'}}</span>
+              </div>
+            <div class="actions">
+              <a href="" class="collapse" data-original-title="" title="">
+              </a>
+              <!-- <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                <i class="icon-cloud-upload"></i>
+              </a> -->
+              <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;" (click)="editTemplate(tempItem.sid)">
+                <i class="icon-wrench"></i>
+              </a>
+              <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;" (click)="delTemplate(tempItem.sid)">
+                <i class="icon-trash"></i>
+              </a>
+              <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title=""
+                title="">
+              </a>
+            </div>
+          </div>
+          <div class="portlet-body">
+            <!-- <div id="context" data-toggle="context" data-target="#context-menu">
+            
+            </div> -->
+            <!--  -->
+            <div class="table-scrollable">
+              <table class="table table-striped table-bordered table-hover" id="sample_6" role="grid" aria-describedby="sample_6_info">
+                <thead>
+                  <tr class="text-center">
+                    <th> 运送方式</th>
+                    <th> 运送到</th>
+                    <th> 首件（个）</th>
+                    <th> 运费（元）</th>
+                    <th> 续件（个）</th>
+                    <th> 运费（元）</th>
+                    <th> 不满（元）</th>
+                    <th> 运费（元）</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr role="row" class="odd" *ngFor="let shipItem of tempItem.shippingMethods;let tsalekey=index;">
+                    <td *ngIf="shipItem.shippingMethod==1"> 快递</td>
+                    <td *ngIf="shipItem.shippingMethod==2"> 货到付款</td>
+                    <td *ngIf="shipItem.shippingMethod==3"> 指定条件免邮</td>
+                    <td *ngIf="shipItem.shippingMethod!=1&&shipItem.shippingMethod!=2&&shipItem.shippingMethod!=3"> ——</td>
+                    <td> {{shipItem.regionName?shipItem.regionName:"——"}}</td>
+                    <td> {{shipItem.firstSum?shipItem.firstSum:"——"}}</td>
+                    <td> {{shipItem.firstFreight?shipItem.firstFreight:"——"}}</td>
+                    <td> {{shipItem.increaseSum?shipItem.increaseSum:"——"}}</td>
+                    <td> {{shipItem.increaseFreight?shipItem.increaseFreight:"——"}}</td>
+                    <td> {{shipItem.saleNoPrice?shipItem.saleNoPrice:"——"}}</td>
+                    <td> {{shipItem.saleFreight?shipItem.saleFreight:"——"}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--  -->
+          </div>
+        </div>
+        <!-- Menu end -->
+        <!-- table start -->
+
+        <!-- table end -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<!--确认删除弹窗-->
+<div class="modal fade bs-modal-sm" id="delModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">
+            提示
+          </h4>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" class="dataid" /> 确定要删除吗？
+        </div>
+        <div class="modal-footer">
+          <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+          <button data-dismiss="modal" class="btn blue delsure" (click)="datadel()">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--确认删除弹窗end-->
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

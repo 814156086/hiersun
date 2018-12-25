@@ -1,0 +1,637 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="glyphicon glyphicon-chevron-left back_hand" (click)="goBack()"></i> 添加产品
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <!-- BEGIN 0-->
+        <ul class="nav nav-tabs">
+          <li class="active">
+            <a href="#tab_1_1" class="tab_1_1" data-toggle="tab">
+              产品信息 </a>
+          </li>
+          <li>
+            <a href="#tab_1_3" class="tab_1_3" data-toggle="tab" (click)="tabMain()">
+              展示分类 </a>
+          </li>
+          <li>
+            <a href="#tab_1_4" class="tab_1_4" data-toggle="tab" (click)="getChecked()">
+              图片上传</a>
+          </li>
+          <li>
+            <a href="#tab_1_6" class="tab_1_6" data-toggle="tab" (click)="tabCmsPackage()">
+              精包装 </a>
+          </li>
+        </ul>
+        <div class="tab-content prod1">
+          <!-- tab start -->
+          <div class="tab-pane fade active in form" id="tab_1_1">
+            <!-- BEGIN FORM-->
+            <div class="form-horizontal">
+              <div class="form-body col-md-12">
+                <div class="portlet-title">
+                  <div class="caption">
+                    <i class="fa fa-archive"></i>产品信息
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="col-md-4 control-label">产品类型
+                    <span class="required" aria-required="true">
+                      * </span>
+                  </label>
+                  <div class="col-md-8">
+                    <!-- <div *ngIf="proTypeName">
+                      <span type="text" class="form-control">{{proTypeName}}</span>
+                    </div> -->
+                    <select id="proType" class="form-control  proTypeId" (change)="selectSkuType()">
+                      <option *ngFor="let protitem of proTypeList;let brdkey=index" value="{{protitem.code}}">{{protitem.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="col-md-4 control-label">版库编码
+                    <span class="required" aria-required="true" *ngIf="proTypeRemark==1">
+                      * </span>
+                  </label>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="patternCode" (keydown.enter)="getSku()" (input)="completeSearch($event)"
+                      placeholder="输入版库编码后请回车">
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="col-md-3 control-label">品牌
+                    <span class="required" aria-required="true">
+                      * </span>
+                  </label>
+                  <div class="col-md-9">
+                    <!-- <div *ngIf="brandName">
+                      <span type="text" class="form-control brdId">{{brandName}}</span>
+                    </div> -->
+                    <select id="select2_brand" class="form-control select2me brdId" data-placeholder="" (change)="selectBrand()">
+                      <option value="">请选择</option>
+                      <option *ngFor="let brditem of brandList;let brdkey=index" value="{{brditem.brandSid}}">{{brditem.brandName}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="col-md-4 control-label">标准名
+                    <span class="required" aria-required="true">
+                      * </span>
+                  </label>
+                  <div class="col-md-8">
+                    <div>
+                      <input type="text" class="form-control productName" placeholder="必填" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="col-md-4 control-label">产品分类
+                    <span class="required" aria-required="true">
+                      * </span>
+                  </label>
+                  <div class="col-md-8">
+                    <select id="category" class="form-control select2me cateId" data-placeholder="请选择">
+                      <option value="">请选择</option>
+                      <option *ngFor="let cateitem of categoryList;let catekey=index" title="{{cateitem.categoryCode}}" value="{{cateitem.id}}">{{cateitem.name}}</option>
+                    </select>
+                    <!-- <div>
+                      <div (click)="showTree()">
+                        <span type="text" style="cursor: pointer;" class="form-control cateName">{{cateName}}</span>
+                      </div>
+                    </div>
+                    <div class="content_wrap_base" *ngIf="!isTree">
+                      <input type="hidden" name="mymsg">
+                      <button class="myclick" (click)="myclick()" style="opacity: 0;display: none;"></button>
+                      <div class="zTreeDemoBackground">
+                        <ul id="treeDemo" class="ztree"></ul>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+                <div class="form-group col-md-4" *ngIf="proTypeFlag==1">
+                  <label class="col-md-3 control-label"> 有效期
+                    <span class="required" aria-required="true">
+                      * </span>
+                  </label>
+                  <div class="col-md-7">
+                    <input type="text" class="form-control" id="validity" (input)="comValidity($event)">
+                  </div>
+                  <label class="control-label" style="float:left;"> 个月</label>
+                </div>
+              </div>
+              <!-- 2 -->
+              <div class="form-body col-md-12">
+                <div class="portlet-title">
+                  <div class="caption">
+                    <i class="fa fa-cubes"></i>产品属性
+                  </div>
+                </div>
+                <div class="proattr" style="max-height: 150px; overflow-y: auto;">
+                  <div *ngFor="let ppaItem of paaList;let ppakey=index;">
+                    <div class="form-group col-md-4" *ngIf="ppaItem.isEnumProp==1">
+                      <label class="col-md-4 control-label">{{ppaItem.propsName}}
+                        <span class="required" aria-required="true" *ngIf="ppaItem.notNull==1">
+                          * </span>
+                      </label>
+                      <div class="col-md-8">
+                        <div *ngIf="ppaItem.readOnly==0">
+                          <input type="text" class="form-control pro{{ppaItem.propsSid}} Not{{ppaItem.notNull}}"
+                            placeholder="请输入" value={{ppaItem.valueName}}>
+                        </div>
+                        <div *ngIf="ppaItem.readOnly!=0">
+                          <input type="text" class="form-control pro{{ppaItem.propsSid}} Not{{ppaItem.notNull}}"
+                            placeholder="请输入" value={{ppaItem.valueName}} disabled>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4" *ngIf="ppaItem.isEnumProp==0">
+                      <label class="col-md-4 control-label">{{ppaItem.propsName}}
+                        <span class="required" aria-required="true" *ngIf="ppaItem.notNull==1">
+                          * </span>
+                      </label>
+                      <div class="col-md-8">
+                        <div *ngIf="ppaItem.readOnly==0">
+                          <select name="detValue" id="" class="form-control value{{ppaItem.propsSid}} Not{{ppaItem.notNull}}">
+                            <option value="">请选择</option>
+                            <option *ngFor="let aitem of ppaItem.values;let akey=index" value="{{aitem.valuesSid}}"
+                              [attr.selected]="aitem.valuesSid==ppaItem.valueSid?true:null">{{aitem.valuesName}}</option>
+                          </select>
+                        </div>
+                        <div *ngIf="ppaItem.readOnly!=0">
+                          <select name="detValue" id="" class="form-control value{{ppaItem.propsSid}} Not{{ppaItem.notNull}}"
+                            disabled>
+                            <option value="">请选择</option>
+                            <option *ngFor="let aitem of ppaItem.values;let akey=index" value="{{aitem.valuesSid}}"
+                              [attr.selected]="aitem.valuesSid==ppaItem.valueSid?true:null">{{aitem.valuesName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 产品属性添加end -->
+              </div>
+              <!-- 2 -->
+              <!-- 3 -->
+              <div class="form-body col-md-12">
+                <div class="portlet-title">
+                  <div class="caption">
+                    <i class="fa fa-cubes"></i>添加商品
+                    <button type="button" class="btn blue addsku_btn" (click)="vetrifyModal()">添加</button>
+                    <button type="button" class="btn btn-danger addsku_btn" (click)="delectSkuItem()">删除</button>
+                  </div>
+                </div>
+                <div class="proattr2">
+                  <div class="table-scrollable" *ngIf="detailParamList.length">
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_6"
+                      role="grid" aria-describedby="sample_6_info">
+                      <thead>
+                        <tr>
+                          <th style="width:20px;">选择</th>
+                          <th *ngFor="let deheaditem of detailParamList;let dehekey=index"> {{deheaditem.propsName}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr role="row" class="odd tr_sku" *ngFor="let skuditem of skuDetailList;let skudkey=index">
+                          <td id="{{skudkey}}">
+                            <div class="md-checkbox">
+                              <!-- <input type="checkbox" value="{{skudkey}}" id="checked{{skudkey}}" name="sku_check" class="md-check"
+                                disabled *ngIf="skudkey+1<=skulength"> -->
+                              <input type="checkbox" value="{{skudkey}}" id="checked{{skudkey}}" name="sku_check" class="md-check">
+                              <label for="checked{{skudkey}}">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box" style="border: 1px solid #666"></span>
+                              </label>
+                            </div>
+                            <!-- {{skudkey}}
+                            {{skuDetailListCopy.length}} -->
+                          </td>
+                          <td *ngFor="let deheaditem of detailParamList;let dehekey=index" class="{{deheaditem.propsCode}}">{{skuditem[deheaditem.propsCode]}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- 产品属性添加end -->
+              </div>
+              <!-- 3-->
+              <!-- <div class=""> -->
+              <!-- <div class="row"> -->
+              <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn blue" (click)="subProduct()">保存</button>
+                <button type="reset" class="btn default" (click)="goBack()">取消</button>
+              </div>
+              <!-- </div> -->
+              <!-- </div> -->
+            </div>
+            <!-- END FORM-->
+          </div>
+          <div class="tab-pane fade" id="tab_1_3">
+            <div class="row">
+              <div class="col-md-12">
+                <div>
+                  <!-- class="portlet box green" -->
+                  <!-- <div class="portlet-title">
+                    <div class="caption">
+                      展示分类管理
+                    </div>
+                    <div class="tools">
+                      <a href="javascript:;" class="collapse" data-original-title="" title="">
+                      </a>
+                    </div>
+                  </div> -->
+                  <div class="portlet-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="portlet blue-hoki box">
+                          <div class="portlet-title">
+                            <div class="caption">
+                              展示分类
+                            </div>
+                          </div>
+                          <div class="portlet-body leftall">
+                            <div class="content_wrap">
+                              <input type="hidden" name="mtmsg">
+                              <button class="thirdclick" (click)="thirdclick()"></button>
+                              <div class="zTreeDemoBackground">
+                                <ul id="thirdTree" class="ztree"></ul>
+                              </div>
+                            </div>
+                          </div>
+                          <!--  -->
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="portlet blue-hoki box">
+                          <div class="portlet-title">
+                            <div class="caption">
+                              详细信息
+                            </div>
+                          </div>
+                          <div class="portlet-body">
+                            <div class="mtall">
+                              <!-- 0 -->
+                              <div *ngFor="let detItem of detList;let detkey=index;">
+                                <label class="col-md-12 mtctitle">{{detItem.propName}}</label>
+                                <div *ngFor="let valItem of detItem.values;let valkey=index;">
+                                  <div class="form-group col-md-12 hide{{detItem.id}}_{{valItem.propsSid}}" *ngIf="valItem.isEnumProp==1">
+                                    <label class="col-md-2 control-label">{{valItem.propsName}}
+                                      <span class="required" aria-required="true" *ngIf="valItem.notNull==1">
+                                        * </span>
+                                    </label>
+                                    <div class="col-md-5">
+                                      <div class="input-icon">
+                                        <i class="fa fa-bell-o"></i>
+                                        <input type="text" class="form-control pro{{detItem.id}}_{{valItem.propsSid}} notNull{{valItem.notNull}}"
+                                          placeholder="请输入" required>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                      <button class="btn red" (click)="delDet(detItem.id,valItem.propsSid)">删除</button>
+                                    </div>
+                                  </div>
+                                  <div class="form-group col-md-12 hide{{detItem.id}}_{{valItem.propsSid}}" *ngIf="valItem.isEnumProp==0">
+                                    <label class="col-md-2 control-label">{{valItem.propsName}}
+                                      <span class="required" aria-required="true" *ngIf="valItem.notNull==1">
+                                        * </span>
+                                    </label>
+                                    <div class="col-md-5">
+                                      <div class="input-icon">
+                                        <i class="fa fa-bell-o"></i>
+                                        <select name="detValue" id="" class="form-control value{{detItem.id}}_{{valItem.propsSid}} notNull{{valItem.notNull}}">
+                                          <option value="">请选择</option>
+                                          <option *ngFor="let aitem of valItem.values;let akey=index" value="{{aitem.valuesSid}}">{{aitem.valuesName}}</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                      <button class="btn red" (click)="delDet(detItem.id,valItem.propsSid)">删除</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- 0 -->
+                            </div>
+                            <div class="portlet-footer" style="text-align: center">
+                              <button type="button" class="btn blue" (click)="subMtMes()">保存</button>
+                              <!-- <button type="button" class="btn default" data-dismiss="modal">取消</button> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="tab_1_4">
+            <!--  -->
+            <div class="row">
+              <div class="col-md-12">
+                <div>
+                  <div class="portlet-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="portlet blue-hoki box">
+                          <div class="portlet-title">
+                            <div class="caption">
+                              商品属性
+                            </div>
+                          </div>
+                          <div class="portlet-body leftall">
+                            <div class="tb-sku">
+                              <dl class="tb-prop tm-sale-prop tm-clear" *ngFor="let lpsitem of salePropList;let lpskey=index;">
+                                <dt class="tb-metatit" *ngIf="lpsitem.values.length!=0">{{lpsitem.propName}}</dt>
+                                <dd>
+                                  <ul class="tm-clear" *ngIf="lpsitem.values.length!=0">
+                                    <li *ngFor="let pitem of lpsitem.values;let pkey=index;" id="{{lpsitem.propCode}}[]{{pitem.valueCode}}"
+                                      class="{{lpsitem.propCode}}{{pitem.valueCode}} propList">
+                                      <a href="javascript:;" role="button" tabindex="0" (click)="getProps(pitem.valueCode,lpsitem.propCode,pitem.valueName)">
+                                        <span>{{pitem.valueName}}</span>
+                                      </a>
+                                      <i></i>
+                                    </li>
+                                  </ul>
+                                </dd>
+                              </dl>
+                            </div>
+                            <!--      <div class="content_wrap">
+                              <input type="hidden" name="picmsg">
+                              <button class="fourthclick" (click)="fourthclick()" style="opacity: 0;"></button>
+                              <div class="zTreeDemoBackground">
+                                <ul id="fourthTree" class="ztree"></ul>
+                              </div>
+                            </div> -->
+                          </div>
+                          <!--  -->
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="portlet blue-hoki box">
+                          <div class="portlet-title">
+                            <div class="caption">
+                              <button type="button" class="btn btn-xs blue-hoki" data-toggle="modal" (click)="addPic()">
+                                <i class="fa fa-plus"></i>
+                                添加图片</button>
+                              <button type="button" class="btn btn-xs blue-hoki" (click)="setMainPic()">
+                                <i class="fa fa-tag"></i>
+                                设为主图 </button>
+                              <button type="button" class="btn btn-xs blue-hoki" (click)="delPics()">
+                                <i class="fa fa-times"></i>
+                                删除图片 </button>
+                            </div>
+                          </div>
+                          <div class="portlet-body">
+                            <div class="mtall1">
+                              <!-- show pic start -->
+                              <!-- 0 -->
+                              <div class="showPic" *ngIf="enableDrag" [sortablejs]="showPicList" enctype="multipart/form-data">
+                                <div class="item_pic" *ngFor="let picItem of showPicList;let pickey=index;" (dragend)="sortPics()">
+                                  <img src="{{picItem.pictureUrl}}" alt="" style="width: 195px;height: 150px;">
+                                  <div class="md-checkbox">
+                                    <input type="checkbox" title="{{picItem.sid}}" value="{{picItem.pictureName}}" id="checkbox{{picItem.sid}}"
+                                      name="uplpic" class="md-check">
+                                    <label for="checkbox{{picItem.sid}}">
+                                      <span></span>
+                                      <span class="check"></span>
+                                      <span class="box"></span>
+                                    </label>
+                                  </div>
+                                  <p class="sign" *ngIf="picItem.isPrimary==1">
+                                    <span class="label label-sm label-danger">主图</span>
+                                  </p>
+                                </div>
+                              </div>
+                              <!-- 1 -->
+                              <div class="showPic" enctype="multipart/form-data" *ngIf="!enableDrag">
+                                <div class="item_pic" *ngFor="let picItem of showPicList;let pickey=index;" (dragend)="sortPics()">
+                                  <img src="{{picItem.pictureUrl}}" alt="" style="width: 195px;height: 150px;">
+                                  <div class="md-checkbox">
+                                    <input type="checkbox" title="{{picItem.sid}}" value="{{picItem.pictureName}}" id="checkbox{{picItem.sid}}"
+                                      name="uplpic" class="md-check">
+                                    <label for="checkbox{{picItem.sid}}">
+                                      <span></span>
+                                      <span class="check"></span>
+                                      <span class="box"></span>
+                                    </label>
+                                  </div>
+                                  <p class="sign" *ngIf="picItem.isPrimary==1">
+                                    <span class="label label-sm label-danger">主图</span>
+                                  </p>
+                                </div>
+                              </div>
+                              <!-- 2 -->
+                              <!-- show pic end -->
+                              <!-- modal start-->
+                              <div class="modal fade" id="addpic" tabindex="-1" role="dialog" data-backdrop="static"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-full">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                        (click)="closeUploader()"></button>
+                                      <h4 class="modal-title">添加图片</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <!-- 0 -->
+                                      <div id="wrapper">
+                                        <div id="container">
+                                          <!--头部，相册选择和格式选择-->
+                                          <div id="uploader">
+                                            <div class="queueList">
+                                              <div id="dndArea" class="placeholder">
+                                                <div id="filePicker"></div>
+                                                <p>或将照片拖到这里，单次最多可选300张</p>
+                                              </div>
+                                            </div>
+                                            <div class="statusBar" style="display:none;">
+                                              <div class="progress">
+                                                <span class="text">0%</span>
+                                                <span class="percentage"></span>
+                                              </div>
+                                              <div class="info"></div>
+                                              <div class="btns">
+                                                <div id="filePicker2"></div>
+                                                <div class="uploadBtn">开始上传</div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <!-- 0 -->
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- modal end -->
+                            </div>
+                            <!-- <div class="portlet-footer" style="text-align: center">
+                                <button type="button" class="btn blue" (click)="subPicUpl()">保存</button>
+                                <button type="button" class="btn default" data-dismiss="modal">取消</button>
+                              </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--  -->
+          </div>
+          <div class="tab-pane fade" id="tab_1_6">
+            <!-- 0 start-->
+            <form class="form-horizontal" id="ffSearch">
+              <div class="row margin-search height-30">
+                <a target="_blank" *ngIf="siteId == 1" class="btn blue-hoki" style="margin-bottom:10px;margin-left: 15px;"
+                  [routerLink]="['/cms/groupcms/']" [queryParams]="{siteId:0,id:'',channelId:0,productCode:prodId}">
+                  <!-- <a target="_blank" *ngIf="siteId == 1" class="btn blue-hoki" style="margin-bottom:10px;margin-left: 15px;" href="/cms/groupcms?siteId=0&channelId=0&productCode={{prodId}}"> -->
+                  <i class="fa fa-edit"></i> 添加页面</a>
+                <a target="_blank" *ngIf="siteId == 2||siteId == 3" class="btn blue-hoki" style="margin-bottom:10px;margin-left: 15px;"
+                  [routerLink]="['/cms/mgroupcms/']" [queryParams]="{siteId:0,id:'',channelId:0,productCode:prodId}">
+                  <i class="fa fa-edit"></i> 添加页面</a>
+                <!--  -->
+              </div>
+
+            </form>
+            <div id="sample_6_wrapper" class="dataTables_wrapper no-footer">
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover" id="sample_6" role="grid"
+                  aria-describedby="sample_6_info">
+                  <thead>
+                    <tr role="row">
+                      <th class="sorting">
+                        英文名称
+                      </th>
+                      <th class="sorting_asc">
+                        中文描述
+                      </th>
+                      <th class="sorting">
+                        生效页面URL
+                      </th>
+                      <th class="sorting">
+                        页面状态
+                      </th>
+                      <th class="sorting">
+                        操作
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="haveChild">
+                      <td class="text-center" colspan="5">没有相关记录~</td>
+                    </tr>
+                    <tr role="row" class="odd" *ngFor="let item of childList;let key=index;">
+                      <td>{{item.fileName}}</td>
+                      <td>{{item.comm}}</td>
+                      <td class="pagelink">
+                        <a href="{{item.url}}" target="_blank">{{item.url}}</a>
+                      </td>
+                      <td>
+                        <!-- <span *ngIf="item.state == 1">暂存</span> -->
+                        <span *ngIf="item.state == 2">未发布</span>
+                        <span *ngIf="item.state == 3">发布</span>
+                        <span *ngIf="item.state == 4">下线</span>
+                        <span *ngIf="item.state == 5">编辑</span>
+                      </td>
+                      <td class="pagebtn">
+                        <a target="_blank" *ngIf="item.siteType == 1" class="btn btn-xs btn-info" [routerLink]="['/cms/groupcms/']"
+                          [queryParams]="{siteId:item.siteId,id:item.id,channelId:item.channelId}">
+                          <i class="fa fa-edit"></i> 编辑</a>
+                        <a target="_blank" *ngIf="item.siteType == 2" class="btn btn-xs btn-info" [routerLink]="['/cms/mgroupcms/']"
+                          [queryParams]="{siteId:item.siteId,id:item.id,channelId:item.channelId}">
+                          <i class="fa fa-edit"></i> 编辑</a>
+                        <span *ngIf="item.state == 2||item.state == 4">
+                          <a href="#myModal3" data-toggle="modal" class="btn red btn-xs" (click)="delMsg(item.id)">
+                            <i class="fa fa-trash-o"></i> 删除</a>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--pagestart-->
+              <div class="clearfix">
+                <div id="pagination1" class="page"></div>
+              </div>
+            </div>
+            <!-- 0 end -->
+          </div>
+          <!-- tab end -->
+        </div>
+        <!-- <div class="clearfix margin-bottom-20">
+        </div> -->
+        <!-- END 1-->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 定制商品弹窗 -->
+<app-skuprice #skuprice (outer)="runChild($event)"></app-skuprice>
+<!-- 非定制商品弹窗 -->
+<app-isskuprice #isskuprice (isouter)="runIsChild($event)"></app-isskuprice>
+<!--精包装删除 -->
+<div id="myModal3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          确定要删除吗？
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button data-dismiss="modal" class="btn blue" (click)="sure()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 提示信息 -->
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<!--确认切换弹窗-->
+<div class="modal fade bs-modal-sm" id="switchModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">
+          系统提示
+        </h4>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" class="dataid" /> {{titleMesg}}
+      </div>
+      <div class="modal-footer">
+        <button class="btn default" (click)="cancelSwitch()">取消</button>
+        <button data-dismiss="modal" class="btn blue delsure" (click)="sureSwitch()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>

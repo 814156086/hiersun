@@ -1,0 +1,380 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class="glyphicon glyphicon-chevron-left back_hand" (click)="goBack()"></i>编辑运费模板
+            <!-- <a href="http://ckd.im/HFwE9">1111</a> -->
+          </div>
+        </div>
+        <div class="portlet-body form">
+          <!-- BEGIN FORM-->
+          <div class="form-horizontal">
+            <div class="form-body">
+              <div class="form-group">
+                <label class="col-md-2 control-label">模板名称：
+                  <span class="required" aria-required="true">
+                    * </span>
+                </label>
+                <div class="col-md-4">
+                  <div class="input-icon">
+                    <i class="fa fa-bell-o"></i>
+                    <input type="text" class="form-control templateName" placeholder="必填" value="{{templateName}}" required>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">是否包邮：
+                  <span class="required" aria-required="true">
+                    * </span>
+                </label>
+                <div class="col-md-4">
+                  <div class="md-radio-inline">
+                    <div class="md-radio">
+                      <input type="radio" id="isCustom" name="isShip" title="1" class="md-radiobtn" checked (change)="isShip(1)">
+                      <label for="isCustom">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        自定义运费 </label>
+                    </div>
+                    <div class="md-radio has-error">
+                      <input type="radio" id="isSeller" name="isShip" title="2" class="md-radiobtn" (change)="isShip(2)">
+                      <label for="isSeller">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        卖家承担运费</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group customCon">
+                <label class="col-md-2 control-label">计价方式：
+                  <span class="required" aria-required="true">
+                    * </span>
+                </label>
+                <div class="col-md-4">
+                  <div class="md-radio-inline">
+                    <div class="md-radio">
+                      <input type="radio" id="isPiece" name="isPrice" title="1" class="md-radiobtn" checked (change)="switchMethod(1)">
+                      <label for="isPiece">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        按件数 </label>
+                    </div>
+                    <div class="md-radio has-error">
+                      <input type="radio" id="isWeight" name="isPrice" title="2" class="md-radiobtn" (change)="switchMethod(2)">
+                      <label for="isWeight">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        按重量</label>
+                    </div>
+                    <div class="md-radio has-warning">
+                      <input type="radio" id="isVolume" name="isPrice" title="3" class="md-radiobtn" (change)="switchMethod(3)">
+                      <label for="isVolume">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        按体积</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group customCon">
+                <label class="col-md-2 control-label">运送方式：
+                  <span class="required" aria-required="true">
+                    * </span>
+                </label>
+                <div class="col-md-9" style="margin-top: 10px;">
+                  <!-- 快递start -->
+                  <div>
+                    <div class="md-checkbox">
+                      <input type="checkbox" title="1" id="delivery" class="md-check">
+                      <label for="delivery">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        快递
+                      </label>
+                    </div>
+                    <div class="table-scrollable" *ngIf="priceMethod==1">
+                      <table class="table table-striped table-bordered table-hover" id="sample_6" role="grid"
+                        aria-describedby="sample_6_info">
+                        <thead>
+                          <tr class="delist">
+                            <th class="row" colspan="6">
+                              <div class="col-md-12">
+                                <label class="control-label col-md-1">默认运费</label>
+                                <input type="text" class="spinner-input form-control col-md-1 firstSum" value="{{deliveryMesg.firstSum}}">
+                                <label class="control-label col-md-1">件内</label>
+                                <input type="text" class="spinner-input form-control col-md-1 firstFreight" value="{{deliveryMesg.firstFreight}}">
+                                <label class="control-label col-md-2">元，每增加</label>
+                                <input type="text" class="spinner-input form-control col-md-1 increaseSum" value="{{deliveryMesg.increaseSum}}">
+                                <label class="control-label col-md-2">件，增加运费</label>
+                                <input type="text" class="spinner-input form-control col-md-1 increaseFreight" value="{{deliveryMesg.increaseFreight}}">
+                                <label class="control-label col-md-1">元</label>
+                              </div>
+                            </th>
+                          </tr>
+                          <tr class="text-center">
+                            <th> 运送到</th>
+                            <th> 首件数（个）</th>
+                            <th> 运费（元）</th>
+                            <th> 续件数（个）</th>
+                            <th> 运费（元）</th>
+                            <th style="width: 150px;"> 操作</th>
+                          </tr>
+                        </thead>
+                        <tbody class="alldeli">
+                          <tr role="row" class="odd deliItem" *ngFor="let deliItem of deliveryList;let delikey=index;">
+                            <td class="regionCode">
+                              <span class="reg{{delikey}}">{{deliItem.regionName}}</span>
+                              <a href="javascript:;" (click)="editRegion(1,delikey)">编辑</a>
+                            </td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.firstSum}}"></td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.firstFreight}}"></td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.increaseSum}}"></td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.increaseFreight}}"></td>
+                            <td>
+                              <a href="javascript:;" class="btn btn-xs red" (click)="delItem(1,delikey)">删除
+                                <i class="fa fa-trash-o"></i></a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="6">
+                              <a href="javascript:;" (click)="addItem(1,$event.target)"> 为指定城市设置运费</a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="table-scrollable" *ngIf="priceMethod==2">
+                      <table class="table table-striped table-bordered table-hover" id="sample_6" role="grid"
+                        aria-describedby="sample_6_info">
+                        <thead>
+                          <tr class="delist">
+                            <th class="row" colspan="6">
+                              <div class="col-md-12">
+                                <label class="control-label col-md-1">默认运费</label>
+                                <input type="text" class="spinner-input form-control col-md-1 firstSum" value="{{deliveryMesg.firstSum}}">
+                                <label class="control-label col-md-1">kg内</label>
+                                <input type="text" class="spinner-input form-control col-md-1 firstFreight" value="{{deliveryMesg.firstFreight}}">
+                                <label class="control-label col-md-2">元，每增加</label>
+                                <input type="text" class="spinner-input form-control col-md-1 increaseSum" value="{{deliveryMesg.increaseSum}}">
+                                <label class="control-label col-md-2">kg，增加运费</label>
+                                <input type="text" class="spinner-input form-control col-md-1 increaseFreight" value="{{deliveryMesg.increaseFreight}}">
+                                <label class="control-label col-md-1">元</label>
+                              </div>
+                            </th>
+                          </tr>
+                          <tr class="text-center">
+                            <th> 运送到</th>
+                            <th> 首重量(kg)</th>
+                            <th> 首费（元）</th>
+                            <th> 续重量(kg)</th>
+                            <th> 续费（元）</th>
+                            <th style="width: 150px;"> 操作</th>
+                          </tr>
+                        </thead>
+                        <tbody class="alldeli">
+                          <tr role="row" class="odd" *ngFor="let deliItem of deliveryList;let delikey=index;">
+                            <td class="regionCode">
+                              <span class="reg{{delikey}}">{{deliItem.regionName}}</span>
+                              <a href="javascript:;" (click)="editRegion(1,delikey)">编辑</a>
+                            </td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.firstSum}}"></td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.firstFreight}}"></td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.increaseSum}}"></td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.increaseFreight}}"></td>
+                            <td>
+                              <a href="javascript:;" class="btn btn-xs red" (click)="delItem(1,delikey)">删除
+                                <i class="fa fa-trash-o"></i></a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="6">
+                              <a href="javascript:;" (click)="addItem(1,$event.target)"> 为指定城市设置运费</a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="table-scrollable" *ngIf="priceMethod==3">
+                      <table class="table table-striped table-bordered table-hover" id="sample_6" role="grid"
+                        aria-describedby="sample_6_info">
+                        <thead>
+                          <tr class="delist">
+                            <th class="row" colspan="6">
+                              <div class="col-md-12">
+                                <label class="control-label col-md-1">默认运费</label>
+                                <input type="text" class="spinner-input form-control col-md-1 firstSum" value="{{deliveryMesg.firstSum}}">
+                                <label class="control-label col-md-1">m<sup>3</sup>内</label>
+                                <input type="text" class="spinner-input form-control col-md-1 firstFreight" value="{{deliveryMesg.firstFreight}}">
+                                <label class="control-label col-md-2">元，每增加</label>
+                                <input type="text" class="spinner-input form-control col-md-1 increaseSum" value="{{deliveryMesg.increaseSum}}">
+                                <label class="control-label col-md-2">m<sup>3</sup>，增加运费</label>
+                                <input type="text" class="spinner-input form-control col-md-1 increaseFreight" value="{{deliveryMesg.increaseFreight}}">
+                                <label class="control-label col-md-1">元</label>
+                              </div>
+                            </th>
+                          </tr>
+                          <tr class="text-center">
+                            <th> 运送到</th>
+                            <th> 首体积(m<sup>3</sup>)</th>
+                            <th> 首费（元）</th>
+                            <th> 续体积(m<sup>3</sup>)</th>
+                            <th> 续费（元）</th>
+                            <th style="width: 150px;"> 操作</th>
+                          </tr>
+                        </thead>
+                        <tbody class="alldeli">
+                          <tr role="row" class="odd" *ngFor="let deliItem of deliveryList;let delikey=index;">
+                            <td class="regionCode">
+                              <span class="reg{{delikey}}">{{deliItem.regionName}}</span>
+                              <a href="javascript:;" (click)="editRegion(1,delikey)">编辑</a>
+                            </td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.firstSum}}"></td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.firstFreight}}"></td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.increaseSum}}"></td>
+                            <td> <input type="text" class="form-control" placeholder="必填" required value="{{deliItem.increaseFreight}}"></td>
+                            <td>
+                              <a href="javascript:;" class="btn btn-xs red" (click)="delItem(1,delikey)">删除
+                                <i class="fa fa-trash-o"></i></a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="6">
+                              <a href="javascript:;" (click)="addItem(1,$event.target)"> 为指定城市设置运费</a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <!-- 快递end -->
+                  <!-- 货到付款start -->
+                  <div class="customCon">
+                    <div class="md-checkbox">
+                      <input type="checkbox" title="2" id="cash" class="md-check">
+                      <label for="cash">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        货到付款
+                      </label>
+                    </div>
+                  </div>
+                  <!-- 货到付款end -->
+                  <!-- 指定条件免邮 start -->
+                  <div class="customCon">
+                    <div class="md-checkbox">
+                      <input type="checkbox" title="3" id="condition" class="md-check">
+                      <label for="condition">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        指定条件免邮
+                      </label>
+                    </div>
+                    <div class="table-scrollable">
+                      <table class="table table-striped table-bordered table-hover" id="sample_6" role="grid"
+                        aria-describedby="sample_6_info">
+                        <thead>
+                          <tr class="text-center">
+                            <th> 选择地区</th>
+                            <th style="width: 50%;"> 设置包邮条件</th>
+                            <th style="width: 150px;"> 操作</th>
+                          </tr>
+                        </thead>
+                        <tbody class="allcond">
+                          <tr role="row" class="odd condItem" *ngFor="let condItem of conditionList;let condkey=index;">
+                            <td class="regionCode">
+                              <span class="reg2{{condkey}}">{{condItem.regionName}}</span>
+                              <a href="javascript:;" (click)="editRegion(3,condkey)">编辑</a>
+                            </td>
+                            <td class="conlist">
+                              <div class="col-md-12">
+                                <label class="control-label col-md-2">不满</label>
+                                <input type="text" class="spinner-input form-control col-md-2 saleNoPrice" value="{{condItem.saleNoPrice}}">
+                                <label class="control-label col-md-3">元，运费</label>
+                                <input type="text" class="spinner-input form-control col-md-2 saleFreight" value="{{condItem.saleFreight}}">
+                                <label class="control-label col-md-1">元</label>
+                              </div>
+                            </td>
+                            <td>
+                              <a href="javascript:;" class="btn btn-xs red" (click)="delItem(3,condkey)">删除 <i class="fa fa-trash-o"></i></a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="6">
+                              <a href="javascript:;" (click)="addItem(3,$event.target)"> 为指定城市设置运费</a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <!-- 指定条件免邮 end -->
+                </div>
+              </div>
+              <!--  -->
+            </div>
+            <div class="form-actions">
+              <div class="row">
+                <div class="col-md-offset-3 col-md-9">
+                  <button type="submit" class="btn blue" (click)="subTemplate()">保存</button>
+                  <button type="reset" class="btn default" (click)="goBack()">取消</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END FORM-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 省市区弹窗 start-->
+<app-regionselect #regionselect></app-regionselect>
+<!-- 省市区弹窗 end -->
+  <!--确认消息提示框-->
+  <div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+    <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+    <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+    <div class="dialog_divOperation ">
+      <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+        (click)="closeWin()">确定</span>
+    </div>
+  </div>
+  <!--确认删除弹窗-->
+  <div class="modal fade bs-modal-sm" id="switchModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">
+            提示
+          </h4>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" class="dataid" /> {{titleMesg}}
+        </div>
+        <div class="modal-footer">
+          <button class="btn default" data-dismiss="modal" aria-hidden="true">取消</button>
+          <button data-dismiss="modal" class="btn blue delsure" (click)="sureSwitch()">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--确认删除弹窗end-->
+  <div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+  <!-- 加载动图 -->
+  <div class="spinner" *ngIf="!isload">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+
+  

@@ -1,0 +1,249 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>预约单列表
+        <small>Reserveorder List</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <ul id="myTab" class="nav nav-tabs">
+            <li class="active">
+              <a data-toggle="tab" (click)="sitechoose(0,2)">未分配</a>
+            </li>
+            <li>
+              <a data-toggle="tab" (click)="sitechoose(1,3)">已分配</a>
+            </li>
+          </ul>
+          <!--筛选-->
+          <div class="choosesx">
+            <form class="form-inline">
+              <div class="col-md-12">
+                <div class="form-group col-md-4">
+                  <label for="f1">订单来源：</label>
+                  <select class="form-control origin">
+                    <option value="">请选择</option>
+                    <option value="本网">本网</option>
+                    <option value="天猫">天猫</option>
+                    <option value="京东">京东</option>
+                    <option value="婚礼纪">婚礼纪</option>
+                    <option value="飞凡">飞凡</option>
+                    <option value="大众点评">大众点评</option>
+                    <option value="洽客">洽客</option>
+                    <option value="婚博">婚博</option>
+                    <option value="尚品">尚品</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label>预约单号：</label>
+                  <input type="text" class="form-control searchorderno" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>联系方式：</label>
+                  <input type="text" class="form-control telephone" />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group col-md-4">
+                  <label>预约日期：</label>
+                  <input type="text" class="form-control reservedata" id="reservedata" placeholder="请选择预约日期" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>预约状态：</label>
+                  <select id="orderstates" class="form-control select2me orderstates" style="width:66%">
+                    <option value="">请选择</option>
+                    <option *ngFor="let item of reservestatelist;let list=index;" value="{{item.sequence}}">{{item.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label>门店编号：</label>
+                  <input type="text" class="form-control shopcode" />
+                </div>
+
+              </div>
+              <div class="col-md-12">
+                <div class="form-group col-md-4">
+                  <label>下单客服：</label>
+                  <select id="operatorid" class="form-control select2me operatorid" style="width:66%">
+                    <option value="">请选择</option>
+                    <option *ngFor="let item of kefulist;let list=index;" value="{{item.departmentid}}">{{item.registername}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="text-center">
+                <span class="searchtips text-dange"></span>
+                <button class="btn btn-default" type="button" (click)="reset()">重置</button>
+                <button class="btn blue btn-default" type="button" (click)="reservelist()">查询</button>
+              </div>
+            </form>
+          </div>
+          <!--筛选-->
+          <div class="portlet box blue-hoki">
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>预约单列表
+              </div>
+              <div class="actions">
+                <div class="btn-group">
+                  <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown">
+                    <i class="fa fa-cogs"></i> 排序
+                    <i class="fa fa-angle-down"></i>
+                  </a>
+                  <ul class="dropdown-menu pull-right">
+                    <li>
+                      <a (click)="reservetimepx(1)">
+                        <i class="fa fa-sort-numeric-desc reservetimepx"></i> 预约成功时间</a>
+                    </li>
+                  </ul>
+                  <input type="hidden" class="ordertype" />
+                  <input type="hidden" class="orderxu" />
+                </div>
+              </div>
+              <!-- <div class="tools">
+                  <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                </div> -->
+            </div>
+            <!--列表end-->
+            <!--body-->
+            <div class="portlet-body">
+
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>
+                        <input type="checkbox" id="parentcheckBox" (click)="parentcheckBox()" />
+                      </th>
+                      <th>序号</th>
+                      <th>预约单来源</th>
+                      <th>预约单号</th>
+                      <th>所属门店</th>
+                      <th>预约日期/时间</th>
+                      <th>姓名</th>
+                      <th>联系方式</th>
+                      <th>预约备注</th>
+                      <th>下单客服</th>
+                      <th>预约单状态</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of reservelists;let list=index;">
+                      <td>
+                        <input type="checkbox" name="orderids" value="{{item.orderno}}" />
+                      </td>
+                      <td>{{list+1}}</td>
+                      <td>{{item.origin}}</td>
+                      <td>
+                        <!--已填写赠品地址-->
+                        <span *ngIf="item.personalinfo==1" class="label label-sm label-success">{{item.orderno}}</span>
+                        <!--未填写赠品地址-->
+                        <span *ngIf="item.personalinfo==0" class="label label-sm label-danger">{{item.orderno}}</span>
+                      </td>
+                      <td>{{item.code}}-{{item.address}}</td>
+                      <td>{{item.reservedate | slice:0:10}} {{item.reservetime}}</td>
+                      <td>{{item.name}}</td>
+                      <td>{{item.telephone}}</td>
+                      <td>
+                        <span *ngIf="item.remark!=null">{{item.remark}}</span>
+                        <span *ngIf="item.remark==null ||item.remark==''">--</span>
+                      </td>
+                      <td>
+                        <span *ngIf="item.kefuname!=null">{{item.kefuname}}</span>
+                        <span *ngIf="item.kefuname==null || item.kefuname==''">--</span>
+                      </td>
+                      <td>
+                        <span *ngIf="item.statename!=null">{{item.statename}}</span>
+                        <span *ngIf="item.statename==null || item.statename==''">--</span>
+                      </td>
+                    </tr>
+                    <tr *ngIf="nodata">
+                      <td colspan="17" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-12" style="margin-top:20px;margin-bottom:20px;" *ngIf="status==0">
+                <a class="btn blue-hoki" (click)="allocation()"><i></i>分配</a>
+              </div>
+              <!--分页页码-->
+              <div class="clearfix box">
+                <div id="pagination1" class="page fr"></div>
+              </div>
+              <!--分页页码end-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>
+<!--分配预约单-->
+<div class="modal fade" id="modal_order" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width:80%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">×</font>
+            </font>
+          </button>
+          <h4>客服列表</h4>
+        </div>
+        <div class="modal-body">
+          <!--客服列表-->
+          <ul>
+            <li *ngFor="let item of kefulistonline;let key=index;">
+              <div class="cusc_name">
+                <div class="md-radio-inline pull-left">
+                  <div class="md-radio" style="margin-right:0px;">
+                    <input type="radio" id="replay{{key}}" name="orderIds" title="0" class="md-radiobtn" value="{{item.logoTag}},{{item.code}},{{item.shopCode}}">
+                    <label for="replay{{key}}">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span>
+                      客服-{{item.registerName}}</label>
+                  </div>
+                  <span class="online fa fa-check-square" *ngIf="item.logoTag==1">
+                    </span>
+                    <span class="linebusy fa fa-minus-square" *ngIf="item.logoTag==0">
+                    </span>
+                    <span *ngIf="item.logoTag!=1 && item.logoTag!=0"></span>
+                </div>
+              </div>
+              <div class="cusc_status clearfix">
+                <ul class="cusc_lc">
+                  <li>已预约成功，未确认购物意向({{item.one}})</li>
+                  <li>已确认购物意向，未验证({{item.two}})</li>
+                  <li>已验证，未回访({{item.three}})</li>
+                  <li>已验证，已回访({{item.four}})</li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <span class="hftips text-danger"></span>
+          <a class="btn blue-hoki" (click)="editreserve()">分配</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--分配预约单end-->

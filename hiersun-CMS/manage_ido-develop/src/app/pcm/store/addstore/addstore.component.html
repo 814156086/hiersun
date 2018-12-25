@@ -1,0 +1,230 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="glyphicon glyphicon-chevron-left back_hand" (click)="goBack()"></i>添加门店
+        </div>
+        <!-- <div class="tools">
+          <a href="javascript:;" class="collapse">
+          </a>
+          <a href="javascript:;" class="reload">
+          </a>
+        </div> -->
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <div class="form-horizontal">
+          <div class="form-body">
+            <div class="form-group">
+              <label class="col-md-3 control-label">门店名称
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="text" class="form-control  stoName" placeholder="必填" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">门店编码
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="text" class="form-control  stoCode" placeholder="必填" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">所属上级
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <input type="text" id="addparent" class="form-control addparId" name="addpaCode" placeholder="必填" value="{{addpOrgName}}"
+                  (focus)="loadAddTree('addparId','addtreeDemo','add_Tree')" (keydown.enter)="searchItem('addparId','addtreeDemo')" />
+                <div id="add_Tree" style="display:none;max-height: 200px;overflow-y: auto">
+                  <input type="hidden" name="onadd">
+                  <button class="addclick" (click)="addclick()" style="opacity: 0;display: none;"></button>
+                  <div class="zTreeDemoBackground">
+                    <ul id="addtreeDemo" class="ztree"></ul>
+                  </div>
+                </div>
+                <!-- <select id="parent" class="form-control input-large input-inline parId">
+                  <option value="">--请选择--</option>
+                  <option *ngFor="let paritem of parentList;let parkey=index" value="{{paritem.sid}}">{{paritem.organizationName}}</option>
+                </select> -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">经营类型
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <div class="md-radio-inline">
+                  <div class="md-radio" *ngFor="let draitem of optwayList;let drakey=index;">
+                    <input type="radio" id="addoptype_{{drakey}}" name="addopeType" title="{{draitem.code}}" class="md-radiobtn">
+                    <label for="addoptype_{{drakey}}">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span>
+                      {{draitem.name}} </label>
+                  </div>
+                </div>
+                <!-- 加盟-->
+                <!-- <div *ngIf="!isShow">
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">加盟名称
+                      <span class="required" aria-required="true">
+                        * </span>
+                    </label>
+                    <div class="col-md-9">
+                      <div class="input-icon">
+                        <i class="fa fa-bell-o"></i>
+                        <input type="text" class="form-control franName" placeholder="必填" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">编码
+                      <span class="required" aria-required="true">
+                        * </span>
+                    </label>
+                    <div class="col-md-9">
+                      <div class="input-icon">
+                        <i class="fa fa-bell-o"></i>
+                        <input type="text" class="form-control franCode" placeholder="必填" required>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">联系方式
+                <!-- <span class="required" aria-required="true">
+                  * </span> -->
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="text" class="form-control tel" placeholder="非必填" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">传真
+                <!-- <span class="required" aria-required="true">
+                  * </span> -->
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="text" class="form-control fax" placeholder="非必填" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">负责人
+                <!-- <span class="required" aria-required="true">
+                  * </span> -->
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="text" class="form-control sOwer" placeholder="非必填" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">省市区
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-5">
+                <select id="province" class="form-control input-small input-inline" (change)="disCity()">
+                  <option value="">--请选择--</option>
+                  <option *ngFor="let provitem of provList;let provkey=index" value="{{provitem.id}}">{{provitem.name}}</option>
+                </select>
+                <select id="city" class="form-control input-small input-inline" (change)="disArea()">
+                  <option value="">--请选择--</option>
+                  <option *ngFor="let cityitem of cityList;let citykey=index" value="{{cityitem.id}}">{{cityitem.name}}</option>
+                </select>
+                <select id="area" class="form-control input-small input-inline">
+                  <option value="">--请选择--</option>
+                  <option *ngFor="let areaitem of areaList;let areakey=index" value="{{areaitem.id}}">{{areaitem.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">详细地址
+                <!-- <span class="required" aria-required="true">
+                  * </span> -->
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="text" class="form-control sAddress" placeholder="非必填" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">可售渠道
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-9">
+                <div class="md-checkbox-inline">
+                  <div class="md-checkbox" *ngFor="let chanitem of channelList;let chankey=index">
+                    <input type="checkbox" id="addcheckbox{{chanitem.sid}}" *ngIf="chanitem.sid!=1" name="addchannel"
+                      title="{{chanitem.sid}}" class="md-check">
+                    <input type="checkbox" id="addcheckbox{{chanitem.sid}}" *ngIf="chanitem.sid==1" name="addchannel"
+                      title="{{chanitem.sid}}" class="md-check" checked="" disabled>
+                    <label for="addcheckbox{{chanitem.sid}}">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span>
+                      {{chanitem.channelName}} </label>
+                  </div>
+                </div>
+                <!--  -->
+              </div>
+            </div>
+            <!--  -->
+          </div>
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn blue" (click)="subStore()">保存</button>
+                <button type="reset" class="btn default" (click)="goBack()">取消</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END FORM-->
+      </div>
+    </div>
+  </div>
+</div>
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

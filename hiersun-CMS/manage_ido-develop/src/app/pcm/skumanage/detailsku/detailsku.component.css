@@ -1,0 +1,98 @@
+/* 返回 */
+.back_hand {
+  cursor: pointer
+}
+
+.portlet-title {
+  border-bottom: 1px solid #eee;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.portlet-title .caption {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 16px;
+  padding: 10px 0;
+}
+
+.prod1 {
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* tab1 基本信息 */
+.proattr {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+/* 去除表格底部横线 */
+table.dataTable.no-footer {
+  border-bottom: 1px solid #f9f9f9;
+}
+
+/* 滚动条 */
+.mtall {
+  height: 400px;
+  overflow-y: auto;
+}
+
+.mtall1 {
+  height: 400px;
+  overflow-y: auto;
+}
+
+/* 商品详情 弹窗 */
+.detailPro {
+  height: 550px;
+  overflow-y: auto;
+}
+
+/* tab2 居中 */
+th,
+td {
+  text-align: center;
+}
+
+.showPic {
+  overflow: hidden;
+}
+
+.item_pic {
+  float: left;
+  margin: 0 0 5px 2px;
+  width: 195px;
+  height: 170px;
+  position: relative;
+}
+
+.item_pic img {
+  width: 195px;
+  height: 150px;
+  margin-bottom: 2px
+}
+
+/* 选择框居中 */
+.md-checkbox {
+  position: relative;
+  width: 18px;
+  margin: 0 auto;
+}
+
+/* 图片上传 主图标志 */
+.sign {
+  position: absolute;
+  left: 70%;
+  top: 74%;
+}
+
+
+.portlet-footer {
+  margin-top: 6px;
+  text-align: center;
+}
+.tab_footer {
+  padding-top: 5px;
+  text-align: center;
+}

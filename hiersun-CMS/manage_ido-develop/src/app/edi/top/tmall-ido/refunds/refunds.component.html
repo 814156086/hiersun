@@ -1,0 +1,238 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>天猫退款管理
+        <small>TOP Refund</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <div class="choosesx">
+            <form class="form-horizontal">
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <div class="form-group">
+                  <label for="edi-top-refunds-condition-refund-id" class="control-label col-md-4">退款单号：</label>
+                  <div class='col-md-8'>
+                    <input id="edi-top-refunds-condition-refund-id" class='refundId form-control' style='width: 100%'
+                          type="text" placeholder="请输入退款单号">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <div class="form-group">
+                  <label for="edi-top-refunds-condition-tid" class="control-label col-md-4">所属交易号：</label>
+                  <div class='col-md-8'>
+                    <input id="edi-top-refunds-condition-tid" class='tid form-control' style='width: 100%'
+                          type="text" placeholder="请输入交易号">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <div class="form-group">
+                  <label for="edi-top-refunds-condition-oms-refund-id" class="control-label col-md-4">中台退款单号：</label>
+                  <div class='col-md-8'>
+                    <input id="edi-top-refunds-condition-oms-refund-id" class='omsRefundId form-control'
+                          style='width: 100%' type="text" placeholder="请输入中台退款单号">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <div class="form-group">
+                  <label for="edi-top-refunds-condition-refund-status" class="control-label col-md-4">退款状态：</label>
+                  <div class='col-md-8'>
+                    <select id="edi-top-refunds-condition-refund-status" class="form-control status">
+                      <option value="">请选择</option>
+                      <option value="WAIT_SELLER_AGREE">买家已经申请退款，等待卖家同意</option>
+                      <option value="WAIT_BUYER_RETURN_GOODS">卖家已经同意退款，等待买家退货</option>
+                      <option value="WAIT_SELLER_CONFIRM_GOODS">买家已经退货，等待卖家确认收货</option>
+                      <option value="SELLER_REFUSE_BUYER">卖家拒绝退款</option>
+                      <option value="CLOSED">退款关闭</option>
+                      <option value="SUCCESS">退款成功</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <div class="form-group">
+                  <label for="edi-top-refunds-condition-refund-phase" class="control-label col-md-4">退款阶段：</label>
+                  <div class='col-md-8'>
+                    <select id="edi-top-refunds-condition-refund-phase" class="form-control refundPhase">
+                      <option value="">请选择</option>
+                      <option value="onsale">售中/onsale</option>
+                      <option value="aftersale">售后/aftersale</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <div class="form-group ">
+                  <label for="edi-top-refunds-condition-has-good-return" class="control-label col-md-4">是否需要退货：</label>
+                  <div class='col-md-8'>
+                  <select class="form-control shouldReturnGoods" id="edi-top-refunds-condition-has-good-return">
+                    <option value="">请选择</option>
+                    <option value="true">是</option>
+                    <option value="false">否</option>
+                  </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" style='margin-bottom:15px'>
+                <div class="form-group">
+                  <label class="control-label col-md-4">货物状态：</label>
+                  <div class='col-md-8'>
+                  <select class="form-control goodStatus" id="goodStatus">
+                    <option value="">请选择</option>
+                    <option value="BUYER_NOT_RECEIVED">买家未收到货</option>
+                    <option value="BUYER_RECEIVED">买家已收到货</option>
+                    <option value="BUYER_RETURNED_GOODS">买家已退货</option>
+                  </select>
+                  </div>
+                </div>
+              </div>
+              <div class="btn_container col-md-6" style="text-align: left;margin-bottom: 15px">
+                <button id="btnSearch" style='margin-left:15px' type="button" class="btnstyle btn default"
+                        (click)="reloadGrid()">查询
+                  <i class="fa fa-search"></i>
+                </button>
+                <button id="btnReset" type="button" class="btnstyle btn default" (click)="clearCondition()">清空
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div style="clear:both;height:10px;"></div>
+          <div class="portlet box blue-hoki" style="margin-top: 15px;">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>天猫退款订单
+              </div>
+              <div class="tools">
+                <a href="javascript:" class="collapse" data-original-title="" title=""></a>
+                <a data-original-title="" title="" (click)="reloadGrid()">
+                  <i class="fa fa-refresh" style="color:#fff;position: relative;top:-2px;"></i>
+                </a>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="table-scrollable">
+                <table style="border-bottom:none"
+                       class="table text-center table-striped table-bordered table-hover dataTable no-footer" id="refund"
+                       role="grid" aria-describedby="item-types_info">
+                  <thead>
+                  <tr role="row">
+                    <th  aria-controls="refund">退款单号</th>
+                    <th  aria-controls="refund">退还金额</th>
+                    <th  aria-controls="refund">退款原因</th>
+                    <th style='min-width:120px'  aria-controls="refund">退款申请时间</th>
+                    <th  aria-controls="refund">支付宝交易号</th>
+                    <th  aria-controls="refund">买家昵称</th>
+                    <th  aria-controls="refund">交易总金额</th>
+                    <th  aria-controls="refund">天猫交易号</th>
+                    <th  aria-controls="refund">天猫子订单号</th>
+                    <th  aria-controls="refund">退款状态</th>
+                    <th  aria-controls="refund">退款阶段</th>
+                    <th style='min-width:120px'  aria-controls="refund">更新时间</th>
+                    <th  aria-controls="refund">物流公司名称</th>
+                    <th  aria-controls="refund">退货运单号</th>
+                    <th  aria-controls="refund">买家是否需要退货</th>
+                    <th  aria-controls="refund">支付给卖家的金额</th>
+                    <th  style="min-width:200px" aria-controls="refund">退款说明</th>
+
+                    <th  aria-controls="refund">商品编号</th>
+                    <th  style="min-width:200px" aria-controls="refund">商品标题</th>
+                    <th  aria-controls="refund">商品价格</th>
+                    <th  aria-controls="refund">商品购买数量</th>
+                    <th style='min-width:120px'  aria-controls="refund">退货时间</th>
+                    <th  aria-controls="item-types">物流方式</th>
+                    <th  aria-controls="refund">货物状态</th>
+                    <th  style="min-width:300px" aria-controls="refund">卖家收货地址</th>
+                    <th  aria-controls="refund">渠道</th>
+                    <th  aria-controls="refund">店铺代码</th>
+                    <th  aria-controls="refund">OMS退款单号</th>
+                    <!--<th class="col-md-2" aria-controls="refund">操作</th>-->
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr role="row" class="odd" *ngFor="let item of pageContent()">
+                    <td>{{item.refundId}}</td>
+                    <td>{{item.refundFee}}</td>
+                    <td>{{item.reason}}</td>
+                    <td>{{item.created | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{item.alipayNo}}</td>
+                    <td>{{item.buyerNick}}</td>
+                    <td>{{item.totalFee}}</td>
+                    <td>{{item.tid}}</td>
+                    <td>{{item.oid}}</td>
+                    <!--<td>{{item.status}}</td>-->
+                    <td *ngIf="item.status=='WAIT_SELLER_AGREE'">买家已经申请退款，等待卖家同意</td>
+                    <td *ngIf="item.status=='WAIT_BUYER_RETURN_GOODS'">卖家已经同意退款，等待买家退货</td>
+                    <td *ngIf="item.status=='WAIT_SELLER_CONFIRM_GOODS'">买家已经退货，等待卖家确认收货</td>
+                    <td *ngIf="item.status=='SELLER_REFUSE_BUYER'">卖家拒绝退款</td>
+                    <td *ngIf="item.status=='CLOSED'">退款关闭</td>
+                    <td *ngIf="item.status=='SUCCESS'">退款成功</td>
+                    <td>{{item.refundPhase}}</td>
+                    <td>{{item.modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{item.companyName}}</td>
+                    <td>{{item.sid}}</td>
+                    <!--<td>{{item.hasGoodReturn}}</td>-->
+                    <td *ngIf="item.hasGoodReturn=='1'">是</td>
+                    <td *ngIf="item.hasGoodReturn=='0'">否</td>
+                    <td>{{item.payment}}</td>
+                    <td>{{item.desc}}</td>
+
+                    <td>{{item.numIid}}</td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.num}}</td>
+                    <td>{{item.goodReturnTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{item.shippingType}}</td>
+                    <!--<td>{{item.goodStatus}}</td>-->
+                    <td *ngIf="item.goodStatus=='BUYER_NOT_RECEIVED'">买家未收到货</td>
+                    <td *ngIf="item.goodStatus=='BUYER_RECEIVED'">买家已收到货</td>
+                    <td *ngIf="item.goodStatus=='BUYER_RETURNED_GOODS'">买家已退货</td>
+                    <td>{{item.address}}</td>
+                    <td>{{item.channel}}</td>
+                    <td>{{item.storeCode}}</td>
+                    <td>{{item.omsRefundId}}</td>
+                    <!--<td>
+                      <a class="btn red btn-xs btn-info" data-toggle="modal" (click)="release(item)">
+                        <i class="fa fa-unlink"></i> 操作
+                      </a>
+                    </td>-->
+                  </tr>
+                  <tr *ngIf='noData'>
+                    <td colspan="29" style="text-align:center;padding:10px;">暂时还没有数据~</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="clearfix">
+                <div id="item-relation-pagination" class="page"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spinner" *ngIf="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<!--<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>-->
+

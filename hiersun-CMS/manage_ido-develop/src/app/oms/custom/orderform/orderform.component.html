@@ -1,0 +1,109 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="glyphicon glyphicon-chevron-left back_hand" (click)="goBack()"></i>添加定做单明细
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <!-- <form action="#" method="POST" class="form-horizontal" enctype="multipart/form-data"> -->
+        <div class="form-horizontal" enctype="multipart/form-data">
+          <div class="form-body" style="position: relative;">
+            <div class="form-group">
+              <label class="control-label" style="width: 8.3333%;">线上订单渠道</label>
+              <div class="col-md-2">
+                <select id="orderSource" class="form-control select2me" data-placeholder=" ">
+                  <option value=""></option>
+                  <option *ngFor="let sourceitem of sourceList;let sourcekey=index;" value="{{sourceitem.channelCode}}">{{sourceitem.channelName}}</option>
+                </select>
+              </div>
+              <label class="control-label col-md-1">线上单据号</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control orderNo" placeholder="必填" />
+              </div>
+              <button type="button" class="btn btn-info" (click)="vetrifyModal()">定做明细</button>
+            </div>
+            <div class="form-group">
+              <label class="control-label">定做GIA主石规格</label>
+              <div class="col-md-6">
+                <textarea class="form-control cusGiaDetail" readonly></textarea>
+                <!-- <input type="text" class="form-control cusGiaDetail" readonly /> -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-1 control-label">定做明细</label>
+              <div class="col-md-6">
+                <textarea class="form-control cusDetail" readonly></textarea>
+                <!-- <input type="text" class="form-control cusDetail" readonly /> -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-1 control-label">定金金额</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control earnestAmount" placeholder="必填" (blur)="countAmount()" (input)="normalInputChange($event)" />
+              </div>
+              <label class="col-md-1 control-label">尾款金额</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control balanceAmount" readonly value="{{balanceAmount}}" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-1 control-label">订货时间</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control saleTime" value='{{today | date:"yyyy-MM-dd"}}' readonly />
+              </div>
+              <label class="control-label" style="width: 8.3333%;">预计取货时间</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control signTime" readonly />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-1 control-label">财务定价</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control finanprice" readonly />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-1 control-label">货品条码</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control brName" readonly />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-1 control-label">销货时间</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control brName" readonly />
+              </div>
+            </div>
+            <div class="fileinput-new thumbnail" style="position: absolute;width: 130px;height: 130px;left: 40%;bottom: 0;">
+              <img src="" onerror="this.src='http://placehold.it/130x130'" class="imaPic">
+            </div>
+            <!--  -->
+          </div>
+          <div class="form-actions">
+            <div class="row" style="text-align: center;">
+              <button type="submit" class="btn blue" (click)="subCustom()">保存</button>
+              <button type="submit" class="btn green" (click)="subCustom()">提交</button>
+              <!-- <button class="btn default" (click)="goBack()">取消</button> -->
+            </div>
+          </div>
+        </div>
+        <!-- END FORM-->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 定做商品弹窗 -->
+<app-verifyprice #verifyprice></app-verifyprice>
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>

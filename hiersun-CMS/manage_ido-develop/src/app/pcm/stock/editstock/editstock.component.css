@@ -1,0 +1,27 @@
+a {
+  text-decoration: none;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+/* 维护 选择框 居中 */
+
+.md-checkbox {
+  position: relative;
+  width: 18px;
+  margin: 0 auto;
+}
+
+.divider-line {
+  border-bottom: 1px solid #cccccc;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.table-ofy {
+  overflow-y: auto;
+  height: 250px;
+}

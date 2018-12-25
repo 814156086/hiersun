@@ -1,0 +1,97 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>支付应用列表
+        <small>Pay Manage</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <a class="btn blue-hoki" (click)="addnew()" style="margin-bottom:20px;">
+            <i class="fa fa-plus"></i> 添加</a>
+          <a class="btn green" (click)="goback()" style="margin-bottom:20px;">
+            <i class="fa"></i> 返回</a>
+          <div class="portlet box blue-hoki">
+            <!--列表头-->
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>支付宝应用列表
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <!--列表end-->
+            <!--body-->
+            <div class="portlet-body">
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>appId</th>
+                      <th>应用名称</th>
+                      <!-- <th>支付宝公钥</th>
+                      <th>商户私钥</th>
+                      <th>商户公钥</th> -->
+                      <th>是否有效</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of zfblist">
+                      <td>{{item.appid}}</td>
+                      <td>{{item.name}}</td>
+                      <!-- <td width="15%">{{item.alipayPublicKey}}</td>
+                      <td width="15%">{{item.privateKey}}</td>
+                      <td width="15%">{{item.publicKey}}</td> -->
+                      <td>
+                        <span class="label label-sm label-success" *ngIf="item.enabled==true">有效</span>
+                        <span class="label label-sm label-danger" *ngIf="item.enabled==false">无效</span>
+                      </td>
+                      <td>
+                        <a class="btn btn-xs btn-info" routerLink='/pay/apply' [queryParams]="{mchchannel:mchchannel,mchid:mchid,pid:pid,appid:item.appid,btntype:'1'}">
+                          <i class="fa fa-file-pdf-o"></i> 详情</a>
+                        <a class="btn btn-xs btn-info green" routerLink='/pay/apply' [queryParams]="{mchchannel:mchchannel,mchid:mchid,pid:pid,appid:item.appid,btntype:'2'}">
+                          <i class="fa fa-edit"></i> 编辑</a>
+                        <a class="btn btn-xs btn-info yellow" *ngIf="item.enabled==true" (click)="editstatus(mchchannel,mchid,pid,item.appid,item.enabled)">
+                          <i class="fa fa-edit"></i> 禁用</a>
+                        <a class="btn btn-xs btn-info blue" *ngIf="item.enabled==false" (click)="editstatus(mchchannel,mchid,pid,item.appid,item.enabled)">
+                          <i class="fa fa-edit"></i> 启用</a>
+                      </td>
+                    </tr>
+                    <tr *ngIf="nodata==true">
+                      <td colspan="6" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--分页页码-->
+              <div class="clearfix box">
+                <div id="pagination1" class="page fr"></div>
+              </div>
+              <!--分页页码end-->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+a {
+  text-decoration: none;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+td {
+  white-space: nowrap;
+}
+
+.table-scrollable {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid #dddddd;
+  margin: 10px 0 !important;
+}
+
+.table-bordered {
+  border: 1px solid #CCC;
+}
+
+.order-container {
+  width: 70%;
+}
+
+.tab-orders {
+  background-color: #f9f9f9;
+}
+
+.tab-orders a {
+  color: black;
+}
+
+/*tab 表格 垂直滚动条 */
+.table-fofy {
+  /* overflow-y: auto; */
+  height: 160px;
+}
+
+.table-ofy {
+  overflow-y: auto;
+  height: 250px;
+}
+
+/* 导航tab页 */
+.nav>li>a {
+  padding: 10px 10px;
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+  padding: 5px;
+}
+
+.table-fofy .form-group {
+  margin-bottom: 5px;
+}

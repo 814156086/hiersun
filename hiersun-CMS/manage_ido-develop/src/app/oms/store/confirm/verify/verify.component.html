@@ -1,0 +1,243 @@
+<div class="datalist">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-head">
+    <div class="page-title">
+      <h1>门店评分
+        <small>Reserveorder Status</small>
+      </h1>
+    </div>
+  </div>
+  <!-- END PAGE TITLE -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet-body">
+        <div class="contenttab">
+          <div class="clearfix" style="margin-bottom: 20px;">
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-default active" (click)="switchType('verify')">
+                <input type="radio" class="toggle"> 门店验证 </label>
+              <label class="btn btn-default reserve" (click)="switchType('reserve')">
+                <input type="radio" class="toggle">订单管理</label>
+              <label class="btn btn-default score" (click)="switchType('score')">
+                <input type="radio" class="toggle"> 门店评分 </label>
+            </div>
+          </div>
+          <!--筛选-->
+          <div class="portlet box" *ngIf="!isSub">
+            <form class="templatecon form-horizontal" [formGroup]="formModel" (submit)="subOrderNo()">
+              <div class="form-group">
+                <label class="col-md-2 control-label">
+                  <span style="color:red;">*</span>请输入预约码：</label>
+                <div class="col-md-6">
+                  <input class="form-control" [class.hasError]="formModel.get('orderCode').invalid && formModel.get('orderCode').touched"
+                    type="text" formControlName="orderCode" name="orderCode" [(ngModel)]="orderCode" placeholder="请输入预约码">
+                  <div [hidden]="formModel.get('orderCode').untouched">
+                    <div class="formtips" [hidden]="!formModel.hasError('required',['orderCode'])">
+                      请填写预约码！
+                    </div>
+                  </div>
+                </div>
+                <label class="col-md-2">
+                  <button type="submit" class="btn blue" id="save_No" [disabled]="formModel.invalid">提交</button>
+                </label>
+              </div>
+            </form>
+          </div>
+          <div class="portlet box" *ngIf="isSub">
+            <form class="templatecon form-horizontal" [formGroup]="formModel2" (submit)="subOrderInfo()" *ngIf="!isSubSucc">
+              <div class="form-group">
+                <label class="col-md-2 control-label">
+                  <span style="color:red;">*</span>请输入预约码：</label>
+                <div class="col-md-6">
+                  <input class="form-control" type="text" formControlName="orderCode2" name="orderCode2" [(ngModel)]="orderCode2"
+                    readonly>
+                  <!-- <div [hidden]="formModel2.get('orderCode2').untouched">
+                      <div class="formtips" [hidden]="!formModel2.hasError('required',['orderCode2'])">
+                        请填写预约码！
+                      </div>
+                    </div> -->
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">
+                  <span style="color:red;">*</span>请输入导购密码：</label>
+                <div class="col-md-6">
+                  <input class="form-control" [class.hasError]="formModel2.get('password').invalid && formModel2.get('password').touched"
+                    type="password" formControlName="password" name="password" [(ngModel)]="password" placeholder="请输入导购密码">
+                  <div [hidden]="formModel2.get('password').untouched">
+                    <div class="formtips" [hidden]="!formModel2.hasError('required',['password'])">
+                      请输入导购密码!
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">
+                  <span style="color:red;">*</span>性别：</label>
+                <div class="col-md-6">
+                  <div class="md-radio-inline">
+                    <div class="md-radio">
+                      <input type="radio" id="male" name="signinSex" formControlName="signinSex" value="男" title="1"
+                        class="md-radiobtn" [(ngModel)]="signinSex" [class.hasError]="formModel2.get('signinSex').invalid && formModel2.get('signinSex').touched">
+                      <label for="male">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        男</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="female" name="signinSex" formControlName="signinSex" value="女" title="2"
+                        class="md-radiobtn" [(ngModel)]="signinSex" [class.hasError]="formModel2.get('signinSex').invalid && formModel2.get('signinSex').touched">
+                      <label for="female">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        女</label>
+                    </div>
+                  </div>
+                  <div [hidden]="formModel2.get('signinSex').untouched">
+                    <div class="formtips" [hidden]="!formModel2.hasError('required',['signinSex'])">
+                      请选择性别!
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">
+                  <span style="color:red;">*</span>到店人数：</label>
+                <div class="col-md-6">
+                  <div class="md-radio-inline">
+                    <div class="md-radio">
+                      <input type="radio" id="one" name="signinNum" formControlName="signinNum" value="1" title="1"
+                        class="md-radiobtn" [(ngModel)]="signinNum" [class.hasError]="formModel2.get('signinNum').invalid && formModel2.get('signinNum').touched">
+                      <label for="one">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        1人</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="two" name="signinNum" formControlName="signinNum" value="2" title="2"
+                        class="md-radiobtn" [(ngModel)]="signinNum" [class.hasError]="formModel2.get('signinNum').invalid && formModel2.get('signinNum').touched">
+                      <label for="two">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        2人</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="mthree" name="signinNum" formControlName="signinNum" value="3" title="3"
+                        class="md-radiobtn" [(ngModel)]="signinNum" [class.hasError]="formModel2.get('signinNum').invalid && formModel2.get('signinNum').touched">
+                      <label for="mthree">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        3人及以上</label>
+                    </div>
+                    <div class="md-radio">
+                      <input type="radio" id="other" name="signinNum" formControlName="signinNum" value="4" title="4"
+                        class="md-radiobtn" [(ngModel)]="signinNum" [class.hasError]="formModel2.get('signinNum').invalid && formModel2.get('signinNum').touched && formModel2.get('signinNum2')">
+                      <label for="other">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        其他</label>
+                    </div>
+                    <label>
+                      <input class="form-control othsNum" [class.hasError]="formModel2.get('signinNum2').invalid && formModel2.get('signinNum2').touched"
+                        type="text" formControlName="signinNum2" name="signinNum2" [(ngModel)]="signinNum2">
+                    </label>
+                  </div>
+                  <div [hidden]="formModel2.get('signinNum').untouched">
+                    <div class="formtips" [hidden]="!formModel2.hasError('required',['signinNum'])">
+                      请选择到店人数!
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">
+                  <button type="submit" class="btn blue" id="save_All" [disabled]="formModel2.invalid">提交</button>
+                </label>
+              </div>
+            </form>
+            <div *ngIf="isSubSucc" style="text-align: center;">
+              <div *ngIf="!isactive&&!issign">
+                <p style="color:#5a5a5a;font-size:16px;font-weight:bold;">您是 <label id="activityName" style="color:red;font-size:16px;font-weight:bold;">{{reOrderActiveMesg.name}}</label>
+                  签到成功的第 <label id="signinCount" style="color:red;font-size:16px;font-weight:bold;">{{reOrderActiveMesg.signinCount}}</label> 位用户 </p>
+              </div>
+              <div *ngIf="!isactive&&issign">
+                <p style="color:#5a5a5a;font-size:16px;font-weight:bold;">本次活动签到，预约签到成功人数已满，已无赠品</p>
+              </div>
+              <div style="padding-top:60px;">
+                <p><label id="stateNameLable" style="color:#a49f87;font-size:16px;font-weight:bold;">{{reOrderSignMesg.statename}}</label></p>
+                <p style="color:#5a5a5a;">门店名称：<label id="shopMapName">{{reOrderSignMesg.address}}</label></p>
+                <p style="color:#5a5a5a;">
+                  <span style="margin-right:10px;">操作人：<label id="operatorName">{{reOrderSignMesg.registername}}</label></span>
+                  <span>编号：<label id="operatorCode">{{reOrderSignMesg.shopcode}}</label></span>
+                </p>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>预约单来源</th>
+                      <th>预约单号</th>
+                      <th>预约门店</th>
+                      <th>预约日期/时间</th>
+                      <th>签到店面</th>
+                      <th>到店时间</th>
+                      <th>姓名</th>
+                      <th>联系方式</th>
+                      <th>预约单状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{reOrderMesg.origin}}</td>
+                      <td>{{reOrderMesg.orderno}}</td>
+                      <td>{{reOrderMesg.address}}</td>
+                      <td>{{reOrderMesg.reserveDate}}</td>
+                      <td>{{reOrderMesg.signinaddress}}</td>
+                      <td>{{reOrderMesg.signindate}}</td>
+                      <td>{{reOrderMesg.name}}</td>
+                      <td>{{reOrderMesg.telephone}}</td>
+                      <td>{{reOrderMesg.stateName}}</td>
+                      <td>
+                        <a class="btn btn-xs btn-info green" target="_blank" routerLink='/oms/reserve/credetail' [queryParams]="{id:reOrderMesg.orderno}">
+                          <i class="fa fa-edit"></i> 查看</a>
+                      </td>
+                    </tr>
+                    <tr *ngIf="nodata">
+                      <td colspan="10" style="text-align:center;padding:10px;">暂时还没有数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--分页页码-->
+              <div class="clearfix box">
+                <div id="pagination1" class="page fr"></div>
+              </div>
+              <!--分页页码end-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

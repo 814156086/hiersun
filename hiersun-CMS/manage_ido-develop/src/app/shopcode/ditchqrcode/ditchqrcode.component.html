@@ -1,0 +1,436 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          渠道活动二维码列表
+        </div>
+      </div>
+      <div class="portlet-body">
+        <!-- addedit -->
+        <div class="clearfix addnews">
+          <a type="button" class="btn red" data-toggle="button" (click)='addactive()'>
+            <i class="fa fa-plus"></i>
+            新建活动二维码 </a>
+        </div>
+        <!-- search -->
+        <div class="clearfix sec_line">
+          <div class="form-inline" role="form">
+            <!-- <label>公司编码：</label> -->
+            <div class="form-group">
+              <label>品牌：</label>
+              <select name="brand" class="form-control" id="brand">
+                  <option value="">请选择</option>
+                  <option *ngFor="let item of brandlist;let brandkey=index" value="{{item.brandSid}}">{{item.brandName}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>活动名称：</label>
+              <input type="text" class="form-control brandId" placeholder="请输入活动名称">
+            </div>
+            <div class="form-group">
+              <label>开始时间：</label>
+              <input type="text" id="beginDt"  class="form-control brandId" placeholder="请选择开始时间">
+            </div>
+            <div class="form-group">
+              <label>结束时间：</label>
+              <input type="text" id="endDt"  class="form-control brandId" placeholder="请选择结束时间">
+            </div>
+            <div class="form-group">
+              <label>状态：</label>
+              <select name="state" class="form-control" id="state">
+                  <option value="">请选择</option>
+                  <option value="1">启用</option>
+                  <option value="0">禁用</option>
+              </select>
+            </div>
+            <button type="submit" class="btn default demand" (click)='ditchcode()'>查询
+              <i class="fa fa-search"></i>
+            </button>
+            <button type="reset" class="btn default clear" (click)='clear()'>清空
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <!-- table -->
+        <div id="sample_6_wrapper" class="dataTables_wrapper no-footer">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_6" role="grid" aria-describedby="sample_6_info">
+              <thead>
+                <tr>
+                  <th> 序号 </th>
+                  <th> 品牌</th>
+                  <th> 活动名称 </th>
+                  <th> 二维码 </th> 
+                  <th> 有效期 </th>
+                  <th> 创建时间 </th>
+                  <th> 申请部门 </th>
+                  <th> 申请人 </th>
+                  <th> 审批号 </th>
+                  <th> 状态 </th>
+                  <th> 操作 </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="odd" *ngFor="let ditchitem of ditchList;let i = index">
+                  <td id="store_index">
+                    {{i+1}}
+                  </td>
+                  <td>
+                    {{ditchitem.brand}}
+                  </td>
+                  <td>
+                    {{ditchitem.name}}
+                  </td>
+                  <td>
+                    <img class="qrcodeImg" (click)='bigimg(i)' src="{{ditchitem.qrcodeImg}}" alt="">
+                  </td>
+                  <td class='min_width'>                    
+                    <div>{{ditchitem.expireStartTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+                    <div>{{ditchitem.expireEndTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+                  </td>
+                  <td class='min_width'>
+                    {{ditchitem.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                  </td>
+                  <td>
+                     {{ditchitem.extra_new.applyBranch}}
+                  </td>
+                  <td>
+                    {{ditchitem.extra_new.applicant}}
+                  </td>
+                  <td>
+                     {{ditchitem.extra_new.applyNo}}
+                  </td>
+                  <td *ngIf='ditchitem.state==0||ditchitem.state==-1'>
+                    <span class="label label-sm label-danger">禁用</span>
+                  </td>
+                  <td *ngIf='ditchitem.state==1'>
+                    <span class="label label-sm label-success">启用</span>
+                  </td>
+                  <td>
+                    <a href="javascript:;" class="btn btn-xs green" *ngIf='ditchitem.code' (click)='dereve(i)'>
+                        导出
+                        <i class="fa fa-paper-plane"></i>
+                    </a>
+                    <a class="btn btn-xs green" *ngIf='ditchitem.code&&ditchitem.state==0||ditchitem.state==-1' (click)='startindex(i)'>
+                        启用
+                        <i class="fa fa-exchange"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs red" *ngIf='ditchitem.state==1' (click)='endindex(i)'>
+                        禁用
+                        <i class="fa fa-exchange"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="clearfix">
+            <div id="pagination1" class="page"></div>
+          </div>
+          <div class="pop_up none" (click)='img_none()'>
+            <img src="" alt="" class="large_img none">
+          </div>
+          <!--启用门店二维码-->
+          <div id="createactive">
+            <div class="startcontent_box row">
+                <button type="button" (click)='createhide()' class="fr close_btn">
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">×</font>
+                    </font>
+                </button>
+                <h4 class="start_title">
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">启用门店</font>
+                    </font>
+                </h4>
+                <div class="sttime">
+                    <label style="text-align: right;">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">
+                            <span style="color:red;">*</span>活动开始时间：</font>
+                        </font>
+                    </label>
+                    <input class="activestart kssj beginDt" id="createstare" type="text" name="createstare" (change)="valid(1)">
+                    <div class="tips1"></div>
+                </div>
+                <div class="edtime">
+                    <label style="text-align: right;">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">
+                            <span style="color:red;">*</span>活动结束时间：</font>
+                        </font>
+                    </label>
+                    <input class="activeend jssj endDt" id="createend"  name="createend" (change)="valid(2)">
+                    <div class="tips2"></div>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn blue" (click)="makesure()">确认</button>
+                    <button class="btn" (click)='createhide()'>取消</button>
+                </div>
+            </div>
+          </div>
+          <!--结束启用二维码-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="hint" *ngIf="isHint">
+    <div class="hintMsg">
+        <i *ngIf="warning" class="warningMsg"></i>
+        <i *ngIf="!warning" class="ok"></i>
+        <span id="hint_content">{{hintMsg}}</span>
+    </div>
+</div>
+
+<div id="addactive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addactive" aria-hidden="true">
+    <div class="addcontent_box">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="bootbox-close-button close" data-dismiss="modal" (click)='addhide()' aria-hidden="true">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">×</font>
+                        </font>
+                    </button>
+                    <h4 class="modal-title">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">新建渠道活动二维码</font>
+                        </font>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form  class="form-horizontal" [formGroup]="formModel" (submit)="addqrcode()">
+                        <div class="row margin-search height-30">
+                            <div class="col-md-12" id="time_location">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" style="text-align: right;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">
+                                        <span style="color:red;">*</span>品牌：</font>
+                                    </font>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <select name="" class="form-control shopname" [class.hasError]="formModel.get('shopname').invalid && formModel.get('shopname').touched" type="text"
+                                        formControlName="shopname" >
+                                            <option value="">请选择</option>
+                                            <option *ngFor="let item of brandlist;let brandkey=index" value="{{item.brandSid}}">{{item.brandName}}</option>
+                                        </select>
+                                        <div [hidden]="formModel.get('shopname').untouched">
+                                            <div class="formtips" [hidden]="!formModel.hasError('required',['shopname'])">
+                                            品牌必填
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" style="text-align: right;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">
+                                        <span style="color:red;">*</span>活动名称：</font>
+                                    </font>
+                                    </label>
+                                    <div class="col-md-9">
+                                    <input class="form-control actname"  oninput="if(value.length>5)value=value.slice(0,30)" [class.hasError]="formModel.get('activename').invalid && formModel.get('activename').touched" type="text"
+                                        formControlName="activename"  placeholder="请输入活动名称" onkeyup="value=value.replace(/[\d]/g,'') ">
+                                    <div [hidden]="formModel.get('activename').untouched">
+                                        <div class="formtips" [hidden]="!formModel.hasError('required',['activename'])">
+                                        活动名称必填
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" style="text-align: right;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">
+                                        <span style="color:red;">*</span>开始日期：</font>
+                                    </font>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <input class="form-control beginDt stadt" id="startdata"  [class.hasError]="formModel.get('beginDt').invalid && formModel.get('beginDt').touched" type="text"
+                                            formControlName="beginDt" name="beginDt" [(ngModel)]="beginDt" placeholder="请输入开始日期">
+                                        <div [hidden]="formModel.get('beginDt').untouched">
+                                            <div class="formtips" [hidden]="!formModel.hasError('required',['beginDt'])">
+                                            开始日期必填
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" style="text-align: right;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">
+                                        <span style="color:red;">*</span>结束日期：</font>
+                                    </font>
+                                    </label>
+                                    <div class="col-md-9">
+                                    <input class="form-control  edt endDt" id="enddata" [class.hasError]="formModel.get('edt').invalid && formModel.get('edt').touched" type="text"
+                                        formControlName="edt" name="edt" [(ngModel)]="edt" placeholder="请输入结束日期">
+                                    <div [hidden]="formModel.get('edt').untouched">
+                                        <div class="formtips" [hidden]="!formModel.hasError('required',['edt'])">
+                                        结束日期必填
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" style="text-align: right;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">
+                                        <span style="color:red;">*</span>申请部门：</font>
+                                    </font>
+                                    </label>
+                                    <div class="col-md-9">
+                                    <input class="form-control  applysection" oninput="if(value.length>5)value=value.slice(0,30)" [class.hasError]="formModel.get('applysection').invalid && formModel.get('applysection').touched" type="text"
+                                        formControlName="applysection"  placeholder="请输入申请部门"onkeyup="value=value.replace(/[\d]/g,'') ">
+                                    <div [hidden]="formModel.get('applysection').untouched">
+                                        <div class="formtips" [hidden]="!formModel.hasError('required',['applysection'])">
+                                        申请部门必填
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" style="text-align: right;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">
+                                        <span style="color:red;">*</span>申请人：</font>
+                                    </font>
+                                    </label>
+                                    <div class="col-md-9">
+                                    <input class="form-control applypeople" oninput="if(value.length>5)value=value.slice(0,10)" [class.hasError]="formModel.get('applypeople').invalid && formModel.get('applypeople').touched" type="text"
+                                        formControlName="applypeople"  placeholder="请输入申请人" onkeyup="value=value.replace(/[\d]/g,'') ">
+                                    <div [hidden]="formModel.get('applypeople').untouched">
+                                        <div class="formtips" [hidden]="!formModel.hasError('required',['applypeople'])">
+                                        申请人必填
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" style="text-align: right;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">
+                                        <span style="color:red;">*</span>审批号：</font>
+                                    </font>
+                                    </label>
+                                    <div class="col-md-9">
+                                    <input class="form-control inspectnum" oninput="if(value.length>5)value=value.slice(0,20)" [class.hasError]="formModel.get('inspectnum').invalid && formModel.get('inspectnum').touched" type="text"
+                                        formControlName="inspectnum"  placeholder="请输入审批号" onKeyUp="value=value.replace(/[\W]/g,'')">
+                                    <div [hidden]="formModel.get('inspectnum').untouched">
+                                        <div class="formtips" [hidden]="!formModel.hasError('required',['inspectnum'])">
+                                        审批号必填
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button  type="submit" class="btn blue" [disabled]="formModel.invalid"(click)='addqrcode()'>确认</button>
+                    <button class="btn default" data-dismiss="modal" aria-hidden="true" (click)='addhide()'>取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div id="createactive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createactive" aria-hidden="true">
+    <div class="startcontent_box">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" (click)='createhide()' class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">×</font>
+                        </font>
+                    </button>
+                    <h4 class="modal-title">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">启用门店</font>
+                        </font>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form   class="form-horizontal">
+                        <div class="row margin-search height-30">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" style="text-align: right;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">
+                                        <span style="color:red;">*</span>活动开始时间：</font>
+                                    </font>
+                                    </label>
+                                    <div class="col-md-7">
+                                    <input class="activestart col-md-7 kssj beginDt" id="createstare" type="text" name="createstare" (change)="valid(1)">
+                                    <div class="tips1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" style="text-align: right;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">
+                                        <span style="color:red;">*</span>活动结束时间：</font>
+                                    </font>
+                                    </label>
+                                    <div class="col-md-7">
+                                    <input class="activeend col-md-7 jssj endDt" id="createend"  name="createend" (change)="valid(2)">
+                                    <div class="tips2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn blue delsure" (click)="makesure()">确认</button>
+                    <button class="btn default" (click)='createhide()'>取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<div id="deleteactive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteactive" aria-hidden="true">
+    <div class="modal-dialog widthset">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">×</font>
+                    </font>
+                </button>
+                <h4 class="modal-title notopen">
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">禁用门店</font>
+                    </font>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" [formGroup]="formModel" (submit)="forbidden()">
+                    <div class="row margin-search height-30">
+                        <div class="col-md-12">
+                            <div class="form-group col-md-12">
+                                <label class="control-label closehint col-md-12">是否确定禁用该活动二维码</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn blue delsure" (click)='forbidden()'>确认</button>
+                <button class="btn default" data-dismiss="modal" aria-hidden="true" (click)='deletehide()'>取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

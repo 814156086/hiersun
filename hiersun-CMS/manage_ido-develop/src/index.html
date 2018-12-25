@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>运营管理系统</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+  <link href="../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
+  <link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+  <!--  datetime -->
+  <link rel="stylesheet" type="text/css" href="../assets/global/plugins/clockface/css/clockface.css" />
+  <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css" />
+  <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+  <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+  <!-- select2 -->
+  <link rel="stylesheet" type="text/css" href="../assets/global/plugins/select2/select2.css"/>
+  <link href="../assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/global/css/components-rounded.css" id="style_components" rel="stylesheet" type="text/css" />
+  <link href="../assets/global/css/jquery.pagination.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
+  <link href="../assets/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
+  <link href="../assets/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
+  <link href="../assets/global/css/plugins.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/admin/layout4/css/layout.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/admin/layout4/css/themes/light.css" rel="stylesheet" type="text/css" id="style_color" />
+  <link href="../assets/admin/layout4/css/custom.css" rel="stylesheet" type="text/css" />
+  <!--jqueryui-->
+  <link rel="stylesheet" type="text/css" href="../assets/global/css/swiper.min.css" />
+  <link rel="stylesheet" href="../assets/global/css/jquery-ui.css">
+  <link rel="stylesheet" href="../assets/global/css/style.css">
+  <link rel="stylesheet" href="../assets/global/css/zTreeStyle.css"/>
+  <link rel="stylesheet" href="../assets/global/css/jquery.dataTables.css"/>
+  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <!-- 上传图片 -->
+  <link rel="stylesheet" href="../assets/global/css/webuploader.css"/>
+  <link rel="stylesheet" href="../assets/global/css/style-upload.css"/>
+  <link rel="stylesheet" href="../assets/global/css/ng-zorro-antd.min.css"/>
+</head>
+
+<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid" style="background: #e9ecf3;">
+  <app-root></app-root>
+
+  <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+  <!-- BEGIN CORE PLUGINS -->
+  <!--[if lt IE 9]>
+<script src="../assets/global/plugins/respond.min.js"></script>
+<script src="../assets/global/plugins/excanvas.min.js"></script> 
+<![endif]-->
+  <script src="../assets/global/scripts/jquery-1.9.1.js" type="text/javascript"></script>
+  <script src="../assets/global/scripts/jquery.pagination.min.js" type="text/javascript"></script>
+  <!--jqueryui-->
+   <script src="../assets/global/scripts/jquery-ui.js"></script>
+   <script type='text/javascript' src='../assets/global/scripts/cms.js'></script>
+   <script type='text/javascript' src='../assets/global/scripts/activepage.js'></script>
+   <script type='text/javascript' src='../assets/global/scripts/mactivepage.js'></script>
+   <script src="http://js.hiersun-ido.com/movelunbo.js"></script>
+
+  <script src="../assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+  <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
+  <script src="../assets/admin/layout4/scripts/layout.js" type="text/javascript"></script>
+  <script src="../assets/admin/layout4/scripts/quick-sidebar.js" type="text/javascript"></script>
+  <script src="../assets/admin/layout4/scripts/demo.js" type="text/javascript"></script>
+  <script src="../assets/admin/pages/scripts/index.js" type="text/javascript"></script>
+  <script src="../assets/admin/pages/scripts/tasks.js" type="text/javascript"></script>
+  <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
+  <script src="../assets/admin/pages/scripts/table-advanced.js"></script>
+  <script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="../assets/global/plugins/clockface/js/clockface.js"></script>
+  <script type="text/javascript" src="../assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+  <script type="text/javascript" src="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <script type="text/javascript" src="../assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+  <script src="../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+  <script src="../assets/admin/pages/scripts/components-pickers.js" type="text/javascript"></script>
+  <script src="../assets/admin/pages/scripts/table-advanced.js"></script>
+  <script type="text/javascript" src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+  <script type="text/javascript" src="../assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+  <script type="text/javascript" src="../assets/global/plugins/clockface/js/clockface.js"></script>
+  <!-- <script type="text/javascript" src="../assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+  <script type="text/javascript" src="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script> -->
+  <script type="text/javascript" src="../assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+  <script type="text/javascript" src="../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+  <script src="../assets/admin/pages/scripts/components-pickers.js" type="text/javascript"></script>
+  <script type="text/javascript" src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+  <script src="../assets/global/plugins/typeahead/handlebars.min.js" type="text/javascript"></script>
+  <script src="../assets/global/scripts/jquery.page.js" type="text/javascript"></script>
+  <!-- <script src="../assets/admin/pages/scripts/components-form-tools.js" type="text/javascript"></script> -->
+  <!-- <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
+  <!-- <script src="https://cdn.bootcss.com/datatables/1.10.16/js/jquery.dataTables.min.js"></script> -->
+  <script src="../assets/global/scripts/jquery.dataTables.js" type="text/javascript"></script>
+  <script src="../assets/global/scripts/jquery.ztree.core.js" type="text/javascript"></script>
+  <script src="../assets/global/scripts/jquery.ztree.excheck.js" type="text/javascript"></script>
+  <script src="../assets/global/scripts/jquery.ztree.exedit.js" type="text/javascript"></script>
+  <!--<script src="../assets/global/scripts/ztree.js"></script>-->
+  <!-- table固定列 -->
+  <!-- <script src="../assets/global/scripts/jquery.fixedheadertable.js"></script> -->
+  <!-- ng2-ckeditor 插件 -->
+  <script src="../assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
+  <!--<script src="//cdn.ckeditor.com/4.9.2/full-all/ckeditor.js"></script>-->
+
+  <script src="../assets/global/scripts/webuploader.js"></script>
+  <!-- <script src="../assets/global/scripts/upload.js"></script> -->
+  <script src="../assets/global/scripts/jquery.ztree.core.js" type="text/javascript"></script>
+  <script src="../assets/global/scripts/jquery.ztree.excheck.js" type="text/javascript"></script>
+  <script src="../assets/global/scripts/jquery.ztree.exedit.js" type="text/javascript"></script>
+  <script src="../assets/global/plugins/select2/select2.min.js" type="text/javascript"></script>
+  <script src="../assets/global/scripts/laydate/laydate.js" type="text/javascript"></script>
+  <script src="https://js.ido-love.com/jquery_lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  <!-- ng2-ckeditor 插件 -->
+  <script src="../assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
+  <!-- auto-complete -->
+  <script src="../assets/global/scripts/bootstrap3-typeahead.js" type="text/javascript"></script>
+
+
+  <script>
+    jQuery(document).ready(function () {
+      Metronic.init(); // init metronic core componets
+      Layout.init(); // init layout
+      QuickSidebar.init(); // init quick sidebar
+      Demo.init(); // init demo features
+      ComponentsPickers.init();
+      Index.init();
+      Index.initDashboardDaterange();
+      Index.initJQVMAP(); // init index page's custom scripts
+      Index.initCalendar(); // init index page's custom scripts
+      Index.initCharts(); // init index page's custom scripts
+      Index.initChat();
+      Index.initMiniCharts();
+      Tasks.initDashboardWidget();
+      
+    });
+  </script>
+  
+</body>
+
+</html>

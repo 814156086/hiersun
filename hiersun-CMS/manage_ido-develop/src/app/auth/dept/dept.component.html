@@ -1,0 +1,444 @@
+<div class="page-head">
+  <div class="page-title">
+    <h1>
+      部门管理
+      <small>
+        DEPT The Management
+      </small>
+    </h1>
+  </div>
+</div>
+<div class="portlet-body col-md-12" style="background:white;">
+  <div class="col-md-12" style="margin-top:10px;">
+      <div class="col-md-3 " style="padding-left:11px;">
+        <div class="portlet box blue-hoki" style="overflow:hidden;">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-globe"></i>部门信息
+            </div>
+            <div class="tools">
+              <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+            </div>
+          </div>
+
+          <div class="portlet-body">
+            <div class="pleftTree">
+              <input type="hidden" name="mymsg" />
+              <button class="myclick" (click)="myclick()"></button>
+              <div class="zTreeDemoBackground">
+                <ul id="ztree" class="ztree"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <!-- 选中app展示详情 -->
+        <div class="right_p col-md-12" *ngIf="treeid" style="margin-bottom:15px;">
+          <div class="portlet box blue-hoki col-md-12">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>部门组织信息
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+            <div class="portlet-body col-md-12" *ngFor="let item of list1">
+              <div class="form-group">
+                <label class="col-md-2 control-label" style="text-align: right;">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">
+                      <span style="color:red;">*</span>编号 :</font>
+                  </font>
+                </label>
+                <div class="col-md-10">
+                  <input type="text" id="key" class="form-control" value="{{item.key}}" readonly style="margin-bottom: 15px;">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label" style="text-align: right;">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">
+                      <span style="color:red;">*</span>名称 :</font>
+                  </font>
+                </label>
+                <div class="col-md-10">
+                  <input type="text" id="name" name="name" class="form-control" value="{{item.name}}" readonly="true"
+                    style="margin-bottom: 15px;">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2  control-label" style="text-align:right;">描述：</label>
+                <div class="col-md-10">
+                  <input type="text" id="comm" name="comm" class="form-control" value="{{item.comm}}" readonly="true"
+                    style="margin-bottom: 15px;">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2  control-label" style="text-align:right;">状态：</label>
+                <div class="col-md-10">
+                  <input *ngIf="item.enabled" class="form-control" type="text" value="启用" readonly>
+                  <input *ngIf="!item.enabled" class="form-control" type="text" value="禁用" readonly>
+                </div>
+              </div>
+              <div class="form-actions right1 col-md-12">
+                <div class="col-md-1"></div>
+                <div class="col-md-11" style="margin-top:10px;">
+                  <button class="btn green" (click)="add(item.id)" *ngIf="editsavenum!=1">添加部门</button>
+                  <button class="btn blue" (click)="editsave()" *ngIf="editsavenum!=1&&item.pId!=null">编辑</button>
+                  <button class="btn blue" *ngIf="cancelnum!=0" (click)="save(item.id)">保存</button>
+                  <button class="btn yellow" *ngIf="cancelnum!=0" (click)="cancel()">返回</button>
+                  <!-- <div *ngIf="addId!=null"> -->
+                  <button class="btn green" *ngIf="!item.enabled&&item.pId!=null&&cancelnum!=0  " (click)="operation(item.id,item.pId,'true')">启用</button>
+                  <button class="btn red" *ngIf="item.enabled && cancelnum!=0" (click)="operation(item.id,item.pId,'false')">禁用</button>
+                  <!-- </div> -->
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- 选中APP展示详情 end -->
+
+        <button class="btn green" style="margin-bottom:15px;" (click)="adddept()" *ngIf="!treeid">添加部门</button>
+        <!-- 选中当前的子类展示 -->
+        <div class="right_c col-md-12">
+          <div class="portlet box blue-hoki col-md-12">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-globe"></i>子部门信息
+              </div>
+              <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+              </div>
+            </div>
+
+            <div class="portlet-body col-md-12">
+              <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_1" role="grid"
+                  aria-describedby="sample_1_info">
+                  <thead>
+                    <tr>
+                      <th>编号</th>
+                      <th>名称</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor='let item of cList'>
+                      <td>{{item.key}}</td>
+                      <td>{{item.name}}</td>
+                      <td *ngIf="item.enabled">启用</td>
+                      <td *ngIf='!item.enabled'>禁用</td>
+                      <td>
+                        <a class="btn btn-xs yellow" (click)="edit(item.id,item.pId)">
+                          <i class="fa fa-edit"></i>
+                          编辑
+                        </a>
+                        <a class="btn btn-xs green" (click)="operation(item.id,item.pId,'true')" *ngIf="!item.enabled">
+                          <i class="fa fa-trash-o"></i>
+                          启用
+                        </a>
+                        <a class="btn btn-xs red" (click)="operation(item.id,item.pId,'false')" *ngIf="item.enabled">
+                          <i class="fa fa-trash-o"></i>
+                          禁用
+                        </a>
+                        <a class="btn btn-xs red" *ngIf="item.noDelete && !item.enabled" (click)="operation(item.id,item.pId,'del')">
+                          <i class="fa fa-trash-o"></i>删除
+                        </a>
+                        <a class="btn btn-xs red" (click)="remove(item.id)">
+                          解除关系
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--pagema-->
+              <div class="clearfix box">
+                <div id="pagination1" class="page fr"></div>
+              </div>
+              <!--pagema-->
+            </div>
+          </div>
+        </div>
+        <!-- 选中当前的子类展示 end -->
+    </div>
+  </div>
+</div>
+<!--操作弹框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">管理</h4>
+      </div>
+      <div class="modal-body">{{message}}</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="subStatus()">确定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--操作弹框end-->
+<!-- 解除关系弹框 -->
+<div class="modal fade" id="remove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:800px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel1">用户关系</h4>
+        </div>
+          <div class="col-md-12" style=" padding: 22px;">
+
+              <div class="col-md-12" style="background:white;padding: 0 0 20px 0;">
+                <div class="col-md-4" style="padding-left:0;">
+                    <input class="form-control" id="searchname"  placeholder="根据账号或名称查询" >
+                </div>
+                <div class="col-md-2" style="padding-left:0;">
+                    <button class="btn btn-success" (click)="search()">查询</button>
+                </div>
+
+              </div>
+            <div class="portlet box blue-hoki">
+              <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>解除用户关系
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                  </div>
+              </div>
+              <div class="portlet-body">
+                  <div class="table-scrollable" style="border-left:2px solid #dddddd;border-top:2px solid #dddddd;">
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_2" role="grid"
+                    aria-describedby="sample_1_info">
+                      <thead>
+                        <tr>
+                          <th>账号</th>
+                          <th>名称</th>
+                          <th>职位名称</th>
+                          <th>状态</th>
+                          <th>操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of userList">
+                          <td>{{item.username}}</td>
+                          <td>{{item.name}}</td>
+                          <td>{{item.dutyName}}</td>
+                          <td *ngIf="item.enabled">启用</td>
+                          <td *ngIf="!item.enabled">禁用</td>
+                          <td>
+                            <button class="btn btn-xs red" (click)="removeUser(item.uid)">解除关系</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="clearfix box">
+                      <div id="pagination2" class="page fr"></div>
+                    </div>
+              </div>
+            </div>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- 解除关系弹框 end-->
+
+<!--编辑弹框-->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel2">部门子类编辑</h4>
+      </div>
+      <div class="portlet-body col-md-12" style="padding: 40px 20px;" *ngFor="let item of editList">
+        <div class="form-group">
+          <label class="col-md-2 control-label" style="text-align: right;">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">
+                <span style="color:red;">*</span>编号 :</font>
+            </font>
+          </label>
+          <div class="col-md-10">
+            <input type="text" id="ekey" class="form-control" value="{{item.key}}" readonly style="margin-bottom: 15px;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label" style="text-align: right;">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">
+                <span style="color:red;">*</span>名称 :</font>
+            </font>
+          </label>
+          <div class="col-md-10">
+            <input type="text" id="ename" class="form-control" value="{{item.name}}" style="margin-bottom: 15px;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2  control-label" style="text-align:right;">描述：</label>
+          <div class="col-md-10">
+            <input type="text" id="ecomm" class="form-control" value="{{item.comm}}" style="margin-bottom: 15px;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2  control-label" style="text-align:right;">状态：</label>
+          <div class="col-md-10">
+            <!-- <input *ngIf="item.enabled" class="form-control" type="text" value="启用" readonly>
+            <input *ngIf="!item.enabled" class="form-control" type="text" value="禁用" readonly>
+             -->
+            <input *ngIf="item.enabled" value="true" type="radio" name="Eenabled" checked>
+            <input *ngIf="!item.enabled" value="true" type="radio" name="Eenabled">
+            启用
+            <input style="margin-left:15px;" type="radio" *ngIf="!item.enabled" value="false" checked name="Eenabled">
+            <input style="margin-left:15px;" type="radio" *ngIf="item.enabled" value="false" name="Eenabled">
+            禁用
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" (click)="editSure()">确定</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--编辑弹框end-->
+
+<!-- 添加弹框 -->
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">添加部门</h4>
+      </div>
+      <div class="portlet-body col-md-12" style="padding: 40px 10px;">
+        <!--<div class="form-group">-->
+        <!--<label class="col-md-2  control-label" style="text-align:right;">编号：</label>-->
+        <!--<div class="col-md-10">-->
+        <!--<input type="text" id="akey" class="form-control" value="" style="margin-bottom: 15px;">-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="form-group">
+          <label class="col-md-2  control-label" style="text-align:right;">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">
+                <span style="color:red;">*</span>名称：</font>
+            </font>
+
+          </label>
+          <div class="col-md-10">
+            <input type="text" id="aname" placeholder="请输入部门名称" class="form-control" value="" style="margin-bottom: 15px;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2  control-label" style="text-align:right;">描述：</label>
+          <div class="col-md-10">
+            <input type="text" id="acomm" class="form-control" placeholder="请输入相关描述" value="" style="margin-bottom: 15px;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2  control-label" style="text-align:right;">状态：</label>
+          <div class="col-md-10">
+            <input type="radio" checked name="enabled" value="true">启用
+            <input style="margin-left:20px;" type="radio" name="enabled" value="false">禁用
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" (click)="addsure()">确定</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="adddept" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel3">添加部门</h4>
+      </div>
+      <div class="portlet-body col-md-12" style="padding: 40px 10px;">
+        <!--<div class="form-group">-->
+        <!--<label class="col-md-2  control-label" style="text-align:right;">编号：</label>-->
+        <!--<div class="col-md-10">-->
+        <!--<input type="text" id="akey" class="form-control" value="" style="margin-bottom: 15px;">-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="form-group">
+          <label class="col-md-2  control-label" style="text-align:right;">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">
+                <span style="color:red;">*</span>名称：</font>
+            </font>
+
+          </label>
+          <div class="col-md-10">
+            <input type="text" id="deptaname" placeholder="请输入部门名称" class="form-control" value="" style="margin-bottom: 15px;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2  control-label" style="text-align:right;">描述：</label>
+          <div class="col-md-10">
+            <input type="text" id="deptacomm" class="form-control" placeholder="请输入相关描述" value="" style="margin-bottom: 15px;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2  control-label" style="text-align:right;">状态：</label>
+          <div class="col-md-10">
+            <input style="margin-left:20px;" type="radio" checked name="deptenabled" value="true">启用
+            <input type="radio" name="deptenabled" value="false">禁用
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" (click)="adddeptsure()">确定</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 添加弹框 end-->
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>
+<!-- 默认加载图标 -->
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<div  id="myModal5" class="modal fade bs-modal-sm"  data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">操作</h4>
+        </div>
+        <div class="modal-body">确定要解除用户关系吗</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="subStatus2()">确定</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,58 @@
+<div class="header">
+  <h2>添加文章大类</h2>
+</div>
+<div class="modify">
+  <form class="form-horizontal" [formGroup]="formModel">
+    <div class="col-md-12">
+      <label class="col-md-2 control-label">
+        <span style="color:red;">*</span>分类编码：</label>
+      <div class="col-md-8">
+        <input class="form-control" [class.hasError]="formModel.get('code').invalid && formModel.get('code').touched"
+          type="text" formControlName="code" name="code" [(ngModel)]="code" placeholder="请输入分类编码" id="code" type="text">
+        <div [hidden]="formModel.get('code').untouched">
+          <div class="formtips checkCode" [hidden]="!formModel.hasError('required',['code'])">
+            分类编码必填
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label class="col-md-2 control-label">
+        <span style="color:red;">*</span>分类序号：</label>
+      <div class="col-md-8">
+        <input class="form-control" [class.hasError]="formModel.get('serialNumber').invalid && formModel.get('serialNumber').touched"
+          type="text" formControlName="serialNumber" name="serialNumber" [(ngModel)]="serialNumber" onkeyup="this.value=this.value.replace(/\D/g,'')"
+          onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="请输入分类序号" id="serialNumber" type="text">
+        <div [hidden]="formModel.get('serialNumber').untouched">
+          <div class="formtips" [hidden]="!formModel.hasError('required',['serialNumber'])">
+            分类序号必填
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label class="col-md-2 control-label">
+        <span style="color:red;">*</span>分类名称：</label>
+      <div class="col-md-8">
+        <input class="form-control" [class.hasError]="formModel.get('name').invalid && formModel.get('name').touched"
+          type="text" formControlName="name" name="name" [(ngModel)]="name" placeholder="请输入分类名称" id="name" type="text">
+        <div [hidden]="formModel.get('name').untouched">
+          <div class="formtips" [hidden]="!formModel.hasError('required',['name'])">
+            分类名称必填
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+
+
+  <div class="anniu">
+    <button type="submit" class="btn success" (click)="goback()">返回</button>
+    <button type="button" class="btn blue" [disabled]="formModel.invalid" (click)='edit()'>保存</button>
+  </div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">{{hintMsg}}</div>
+</div>

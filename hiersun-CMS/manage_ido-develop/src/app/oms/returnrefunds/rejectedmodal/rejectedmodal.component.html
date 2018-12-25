@@ -1,0 +1,183 @@
+<div class="modal fade" id="modal_replus" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog sale-container">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title">拒收退货</h4>
+          </div>
+      <div class="modal-body form-horizontal">
+        <!-- 1 -->
+        <div class="form-body">
+          <div class="table-scrollable table-ofy">
+            <table class="table table-striped table-bordered table-hover selItemTable">
+              <thead>
+                <tr class="text-center">
+                  <th> 操作</th>
+                  <th> 商品名称</th>
+                  <th> 商品渠道名称</th>
+                  <th *ngFor="let pnitem of propNameListR;let pnkey=index;">
+                    {{pnitem}}
+                  </th>
+                  <th> sku编码</th>
+                  <th> 缺货数量</th>
+                  <th> 商品编号</th>
+                  <th> 标准价</th>
+                  <th> 销售价</th>
+                  <th> 销售数量</th>
+                  <th> 是否为赠品</th>
+                  <th> 订单号</th>
+                  <th> 行号</th>
+                  <th> 门店名称</th>
+                  <th> 商品单位</th>
+                  <th> 品牌名称</th>
+                  <th> spu编码</th>
+                  <th> 可退货数量</th>
+                  <th>提货数量</th>
+                  <th>商品折后总额</th>
+                  <th>商品图片</th>
+                  <th>运费分摊金额</th>
+                  <th>实际运费分摊</th>
+                  <th>是否已评论</th>
+                  <th>收银损益</th>
+                  <th>创建时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr role="row" class="odd" *ngFor="let slitem of saleItemListR;let skey=index;">
+                  <!-- <td><button type="button" class="btn green-meadow" (click)="submitReturn(slitem)">退货</button></td> -->
+                  <td id="{{slitem.salesItemNo}}">
+                    <div class="md-checkbox">
+                      <input type="checkbox" name="checkbox_rejec" value="{{slitem.salesItemNo}}" title="{{slitem.sid}}"
+                        id="checkbox_rejec{{slitem.sid}}" class="md-check" *ngIf="!hasGift" checked disabled>
+                      <input type="checkbox" name="checkbox_rejec" value="{{slitem.salesItemNo}}" title="{{slitem.sid}}"
+                        id="checkbox_rejec{{slitem.sid}}" class="md-check" *ngIf="hasGift">
+                      <label for="checkbox_rejec{{slitem.sid}}">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                      </label>
+                    </div>
+                  </td>
+                  <!-- 商品名称 -->
+                  <td> {{slitem.shoppeProName?slitem.shoppeProName:"——"}}</td>
+                  <!-- 商品渠道名称 -->
+                  <td> {{slitem.productChannleName?slitem.productChannleName:"——"}} </td>
+                  <td *ngFor="let spItem of slitem.saleItemList;let spkey=index;">
+                    {{spItem?spItem:"——"}}
+                  </td>
+                  <!-- sku编码 -->
+                  <td> {{slitem.skuNo?slitem.skuNo:"——"}}</td>
+                  <!-- 缺货数量 -->
+                  <td> {{slitem.stockoutAmount}} </td>
+                  <!-- 商品编号 -->
+                  <td class="rejecbarCode"> {{slitem.barcode?slitem.barcode:"——"}} </td>
+                  <!-- 标准价 -->
+                  <td> {{slitem.standPrice}} </td>
+                  <!-- 销售价 -->
+                  <td class="rejecprice"> {{slitem.salePrice}} </td>
+                  <!-- 销售数量 -->
+                  <td> {{slitem.saleSum}} </td>
+                  <!-- 是否为赠品 -->
+                  <td *ngIf="slitem.isGift!=1">
+                    <span class="label label-sm label-danger">否</span>
+                  </td>
+                  <td *ngIf="slitem.isGift==1">
+                    <span class="label label-sm label-success">是</span>
+                  </td>
+                  <!-- 订单号 -->
+                  <td class="rejecorderNo"> {{slitem.orderNo?slitem.orderNo:"——"}}</td>
+                  <!-- 行号 -->
+                  <td> {{slitem.rowNo?slitem.rowNo:"——"}}</td>
+                  <!-- 门店名称 -->
+                  <td> 门店名称 </td>
+                  <!-- 商品单位 -->
+                  <td> {{slitem.unit?slitem.unit:"——"}}</td>
+                  <!-- 品牌名称 -->
+                  <td> {{slitem.brandName?slitem.brandName:"——"}} </td>
+                  <!-- spu编码 -->
+                  <td> {{slitem.spuNo?slitem.spuNo:"——"}} </td>
+                  <!-- 可退货数量 -->
+                  <td class="rejecrefundNum"> {{slitem.refundNum}}</td>
+                  <!-- 提货数量 -->
+                  <td> {{slitem.pickSum}}</td>
+                  <!-- 商品折后总额 -->
+                  <td> {{slitem.paymentAmount}}</td>
+                  <!-- 商品图片 -->
+                  <td> 商品图片</td>
+                  <!-- 运费分摊金额 -->
+                  <td> {{slitem.shippingFeeSplit}}</td>
+                  <!-- 实际运费分摊 -->
+                  <td> {{slitem.shippingFeeSplit}}</td>
+                  <!-- 是否已评论 -->
+                  <td> 是否已评论</td>
+                  <!-- 收银损益 -->
+                  <td> {{slitem.incomeAmount}}</td>
+                  <!-- 创建时间 -->
+                  <td> {{slitem.createdTimeStr?slitem.createdTimeStr:"——"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 1 -->
+        <div style="margin: 0 auto;width: 30%;">
+          <button type="button" class="btn btn-block green-meadow" (click)="submitReturnRejec()">退货</button>
+        </div>
+      </div>
+      <div class="modal-footer" style="text-align: right;">
+        <button type="button" class="btn default" data-dismiss="modal" (click)="closeMoadl()">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 提交退货弹窗 -->
+<!-- BEGIN MODAL-->
+<div class="modal fade" id="submit_return" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">创建退货申请单</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+        <!-- 1 -->
+        <div class="form-body">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label class="control-label col-md-4">退货原因：</label>
+                <div class="col-md-7">
+                  <select id="rejectedReason" class="form-control">
+                    <option value="">请选择退货申请的原因</option>
+                    <option *ngFor="let refitem of refundReasonList;let refkey=index;" value="{{refitem.codeValue}}">{{refitem.codeName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 1 -->
+      </div>
+      <div class="modal-footer" style="text-align: center">
+        <button type="button" class="btn blue" (click)="subReasonRejec()">确定</button>
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>

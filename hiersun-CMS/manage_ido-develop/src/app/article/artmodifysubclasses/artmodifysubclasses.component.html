@@ -1,0 +1,77 @@
+<div class="header">
+        <h2>
+            修改文章子类
+            <small>Modify article subclasses</small>
+        </h2>
+    </div>
+    <div class="modify">
+        <form class="form-horizontal" [formGroup]="formModel">
+        <div *ngFor = 'let item of ftpArray;let key = index'>
+            <div class="col-md-12">
+                <label class="col-md-2 control-label">子分类序号：</label>
+                <div class="col-md-8">
+                    <input type="text" name="artSubClassify.serialNumber" value="{{item.serialNumber}}" onkeyup="this.value=this.value.replace(/\D/g,'')" id="cserialNumber" class="form-control" >
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="col-md-2 control-label">
+                        <span style="color:red;">*</span>子分类名称：</label>
+                <div class="col-md-8">
+                    <input  [class.hasError]="formModel.get('cname').invalid && formModel.get('cname').touched"
+                    type="text" formControlName="cname" name="cname" [(ngModel)]="cname" placeholder="请输入子分类名称"name="artSubClassify.name" id="cname" class="form-control">
+                    <div [hidden]="formModel.get('cname').untouched">
+                            <div class="formtips" [hidden]="!formModel.hasError('required',['cname'])">
+                                子分类名称必填
+                            </div>
+                            </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="col-md-2 control-label">
+                        <span style="color:rgb(172, 48, 48);">*</span>子分类编码：</label>
+                <div class="col-md-8">
+                    <input readonly [class.hasError]="formModel.get('csubCode').invalid && formModel.get('csubCode').touched"
+                    type="text" formControlName="csubCode" name="csubCode" [(ngModel)]="csubCode" placeholder="请输入子分类编码" name="artSubClassify.subCode" id="csubCode" class="form-control">
+                    <div [hidden]="formModel.get('csubCode').untouched">
+                            <div class="formtips" [hidden]="!formModel.hasError('required',['csubCode'])">
+                                子分类编码必填
+                            </div>
+                            </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="col-md-2 control-label">分类title：</label>
+                <div class="col-md-8">
+                    <input type="text" name="artSubClassify.title" value="{{item.title}}" id="ctit" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="col-md-2 control-label">分类keywords：</label>
+                <div class="col-md-8">
+                    <textarea name="artSubClassify.keywords" class="textarea_fl" value="{{item.keywords}}" id="ckey"></textarea>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="col-md-2 control-label">分类description：</label>
+                <div class="col-md-8">
+                    <textarea name="artSubClassify.description" class="textarea_fl" value="{{item.description}}" id="cdp"></textarea>
+                </div>
+            </div>
+        </div>
+    
+    <!-- <div *ngFor = 'let item of ftpArray;let key = index'>
+    <p>子分类序号：<input type="text" name="artSubClassify.serialNumber" value="{{item.serialNumber}}" id="cserialNumber" class="form-control"></p>
+    <p>子分类名称：<input type="text" name="artSubClassify.name" value="{{item.name}}" id="cname" class="form-control"></p>
+    <p>子分类编码：<input type="text" name="artSubClassify.subCode" value="{{item.subCode}}" id="csubCode" class="form-control"></p>
+    <p>分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类title：<input type="text" name="artSubClassify.title" value="{{item.title}}" id="ctit" class="form-control"></p>
+    <div>分&nbsp;&nbsp;类keywords：<textarea name="artSubClassify.keywords" class="textarea_fl" value="{{item.keywords}}" id="ckey"></textarea></div>
+    <div style="margin-bottom: 10px">分类description：<textarea name="artSubClassify.description" class="textarea_fl" value="{{item.description}}" id="cdp"></textarea></div>
+    </div> -->
+    </form>
+    <div class="anniu">
+        
+        <input class="btn inp2 btnBigOnBlur" type="button" value="返回" (click)="back()">
+        <input class="btn btn-success inp1 btnBigOnBlur" [disabled]="formModel.invalid" type="submit" value="保存" (click)="sub_form()">
+    </div>
+    </div>
+    

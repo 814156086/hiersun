@@ -1,0 +1,125 @@
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+  <div class="page-title">
+    <h1>支付宝交易日志详情
+      <small>Alipy Jouornal Detail</small>
+    </h1>
+  </div>
+  <!-- END PAGE TITLE -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="contenttab">
+      <form class="templatecon form-horizontal">
+        <div class="form-group">
+          <label class="col-md-2 control-label">订单号：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{orderTradeNo}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">订单金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{totalAmount}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">付款金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{buyerPayAmount}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">实收金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{receiptAmount}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">付款时间：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{gmtPayment}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">发票金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{invoiceAmount}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">买家支付宝账号：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{buyerLogonId}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">买家支付宝id：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{buyerUserId}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">交易门店：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{storeName}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">支付宝交易号：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{tradeNo}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">使用的商品优惠信息：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{discountGoodsDetail}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">本次资金单据列表：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{fundBillList}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">集分宝金额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{pointAmount}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">支付宝卡余额：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{cardBalance}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">通知类型：</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{notifyType}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label"></label>
+          <div class="col-md-8">
+            <button type="button" class="btn default" (click)="goback()">返回</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="spinner" *ngIf="isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div id="hint" *ngIf="isHint">
+  <div class="hintMsg">
+    <i *ngIf="warning" class="warningMsg"></i>
+    <i *ngIf="!warning" class="ok"></i>
+    <span>{{hintMsg}}</span>
+  </div>
+</div>

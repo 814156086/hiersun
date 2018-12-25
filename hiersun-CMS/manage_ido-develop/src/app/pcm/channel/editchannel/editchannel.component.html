@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue-hoki">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="glyphicon glyphicon-chevron-left back_hand" (click)="goBack()"></i>编辑销售渠道
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse">
+          </a>
+          <a href="javascript:;" class="reload">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <div class="form-horizontal">
+          <div class="form-body">
+            <div class="form-group">
+              <label class="col-md-3 control-label">销售渠道编码
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="text" readonly="true" class="form-control chanCode" name="chanCode" placeholder="必填" value="{{chanCode}}" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">销售渠道名称
+                <span class="required" aria-required="true">
+                  * </span>
+              </label>
+              <div class="col-md-4">
+                <div class="input-icon">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="text" class="form-control chanName" name="chanName" placeholder="必填" value="{{chanName}}" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn blue" (click)="subChannel()">保存</button>
+                <button class="btn default" (click)="goBack()">取消</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END FORM-->
+      </div>
+    </div>
+  </div>
+</div>
+<!--确认消息提示框-->
+<div id="warnMsgWin" *ngIf="isShowWarnWin" class="div_dialog animated {{btn_type_css}} fadeIn">
+  <div class="title_dialog" style="font-size: 19px;line-height: 16px;">系统提示:</div>
+  <div class="discription_dialog" style="font-size: 15px;">{{warnMsg}}</div>
+  <div class="dialog_divOperation ">
+    <span class="btn_span yellow_win_btn_hover_{{btn_type_css}} one_btn_span defalut" data-name="确定" style="padding: 4px 17px; font-size: 14px; height: auto;"
+      (click)="closeWin()">确定</span>
+  </div>
+</div>
+<div *ngIf="isShowWarnWin" class="cpt-dw-dialog-mask animated fadeIn" style="background: rgba(0, 0, 0, 0.4);z-index: 10000010;transition: all 0s ease 0s;animation-duration: 0s;"></div>
+<!-- 加载动图 -->
+<div class="spinner" *ngIf="!isload">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
